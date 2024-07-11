@@ -57,8 +57,40 @@ function history(button) {
     }
 
     Autograder.Submissions.history(course, assignment)
-        .then(function(submissions) {
-            let text = JSON.stringify(submissions.history, null, 4);
+        .then(function(result) {
+            let text = JSON.stringify(result, null, 4);
+            button.parentElement.querySelector('.result-area').textContent = text;
+        })
+        .catch(warn);
+}
+
+function peek(button) {
+    if (!Autograder.hasCredentials()) {
+        warn("Must login first.");
+        return;
+    }
+
+    let course = button.parentElement.querySelector('input[name="course"]').value;
+    let assignment = button.parentElement.querySelector('input[name="assignment"]').value;
+    let submission = button.parentElement.querySelector('input[name="submission"]').value;
+
+    if (course.length < 1) {
+        warn("No course provided for peek.");
+        return;
+    }
+
+    if (assignment.length < 1) {
+        warn("No assignment provided for peek.");
+        return;
+    }
+
+    if (submission.length < 1) {
+        submission = null;
+    }
+
+    Autograder.Submissions.peek(course, assignment, submission)
+        .then(function(result) {
+            let text = JSON.stringify(result, null, 4);
             button.parentElement.querySelector('.result-area').textContent = text;
         })
         .catch(warn);
@@ -77,6 +109,7 @@ function initHandlers() {
     window.ag.handlers.login = login;
     window.ag.handlers.logout = logout;
     window.ag.handlers.history = history;
+    window.ag.handlers.peek = peek;
 }
 
 function main() {
