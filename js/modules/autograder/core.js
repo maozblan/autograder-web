@@ -37,15 +37,15 @@ async function _resolveAPIResponse(response) {
     let body = await response.json();
 
     if (!body.success) {
-        console.error(`Autograder API call failed: '${body.message}'.`);
+        if (response.status == 401) {
+            // Shorten the message for auth error.
+            return Promise.reject(body.message);
+        }
+
+        return Promise.reject(`Autograder API call failed: '${body.message}'.`);
     }
 
-    return {
-        success: body.success,
-        message: body.message,
-        content: body.content,
-        body: body,
-    }
+    return Promise.resolve(body.content);
 }
 
 async function _resolveAPIError(response) {
@@ -55,7 +55,7 @@ async function _resolveAPIError(response) {
     let body = await response.text();
     console.error(body);
 
-    return body;
+    return Promise.reject(body);
 }
 
 function sendRequest(endpoint, payload = {},

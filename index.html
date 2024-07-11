@@ -36,6 +36,23 @@
                 <div class='logout'>
                     <button onclick='window.ag.handlers.logout()' >Logout</button>
                 </div>
+
+                <hr />
+
+                <div class='history'>
+                    <div>
+                        <label for='course'>Course:</label>
+                        <input type='course' name='course' placeholder='course id' />
+                    </div>
+                    <div>
+                        <label for='assignment'>Assignment:</label>
+                        <input type='assignment' name='assignment' placeholder='assignment id' />
+                    </div>
+                    <button onclick='window.ag.handlers.history(this)' >History</button>
+
+                    <pre class='result-area'>
+                    </pre>
+                </div>
             </div>
             <div class='footer'>
             </div>

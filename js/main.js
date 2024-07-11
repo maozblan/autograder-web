@@ -1,13 +1,18 @@
 import * as Autograder from './modules/autograder/base.js'
 
 function notify(message) {
+    console.info(message);
+    alert(message);
+}
+
+function warn(message) {
     console.warn(message);
     alert(message);
 }
 
 function login(button) {
     if (Autograder.hasCredentials()) {
-        notify("Already logged in. Logout first to login again.");
+        warn("Already logged in. Logout first to login again.");
         return;
     }
 
@@ -15,20 +20,48 @@ function login(button) {
     let cleartext = button.parentElement.querySelector('input[name="password"]').value;
 
     if (email.length < 1) {
-        notify("No email provided for login.");
+        warn("No email provided for login.");
         return;
     }
 
     if (cleartext.length < 1) {
-        notify("No password provided for login.");
+        warn("No password provided for login.");
         return;
     }
 
     Autograder.Users.createToken(email, cleartext)
         .then(function(token) {
             Autograder.setCredentials(email, token['token-id'], token['token-cleartext']);
+            notify("Logged In");
         })
-        .catch(notify);
+        .catch(warn);
+}
+
+function history(button) {
+    if (!Autograder.hasCredentials()) {
+        warn("Must login first.");
+        return;
+    }
+
+    let course = button.parentElement.querySelector('input[name="course"]').value;
+    let assignment = button.parentElement.querySelector('input[name="assignment"]').value;
+
+    if (course.length < 1) {
+        warn("No course provided for history.");
+        return;
+    }
+
+    if (assignment.length < 1) {
+        warn("No assignment provided for history.");
+        return;
+    }
+
+    Autograder.Submissions.history(course, assignment)
+        .then(function(submissions) {
+            let text = JSON.stringify(submissions.history, null, 4);
+            button.parentElement.querySelector('.result-area').textContent = text;
+        })
+        .catch(warn);
 }
 
 function logout() {
@@ -43,6 +76,7 @@ function initHandlers() {
 
     window.ag.handlers.login = login;
     window.ag.handlers.logout = logout;
+    window.ag.handlers.history = history;
 }
 
 function main() {
