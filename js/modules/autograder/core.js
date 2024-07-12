@@ -30,7 +30,25 @@ function setCredentials(email, id, cleartext) {
 }
 
 function clearCredentials() {
+    let credentials = getCredentials();
     localStorage.removeItem(CREDENTIALS_KEY);
+
+    if (!credentials) {
+        return Promise.resolve({'found': false});
+    }
+
+    return _deleteToken(credentials);
+}
+
+// Delete the context token.
+function _deleteToken(credentials) {
+    let args = {
+        [REQUEST_USER_EMAIL_KEY]: credentials['email'],
+        'token-id': credentials['token-id'],
+        [REQUEST_USER_PASS_KEY]: credentials['token'],
+    };
+
+    return sendRequest('users/tokens/delete', args);
 }
 
 async function _resolveAPIResponse(response) {

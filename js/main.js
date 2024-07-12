@@ -98,8 +98,6 @@ function peek(button) {
 
 function logout() {
     Autograder.clearCredentials();
-
-    // TODO(eriq): Destroy the token on the server side.
 }
 
 function initHandlers() {
