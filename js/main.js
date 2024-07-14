@@ -96,6 +96,39 @@ function peek(button) {
         .catch(warn);
 }
 
+function submit(button) {
+    if (!Autograder.hasCredentials()) {
+        warn("Must login first.");
+        return;
+    }
+
+    let course = button.parentElement.querySelector('input[name="course"]').value;
+    let assignment = button.parentElement.querySelector('input[name="assignment"]').value;
+    let files = button.parentElement.querySelector('input[name="files"]').files;
+
+    if (course.length < 1) {
+        warn("No course provided for peek.");
+        return;
+    }
+
+    if (assignment.length < 1) {
+        warn("No assignment provided for peek.");
+        return;
+    }
+
+    if (files.length < 1) {
+        warn("No submission files provided.");
+        return;
+    }
+
+    Autograder.Submissions.submit(course, assignment, files)
+        .then(function(result) {
+            let text = JSON.stringify(result, null, 4);
+            button.parentElement.querySelector('.result-area').textContent = text;
+        })
+        .catch(warn);
+}
+
 function logout() {
     Autograder.clearCredentials();
 }
@@ -108,6 +141,7 @@ function initHandlers() {
     window.ag.handlers.logout = logout;
     window.ag.handlers.history = history;
     window.ag.handlers.peek = peek;
+    window.ag.handlers.submit = submit;
 }
 
 function main() {

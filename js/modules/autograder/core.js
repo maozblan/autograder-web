@@ -76,7 +76,8 @@ async function _resolveAPIError(response) {
     return Promise.reject(body);
 }
 
-function sendRequest(endpoint, payload = {},
+function sendRequest(endpoint,
+        payload = {}, files = [],
         override_email = undefined, override_cleartext = undefined) {
     let credentials = getCredentials();
 
@@ -97,6 +98,10 @@ function sendRequest(endpoint, payload = {},
 
     let body = new FormData();
     body.set('content', JSON.stringify(payload));
+
+    for (const file of files) {
+        body.append(file.name, file);
+    }
 
     let response = fetch(url, {
         'method': 'POST',

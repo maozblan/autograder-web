@@ -28,13 +28,13 @@
                         <label for='password'>Password:</label>
                         <input type='password' name='password' placeholder='password' />
                     </div>
-                    <button onclick='window.ag.handlers.login(this)' >Login</button>
+                    <button onclick='window.ag.handlers.login(this)'>Login</button>
                 </div>
 
                 <hr />
 
                 <div class='logout'>
-                    <button onclick='window.ag.handlers.logout()' >Logout</button>
+                    <button onclick='window.ag.handlers.logout()'>Logout</button>
                 </div>
 
                 <hr />
@@ -42,13 +42,13 @@
                 <div class='history'>
                     <div>
                         <label for='course'>Course:</label>
-                        <input type='course' name='course' placeholder='course id' />
+                        <input type='text' name='course' placeholder='course id' />
                     </div>
                     <div>
                         <label for='assignment'>Assignment:</label>
-                        <input type='assignment' name='assignment' placeholder='assignment id' />
+                        <input type='text' name='assignment' placeholder='assignment id' />
                     </div>
-                    <button onclick='window.ag.handlers.history(this)' >History</button>
+                    <button onclick='window.ag.handlers.history(this)'>History</button>
 
                     <pre class='result-area'>
                     </pre>
@@ -59,17 +59,38 @@
                 <div class='peek'>
                     <div>
                         <label for='course'>Course:</label>
-                        <input type='course' name='course' placeholder='course id' />
+                        <input type='text' name='course' placeholder='course id' />
                     </div>
                     <div>
                         <label for='assignment'>Assignment:</label>
-                        <input type='assignment' name='assignment' placeholder='assignment id' />
+                        <input type='text' name='assignment' placeholder='assignment id' />
                     </div>
                     <div>
                         <label for='submission'>Submission (optional):</label>
-                        <input type='submission' name='submission' placeholder='submission id' />
+                        <input type='text' name='submission' placeholder='submission id' />
                     </div>
-                    <button onclick='window.ag.handlers.peek(this)' >Peek</button>
+                    <button onclick='window.ag.handlers.peek(this)'>Peek</button>
+
+                    <pre class='result-area'>
+                    </pre>
+                </div>
+
+                <hr />
+
+                <div class='submit'>
+                    <div>
+                        <label for='course'>Course:</label>
+                        <input type='text' name='course' placeholder='course id' />
+                    </div>
+                    <div>
+                        <label for='assignment'>Assignment:</label>
+                        <input type='text' name='assignment' placeholder='assignment id' />
+                    </div>
+                    <div>
+                        <label for='files'>Files:</label>
+                        <input type='file' multiple='true' name='files' placeholder='submission files' />
+                    </div>
+                    <button onclick='window.ag.handlers.submit(this)'>Submit</button>
 
                     <pre class='result-area'>
                     </pre>
