@@ -133,6 +133,15 @@ function logout() {
     Autograder.clearCredentials();
 }
 
+function getContextUser(button) {
+    Autograder.Users.get()
+        .then(function(result) {
+            let text = JSON.stringify(result, null, 4);
+            button.parentElement.querySelector('.result-area').textContent = text;
+        })
+        .catch(warn);
+}
+
 function initHandlers() {
     window.ag = window.ag || {};
     window.ag.handlers = window.ag.handlers || {};
@@ -142,6 +151,7 @@ function initHandlers() {
     window.ag.handlers.history = history;
     window.ag.handlers.peek = peek;
     window.ag.handlers.submit = submit;
+    window.ag.handlers.getContextUser = getContextUser;
 }
 
 function main() {
