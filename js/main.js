@@ -1,18 +1,9 @@
 import * as Autograder from './modules/autograder/base.js'
-
-function notify(message) {
-    console.info(message);
-    alert(message);
-}
-
-function warn(message) {
-    console.warn(message);
-    alert(message);
-}
+import * as WebUI from './modules/webui/base.js'
 
 function login(button) {
     if (Autograder.hasCredentials()) {
-        warn("Already logged in. Logout first to login again.");
+        WebUI.Util.warn("Already logged in. Logout first to login again.");
         return;
     }
 
@@ -20,26 +11,26 @@ function login(button) {
     let cleartext = button.parentElement.querySelector('input[name="password"]').value;
 
     if (email.length < 1) {
-        warn("No email provided for login.");
+        WebUI.Util.warn("No email provided for login.");
         return;
     }
 
     if (cleartext.length < 1) {
-        warn("No password provided for login.");
+        WebUI.Util.warn("No password provided for login.");
         return;
     }
 
     Autograder.Users.createToken(email, cleartext)
         .then(function(token) {
             Autograder.setCredentials(email, token['token-id'], token['token-cleartext']);
-            notify("Logged In");
+            WebUI.Util.notify("Logged In");
         })
-        .catch(warn);
+        .catch(WebUI.Util.warn);
 }
 
 function history(button) {
     if (!Autograder.hasCredentials()) {
-        warn("Must login first.");
+        WebUI.Util.warn("Must login first.");
         return;
     }
 
@@ -47,12 +38,12 @@ function history(button) {
     let assignment = button.parentElement.querySelector('input[name="assignment"]').value;
 
     if (course.length < 1) {
-        warn("No course provided for history.");
+        WebUI.Util.warn("No course provided for history.");
         return;
     }
 
     if (assignment.length < 1) {
-        warn("No assignment provided for history.");
+        WebUI.Util.warn("No assignment provided for history.");
         return;
     }
 
@@ -61,12 +52,12 @@ function history(button) {
             let text = JSON.stringify(result, null, 4);
             button.parentElement.querySelector('.result-area').textContent = text;
         })
-        .catch(warn);
+        .catch(WebUI.Util.warn);
 }
 
 function peek(button) {
     if (!Autograder.hasCredentials()) {
-        warn("Must login first.");
+        WebUI.Util.warn("Must login first.");
         return;
     }
 
@@ -75,12 +66,12 @@ function peek(button) {
     let submission = button.parentElement.querySelector('input[name="submission"]').value;
 
     if (course.length < 1) {
-        warn("No course provided for peek.");
+        WebUI.Util.warn("No course provided for peek.");
         return;
     }
 
     if (assignment.length < 1) {
-        warn("No assignment provided for peek.");
+        WebUI.Util.warn("No assignment provided for peek.");
         return;
     }
 
@@ -93,12 +84,12 @@ function peek(button) {
             let text = JSON.stringify(result, null, 4);
             button.parentElement.querySelector('.result-area').textContent = text;
         })
-        .catch(warn);
+        .catch(WebUI.Util.warn);
 }
 
 function submit(button) {
     if (!Autograder.hasCredentials()) {
-        warn("Must login first.");
+        WebUI.Util.warn("Must login first.");
         return;
     }
 
@@ -107,17 +98,17 @@ function submit(button) {
     let files = button.parentElement.querySelector('input[name="files"]').files;
 
     if (course.length < 1) {
-        warn("No course provided for peek.");
+        WebUI.Util.warn("No course provided for peek.");
         return;
     }
 
     if (assignment.length < 1) {
-        warn("No assignment provided for peek.");
+        WebUI.Util.warn("No assignment provided for peek.");
         return;
     }
 
     if (files.length < 1) {
-        warn("No submission files provided.");
+        WebUI.Util.warn("No submission files provided.");
         return;
     }
 
@@ -126,7 +117,7 @@ function submit(button) {
             let text = JSON.stringify(result, null, 4);
             button.parentElement.querySelector('.result-area').textContent = text;
         })
-        .catch(warn);
+        .catch(WebUI.Util.warn);
 }
 
 function logout() {
@@ -139,14 +130,14 @@ function getContextUser(button) {
             let text = JSON.stringify(result, null, 4);
             button.parentElement.querySelector('.result-area').textContent = text;
         })
-        .catch(warn);
+        .catch(WebUI.Util.warn);
 }
 
 function initHandlers() {
     window.ag = window.ag || {};
     window.ag.handlers = window.ag.handlers || {};
 
-    window.ag.handlers.login = login;
+    // window.ag.handlers.login = login;
     window.ag.handlers.logout = logout;
     window.ag.handlers.history = history;
     window.ag.handlers.peek = peek;
@@ -156,6 +147,7 @@ function initHandlers() {
 
 function main() {
     initHandlers();
+    WebUI.init();
 }
 
 document.addEventListener("DOMContentLoaded", main);
