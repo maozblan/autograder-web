@@ -1,7 +1,6 @@
-import * as Autograder from '/js/modules/autograder/base.js'
 import * as Core from './core.js'
+import * as Home from './home.js'
 import * as Login from './login.js'
-import * as Util from './util.js'
 
 let currentHash = undefined;
 
@@ -54,6 +53,9 @@ function route(rawPath = undefined) {
     currentHash = newHash;
     window.location.hash = newHash;
 
+    // Set the default nav.
+    Core.setNav();
+
     // Check all known routes.
     for (const [pattern, handler] of ROUTES) {
         if (path.match(pattern)) {
@@ -67,46 +69,27 @@ function route(rawPath = undefined) {
     return DEFAULT_ROUTE(path, params);
 }
 
-function handlerHome(path, params) {
-    // Go to login page if not logged in.
-    if (!Autograder.hasCredentials()) {
-        return route('login');
-    }
-
-    Core.setNav([
-        ['Logout', '#logout'],
-    ]);
-
-    // Fetch context user if not currently set (then retry this handler).
-    if (!Core.getContextUser()) {
-        Core.loading();
-
-        Autograder.Users.get()
-            .then(function(result) {
-                if (!result.found) {
-                    Util.warn("Server could not find context user.");
-                    return handlerLogout(path, params);
-                }
-
-                Core.setContextUser(result.user);
-                return handlerHome(path, params);
-            })
-            .catch(function(result) {
-                Util.warn(result);
-                return handlerLogout(path, params);
-            });
-
-        return;
-    }
-
-    // TODO
-    let text = JSON.stringify(Core.getContextUser(), null, 4);
-    document.querySelector('.content').innerHTML = `<pre>${text}</pre>`;
+function handlerNotFound(path, params) {
+    document.querySelector('.content').innerHTML = `
+        <h2>Location Not Found</h2>
+        <p>We could not find the location '${path}'.</p>
+    `;
 }
 
-const DEFAULT_ROUTE = handlerHome
+function handlerAccount(path, params) {
+    // TEST
+    console.log("Account");
+}
+
+function handlerCourse(path, params) {
+    // TEST
+    console.log("Course");
+    console.log(params);
+}
+
+const DEFAULT_ROUTE = handlerNotFound
 const ROUTES = [
-    [/^$/, handlerHome],
+    [/^$/, Home.handlerHome],
     [/^login$/, Login.handlerLogin],
     [/^logout$/, Login.handlerLogout],
 ];

@@ -3,10 +3,6 @@ import * as Core from './core.js'
 import * as Util from './util.js'
 
 function handlerLogin(path, params) {
-    Core.setNav([
-        ['Login', '#login'],
-    ]);
-
     let content = `
         <h2>Login</h2>
         <div class='login'>
