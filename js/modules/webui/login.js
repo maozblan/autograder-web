@@ -23,7 +23,7 @@ function handlerLogin(path, params) {
 
 function handlerLogout(path, params) {
     Autograder.clearCredentials();
-    return handlerLogin(path, params);
+    return Core.redirect('login');
 }
 
 function login(button) {

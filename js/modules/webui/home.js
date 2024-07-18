@@ -20,7 +20,7 @@ function handlerHome(path, params) {
             .then(function(result) {
                 if (!result.found) {
                     Util.warn("Server could not find context user.");
-                    return handlerLogout(path, params);
+                    return Core.redirect('logout');
                 }
 
                 Core.setContextUser(result.user);
@@ -28,7 +28,7 @@ function handlerHome(path, params) {
             })
             .catch(function(result) {
                 Util.warn(result);
-                return handlerLogout(path, params);
+                return Core.redirect('logout');
             });
 
         return;
@@ -41,9 +41,25 @@ function handlerHome(path, params) {
 function _handlerHomeWithContext(path, params) {
     let contextUser = Core.getContextUser();
 
-    // TODO
-    let text = JSON.stringify(contextUser, null, 4);
-    document.querySelector('.content').innerHTML = `<pre>${text}</pre>`;
+    let coursesHTML = [];
+    for (const course of Core.getContextCourses()) {
+        let link = `#course?id=${course.id}`;
+        coursesHTML.push(`<li><a href='${link}'>${course.name}</a></li>`);
+    }
+
+    if (coursesHTML.length === 0) {
+        document.querySelector('.content').innerHTML = '<h3>No Enrolled Courses</h3>';
+        return;
+    }
+
+    let html = `
+        <h3>Enrolled Courses:</h3>
+        <ul class='course-list'>
+            ${coursesHTML.join('')}
+        </ul>
+    `;
+
+    document.querySelector('.content').innerHTML = html;
 }
 
 export {

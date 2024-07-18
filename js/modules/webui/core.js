@@ -11,6 +11,20 @@ function setContextUser(user) {
     contextUser = user;
 }
 
+// Get the (sorted) list of courses for the context user,
+// undefined if there is no context user.
+function getContextCourses() {
+    if (!contextUser) {
+        return undefined;
+    }
+
+    let sortedCourses = Object.values(contextUser.courses).sort(function(a, b) {
+        return Util.caseInsensitiveStringCompare(a.name, b.name);
+    });
+
+    return sortedCourses;
+}
+
 function loading() {
     // TODO
     console.log("Loading");
@@ -37,13 +51,8 @@ function _getContextUserNav(items = []) {
         return items;
     }
 
-    // Sort the courses by name.
-    let sortedCourses = Object.values(contextUser.courses).sort(function(a, b) {
-        return Util.caseInsensitiveStringCompare(a['course-name'], b['course-name']);
-    });
-
-    for (const courseInfo of sortedCourses) {
-        items.push([courseInfo['course-name'], `#course?id=${courseInfo['course-id']}`])
+    for (const courseInfo of getContextCourses()) {
+        items.push([courseInfo.name, `#course?id=${courseInfo.id}`])
     }
 
     return items;
@@ -83,6 +92,7 @@ function redirect(path = '') {
 }
 
 export {
+    getContextCourses,
     getContextUser,
     setContextUser,
     redirect,
