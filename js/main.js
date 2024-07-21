@@ -1,6 +1,8 @@
 import * as Autograder from './modules/autograder/base.js'
 import * as WebUI from './modules/webui/base.js'
 
+// TEST - Remove these.
+
 function login(button) {
     if (Autograder.hasCredentials()) {
         WebUI.Util.warn("Already logged in. Logout first to login again.");

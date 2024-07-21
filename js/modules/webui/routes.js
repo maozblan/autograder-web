@@ -1,3 +1,4 @@
+import * as Autograder from '/js/modules/autograder/base.js'
 import * as Core from './core.js'
 import * as Home from './home.js'
 import * as Login from './login.js'
@@ -56,10 +57,17 @@ function route(rawPath = undefined) {
     // Set the default nav.
     Core.setNav();
 
+    let loggedIn = Autograder.hasCredentials();
+
     // Check all known routes.
-    for (const [pattern, handler] of ROUTES) {
+    for (const [pattern, handler, requiresLogin] of ROUTES) {
         if (path.match(pattern)) {
             console.debug(`Routing '${path}' to ${handler.name}.`);
+
+            if (requiresLogin && !loggedIn) {
+                return Core.redirect('login');
+            }
+
             return handler(path, params);
         }
     }
@@ -79,6 +87,9 @@ function handlerNotFound(path, params) {
 function handlerAccount(path, params) {
     // TEST
     console.log("Account");
+
+    // TEST
+    console.log
 }
 
 function handlerCourse(path, params) {
@@ -89,9 +100,9 @@ function handlerCourse(path, params) {
 
 const DEFAULT_ROUTE = handlerNotFound
 const ROUTES = [
-    [/^$/, Home.handlerHome],
-    [/^login$/, Login.handlerLogin],
-    [/^logout$/, Login.handlerLogout],
+    [/^$/, Home.handlerHome, true],
+    [/^login$/, Login.handlerLogin, false],
+    [/^logout$/, Login.handlerLogout, true],
 ];
 
 export {

@@ -7,6 +7,7 @@ function init() {
     _initHandlers();
 
     Routes.init();
+    Util.init();
 }
 
 function _initHandlers() {

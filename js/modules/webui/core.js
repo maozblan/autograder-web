@@ -11,6 +11,10 @@ function setContextUser(user) {
     contextUser = user;
 }
 
+function clearContextUser() {
+    contextUser = undefined;
+}
+
 // Get the (sorted) list of courses for the context user,
 // undefined if there is no context user.
 function getContextCourses() {
@@ -92,6 +96,7 @@ function redirect(path = '') {
 }
 
 export {
+    clearContextUser,
     getContextCourses,
     getContextUser,
     setContextUser,
