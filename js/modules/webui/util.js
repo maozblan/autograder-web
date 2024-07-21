@@ -40,8 +40,20 @@ function caseInsensitiveStringCompare(a, b) {
     return a.localeCompare(b, undefined, { sensitivity: 'base' });
 }
 
+// Return a standardized location that always has as leading hash.
+function getLocationHash() {
+    let hash = window.location.hash.trim();
+
+    if (hash.length === 0) {
+        return '#';
+    }
+
+    return hash;
+}
+
 export {
     caseInsensitiveStringCompare,
+    getLocationHash,
     init,
     notify,
     onKeyEvent,
