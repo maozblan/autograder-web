@@ -1,8 +1,13 @@
 import * as Autograder from '/js/modules/autograder/base.js'
 import * as Core from './core.js'
+import * as Routes from './routes.js'
 import * as Util from './util.js'
 
-function handlerHome(path, params) {
+function init() {
+    Routes.addRoute(/^$/, _handlerHome);
+}
+
+function _handlerHome(path, params) {
     // The nav will change after we load a context user,
     // so explicitly refresh the nav.
     Core.setNav();
@@ -31,5 +36,5 @@ function handlerHome(path, params) {
 }
 
 export {
-    handlerHome,
+    init,
 }

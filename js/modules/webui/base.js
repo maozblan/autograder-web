@@ -1,4 +1,6 @@
 import * as Core from './core.js'
+import * as Course from './course.js'
+import * as Home from './home.js'
 import * as Login from './login.js'
 import * as Routes from './routes.js'
 import * as Util from './util.js'
@@ -6,8 +8,15 @@ import * as Util from './util.js'
 function init() {
     _initHandlers();
 
-    Routes.init();
+    // Init utils first.
     Util.init();
+
+    Course.init();
+    Home.init();
+    Login.init();
+
+    // Init routes last (since it will route).
+    Routes.init();
 }
 
 function _initHandlers() {

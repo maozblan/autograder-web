@@ -1,9 +1,10 @@
 import * as Autograder from '/js/modules/autograder/base.js'
-import * as Course from './course.js'
 import * as Core from './core.js'
-import * as Home from './home.js'
-import * as Login from './login.js'
 import * as Util from './util.js'
+
+let routes = [];
+
+const DEFAULT_HANDLER = _handlerNotFound
 
 // The current hash/location we are routed to.
 // Should be prefixed with a hash symbol.
@@ -16,6 +17,10 @@ function init() {
     });
 
     route();
+}
+
+function addRoute(pattern, handler, requiresLogin = true) {
+    routes.push([pattern, handler, requiresLogin]);
 }
 
 // Route the page content to a path specified in an argument or window.location.hash.
@@ -40,7 +45,7 @@ function route(rawPath = undefined) {
     window.location.hash = newHash;
 
     // Check all known routes.
-    for (const [pattern, handler, requiresLogin] of ROUTES) {
+    for (const [pattern, handler, requiresLogin] of routes) {
         if (path.match(pattern)) {
             console.debug(`Routing '${path}' to ${handler.name}.`);
             return _handlerWrapper(handler, path, params, requiresLogin);
@@ -124,27 +129,15 @@ function _fetchContextUser() {
         });
 }
 
-function handlerNotFound(path, params) {
+function _handlerNotFound(path, params) {
     document.querySelector('.content').innerHTML = `
         <h2>Location Not Found</h2>
         <p>We could not find the location '${path}'.</p>
     `;
 }
 
-function handlerAccount(path, params) {
-    // TEST
-    console.log("Account");
-}
-
-const DEFAULT_HANDLER = handlerNotFound
-const ROUTES = [
-    [/^$/, Home.handlerHome, true],
-    [/^course$/, Course.handlerCourse, true],
-    [/^login$/, Login.handlerLogin, false],
-    [/^logout$/, Login.handlerLogout, true],
-];
-
 export {
     init,
+    addRoute,
     route,
 }

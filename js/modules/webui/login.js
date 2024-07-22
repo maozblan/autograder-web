@@ -1,8 +1,14 @@
 import * as Autograder from '/js/modules/autograder/base.js'
 import * as Core from './core.js'
+import * as Routes from './routes.js'
 import * as Util from './util.js'
 
-function handlerLogin(path, params) {
+function init() {
+    Routes.addRoute(/^login$/, _handlerLogin, false);
+    Routes.addRoute(/^logout$/, _handlerLogout);
+}
+
+function _handlerLogin(path, params) {
     let content = `
         <h2>Login</h2>
         <div class='login'>
@@ -23,7 +29,7 @@ function handlerLogin(path, params) {
     document.querySelector('.content').innerHTML = content;
 }
 
-function handlerLogout(path, params) {
+function _handlerLogout(path, params) {
     Core.clearContextUser();
     Autograder.clearCredentials();
     return Core.redirectLogin();
@@ -58,7 +64,6 @@ function login(event, context) {
 }
 
 export {
-    handlerLogin,
-    handlerLogout,
+    init,
     login,
 }
