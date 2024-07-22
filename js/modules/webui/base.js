@@ -3,6 +3,7 @@ import * as Course from './course.js'
 import * as Home from './home.js'
 import * as Login from './login.js'
 import * as Routes from './routes.js'
+import * as User from './user.js'
 import * as Util from './util.js'
 
 function init() {
@@ -14,6 +15,7 @@ function init() {
     Course.init();
     Home.init();
     Login.init();
+    User.init();
 
     // Init routes last (since it will route).
     Routes.init();

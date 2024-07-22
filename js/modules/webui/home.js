@@ -20,17 +20,17 @@ function handlerHome(path, params) {
         coursesHTML.push(`<li><a href='${link}'>${course.name}</a></li>`);
     }
 
+    let html = '';
     if (coursesHTML.length === 0) {
-        document.querySelector('.content').innerHTML = '<h3>No Enrolled Courses</h3>';
-        return;
+        html = '<h3>No Enrolled Courses</h3>';
+    } else {
+        html = `
+            <h3>Enrolled Courses:</h3>
+            <ul class='course-list'>
+                ${coursesHTML.join('')}
+            </ul>
+        `;
     }
-
-    let html = `
-        <h3>Enrolled Courses:</h3>
-        <ul class='course-list'>
-            ${coursesHTML.join('')}
-        </ul>
-    `;
 
     document.querySelector('.content').innerHTML = html;
 }

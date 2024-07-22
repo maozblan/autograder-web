@@ -8,13 +8,7 @@ function init() {
 }
 
 function handlerCourse(path, params) {
-    // TEST
-    console.log("Course");
-    console.log(params);
-
     let contextUser = Core.getContextUser();
-    // TEST
-    console.log(contextUser);
 
     let courseID = params.id;
     if (!courseID) {
@@ -28,12 +22,26 @@ function handlerCourse(path, params) {
         return Core.redirectHome();
     }
 
-    // TEST
-    console.log(course);
-
     let actions = courseActions(courseID, course.role);
-    // TEST
-    console.log(actions);
+
+    let actionsHTML = [];
+    for (const [label, link] of actions) {
+        actionsHTML.push(`<li><a href='${link}'>${label}</a></li>`);
+    }
+
+    let html = '';
+    if (actionsHTML.length == 0) {
+        html = '<h3>No Course Actions</h3>';
+    } else {
+        html = `
+            <h3>Course Actions:</h3>
+            <ul class='action-list'>
+                ${actionsHTML.join('')}
+            </ul>
+        `;
+    }
+
+    document.querySelector('.content').innerHTML = html;
 }
 
 function courseActions(courseID, roleString) {
