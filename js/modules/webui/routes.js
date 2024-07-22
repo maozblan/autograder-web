@@ -4,11 +4,11 @@ import * as Util from './util.js'
 
 let routes = [];
 
-const DEFAULT_HANDLER = _handlerNotFound
+const DEFAULT_HANDLER = handlerNotFound
 
 // The current hash/location we are routed to.
 // Should be prefixed with a hash symbol.
-let _currentHash = undefined;
+let currentHash = undefined;
 
 // Start listening for routing events and do an initial route.
 function init() {
@@ -29,37 +29,37 @@ function route(rawPath = undefined) {
         rawPath = Util.getLocationHash();
     }
 
-    let [path, params] = _parsePath(rawPath);
+    let [path, params] = parsePath(rawPath);
 
     // Form the canonical path we are on.
     let newHash = Core.formHashPath(path, params);
 
     // Skip any routing if we are on the current path.
     // This let's us avoid infinite loops when routing internally.
-    if (newHash == _currentHash) {
+    if (newHash == currentHash) {
         return;
     }
 
     // Set the hash to the cleaned-up value.
-    _currentHash = newHash;
+    currentHash = newHash;
     window.location.hash = newHash;
 
     // Check all known routes.
     for (const [pattern, handler, requiresLogin] of routes) {
         if (path.match(pattern)) {
             console.debug(`Routing '${path}' to ${handler.name}.`);
-            return _handlerWrapper(handler, path, params, requiresLogin);
+            return handlerWrapper(handler, path, params, requiresLogin);
         }
     }
 
     // Fallback to the default route.
     console.warn(`Unknown path '${path}'. Falling back to default route.`);
-    return _handlerWrapper(DEFAULT_HANDLER, path, params, requiresLogin);
+    return handlerWrapper(DEFAULT_HANDLER, path, params, requiresLogin);
 }
 
 // Parse a raw path (which may have come from a hash)
 // into a clean path and params (which can be empty).
-function _parsePath(rawPath) {
+function parsePath(rawPath) {
     rawPath = Core.basicPathClean(rawPath);
 
     // Parse the raw path as a url to pull out parameters.
@@ -81,7 +81,7 @@ function _parsePath(rawPath) {
 }
 
 // Do any setup for a handler, call the handler, then do any teardown.
-function _handlerWrapper(handler, path, params, requiresLogin) {
+function handlerWrapper(handler, path, params, requiresLogin) {
     let loggedIn = Autograder.hasCredentials();
 
     // Redirect to a login if required.
@@ -91,7 +91,7 @@ function _handlerWrapper(handler, path, params, requiresLogin) {
 
     // Anything that needs a login also needs a context user.
     if (requiresLogin && !Core.getContextUser()) {
-        return _fetchContextUser()
+        return fetchContextUser()
             .then(function(result) {
                 Core.setNav();
                 return handler(path, params);
@@ -106,7 +106,7 @@ function _handlerWrapper(handler, path, params, requiresLogin) {
     return handler(path, params);
 }
 
-function _fetchContextUser() {
+function fetchContextUser() {
     if (Core.getContextUser()) {
         return Promise.resolve(Core.getContextUser());
     }
@@ -129,7 +129,7 @@ function _fetchContextUser() {
         });
 }
 
-function _handlerNotFound(path, params) {
+function handlerNotFound(path, params) {
     document.querySelector('.content').innerHTML = `
         <h2>Location Not Found</h2>
         <p>We could not find the location '${path}'.</p>

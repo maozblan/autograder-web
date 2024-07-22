@@ -31,12 +31,12 @@ function handlerCourse(path, params) {
     // TEST
     console.log(course);
 
-    let actions = _courseActions(courseID, course.role);
+    let actions = courseActions(courseID, course.role);
     // TEST
     console.log(actions);
 }
 
-function _courseActions(courseID, roleString) {
+function courseActions(courseID, roleString) {
     let role = Autograder.Users.getCourseRoleValue(roleString);
     let actions = [];
 

@@ -4,10 +4,10 @@ import * as Routes from './routes.js'
 import * as Util from './util.js'
 
 function init() {
-    Routes.addRoute(/^$/, _handlerHome);
+    Routes.addRoute(/^$/, handlerHome);
 }
 
-function _handlerHome(path, params) {
+function handlerHome(path, params) {
     // The nav will change after we load a context user,
     // so explicitly refresh the nav.
     Core.setNav();

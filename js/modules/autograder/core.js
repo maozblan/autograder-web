@@ -37,11 +37,11 @@ function clearCredentials() {
         return Promise.resolve({'found': false});
     }
 
-    return _deleteToken(credentials);
+    return deleteToken(credentials);
 }
 
 // Delete the context token.
-function _deleteToken(credentials) {
+function deleteToken(credentials) {
     let args = {
         [REQUEST_USER_EMAIL_KEY]: credentials['email'],
         'token-id': credentials['token-id'],
@@ -51,7 +51,7 @@ function _deleteToken(credentials) {
     return sendRequest('users/tokens/delete', args);
 }
 
-async function _resolveAPIResponse(response) {
+async function resolveAPIResponse(response) {
     let body = await response.json();
 
     if (!body.success) {
@@ -66,7 +66,7 @@ async function _resolveAPIResponse(response) {
     return Promise.resolve(body.content);
 }
 
-async function _resolveAPIError(response) {
+async function resolveAPIError(response) {
     console.error("Failed to send API request to autograder.");
     console.error(response);
 
@@ -108,7 +108,7 @@ function sendRequest(endpoint,
         'body': body,
     });
 
-    return response.then(_resolveAPIResponse, _resolveAPIError);
+    return response.then(resolveAPIResponse, resolveAPIError);
 }
 
 export {

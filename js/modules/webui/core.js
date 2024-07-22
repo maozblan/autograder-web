@@ -75,7 +75,7 @@ function loading() {
 
 // Add the base navigation items (e.g., home and login/logout)
 // to the given name items and return the modified list.
-function _getBaseNav(items = []) {
+function getBaseNav(items = []) {
     if (Autograder.hasCredentials()) {
         items.unshift(['Home', formHashPath('')]);
         items.push(['Account', formHashPath('account')]);
@@ -89,7 +89,7 @@ function _getBaseNav(items = []) {
 
 // Add the navigation items (e.g. courses) for the context user
 // to the given name items and return the modified list.
-function _getContextUserNav(items = []) {
+function getContextUserNav(items = []) {
     if (!contextUser) {
         return items;
     }
@@ -105,11 +105,11 @@ function _getContextUserNav(items = []) {
 // If not deselected, most nav items will be handled automatically.
 function setNav(items = [], includeContextUser = true, includeBase = true) {
     if (includeContextUser) {
-        items = _getContextUserNav(items);
+        items = getContextUserNav(items);
     }
 
     if (includeBase) {
-        items = _getBaseNav(items);
+        items = getBaseNav(items);
     }
 
     let currentHash = Util.getLocationHash();

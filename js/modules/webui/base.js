@@ -6,7 +6,7 @@ import * as Routes from './routes.js'
 import * as Util from './util.js'
 
 function init() {
-    _initHandlers();
+    initHandlers();
 
     // Init utils first.
     Util.init();
@@ -19,7 +19,7 @@ function init() {
     Routes.init();
 }
 
-function _initHandlers() {
+function initHandlers() {
     window.ag = window.ag || {};
     window.ag.handlers = window.ag.handlers || {};
 
