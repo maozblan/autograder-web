@@ -135,6 +135,20 @@ function redirect(path = '') {
     window.location.hash = path;
 }
 
+// Common redirection shortcuts.
+
+function redirectHome() {
+    redirect('');
+}
+
+function redirectLogin() {
+    redirect('login');
+}
+
+function redirectLogout() {
+    redirect('logout');
+}
+
 export {
     basicPathClean,
     clearContextUser,
@@ -143,6 +157,9 @@ export {
     getContextUser,
     setContextUser,
     redirect,
+    redirectHome,
+    redirectLogin,
+    redirectLogout,
 
     loading,
     setNav,

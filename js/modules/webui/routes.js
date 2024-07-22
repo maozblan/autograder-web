@@ -81,7 +81,7 @@ function _handlerWrapper(handler, path, params, requiresLogin) {
 
     // Redirect to a login if required.
     if (requiresLogin && !loggedIn) {
-        return Core.redirect('login');
+        return Core.redirectLogin();
     }
 
     // Anything that needs a login also needs a context user.
@@ -92,7 +92,7 @@ function _handlerWrapper(handler, path, params, requiresLogin) {
                 return handler(path, params);
             })
             .catch(function(result) {
-                return Core.redirect('logout');
+                return Core.redirectLogout();
             });
     }
 

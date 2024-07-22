@@ -26,7 +26,7 @@ function handlerLogin(path, params) {
 function handlerLogout(path, params) {
     Core.clearContextUser();
     Autograder.clearCredentials();
-    return Core.redirect('login');
+    return Core.redirectLogin();
 }
 
 function login(event, context) {
@@ -52,7 +52,7 @@ function login(event, context) {
     Autograder.Users.createToken(email, cleartext)
         .then(function(token) {
             Autograder.setCredentials(email, token['token-id'], token['token-cleartext']);
-            Core.redirect();
+            Core.redirectHome();
         })
         .catch(Util.warn);
 }
