@@ -71,6 +71,7 @@ function basicPathClean(path) {
 function loading() {
     // TODO
     console.log("Loading");
+    document.querySelector('.content').innerHTML = '<h1>LOADING ...</h1>';
 }
 
 // Add the base navigation items (e.g., home and login/logout)

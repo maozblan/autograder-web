@@ -1,3 +1,4 @@
+import * as Assignment from './assignment.js'
 import * as Core from './core.js'
 import * as Course from './course.js'
 import * as Home from './home.js'
@@ -12,6 +13,7 @@ function init() {
     // Init utils first.
     Util.init();
 
+    Assignment.init();
     Course.init();
     Home.init();
     Login.init();

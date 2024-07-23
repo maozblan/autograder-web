@@ -35,6 +35,8 @@ function addRoute(pattern, handler,
 }
 
 // Route the page content to a path specified in an argument or window.location.hash.
+// For routes that require an additional load/request (non-trivial routes),
+// the loading page will be activated when the request it made.
 function route(rawPath = undefined) {
     if (!rawPath) {
         rawPath = Util.getLocationHash();
@@ -92,10 +94,8 @@ function parsePath(rawPath) {
 }
 
 // Do any setup for a handler, call the handler, then do any teardown.
-function handlerWrapper(handler, path, params, requirements) {
+function handlerWrapper(handler, path, params, requirements, context = {}) {
     let loggedIn = Autograder.hasCredentials();
-
-    let context = {};
 
     // Redirect to a login if required.
     if (requirements.login && !loggedIn) {
@@ -137,6 +137,22 @@ function handlerWrapper(handler, path, params, requirements) {
             Util.warn(`No assignment id specified for path '${path}'.`);
             return Core.redirectHome();
         }
+
+        // Fetch the assignment and re-call the wrapper (with additional context).
+        if (!context.assignment) {
+            // Non-trivial route.
+            Core.loading();
+
+            return Autograder.Assignments.get(context.courseID, context.assignmentID)
+                .then(function(result) {
+                    context.assignment = result.assignment;
+                    return handlerWrapper(handler, path, params, requirements, context);
+                })
+                .catch(function(result) {
+                    Util.warn(result);
+                    return Core.redirectHome();
+                });
+        }
     }
 
     // This path has everything it needs.
@@ -149,6 +165,7 @@ function fetchContextUser() {
         return Promise.resolve(Core.getContextUser());
     }
 
+    // Non-trivial route.
     Core.loading();
 
     return Autograder.Users.get()

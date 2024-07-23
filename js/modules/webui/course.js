@@ -45,7 +45,7 @@ function render(context, assignments) {
         `
     }
 
-    let courseActions = getCourseActions(context.courseID, context.course.role);
+    let courseActions = getCourseActions(context);
     if (courseActions.length > 0) {
         let lines = [];
         for (const [label, link] of actions) {
@@ -63,18 +63,11 @@ function render(context, assignments) {
     document.querySelector('.content').innerHTML = html;
 }
 
-function getCourseActions(courseID, roleString) {
-    let role = Autograder.Users.getCourseRoleValue(roleString);
+function getCourseActions(context) {
+    let role = Autograder.Users.getCourseRoleValue(context.course.role);
     let actions = [];
 
     // TODO - Grader/Admin Actions.
-    /* TEST
-    if (role >= Autograder.Users.COURSE_ROLE_STUDENT) {
-        actions.push(['Submit an Assignment', Core.formHashPath('submit', {'course-id': courseID})]);
-        actions.push(['Peek a Previous Submission', Core.formHashPath('peek', {'course-id': courseID})]);
-        actions.push(['View Submission History', Core.formHashPath('history', {'course-id': courseID})]);
-    }
-    */
 
     return actions;
 }
