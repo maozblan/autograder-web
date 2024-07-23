@@ -95,7 +95,7 @@ function getContextUserNav(items = []) {
     }
 
     for (const courseInfo of getContextCourses()) {
-        items.push([courseInfo.name, formHashPath('course', {id: courseInfo.id})]);
+        items.push([courseInfo.name, formHashPath('course', {'course-id': courseInfo.id})]);
     }
 
     return items;

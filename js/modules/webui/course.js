@@ -4,25 +4,12 @@ import * as Routes from './routes.js'
 import * as Util from './util.js'
 
 function init() {
-    Routes.addRoute(/^course$/, handlerCourse);
+    let requirements = {course: true};
+    Routes.addRoute(/^course$/, handlerCourse, requirements);
 }
 
-function handlerCourse(path, params) {
-    let contextUser = Core.getContextUser();
-
-    let courseID = params.id;
-    if (!courseID) {
-        Util.warn('No course id specified.');
-        return Core.redirectHome();
-    }
-
-    let course = contextUser.courses[params.id];
-    if (!course) {
-        Util.warn(`Could not find specified course '${params.id}'.`);
-        return Core.redirectHome();
-    }
-
-    let actions = courseActions(courseID, course.role);
+function handlerCourse(path, params, context) {
+    let actions = courseActions(context.courseID, context.course.role);
 
     let actionsHTML = [];
     for (const [label, link] of actions) {
@@ -59,5 +46,4 @@ function courseActions(courseID, roleString) {
 
 export {
     init,
-    handlerCourse,
 }

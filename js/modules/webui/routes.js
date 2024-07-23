@@ -19,8 +19,19 @@ function init() {
     route();
 }
 
-function addRoute(pattern, handler, requiresLogin = true) {
-    routes.push([pattern, handler, requiresLogin]);
+// Add a route to the router.
+// Handlers should take three parameters: handler(path, pathParams, context).
+// Where |path| the the canonical path being handle (without any query parameters),
+// |pathParams| are any query parameters on the original path,
+// and |context| is any context resolved by the router while preparing the request.
+// Possible fields for |context| are: user, courseID, course, and assignmentID.
+function addRoute(pattern, handler,
+        requirements = {login: true, course: false, assignment: false}) {
+    // Fill in any holes in requirements.
+    requirements.course = requirements.course || requirements.assignment;
+    requirements.login = requirements.login || requirements.course;
+
+    routes.push([pattern, handler, requirements]);
 }
 
 // Route the page content to a path specified in an argument or window.location.hash.
@@ -45,16 +56,16 @@ function route(rawPath = undefined) {
     window.location.hash = newHash;
 
     // Check all known routes.
-    for (const [pattern, handler, requiresLogin] of routes) {
+    for (const [pattern, handler, requirements] of routes) {
         if (path.match(pattern)) {
             console.debug(`Routing '${path}' to ${handler.name}.`);
-            return handlerWrapper(handler, path, params, requiresLogin);
+            return handlerWrapper(handler, path, params, requirements);
         }
     }
 
     // Fallback to the default route.
     console.warn(`Unknown path '${path}'. Falling back to default route.`);
-    return handlerWrapper(DEFAULT_HANDLER, path, params, requiresLogin);
+    return handlerWrapper(DEFAULT_HANDLER, path, params, requirements);
 }
 
 // Parse a raw path (which may have come from a hash)
@@ -81,29 +92,56 @@ function parsePath(rawPath) {
 }
 
 // Do any setup for a handler, call the handler, then do any teardown.
-function handlerWrapper(handler, path, params, requiresLogin) {
+function handlerWrapper(handler, path, params, requirements) {
     let loggedIn = Autograder.hasCredentials();
 
+    let context = {};
+
     // Redirect to a login if required.
-    if (requiresLogin && !loggedIn) {
+    if (requirements.login && !loggedIn) {
         return Core.redirectLogin();
     }
 
     // Anything that needs a login also needs a context user.
-    if (requiresLogin && !Core.getContextUser()) {
+    context.user = Core.getContextUser();
+    if (requirements.login && !context.user) {
         return fetchContextUser()
             .then(function(result) {
-                Core.setNav();
-                return handler(path, params);
+                // Call this function again to complete all checks.
+                return handlerWrapper(handler, path, params, requirements);
             })
             .catch(function(result) {
                 return Core.redirectLogout();
             });
     }
 
+    // Check course.
+    if (requirements.course) {
+        context.courseID = params['course-id'];
+        if (!context.courseID) {
+            Util.warn(`No course id specified for path '${path}'.`);
+            return Core.redirectHome();
+        }
+
+        context.course = context.user.courses[context.courseID];
+        if (!context.course) {
+            Util.warn(`Could not find specified course ('${context.courseID}') for path '${path}'.`);
+            return Core.redirectHome();
+        }
+    }
+
+    // Check assignment.
+    if (requirements.assignment) {
+        context.assignmentID = params['assignment-id'];
+        if (!context.assignmentID) {
+            Util.warn(`No assignment id specified for path '${path}'.`);
+            return Core.redirectHome();
+        }
+    }
+
     // This path has everything it needs.
     Core.setNav();
-    return handler(path, params);
+    return handler(path, params, context);
 }
 
 function fetchContextUser() {

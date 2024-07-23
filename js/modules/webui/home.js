@@ -7,16 +7,14 @@ function init() {
     Routes.addRoute(/^$/, handlerHome);
 }
 
-function handlerHome(path, params) {
+function handlerHome(path, params, context) {
     // The nav will change after we load a context user,
     // so explicitly refresh the nav.
     Core.setNav();
 
-    let contextUser = Core.getContextUser();
-
     let coursesHTML = [];
     for (const course of Core.getContextCourses()) {
-        let link = `#course?id=${course.id}`;
+        let link = Core.formHashPath('course', {'course-id': course.id});
         coursesHTML.push(`<li><a href='${link}'>${course.name}</a></li>`);
     }
 

@@ -4,11 +4,11 @@ import * as Routes from './routes.js'
 import * as Util from './util.js'
 
 function init() {
-    Routes.addRoute(/^login$/, handlerLogin, false);
+    Routes.addRoute(/^login$/, handlerLogin, {login: false});
     Routes.addRoute(/^logout$/, handlerLogout);
 }
 
-function handlerLogin(path, params) {
+function handlerLogin(path, params, context) {
     let content = `
         <h2>Login</h2>
         <div class='login'>
@@ -29,7 +29,7 @@ function handlerLogin(path, params) {
     document.querySelector('.content').innerHTML = content;
 }
 
-function handlerLogout(path, params) {
+function handlerLogout(path, params, context) {
     Core.clearContextUser();
     Autograder.clearCredentials();
     return Core.redirectLogin();
