@@ -65,7 +65,7 @@ function route(rawPath = undefined) {
 
     // Fallback to the default route.
     console.warn(`Unknown path '${path}'. Falling back to default route.`);
-    return handlerWrapper(DEFAULT_HANDLER, path, params, requirements);
+    return handlerWrapper(DEFAULT_HANDLER, path, params, {});
 }
 
 // Parse a raw path (which may have come from a hash)

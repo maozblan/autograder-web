@@ -29,12 +29,16 @@ function setCredentials(email, id, cleartext) {
     return localStorage.setItem(CREDENTIALS_KEY, JSON.stringify(credentials));
 }
 
-function clearCredentials() {
+function clearCredentials(sendDelete = true) {
     let credentials = getCredentials();
     localStorage.removeItem(CREDENTIALS_KEY);
 
     if (!credentials) {
         return Promise.resolve({'found': false});
+    }
+
+    if (!sendDelete) {
+        return Promise.resolve({'found': true});
     }
 
     return deleteToken(credentials);
@@ -56,6 +60,9 @@ async function resolveAPIResponse(response) {
 
     if (!body.success) {
         if (response.status == 401) {
+            // Clear any credentials in the cache.
+            clearCredentials(false);
+
             // Shorten the message for auth error.
             return Promise.reject(body.message);
         }
