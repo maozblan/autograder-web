@@ -7,6 +7,7 @@ function init() {
     let requirements = {assignment: true};
     Routes.addRoute(/^course\/assignment$/, handlerAssignment, requirements);
     Routes.addRoute(/^course\/assignment\/peek$/, handlerPeek, requirements);
+    Routes.addRoute(/^course\/assignment\/history$/, handlerHistory, requirements);
 }
 
 function handlerAssignment(path, params, context) {
@@ -50,12 +51,8 @@ function assignmentActions(context) {
     return actions;
 }
 
-// TEST - Peek from history
-
 function handlerPeek(path, params, context) {
     Core.loading();
-
-    // TEST - Arbitrary submission.
 
     Autograder.Submissions.peek(context.courseID, context.assignmentID, params['submission-id'])
         .then(function(result) {
@@ -79,6 +76,72 @@ function handlerPeek(path, params, context) {
 
 function renderPeek(context, submission) {
     let html = submissionToHTML(context, submission);
+    document.querySelector('.content').innerHTML = html;
+}
+
+function handlerHistory(path, params, context) {
+    Core.loading();
+
+    Autograder.Submissions.history(context.courseID, context.assignmentID)
+        .then(function(result) {
+            if (!result['found-user']) {
+                Util.warn("Could not find submission user.");
+                return Core.redirectHome();
+            }
+
+            renderHistory(context, result['history']);
+        })
+        .catch(function(result) {
+            Util.warn(result);
+            return Core.redirectHome();
+        });
+}
+
+function renderHistory(context, history) {
+    let rowsHTML = [];
+    for (const record of history.toReversed()) {
+        let submissionTime = Date(record['grading_start_time']).toLocaleString();
+
+        let params = {
+            'course-id': context.courseID,
+            'assignment-id': context.assignmentID,
+            'submission-id': record['short-id'],
+        };
+        let peekLink = Core.formHashPath('course/assignment/peek', params);
+
+        rowsHTML.push(`
+            <tr>
+                <td><a href='${peekLink}'>${record['short-id']}</a></td>
+                <td>${record['score']}</td>
+                <td>${record['max_points']}</td>
+                <td>${submissionTime}</td>
+                <td>${record['message']}</td>
+            </tr>
+        `);
+    }
+
+    let html = `
+        <div class='submission-history'>
+            <h2>${context.assignment.name}</h2>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Short ID</th>
+                            <th>Score</th>
+                            <th>Max Points</th>
+                            <th>Submission Time</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${rowsHTML.join('')}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    `;
+
     document.querySelector('.content').innerHTML = html;
 }
 
@@ -154,7 +217,7 @@ function makeTableRow(label, value, name = undefined) {
 
     return `
         <tr ${nameHTML}>
-            <td class='label'>${label}</td>
+            <th class='label'>${label}</th>
             <td class='value'>${value}</td>
         </tr>
     `;
