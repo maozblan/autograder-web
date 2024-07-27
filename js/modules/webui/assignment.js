@@ -11,6 +11,8 @@ function init() {
 }
 
 function handlerAssignment(path, params, context) {
+    addAssignmentNav(context);
+
     let html = `
         <h2>Assignment: ${context.assignment.name}</h2>
     `;
@@ -33,25 +35,8 @@ function handlerAssignment(path, params, context) {
     document.querySelector('.content').innerHTML = html;
 }
 
-function assignmentActions(context) {
-    let role = Autograder.Users.getCourseRoleValue(context.course.role);
-    let actions = [];
-
-    if (role >= Autograder.Users.COURSE_ROLE_STUDENT) {
-        let params = {
-            'course-id': context.courseID,
-            'assignment-id': context.assignmentID,
-        };
-
-        actions.push(['Submit', Core.formHashPath('course/assignment/submit', params)]);
-        actions.push(['Peek a Previous Submission', Core.formHashPath('course/assignment/peek', params)]);
-        actions.push(['View Submission History', Core.formHashPath('course/assignment/history', params)]);
-    }
-
-    return actions;
-}
-
 function handlerPeek(path, params, context) {
+    addAssignmentNav(context);
     Core.loading();
 
     Autograder.Submissions.peek(context.courseID, context.assignmentID, params['submission-id'])
@@ -74,12 +59,8 @@ function handlerPeek(path, params, context) {
         });
 }
 
-function renderPeek(context, submission) {
-    let html = submissionToHTML(context, submission);
-    document.querySelector('.content').innerHTML = html;
-}
-
 function handlerHistory(path, params, context) {
+    addAssignmentNav(context);
     Core.loading();
 
     Autograder.Submissions.history(context.courseID, context.assignmentID)
@@ -95,6 +76,41 @@ function handlerHistory(path, params, context) {
             Log.warn(result, context);
             return Core.redirectHome();
         });
+}
+
+function addAssignmentNav(context) {
+    let params = {
+        'course-id': context.courseID,
+        'assignment-id': context.assignmentID,
+    };
+    let link = Core.formHashPath('course/assignment', params);
+
+    let navItem = Core.makeNavItem(context.assignment.name, link, true);
+
+    Core.setNav([], true, true, {[context.course.name]: [navItem]});
+}
+
+function assignmentActions(context) {
+    let role = Autograder.Users.getCourseRoleValue(context.course.role);
+    let actions = [];
+
+    if (role >= Autograder.Users.COURSE_ROLE_STUDENT) {
+        let params = {
+            'course-id': context.courseID,
+            'assignment-id': context.assignmentID,
+        };
+
+        actions.push(['Submit', Core.formHashPath('course/assignment/submit', params)]);
+        actions.push(['Peek a Previous Submission', Core.formHashPath('course/assignment/peek', params)]);
+        actions.push(['View Submission History', Core.formHashPath('course/assignment/history', params)]);
+    }
+
+    return actions;
+}
+
+function renderPeek(context, submission) {
+    let html = submissionToHTML(context, submission);
+    document.querySelector('.content').innerHTML = html;
 }
 
 function renderHistory(context, history) {

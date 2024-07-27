@@ -78,11 +78,11 @@ function loading() {
 // to the given name items and return the modified list.
 function getBaseNav(items = []) {
     if (Autograder.hasCredentials()) {
-        items.unshift(['Home', formHashPath('')]);
-        items.push(['Account', formHashPath('account')]);
-        items.push(['Logout', formHashPath('logout')]);
+        items.unshift(makeNavItem('Home', formHashPath('')));
+        items.push(makeNavItem('Account', formHashPath('account')));
+        items.push(makeNavItem('Logout', formHashPath('logout')));
     } else {
-        items.push(['Login', formHashPath('login')]);
+        items.push(makeNavItem('Login', formHashPath('login')));
     }
 
     return items;
@@ -96,13 +96,13 @@ function getContextUserNav(items = []) {
     }
 
     for (const courseInfo of getContextCourses()) {
-        items.push([courseInfo.name, formHashPath('course', {'course-id': courseInfo.id})]);
+        items.push(makeNavItem(courseInfo.name, formHashPath('course', {'course-id': courseInfo.id})));
     }
 
     return items;
 }
 
-// The passed in items should be: [[name, link], ...].
+// The passed in items should be constructed via makeNavItem().
 // If not deselected, most nav items will be handled automatically.
 // |submenus| allows for callers to insert items below an existing nav item (a submenu),
 // formatted as follows: {<parent name>: [[name, link], ...], ...}.
@@ -110,8 +110,21 @@ function getContextUserNav(items = []) {
 function setNav(items = [],
         includeContextUser = true, includeBase = true,
         submenus = {}) {
-    // TEST
+    let nodes = buildNavTree(items, includeContextUser, includeBase, submenus);
 
+    let navHTML = [`<ul class='nav'>`];
+    for (const node of nodes) {
+        navHTML.push(navNodeToHTML(node));
+    }
+    navHTML.push('</ul>');
+
+    document.querySelector('.nav').innerHTML = navHTML.join('');
+}
+
+// Add all context nav items, add submenus, and mark entries as active.
+function buildNavTree(items = [],
+        includeContextUser = true, includeBase = true,
+        submenus = {}) {
     if (includeContextUser) {
         items = getContextUserNav(items);
     }
@@ -120,23 +133,67 @@ function setNav(items = [],
         items = getBaseNav(items);
     }
 
-    let currentHash = Util.getLocationHash();
-    let navHTML = [`<ul class='nav'>`];
+    let [nodes, _] = makeNavNodes(items, submenus);
+    return nodes;
+}
 
-    for (const [name, link] of items) {
-        let classes = [];
-
-        // Check to see if this nav item is the active one.
-        if (link === currentHash) {
-            classes.push('active');
-        }
-
-        navHTML.push(`<li><a class='${classes.join(' ')}' href='${link}'>${name}</a></li>`);
+// Return true if one of the nodes is active.
+function makeNavNodes(items = [], submenus = {}) {
+    if (!items) {
+        return [[], false];
     }
 
-    navHTML.push('<ul>');
+    let currentHash = Util.getLocationHash();
 
-    document.querySelector('.nav').innerHTML = navHTML.join('');
+    let nodes = [];
+    let foundActive = false;
+
+    for (const item of items) {
+        let pathActive = (item.link === currentHash);
+        let [children, childrenActive] = makeNavNodes(submenus[item.name], submenus);
+        let active = item.active || pathActive || childrenActive;
+
+        let node = {
+            name: item.name,
+            link: item.link,
+            active: active,
+            children: children,
+        };
+
+        nodes.push(node);
+        foundActive = foundActive || active;
+    }
+
+    return [nodes, foundActive];
+}
+
+function navNodeToHTML(node) {
+    let classes = [];
+    if (node.active) {
+        classes.push('active');
+    }
+
+    let lines = [
+        `<li><a class='${classes.join(' ')}' data-name='${node.name}' href='${node.link}'>${node.name}</a></li>`,
+    ];
+
+    if (node.children) {
+        lines.push('<ul>');
+        for (const child of node.children) {
+            lines.push(navNodeToHTML(child));
+        }
+        lines.push('</ul>');
+    }
+
+    return lines.join('');
+}
+
+function makeNavItem(name, link, active = false) {
+    return {
+        name: name,
+        link: link,
+        active: active,
+    };
 }
 
 function redirect(path = '') {
@@ -171,4 +228,6 @@ export {
 
     loading,
     setNav,
+
+    makeNavItem,
 }
