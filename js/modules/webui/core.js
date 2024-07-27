@@ -104,7 +104,14 @@ function getContextUserNav(items = []) {
 
 // The passed in items should be: [[name, link], ...].
 // If not deselected, most nav items will be handled automatically.
-function setNav(items = [], includeContextUser = true, includeBase = true) {
+// |submenus| allows for callers to insert items below an existing nav item (a submenu),
+// formatted as follows: {<parent name>: [[name, link], ...], ...}.
+// When a submenu is active, the parent will also be active.
+function setNav(items = [],
+        includeContextUser = true, includeBase = true,
+        submenus = {}) {
+    // TEST
+
     if (includeContextUser) {
         items = getContextUserNav(items);
     }

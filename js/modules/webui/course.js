@@ -1,7 +1,7 @@
 import * as Autograder from '/js/modules/autograder/base.js'
 import * as Core from './core.js'
+import * as Log from './log.js'
 import * as Routes from './routes.js'
-import * as Util from './util.js'
 
 function init() {
     let requirements = {course: true};
@@ -17,7 +17,7 @@ function handlerCourse(path, params, context) {
             return result.assignments;
         })
         .catch(function(result) {
-            Util.warn(result);
+            Log.warn(result, context);
             return Core.redirectHome();
         });
 }

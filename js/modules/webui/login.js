@@ -1,5 +1,6 @@
 import * as Autograder from '/js/modules/autograder/base.js'
 import * as Core from './core.js'
+import * as Log from './log.js'
 import * as Routes from './routes.js'
 import * as Util from './util.js'
 
@@ -37,7 +38,7 @@ function handlerLogout(path, params, context) {
 
 function login(event, context) {
     if (Autograder.hasCredentials()) {
-        Util.warn("Already logged in. Logout first to login again.");
+        Log.warn("Already logged in. Logout first to login again.", context);
         return;
     }
 
@@ -46,12 +47,12 @@ function login(event, context) {
     let cleartext = container.querySelector('input[name="password"]').value;
 
     if (email.length < 1) {
-        Util.warn("No email provided for login.");
+        Log.warn("No email provided for login.", context);
         return;
     }
 
     if (cleartext.length < 1) {
-        Util.warn("No password provided for login.");
+        Log.warn("No password provided for login.", context);
         return;
     }
 
@@ -60,7 +61,7 @@ function login(event, context) {
             Autograder.setCredentials(email, token['token-id'], token['token-cleartext']);
             Core.redirectHome();
         })
-        .catch(Util.warn);
+        .catch(Log.warn);
 }
 
 export {

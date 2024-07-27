@@ -1,5 +1,6 @@
 import * as Autograder from '/js/modules/autograder/base.js'
 import * as Core from './core.js'
+import * as Log from './log.js'
 import * as Util from './util.js'
 
 let routes = [];
@@ -119,13 +120,13 @@ function handlerWrapper(handler, path, params, requirements, context = {}) {
     if (requirements.course) {
         context.courseID = params['course-id'];
         if (!context.courseID) {
-            Util.warn(`No course id specified for path '${path}'.`);
+            Log.warn(`No course id specified for path '${path}'.`, context);
             return Core.redirectHome();
         }
 
         context.course = context.user.courses[context.courseID];
         if (!context.course) {
-            Util.warn(`Could not find specified course ('${context.courseID}') for path '${path}'.`);
+            Log.warn(`Could not find specified course ('${context.courseID}') for path '${path}'.`, context);
             return Core.redirectHome();
         }
     }
@@ -134,7 +135,7 @@ function handlerWrapper(handler, path, params, requirements, context = {}) {
     if (requirements.assignment) {
         context.assignmentID = params['assignment-id'];
         if (!context.assignmentID) {
-            Util.warn(`No assignment id specified for path '${path}'.`);
+            Log.warn(`No assignment id specified for path '${path}'.`, context);
             return Core.redirectHome();
         }
 
@@ -149,7 +150,7 @@ function handlerWrapper(handler, path, params, requirements, context = {}) {
                     return handlerWrapper(handler, path, params, requirements, context);
                 })
                 .catch(function(result) {
-                    Util.warn(result);
+                    Log.warn(result, context);
                     return Core.redirectHome();
                 });
         }
@@ -171,7 +172,7 @@ function fetchContextUser() {
     return Autograder.Users.get()
         .then(function(result) {
             if (!result.found) {
-                Util.warn("Server could not find context user.");
+                Log.warn("Server could not find context user.");
                 return Promist.reject(result);
             }
 
@@ -179,7 +180,7 @@ function fetchContextUser() {
             return result.user;
         })
         .catch(function(result) {
-            Util.warn(result);
+            Log.warn(result);
             return result;
         });
 }

@@ -1,7 +1,7 @@
 import * as Autograder from '/js/modules/autograder/base.js'
 import * as Core from './core.js'
+import * as Log from './log.js'
 import * as Routes from './routes.js'
-import * as Util from './util.js'
 
 function init() {
     let requirements = {assignment: true};
@@ -57,19 +57,19 @@ function handlerPeek(path, params, context) {
     Autograder.Submissions.peek(context.courseID, context.assignmentID, params['submission-id'])
         .then(function(result) {
             if (!result['found-user']) {
-                Util.warn("Could not find submission user.");
+                Log.warn("Could not find submission user.", context);
                 return Core.redirectHome();
             }
 
             if (!result['found-submission']) {
-                Util.warn("Could not find submission.");
+                Log.warn("Could not find submission.", context);
                 return Core.redirectHome();
             }
 
             renderPeek(context, result['submission-result']);
         })
         .catch(function(result) {
-            Util.warn(result);
+            Log.warn(result, context);
             return Core.redirectHome();
         });
 }
@@ -85,14 +85,14 @@ function handlerHistory(path, params, context) {
     Autograder.Submissions.history(context.courseID, context.assignmentID)
         .then(function(result) {
             if (!result['found-user']) {
-                Util.warn("Could not find submission user.");
+                Log.warn("Could not find submission user.", context);
                 return Core.redirectHome();
             }
 
             renderHistory(context, result['history']);
         })
         .catch(function(result) {
-            Util.warn(result);
+            Log.warn(result, context);
             return Core.redirectHome();
         });
 }
