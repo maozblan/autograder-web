@@ -77,6 +77,10 @@ async function resolveAPIError(response) {
     console.error("Failed to send API request to autograder.");
     console.error(response);
 
+    if (!response.text) {
+        return Promise.reject(response);
+    }
+
     let body = await response.text();
     console.error(body);
 

@@ -1,8 +1,15 @@
 function init() {
-    window.ag = window.ag || {};
-    window.ag.util = window.ag.util || {};
+    registerHandler('onKeyEvent', onKeyEvent);
+}
 
-    window.ag.util.onKeyEvent = onKeyEvent;
+// Register a handler and return it's global name.
+function registerHandler(name, handler) {
+    window.ag = window.ag || {};
+    window.ag.handlers = window.ag.handlers || {};
+
+    window.ag.handlers[name] = handler;
+
+    return `window.ag.handlers.${name}`;
 }
 
 function onKeyEvent(event, context, keys, handler) {
@@ -26,16 +33,6 @@ function queryAncestor(element, query) {
     return queryAncestor(element.parentElement, query);
 }
 
-function notify(message) {
-    console.info(message);
-    alert(message);
-}
-
-function warn(message) {
-    console.warn(message);
-    alert(message);
-}
-
 function caseInsensitiveStringCompare(a, b) {
     return a.localeCompare(b, undefined, { sensitivity: 'base' });
 }
@@ -55,8 +52,7 @@ export {
     caseInsensitiveStringCompare,
     getLocationHash,
     init,
-    notify,
     onKeyEvent,
     queryAncestor,
-    warn,
+    registerHandler,
 }

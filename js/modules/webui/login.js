@@ -16,12 +16,12 @@ function handlerLogin(path, params, context) {
             <div>
                 <label for='email'>Email:</label>
                 <input type='email' name='email' placeholder='email'
-                        onkeypress='window.ag.util.onKeyEvent(event, this, ["Enter"], window.ag.handlers.login)' />
+                        onkeypress='window.ag.handlers.onKeyEvent(event, this, ["Enter"], window.ag.handlers.login)' />
             </div>
             <div>
                 <label for='password'>Password:</label>
                 <input type='password' name='password' placeholder='password'
-                        onkeypress='window.ag.util.onKeyEvent(event, this, ["Enter"], window.ag.handlers.login)' />
+                        onkeypress='window.ag.handlers.onKeyEvent(event, this, ["Enter"], window.ag.handlers.login)' />
             </div>
             <button onclick='window.ag.handlers.login(null, this)'>Login</button>
         </div>

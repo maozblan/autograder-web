@@ -2,12 +2,14 @@ import * as Autograder from '/js/modules/autograder/base.js'
 import * as Core from './core.js'
 import * as Log from './log.js'
 import * as Routes from './routes.js'
+import * as Util from './util.js'
 
 function init() {
     let requirements = {assignment: true};
     Routes.addRoute(/^course\/assignment$/, handlerAssignment, requirements);
     Routes.addRoute(/^course\/assignment\/peek$/, handlerPeek, requirements);
     Routes.addRoute(/^course\/assignment\/history$/, handlerHistory, requirements);
+    Routes.addRoute(/^course\/assignment\/submit$/, handlerSubmit, requirements);
 }
 
 function handlerAssignment(path, params, context) {
@@ -71,6 +73,60 @@ function handlerHistory(path, params, context) {
             }
 
             renderHistory(context, result['history']);
+        })
+        .catch(function(result) {
+            Log.warn(result, context);
+            return Core.redirectHome();
+        });
+}
+
+function handlerSubmit(path, params, context) {
+    addAssignmentNav(context);
+
+    let html = `
+        <div>
+            <div>
+                <label for='files'>Files:</label>
+                <input type='file' multiple='true' name='files' placeholder='submission files' />
+            </div>
+            <button disabled>Submit</button>
+        </div>
+    `;
+
+    // Attach the handlers after the button exists so we can bind the context.
+    let doc = new DOMParser().parseFromString(html, 'text/html');
+    let button = doc.querySelector('button');
+    let input = doc.querySelector('input');
+
+    // File change handler (enable submit with files).
+    input.addEventListener('change', function(event) {
+        if (event.target.files) {
+            button.disabled = false;
+        } else {
+            button.disabled = true;
+        }
+    });
+
+    // Submit handler.
+    button.addEventListener('click', function() {
+        submit(context);
+    });
+
+    document.querySelector('.content').appendChild(doc.querySelector('div'));
+}
+
+function submit(context) {
+    let files = document.querySelector('.content input').files;
+    if (files.length < 1) {
+        Log.warn("No submission files provided.");
+        return;
+    }
+
+    Core.loading();
+
+    Autograder.Submissions.submit(context.courseID, context.assignmentID, files)
+        .then(function(result) {
+            renderSubmit(context, result);
         })
         .catch(function(result) {
             Log.warn(result, context);
@@ -160,6 +216,28 @@ function renderHistory(context, history) {
 
     document.querySelector('.content').innerHTML = html;
 }
+
+function renderSubmit(context, result) {
+    if (result.rejected) {
+        document.querySelector('.content').innerHTML = `
+            <h3>Submission Rejected</h3>
+            <p>${result.message}</p>
+        `;
+        return;
+    }
+
+    if (!result['grading-success']) {
+        document.querySelector('.content').innerHTML = `
+            <h3>Grading Failed</h3>
+            <p>${result.message}</p>
+        `;
+        return;
+    }
+
+    let html = submissionToHTML(context, result.result);
+    document.querySelector('.content').innerHTML = html;
+}
+
 
 function submissionToHTML(context, submission) {
     let submissionTime = Date(submission['grading_start_time']).toLocaleString();

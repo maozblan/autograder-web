@@ -11,7 +11,7 @@ const LEVEL_TO_STRING = {
     [LEVEL_TRACE]: "trace",
     [LEVEL_DEBUG]: "debug",
     [LEVEL_INFO]: "info",
-    [LEVEL_WARN]: "wanr",
+    [LEVEL_WARN]: "warn",
     [LEVEL_ERROR]: "error",
     [LEVEL_FATAL]: "fatal",
 }
