@@ -6,6 +6,8 @@ const CREDENTIALS_KEY = 'AUTOGRADER.CREDENTIALS';
 const REQUEST_USER_EMAIL_KEY = 'user-email';
 const REQUEST_USER_PASS_KEY = 'user-pass';
 
+let cache = {};
+
 function hasCredentials() {
     return Boolean(localStorage.getItem(CREDENTIALS_KEY));
 }
@@ -52,7 +54,11 @@ function deleteToken(credentials) {
         [REQUEST_USER_PASS_KEY]: credentials['token'],
     };
 
-    return sendRequest('users/tokens/delete', args);
+    return sendRequest({
+        endpoint: 'users/tokens/delete',
+        payload: args,
+        cache: false,
+    });
 }
 
 async function resolveAPIResponse(response) {
@@ -87,9 +93,16 @@ async function resolveAPIError(response) {
     return Promise.reject(body);
 }
 
-function sendRequest(endpoint,
+function sendRequest({
+        endpoint = undefined,
         payload = {}, files = [],
-        override_email = undefined, override_cleartext = undefined) {
+        override_email = undefined, override_cleartext = undefined,
+        cache = true,
+        }) {
+    if (!endpoint) {
+        throw new Error("Endpoint not specified.")
+    }
+
     let credentials = getCredentials();
 
     if (credentials) {
@@ -114,12 +127,62 @@ function sendRequest(endpoint,
         body.append(file.name, file);
     }
 
+    if (cache) {
+        let cacheResponse = fetchCache(url, payload);
+        if (cacheResponse) {
+            return Promise.resolve(cacheResponse);
+        }
+    }
+
     let response = fetch(url, {
         'method': 'POST',
         'body': body,
     });
 
-    return response.then(resolveAPIResponse, resolveAPIError);
+    let resolveSuccess = resolveAPIResponse;
+    if (cache) {
+        resolveSuccess = function(result) {
+            return resolveAPIResponse(result).then(function(content) {
+                saveCache(url, payload, content);
+                return Promise.resolve(content);
+            });
+        }
+    }
+
+    return response.then(resolveSuccess, resolveAPIError);
+}
+
+function fetchCache(url, payload) {
+    let key = makeCacheKey(url, payload);
+    let entry = cache[key];
+    if (!entry) {
+        return undefined;
+    }
+
+    entry.accessed = new Date();
+    return entry.content;
+}
+
+function saveCache(url, payload, content) {
+    let now = Date.now();
+
+    let key = makeCacheKey(url, payload);
+    let entry = {
+        content: content,
+        created: now,
+        accessed: now,
+    }
+
+    cache[key] = entry;
+}
+
+function makeCacheKey(url, payload) {
+    let key = {
+        url: url,
+        payload: payload,
+    };
+
+    return JSON.stringify(key);
 }
 
 export {

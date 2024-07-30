@@ -51,12 +51,18 @@ function getServerRoleValue(role) {
 }
 
 function createToken(email, cleartext) {
-    return Core.sendRequest('users/tokens/create',
-            {}, [], email, cleartext);
+    return Core.sendRequest({
+        endpoint: 'users/tokens/create',
+        override_email: email,
+        override_cleartext: cleartext,
+        cache: false,
+    });
 }
 
 function get() {
-    return Core.sendRequest('users/get');
+    return Core.sendRequest({
+        endpoint: 'users/get',
+    });
 }
 
 export {

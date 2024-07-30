@@ -1,12 +1,14 @@
 import * as Core from './core.js'
 
 function history(course, assignment) {
-    let args = {
-        'course-id': course,
-        'assignment-id': assignment,
-    };
-
-    return Core.sendRequest('submissions/history', args);
+    return Core.sendRequest({
+        endpoint: 'submissions/history',
+        cache: false,
+        payload: {
+            'course-id': course,
+            'assignment-id': assignment,
+        },
+    });
 }
 
 function peek(course, assignment, submission = undefined) {
@@ -15,21 +17,27 @@ function peek(course, assignment, submission = undefined) {
         'assignment-id': assignment,
     };
 
-
     if (submission) {
         args['target-submission'] = submission;
     }
 
-    return Core.sendRequest('submissions/peek', args);
+    return Core.sendRequest({
+        endpoint: 'submissions/peek',
+        payload: args,
+        cache: false,
+    });
 }
 
 function submit(course, assignment, files) {
-    let args = {
-        'course-id': course,
-        'assignment-id': assignment,
-    };
-
-    return Core.sendRequest('submissions/submit', args, files);
+    return Core.sendRequest({
+        endpoint: 'submissions/submit',
+        files: files,
+        cache: false,
+        payload: {
+            'course-id': course,
+            'assignment-id': assignment,
+        },
+    });
 }
 
 export {

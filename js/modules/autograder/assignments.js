@@ -1,12 +1,22 @@
 import * as Core from './core.js'
 
 function list(courseID) {
-    return Core.sendRequest('courses/assignments/list', {'course-id': courseID});
+    return Core.sendRequest({
+        endpoint: 'courses/assignments/list',
+        payload: {
+            'course-id': courseID
+        },
+    });
 }
 
 function get(courseID, assignmentID) {
-    return Core.sendRequest('courses/assignments/get',
-            {'course-id': courseID, 'assignment-id': assignmentID});
+    return Core.sendRequest({
+        endpoint: 'courses/assignments/get',
+        payload: {
+            'course-id': courseID,
+            'assignment-id': assignmentID,
+        },
+    });
 }
 
 export {
