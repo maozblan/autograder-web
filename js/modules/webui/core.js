@@ -102,14 +102,20 @@ function getContextUserNav(items = []) {
     return items;
 }
 
-// The passed in items should be constructed via makeNavItem().
+// The elements in |items|, |breadcrumbs|, and the elements in the values of |submenus|
+// should all be constructed via makeNavItem().
 // If not deselected, most nav items will be handled automatically.
 // |submenus| allows for callers to insert items below an existing nav item (a submenu),
 // formatted as follows: {<parent name>: [[name, link], ...], ...}.
 // When a submenu is active, the parent will also be active.
 function setNav(items = [],
         includeContextUser = true, includeBase = true,
-        submenus = {}) {
+        submenus = {}, breadcrumbs = []) {
+    renderNav(items, includeContextUser, includeBase, submenus);
+    renderBreadcrumbs(breadcrumbs);
+}
+
+function renderNav(items, includeContextUser, includeBase, submenus) {
     let nodes = buildNavTree(items, includeContextUser, includeBase, submenus);
 
     let navHTML = [`<ul class='nav'>`];
@@ -121,10 +127,35 @@ function setNav(items = [],
     document.querySelector('.nav').innerHTML = navHTML.join('');
 }
 
+function renderBreadcrumbs(breadcrumbs, includeHome = true) {
+    if (includeHome) {
+        breadcrumbs.unshift(makeNavItem('Home', ''));
+    }
+
+    let breadcrumbsHTML = [];
+    for (let i = 0; i < breadcrumbs.length; i++) {
+        let breadcrumb = breadcrumbs[i];
+
+        if (i > 0) {
+            breadcrumbsHTML.push(`<span class='breadcrumb-delim'>&gt;&gt;</span>`);
+        }
+
+        breadcrumbsHTML.push(`
+            <a class='breadcrumb' href='${breadcrumb.link}'>${breadcrumb.name}</a>
+        `);
+    }
+
+    let html = `
+        <div>
+            ${breadcrumbsHTML.join('')}
+        </div>
+    `;
+
+    document.querySelector('.breadcrumbs').innerHTML = html;
+}
+
 // Add all context nav items, add submenus, and mark entries as active.
-function buildNavTree(items = [],
-        includeContextUser = true, includeBase = true,
-        submenus = {}) {
+function buildNavTree(items, includeContextUser, includeBase, submenus) {
     if (includeContextUser) {
         items = getContextUserNav(items);
     }
@@ -225,6 +256,7 @@ export {
     redirectHome,
     redirectLogin,
     redirectLogout,
+    renderBreadcrumbs,
 
     loading,
     setNav,

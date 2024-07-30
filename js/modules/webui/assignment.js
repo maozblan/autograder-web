@@ -13,7 +13,7 @@ function init() {
 }
 
 function handlerAssignment(path, params, context) {
-    addAssignmentNav(context);
+    setContextNav(path, params, context);
 
     let html = `
         <h2>Assignment: ${context.assignment.name}</h2>
@@ -38,7 +38,7 @@ function handlerAssignment(path, params, context) {
 }
 
 function handlerPeek(path, params, context) {
-    addAssignmentNav(context);
+    setContextNav(path, params, context, 'Peek');
     Core.loading();
 
     Autograder.Submissions.peek(context.courseID, context.assignmentID, params['submission-id'])
@@ -62,7 +62,7 @@ function handlerPeek(path, params, context) {
 }
 
 function handlerHistory(path, params, context) {
-    addAssignmentNav(context);
+    setContextNav(path, params, context, 'History');
     Core.loading();
 
     Autograder.Submissions.history(context.courseID, context.assignmentID)
@@ -81,7 +81,7 @@ function handlerHistory(path, params, context) {
 }
 
 function handlerSubmit(path, params, context) {
-    addAssignmentNav(context);
+    setContextNav(path, params, context, 'Submit');
 
     let html = `
         <div>
@@ -134,16 +134,19 @@ function submit(context) {
         });
 }
 
-function addAssignmentNav(context) {
-    let params = {
-        'course-id': context.courseID,
-        'assignment-id': context.assignmentID,
-    };
-    let link = Core.formHashPath('course/assignment', params);
+function setContextNav(path, params, context, terminalCrumbName = undefined) {
+    let breadcrumbs = [
+        Core.makeNavItem(context.course.name, Core.formHashPath('course',
+                {'course-id': context.courseID})),
+        Core.makeNavItem(context.assignment.name, Core.formHashPath('course/assignment',
+                {'course-id': context.courseID, 'assignment-id': context.assignmentID})),
+    ];
 
-    let navItem = Core.makeNavItem(context.assignment.name, link, true);
+    if (terminalCrumbName) {
+        breadcrumbs.push(Core.makeNavItem(terminalCrumbName, Core.formHashPath(path, params)));
+    }
 
-    Core.setNav([], true, true, {[context.course.name]: [navItem]});
+    Core.renderBreadcrumbs(breadcrumbs);
 }
 
 function assignmentActions(context) {

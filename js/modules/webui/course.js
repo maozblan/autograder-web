@@ -9,6 +9,7 @@ function init() {
 }
 
 function handlerCourse(path, params, context) {
+    setContextNav(path, params, context);
     Core.loading();
 
     return Autograder.Assignments.list(context.courseID)
@@ -20,6 +21,15 @@ function handlerCourse(path, params, context) {
             Log.warn(result, context);
             return Core.redirectHome();
         });
+}
+
+function setContextNav(path, params, context) {
+    let breadcrumbs = [
+        Core.makeNavItem(context.course.name, Core.formHashPath('course',
+                {'course-id': context.courseID})),
+    ];
+
+    Core.renderBreadcrumbs(breadcrumbs);
 }
 
 function render(context, assignments) {
