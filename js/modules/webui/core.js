@@ -118,7 +118,7 @@ function setNav(items = [],
 function renderNav(items, includeContextUser, includeBase, submenus) {
     let nodes = buildNavTree(items, includeContextUser, includeBase, submenus);
 
-    let navHTML = [`<ul class='nav'>`];
+    let navHTML = [`<ul class='nav-items'>`];
     for (const node of nodes) {
         navHTML.push(navNodeToHTML(node));
     }
