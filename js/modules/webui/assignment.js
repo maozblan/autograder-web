@@ -175,7 +175,7 @@ function renderPeek(context, submission) {
 function renderHistory(context, history) {
     let rowsHTML = [];
     for (const record of history.toReversed()) {
-        let submissionTime = Date(record['grading_start_time']).toLocaleString();
+        let submissionTime = (new Date(record['grading_start_time'])).toLocaleString();
 
         let params = {
             'course-id': context.courseID,
@@ -243,7 +243,7 @@ function renderSubmit(context, result) {
 
 
 function submissionToHTML(context, submission) {
-    let submissionTime = Date(submission['grading_start_time']).toLocaleString();
+    let submissionTime = (new Date(submission['grading_start_time'])).toLocaleString();
 
     let messageHTML = '';
     if (submission.message) {
