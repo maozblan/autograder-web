@@ -4,7 +4,7 @@ import * as Routes from './routes.js'
 import * as Util from './util.js'
 
 function init() {
-    Routes.addRoute(/^$/, handlerHome);
+    Routes.addRoute(/^$/, handlerHome, 'home');
 }
 
 function handlerHome(path, params, context) {
@@ -15,7 +15,7 @@ function handlerHome(path, params, context) {
     let coursesHTML = [];
     for (const course of Core.getContextCourses()) {
         let link = Core.formHashPath('course', {'course-id': course.id});
-        coursesHTML.push(`<li><a href='${link}'>${course.name}</a></li>`);
+        coursesHTML.push(`<a class='card' href='${link}'>${course.name}</a>`);
     }
 
     let html = '';
@@ -24,9 +24,9 @@ function handlerHome(path, params, context) {
     } else {
         html = `
             <h3>Enrolled Courses:</h3>
-            <ul class='course-list'>
+            <div class='deck'>
                 ${coursesHTML.join('')}
-            </ul>
+            </div>
         `;
     }
 

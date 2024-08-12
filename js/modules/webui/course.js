@@ -5,7 +5,7 @@ import * as Routes from './routes.js'
 
 function init() {
     let requirements = {course: true};
-    Routes.addRoute(/^course$/, handlerCourse, requirements);
+    Routes.addRoute(/^course$/, handlerCourse, 'course', requirements);
 }
 
 function handlerCourse(path, params, context) {
@@ -44,14 +44,14 @@ function render(context, assignments) {
             };
             let link = Core.formHashPath('course/assignment', params);
 
-            lines.push(`<li><a href='${link}'>${assignment.name}</a></li>`);
+            lines.push(`<a class='card' href='${link}'>${assignment.name}</a>`);
         }
 
         html += `
             <h3>Assignments:</h3>
-            <ul class='assignment-list'>
+            <div class='deck'>
                 ${lines.join('')}
-            </ul>
+            </div>
         `
     }
 
@@ -59,14 +59,14 @@ function render(context, assignments) {
     if (courseActions.length > 0) {
         let lines = [];
         for (const [label, link] of actions) {
-            lines.push(`<li><a href='${link}'>${label}</a></li>`);
+            lines.push(`<a class='card' href='${link}'>${label}</a>`);
         }
 
         html += `
             <h3>Course Actions:</h3>
-            <ul class='action-list'>
+            <div class='deck'>
                 ${lines.join('')}
-            </ul>
+            </div>
         `;
     }
 

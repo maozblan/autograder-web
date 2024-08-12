@@ -27,12 +27,13 @@ function init() {
 // and |context| is any context resolved by the router while preparing the request.
 // Possible fields for |context| are: user, courseID, course, and assignmentID.
 function addRoute(pattern, handler,
+        pageName = undefined,
         requirements = {login: true, course: false, assignment: false}) {
     // Fill in any holes in requirements.
     requirements.course = requirements.course || requirements.assignment;
     requirements.login = requirements.login || requirements.course;
 
-    routes.push([pattern, handler, requirements]);
+    routes.push([pattern, handler, requirements, pageName]);
 }
 
 // Route the page content to a path specified in an argument or window.location.hash.
@@ -59,16 +60,16 @@ function route(rawPath = undefined) {
     window.location.hash = newHash;
 
     // Check all known routes.
-    for (const [pattern, handler, requirements] of routes) {
+    for (const [pattern, handler, requirements, pageName] of routes) {
         if (path.match(pattern)) {
             console.debug(`Routing '${path}' to ${handler.name}.`);
-            return handlerWrapper(handler, path, params, requirements);
+            return handlerWrapper(handler, path, params, pageName, requirements);
         }
     }
 
     // Fallback to the default route.
     console.warn(`Unknown path '${path}'. Falling back to default route.`);
-    return handlerWrapper(DEFAULT_HANDLER, path, params, {});
+    return handlerWrapper(DEFAULT_HANDLER, path, params, undefined, {});
 }
 
 // Parse a raw path (which may have come from a hash)
@@ -95,7 +96,7 @@ function parsePath(rawPath) {
 }
 
 // Do any setup for a handler, call the handler, then do any teardown.
-function handlerWrapper(handler, path, params, requirements, context = {}) {
+function handlerWrapper(handler, path, params, pageName, requirements, context = {}) {
     let loggedIn = Autograder.hasCredentials();
 
     // Redirect to a login if required.
@@ -109,7 +110,7 @@ function handlerWrapper(handler, path, params, requirements, context = {}) {
         return fetchContextUser()
             .then(function(result) {
                 // Call this function again to complete all checks.
-                return handlerWrapper(handler, path, params, requirements);
+                return handlerWrapper(handler, path, params, pageName, requirements);
             })
             .catch(function(result) {
                 return Core.redirectLogout();
@@ -147,7 +148,7 @@ function handlerWrapper(handler, path, params, requirements, context = {}) {
             return Autograder.Assignments.get(context.courseID, context.assignmentID)
                 .then(function(result) {
                     context.assignment = result.assignment;
-                    return handlerWrapper(handler, path, params, requirements, context);
+                    return handlerWrapper(handler, path, params, pageName, requirements, context);
                 })
                 .catch(function(result) {
                     Log.warn(result, context);
@@ -157,7 +158,16 @@ function handlerWrapper(handler, path, params, requirements, context = {}) {
     }
 
     // This path has everything it needs.
+
+    // Set the nav menu.
     Core.setNav();
+
+    // Set the page inforamtion.
+    if (pageName) {
+        document.querySelector('.content').setAttribute('data-page', pageName);
+    }
+
+    // Call the handler.
     return handler(path, params, context);
 }
 

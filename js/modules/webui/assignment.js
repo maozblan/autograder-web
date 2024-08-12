@@ -6,10 +6,10 @@ import * as Util from './util.js'
 
 function init() {
     let requirements = {assignment: true};
-    Routes.addRoute(/^course\/assignment$/, handlerAssignment, requirements);
-    Routes.addRoute(/^course\/assignment\/peek$/, handlerPeek, requirements);
-    Routes.addRoute(/^course\/assignment\/history$/, handlerHistory, requirements);
-    Routes.addRoute(/^course\/assignment\/submit$/, handlerSubmit, requirements);
+    Routes.addRoute(/^course\/assignment$/, handlerAssignment, 'assignment', requirements);
+    Routes.addRoute(/^course\/assignment\/peek$/, handlerPeek, 'assignment-peek', requirements);
+    Routes.addRoute(/^course\/assignment\/history$/, handlerHistory, 'assignment-history', requirements);
+    Routes.addRoute(/^course\/assignment\/submit$/, handlerSubmit, 'assignment-submit', requirements);
 }
 
 function handlerAssignment(path, params, context) {
@@ -23,14 +23,14 @@ function handlerAssignment(path, params, context) {
     if (actions.length > 0) {
         let actionsHTML = [];
         for (const [label, link] of actions) {
-            actionsHTML.push(`<li><a href='${link}'>${label}</a></li>`);
+            actionsHTML.push(`<a class='card' href='${link}'>${label}</a>`);
         }
 
         html += `
             <h3>Assignment Actions:</h3>
-            <ul class='action-list'>
+            <div class='deck'>
                 ${actionsHTML.join('')}
-            </ul>
+            </div>
         `;
     }
 
