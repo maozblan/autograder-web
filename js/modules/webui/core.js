@@ -118,11 +118,11 @@ function setNav(items = [],
 function renderNav(items, includeContextUser, includeBase, submenus) {
     let nodes = buildNavTree(items, includeContextUser, includeBase, submenus);
 
-    let navHTML = [`<ul class='nav-items'>`];
+    let navHTML = [`<div class='nav-items'>`];
     for (const node of nodes) {
         navHTML.push(navNodeToHTML(node));
     }
-    navHTML.push('</ul>');
+    navHTML.push('</div>');
 
     document.querySelector('.nav').innerHTML = navHTML.join('');
 }
@@ -205,16 +205,20 @@ function navNodeToHTML(node) {
     }
 
     let lines = [
-        `<li><a class='${classes.join(' ')}' data-name='${node.name}' href='${node.link}'>${node.name}</a></li>`,
+        `<div class='nav-item'>
+            <a class='${classes.join(' ')}' data-name='${node.name}' href='${node.link}'>${node.name}</a>
+        `,
     ];
 
-    if (node.children) {
-        lines.push('<ul>');
+    if (node.children && (node.children.length > 0)) {
+        lines.push(`<div class='nav-children'>`);
         for (const child of node.children) {
             lines.push(navNodeToHTML(child));
         }
-        lines.push('</ul>');
+        lines.push('</div>');
     }
+
+    lines.push('</div>');
 
     return lines.join('');
 }

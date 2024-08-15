@@ -1,6 +1,6 @@
 :root {
     --color-light-bg-primary: #f1ecf5;
-    --color-light-bg-secondary: #ffffff;
+    --color-light-bg-secondary: #f7f7f7;
     --color-light-bg-tertiary: #d5d5d5;
     --color-light-text-primary: #333333;
     --color-light-text-secondary: #333333;
@@ -57,6 +57,7 @@ ul, ol {
     color: var(--color-dark-text-primary);
 
     padding: 0.5em;
+    text-align: center;
 }
 
 .page-body {
@@ -72,13 +73,27 @@ ul, ol {
 
     max-width: 20%;
     padding: 0.5em;
-    padding-left: 2em;
 
     border-radius: var(--curve-radius);
 }
 
 .nav a.active {
     font-weight: bold;
+}
+
+.nav-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1.0em;
+}
+
+.nav a,
+.breadcrumbs a {
+    color: inherit;
+    text-decoration: inherit;
+    font-family: sans;
+    font-weight: bold;
+    font-size: 1.15em;
 }
 
 .content-area {
@@ -135,4 +150,29 @@ ul, ol {
     border-radius: 10px;
     text-decoration: none;
     box-shadow: 1px 1px 1px var(--color-bg-primary);
+}
+
+.submission table,
+.submission-history table {
+    margin-left: 2em;
+}
+
+.submission table th,
+.submission table tr,
+.submission-history table th,
+.submission-history table tr {
+    text-align: left;
+    padding-right: 2em;
+}
+
+.submission-questions-area {
+    margin-top: 2em;
+}
+
+.submission-questions {
+    margin-left: 2em;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 }

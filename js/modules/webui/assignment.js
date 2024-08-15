@@ -196,9 +196,10 @@ function renderHistory(context, history) {
     }
 
     let html = `
-        <div class='submission-history'>
-            <h2>${context.assignment.name}</h2>
-            <div>
+        <div class='submission-history-area'>
+            <h2>${context.assignment.name}: History</h2>
+            <div class='submission-history'>
+                <h3>History</h3>
                 <table>
                     <thead>
                         <tr>
@@ -252,8 +253,9 @@ function submissionToHTML(context, submission) {
 
     let html = `
         <div class='submission'>
-            <h2>${context.assignment.name}</h2>
+            <h2>${context.assignment.name}: Submission ${submission['short-id']}</h2>
             <div class='submission-metadata'>
+                <h3>Summary</h3>
                 <table>
                     <tbody>
                         ${makeTableRow('Short Submission ID', submission['short-id'], 'short-id')}
@@ -268,7 +270,8 @@ function submissionToHTML(context, submission) {
                     </tbody>
                 </table>
             </div>
-            <div class='submission-questions'>
+            <div class='submission-questions-area'>
+                <h3>Questions</h3>
                 ${questionsToHTML(submission.questions)}
             </div>
         </div>
@@ -278,7 +281,9 @@ function submissionToHTML(context, submission) {
 }
 
 function questionsToHTML(questions) {
-    let questionsHTML = [];
+    let questionsHTML = [
+        `<div class='submission-questions'>`,
+    ];
 
     for (const [i, question] of questions.entries()) {
         let messageHTML = '';
@@ -288,9 +293,9 @@ function questionsToHTML(questions) {
 
         questionsHTML.push(`
             <div class='submission-question'>
-                <h3 data-index='${i}' data-name='${question['name']}'>
-                    Question ${i + 1}: ${question['name']}
-                </h3>
+                <h4 data-index='${i}' data-name='${question['name']}'>
+                    ${question['name']}
+                </h4>
                 <table data-index='${i}' data-name='${question['name']}'>
                     <tbody>
                         ${makeTableRow('Name', question['name'], 'name')}
@@ -302,6 +307,8 @@ function questionsToHTML(questions) {
             </div>
         `);
     }
+
+    questions.push('</div>');
 
     return questionsHTML.join('');
 }
