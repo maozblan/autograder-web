@@ -1,18 +1,19 @@
 :root {
     --color-light-bg-primary: #f0f0f0;
-    --color-light-bg-secondary: #ffffff;
-    --color-light-bg-tertiary: #d5d5d5;
+    --color-light-bg-secondary: #f5f5f5;
+    --color-light-bg-tertiary: #ffffff;
     --color-light-text-primary: rgba(0, 0, 0, 0.75);
     --color-light-text-secondary: rgba(0, 0, 0, 0.60);
     --color-light-text-tertiary: rgba(0, 0, 0, 0.40);
+    --color-light-text-link: rgba(40, 40, 255, 0.75);
 
-    /* TEST - Dark mode  after fonts */
-    --color-dark-bg-primary: #7d7b80;
-    --color-dark-bg-secondary: #7f7f7f;
-    --color-dark-bg-tertiary: #777777;
-    --color-dark-text-primary: #ffffff;
-    --color-dark-text-secondary: #bbbbbb;
-    --color-dark-text-tertiary: #bbbbbb;
+    --color-dark-bg-primary: #303030;
+    --color-dark-bg-secondary: #151515;
+    --color-dark-bg-tertiary: #000000;
+    --color-dark-text-primary: rgba(255, 255, 255, 0.85);
+    --color-dark-text-secondary: rgba(255, 255, 255, 0.75);
+    --color-dark-text-tertiary: rgba(255, 255, 255, 0.65);
+    --color-dark-text-link: rgba(130, 130, 255, 0.85);
 
     --curve-radius: 5px;
 
@@ -23,6 +24,43 @@
     --font-size-smaller: 0.75rem;
 }
 
+/* Default to light colors. */
+html {
+    --color-bg-primary: var(--color-light-bg-primary);
+    --color-bg-secondary: var(--color-light-bg-secondary);
+    --color-bg-tertiary: var(--color-light-bg-tertiary);
+    --color-text-primary: var(--color-light-text-primary);
+    --color-text-secondary: var(--color-light-text-secondary);
+    --color-text-tertiary: var(--color-light-text-tertiary);
+    --color-text-link: var(--color-light-text-link);
+}
+
+/* Let system setting override default color scheme. */
+@media (prefers-color-scheme: light) {
+    html {
+        --color-bg-primary: var(--color-light-bg-primary);
+        --color-bg-secondary: var(--color-light-bg-secondary);
+        --color-bg-tertiary: var(--color-light-bg-tertiary);
+        --color-text-primary: var(--color-light-text-primary);
+        --color-text-secondary: var(--color-light-text-secondary);
+        --color-text-tertiary: var(--color-light-text-tertiary);
+        --color-text-link: var(--color-light-text-link);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    html {
+        --color-bg-primary: var(--color-dark-bg-primary);
+        --color-bg-secondary: var(--color-dark-bg-secondary);
+        --color-bg-tertiary: var(--color-dark-bg-tertiary);
+        --color-text-primary: var(--color-dark-text-primary);
+        --color-text-secondary: var(--color-dark-text-secondary);
+        --color-text-tertiary: var(--color-dark-text-tertiary);
+        --color-text-link: var(--color-dark-text-link);
+    }
+}
+
+/* Let explicit setting override system default. */
 html.light {
     --color-bg-primary: var(--color-light-bg-primary);
     --color-bg-secondary: var(--color-light-bg-secondary);
@@ -30,21 +68,27 @@ html.light {
     --color-text-primary: var(--color-light-text-primary);
     --color-text-secondary: var(--color-light-text-secondary);
     --color-text-tertiary: var(--color-light-text-tertiary);
+    --color-text-link: var(--color-light-text-link);
 }
 
 html.dark {
-    --color-bg-primary: var(--color-dark-bg-primary: #ffffff);
+    --color-bg-primary: var(--color-dark-bg-primary);
     --color-bg-secondary: var(--color-dark-bg-secondary);
     --color-bg-tertiary: var(--color-dark-bg-tertiary);
     --color-text-primary: var(--color-dark-text-primary);
     --color-text-secondary: var(--color-dark-text-secondary);
     --color-text-tertiary: var(--color-dark-text-tertiary);
+    --color-text-link: var(--color-dark-text-link);
 }
 
 html {
     background-color: var(--color-bg-primary);
     color: var(--color-text-primary);
     font-size: var(--font-size-normal);
+}
+
+a {
+    color: var(--color-text-link);
 }
 
 /* Set basic relative font sizing. */
