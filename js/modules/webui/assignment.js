@@ -23,14 +23,14 @@ function handlerAssignment(path, params, context) {
     if (actions.length > 0) {
         let actionsHTML = [];
         for (const [label, link] of actions) {
-            actionsHTML.push(`<a class='card' href='${link}'>${label}</a>`);
+            actionsHTML.push(`<li><a href='${link}'>${label}</a></li>`);
         }
 
         html += `
             <h3>Assignment Actions:</h3>
-            <div class='deck'>
+            <ul class='soft-list'>
                 ${actionsHTML.join('')}
-            </div>
+            </ul>
         `;
     }
 

@@ -44,14 +44,14 @@ function render(context, assignments) {
             };
             let link = Core.formHashPath('course/assignment', params);
 
-            lines.push(`<a class='card' href='${link}'>${assignment.name}</a>`);
+            lines.push(`<li><a class='card' href='${link}'>${assignment.name}</a></li>`);
         }
 
         html += `
             <h3>Assignments:</h3>
-            <div class='deck'>
+            <ul class='soft-list'>
                 ${lines.join('')}
-            </div>
+            </ul>
         `
     }
 
@@ -59,14 +59,14 @@ function render(context, assignments) {
     if (courseActions.length > 0) {
         let lines = [];
         for (const [label, link] of actions) {
-            lines.push(`<a class='card' href='${link}'>${label}</a>`);
+            lines.push(`<li><a class='card' href='${link}'>${label}</a></li>`);
         }
 
         html += `
             <h3>Course Actions:</h3>
-            <div class='deck'>
+            <ul class='soft-list'>
                 ${lines.join('')}
-            </div>
+            </ul>
         `;
     }
 

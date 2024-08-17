@@ -15,7 +15,7 @@ function handlerHome(path, params, context) {
     let coursesHTML = [];
     for (const course of Core.getContextCourses()) {
         let link = Core.formHashPath('course', {'course-id': course.id});
-        coursesHTML.push(`<a class='card' href='${link}'>${course.name}</a>`);
+        coursesHTML.push(`<li><a href='${link}'>${course.name}</a></li>`);
     }
 
     let html = '';
@@ -24,9 +24,9 @@ function handlerHome(path, params, context) {
     } else {
         html = `
             <h3>Enrolled Courses:</h3>
-            <div class='deck'>
+            <ul class='soft-list'>
                 ${coursesHTML.join('')}
-            </div>
+            </ul>
         `;
     }
 

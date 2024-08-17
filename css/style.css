@@ -1,10 +1,10 @@
 :root {
-    --color-light-bg-primary: #f1ecf5;
-    --color-light-bg-secondary: #f7f7f7;
+    --color-light-bg-primary: #f0f0f0;
+    --color-light-bg-secondary: #ffffff;
     --color-light-bg-tertiary: #d5d5d5;
-    --color-light-text-primary: #333333;
-    --color-light-text-secondary: #333333;
-    --color-light-text-tertiary: #333333;
+    --color-light-text-primary: rgba(0, 0, 0, 0.75);
+    --color-light-text-secondary: rgba(0, 0, 0, 0.60);
+    --color-light-text-tertiary: rgba(0, 0, 0, 0.40);
 
     /* TEST - Dark mode  after fonts */
     --color-dark-bg-primary: #7d7b80;
@@ -15,6 +15,12 @@
     --color-dark-text-tertiary: #bbbbbb;
 
     --curve-radius: 5px;
+
+    --font-size-larger: 1.25rem;
+    --font-size-large: 1.15rem;
+    --font-size-normal: 1.00rem;
+    --font-size-small: 0.85rem;
+    --font-size-smaller: 0.75rem;
 }
 
 html.light {
@@ -38,6 +44,24 @@ html.dark {
 html {
     background-color: var(--color-bg-primary);
     color: var(--color-text-primary);
+    font-size: var(--font-size-normal);
+}
+
+/* Set basic relative font sizing. */
+h1 {
+    font-size: 2.00rem;
+}
+
+h2 {
+    font-size: 1.75rem;
+}
+
+h3 {
+    font-size: 1.50rem;
+}
+
+h4 {
+    font-size: 1.25rem;
 }
 
 h1, h2, h3, h4,
@@ -53,9 +77,6 @@ ul, ol {
 }
 
 .header {
-    background-color: var(--color-dark-bg-primary);
-    color: var(--color-dark-text-primary);
-
     padding: 0.5em;
     text-align: center;
 }
@@ -68,13 +89,10 @@ ul, ol {
 }
 
 .nav {
-    background-color: var(--color-bg-secondary);
-    color: var(--color-text-secondary);
-
     max-width: 20%;
     padding: 0.5em;
 
-    border-radius: var(--curve-radius);
+    border-right: 2px solid var(--color-text-tertiary);
 }
 
 .nav a.active {
@@ -93,7 +111,7 @@ ul, ol {
     text-decoration: inherit;
     font-family: sans;
     font-weight: bold;
-    font-size: 1.15em;
+    font-size: var(--font-size-large);
 }
 
 .content-area {
@@ -105,23 +123,13 @@ ul, ol {
 }
 
 .breadcrumbs {
-    background-color: var(--color-bg-secondary);
-    color: var(--color-text-secondary);
-
     padding: 0.5em;
-
-    border-radius: var(--curve-radius);
+    border-bottom: 2px solid var(--color-text-tertiary);
 }
 
 .content {
-    background-color: var(--color-bg-tertiary);
-    color: var(--color-text-tertiary);
-
     flex-grow: 1000;
-
-    padding: 2em;
-
-    border-radius: var(--curve-radius);
+    padding: 0.5em;
 }
 
 .content h2 {
@@ -133,23 +141,14 @@ ul, ol {
     margin-bottom: 0.75em;
 }
 
-/* A container that holds cards in the content area. */
-.content .deck {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    gap: 0.75em;
+.soft-list {
+    list-style-type: '\2014    ';
+    list-style-position: inside;
+    font-size: var(--font-size-large);
 }
 
-/* A place for info. */
-.content .card {
-    background-color: var(--color-bg-secondary);
-    color: var(--color-text-secondary);
-
-    padding: 1em;
-    border-radius: 10px;
-    text-decoration: none;
-    box-shadow: 1px 1px 1px var(--color-bg-primary);
+.soft-list li {
+    line-height: 2em;
 }
 
 .submission table,
