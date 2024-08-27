@@ -162,6 +162,18 @@ function handlerWrapper(handler, path, params, pageName, requirements, context =
     // Set the nav menu.
     Core.setNav();
 
+    // Set the context user.
+    if (context.user) {
+        let name = context.user.name ?? context.user.email;
+        document.querySelector('.header .current-user').innerHTML = `
+            <div>
+                <span>Logged in as</span>
+                <br />
+                <span>${name}</span>
+            </div>
+        `;
+    }
+
     // Set the page inforamtion.
     if (pageName) {
         document.querySelector('.content').setAttribute('data-page', pageName);

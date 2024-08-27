@@ -96,7 +96,7 @@ function getContextUserNav(items = []) {
     }
 
     for (const courseInfo of getContextCourses()) {
-        items.push(makeNavItem(courseInfo.name, formHashPath('course', {'course-id': courseInfo.id})));
+        items.push(makeNavItem(courseInfo.name, formHashPath('course', {'course-id': courseInfo.id}), true));
     }
 
     return items;
@@ -187,6 +187,7 @@ function makeNavNodes(items = [], submenus = {}) {
         let node = {
             name: item.name,
             link: item.link,
+            indent: item.indent,
             active: active,
             children: children,
         };
@@ -199,14 +200,21 @@ function makeNavNodes(items = [], submenus = {}) {
 }
 
 function navNodeToHTML(node) {
-    let classes = [];
+    let classes = [
+        'nav-item',
+    ];
+
     if (node.active) {
         classes.push('active');
     }
 
+    if (node.indent) {
+        classes.push('indent');
+    }
+
     let lines = [
-        `<div class='nav-item'>
-            <a class='${classes.join(' ')}' data-name='${node.name}' href='${node.link}'>${node.name}</a>
+        `<div class='${classes.join(' ')}'>
+            <a data-name='${node.name}' href='${node.link}'>${node.name}</a>
         `,
     ];
 
@@ -223,10 +231,11 @@ function navNodeToHTML(node) {
     return lines.join('');
 }
 
-function makeNavItem(name, link, active = false) {
+function makeNavItem(name, link, indent = false, active = false) {
     return {
         name: name,
         link: link,
+        indent: indent,
         active: active,
     };
 }

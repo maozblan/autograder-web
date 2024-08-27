@@ -2,6 +2,9 @@
     --color-light-bg-primary: #f0f0f0;
     --color-light-bg-secondary: #f5f5f5;
     --color-light-bg-tertiary: #ffffff;
+
+    --color-light-bg-accent-primary: rgb(130, 130, 255);
+
     --color-light-text-primary: rgba(0, 0, 0, 0.75);
     --color-light-text-secondary: rgba(0, 0, 0, 0.60);
     --color-light-text-tertiary: rgba(0, 0, 0, 0.40);
@@ -10,10 +13,13 @@
     --color-dark-bg-primary: #303030;
     --color-dark-bg-secondary: #151515;
     --color-dark-bg-tertiary: #000000;
+
     --color-dark-text-primary: rgba(255, 255, 255, 0.85);
     --color-dark-text-secondary: rgba(255, 255, 255, 0.75);
     --color-dark-text-tertiary: rgba(255, 255, 255, 0.65);
     --color-dark-text-link: rgba(130, 130, 255, 0.85);
+
+    --color-dark-bg-accent-primary: rgb(130, 130, 255);
 
     --curve-radius: 5px;
 
@@ -29,6 +35,9 @@ html {
     --color-bg-primary: var(--color-light-bg-primary);
     --color-bg-secondary: var(--color-light-bg-secondary);
     --color-bg-tertiary: var(--color-light-bg-tertiary);
+
+    --color-bg-accent-primary: var(--color-light-bg-accent-primary);
+
     --color-text-primary: var(--color-light-text-primary);
     --color-text-secondary: var(--color-light-text-secondary);
     --color-text-tertiary: var(--color-light-text-tertiary);
@@ -41,6 +50,9 @@ html {
         --color-bg-primary: var(--color-light-bg-primary);
         --color-bg-secondary: var(--color-light-bg-secondary);
         --color-bg-tertiary: var(--color-light-bg-tertiary);
+
+        --color-bg-accent-primary: var(--color-light-bg-accent-primary);
+
         --color-text-primary: var(--color-light-text-primary);
         --color-text-secondary: var(--color-light-text-secondary);
         --color-text-tertiary: var(--color-light-text-tertiary);
@@ -53,6 +65,9 @@ html {
         --color-bg-primary: var(--color-dark-bg-primary);
         --color-bg-secondary: var(--color-dark-bg-secondary);
         --color-bg-tertiary: var(--color-dark-bg-tertiary);
+
+        --color-bg-accent-primary: var(--color-dark-bg-accent-primary);
+
         --color-text-primary: var(--color-dark-text-primary);
         --color-text-secondary: var(--color-dark-text-secondary);
         --color-text-tertiary: var(--color-dark-text-tertiary);
@@ -65,6 +80,9 @@ html.light {
     --color-bg-primary: var(--color-light-bg-primary);
     --color-bg-secondary: var(--color-light-bg-secondary);
     --color-bg-tertiary: var(--color-light-bg-tertiary);
+
+    --color-bg-accent-primary: var(--color-light-bg-accent-primary);
+
     --color-text-primary: var(--color-light-text-primary);
     --color-text-secondary: var(--color-light-text-secondary);
     --color-text-tertiary: var(--color-light-text-tertiary);
@@ -75,6 +93,9 @@ html.dark {
     --color-bg-primary: var(--color-dark-bg-primary);
     --color-bg-secondary: var(--color-dark-bg-secondary);
     --color-bg-tertiary: var(--color-dark-bg-tertiary);
+
+    --color-bg-accent-primary: var(--color-dark-bg-accent-primary);
+
     --color-text-primary: var(--color-dark-text-primary);
     --color-text-secondary: var(--color-dark-text-secondary);
     --color-text-tertiary: var(--color-dark-text-tertiary);
@@ -123,6 +144,25 @@ ul, ol {
 .header {
     padding: 0.5em;
     text-align: center;
+    background-color: var(--color-bg-accent-primary);
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .current-user {
+    font-size: var(--font-size-small);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.header div {
+    flex-basis: 0;
+    flex-grow: 1;
 }
 
 .page-body {
@@ -139,14 +179,23 @@ ul, ol {
     border-right: 2px solid var(--color-text-tertiary);
 }
 
-.nav a.active {
-    font-weight: bold;
-}
-
 .nav-items {
     display: flex;
     flex-direction: column;
     gap: 1.0em;
+}
+
+.nav-item.indent {
+    padding-left: 1em;
+}
+
+.nav-item.active a {
+    font-weight: 900;
+    font-style: italic;
+}
+
+.nav-item:hover {
+    color: var(--color-dark-bg-accent-primary);
 }
 
 .nav a,
@@ -173,7 +222,9 @@ ul, ol {
 
 .content {
     flex-grow: 1000;
-    padding: 0.5em;
+    padding: 1.0em;
+    background-color: var(--color-bg-secondary);
+    border-radius: 10px;
 }
 
 .content h2 {
