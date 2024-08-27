@@ -2,7 +2,7 @@ import * as Core from './core.js'
 
 function history(course, assignment) {
     return Core.sendRequest({
-        endpoint: 'submissions/history',
+        endpoint: 'courses/assignments/submissions/fetch/user/history',
         cache: false,
         payload: {
             'course-id': course,
@@ -22,7 +22,7 @@ function peek(course, assignment, submission = undefined) {
     }
 
     return Core.sendRequest({
-        endpoint: 'submissions/peek',
+        endpoint: 'courses/assignments/submissions/fetch/user/peek',
         payload: args,
         cache: false,
     });
@@ -30,7 +30,7 @@ function peek(course, assignment, submission = undefined) {
 
 function submit(course, assignment, files) {
     return Core.sendRequest({
-        endpoint: 'submissions/submit',
+        endpoint: 'courses/assignments/submissions/submit',
         files: files,
         cache: false,
         payload: {
