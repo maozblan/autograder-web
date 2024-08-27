@@ -6,7 +6,7 @@ import * as Util from './util.js'
 
 function init() {
     Routes.addRoute(/^login$/, handlerLogin, 'login', {login: false});
-    Routes.addRoute(/^logout$/, 'logout', handlerLogout);
+    Routes.addRoute(/^logout$/, handlerLogout, 'logout');
 }
 
 function handlerLogin(path, params, context) {

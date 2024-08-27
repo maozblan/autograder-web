@@ -163,9 +163,10 @@ function handlerWrapper(handler, path, params, pageName, requirements, context =
     Core.setNav();
 
     // Set the context user.
+    let currentUserHTML = '';
     if (context.user) {
         let name = context.user.name ?? context.user.email;
-        document.querySelector('.header .current-user').innerHTML = `
+        currentUserHTML = `
             <div>
                 <span>Logged in as</span>
                 <br />
@@ -173,6 +174,7 @@ function handlerWrapper(handler, path, params, pageName, requirements, context =
             </div>
         `;
     }
+    document.querySelector('.header .current-user').innerHTML = currentUserHTML;
 
     // Set the page inforamtion.
     if (pageName) {
