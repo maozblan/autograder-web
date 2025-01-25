@@ -1,2 +1,12 @@
 *.swp
 .DS_Store
+.idea
+
+/bin/
+/dist/
+/test/
+
+coverage/
+node_modules/
+
+/test.*
