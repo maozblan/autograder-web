@@ -1,0 +1,3203 @@
+{
+    "{\"arguments\":{\"course-id\":\"course101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/admin/update\",\"files\":[]}": {
+        "endpoint": "courses/admin/update",
+        "module_name": "autograder.api.courses.admin.update",
+        "arguments": {
+            "course": "course101"
+        },
+        "output": {
+            "result": {
+                "course-id": "course101",
+                "success": true,
+                "message": "",
+                "created": false,
+                "updated": true,
+                "lms-sync-result": {
+                    "user-sync": [
+                        {
+                            "email": "course-admin@test.edulinq.org",
+                            "skipped": true
+                        },
+                        {
+                            "email": "course-grader@test.edulinq.org",
+                            "skipped": true
+                        },
+                        {
+                            "email": "course-other@test.edulinq.org",
+                            "skipped": true
+                        },
+                        {
+                            "email": "course-owner@test.edulinq.org",
+                            "skipped": true
+                        },
+                        {
+                            "email": "course-student@test.edulinq.org",
+                            "skipped": true
+                        }
+                    ],
+                    "assignment-sync": {
+                        "synced-assignments": [],
+                        "ambiguous-matches": [],
+                        "non-matched-assignments": [],
+                        "unchanged-assignments": []
+                    }
+                },
+                "built-assignment-images": [
+                    "autograder.course101.hw0"
+                ]
+            }
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/admin/update\",\"files\":[]}": {
+        "endpoint": "courses/admin/update",
+        "module_name": "autograder.api.courses.admin.update",
+        "arguments": {},
+        "output": {
+            "result": {
+                "course-id": "course101",
+                "success": true,
+                "message": "",
+                "created": false,
+                "updated": true,
+                "lms-sync-result": {
+                    "user-sync": [
+                        {
+                            "email": "course-admin@test.edulinq.org",
+                            "skipped": true
+                        },
+                        {
+                            "email": "course-grader@test.edulinq.org",
+                            "skipped": true
+                        },
+                        {
+                            "email": "course-other@test.edulinq.org",
+                            "skipped": true
+                        },
+                        {
+                            "email": "course-owner@test.edulinq.org",
+                            "skipped": true
+                        },
+                        {
+                            "email": "course-student@test.edulinq.org",
+                            "skipped": true
+                        }
+                    ],
+                    "assignment-sync": {
+                        "synced-assignments": [],
+                        "ambiguous-matches": [],
+                        "non-matched-assignments": [],
+                        "unchanged-assignments": []
+                    }
+                },
+                "built-assignment-images": [
+                    "autograder.course101.hw0"
+                ]
+            }
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"filter-role\":\"unknown\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/course/attempts\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/course/attempts",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.course.attempts",
+        "arguments": {
+            "filter-role": "unknown"
+        },
+        "output": {
+            "grading-results": {
+                "course-admin@test.edulinq.org": null,
+                "course-grader@test.edulinq.org": null,
+                "course-other@test.edulinq.org": null,
+                "course-owner@test.edulinq.org": null,
+                "course-student@test.edulinq.org": {
+                    "info": {
+                        "id": "course101::hw0::course-student@test.edulinq.org::1697406272",
+                        "short-id": "1697406272",
+                        "course-id": "course101",
+                        "assignment-id": "hw0",
+                        "user": "course-student@test.edulinq.org",
+                        "message": "",
+                        "max_points": 2,
+                        "score": 2,
+                        "name": "HW0",
+                        "questions": [
+                            {
+                                "name": "Q1",
+                                "max_points": 1,
+                                "score": 1,
+                                "message": "",
+                                "grading_start_time": 1697406273000,
+                                "grading_end_time": 1697406273000
+                            },
+                            {
+                                "name": "Q2",
+                                "max_points": 1,
+                                "score": 1,
+                                "message": "",
+                                "grading_start_time": 1697406273000,
+                                "grading_end_time": 1697406273000
+                            },
+                            {
+                                "name": "Style",
+                                "max_points": 0,
+                                "score": 0,
+                                "message": "Style is clean!",
+                                "grading_start_time": 1697406273000,
+                                "grading_end_time": 1697406273000
+                            }
+                        ],
+                        "grading_start_time": 1697406273000,
+                        "grading_end_time": 1697406273000,
+                        "additional-info": null
+                    },
+                    "input-files-gzip": {
+                        "submission.py": "H4sICAAAAAAA/3N1Ym1pc3Npb24ucHkASklNU0grzUsuyczPM9TQtOJSUFBQKEotKS3KUwgpKk3l4kJWYaRRlpiDqqgsMUdBW8GQCxAAAP//PpwmbkkAAAA="
+                    },
+                    "output-files-gzip": {
+                        "result.json": "H4sICAAAAAAA/3Jlc3VsdC5qc29uAMSSvQqDMBSFd5/iNrNDDPUnPkHX0qFDKRI0SEBja1JoEd+9mIptg1YyNdPl3HPO5YN0HgAAkqzmKAW0O2Lkv6TrjSstGqlQCicjDa+bpq/cPhhj06Zm9+zSCKmHfGAtVd60fEavuVKsNI12X9myQsgyU5q1OtPC3A0iSuMtTggJKVkIcFnM2id376/Skb/ThW50oQPdQT8q/hMQLwDa+gegKQWhIK84kxtn3sSFNyLxm9dM5/ETr97BlnGhn3q99wwAAP//PProBisDAAA="
+                    },
+                    "stdout": "Autograder transcript for assignment: HW0.\nGrading started at 2023-11-11 22:13 and ended at 2023-11-11 22:13.\nQ1: 1 / 1\nQ2: 1 / 1\nStyle: 0 / 0\n   Style is clean!\n\nTotal: 2 / 2\n",
+                    "stderr": ""
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"filter-role\":\"grader\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/course/attempts\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/course/attempts",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.course.attempts",
+        "arguments": {
+            "filter-role": "grader"
+        },
+        "output": {
+            "grading-results": {
+                "course-grader@test.edulinq.org": null
+            }
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"filter-role\":\"student\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/course/attempts\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/course/attempts",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.course.attempts",
+        "arguments": {
+            "filter-role": "student"
+        },
+        "output": {
+            "grading-results": {
+                "course-student@test.edulinq.org": {
+                    "info": {
+                        "id": "course101::hw0::course-student@test.edulinq.org::1697406272",
+                        "short-id": "1697406272",
+                        "course-id": "course101",
+                        "assignment-id": "hw0",
+                        "user": "course-student@test.edulinq.org",
+                        "message": "",
+                        "max_points": 2,
+                        "score": 2,
+                        "name": "HW0",
+                        "questions": [
+                            {
+                                "name": "Q1",
+                                "max_points": 1,
+                                "score": 1,
+                                "message": "",
+                                "grading_start_time": 1697406273000,
+                                "grading_end_time": 1697406273000
+                            },
+                            {
+                                "name": "Q2",
+                                "max_points": 1,
+                                "score": 1,
+                                "message": "",
+                                "grading_start_time": 1697406273000,
+                                "grading_end_time": 1697406273000
+                            },
+                            {
+                                "name": "Style",
+                                "max_points": 0,
+                                "score": 0,
+                                "message": "Style is clean!",
+                                "grading_start_time": 1697406273000,
+                                "grading_end_time": 1697406273000
+                            }
+                        ],
+                        "grading_start_time": 1697406273000,
+                        "grading_end_time": 1697406273000,
+                        "additional-info": null
+                    },
+                    "input-files-gzip": {
+                        "submission.py": "H4sICAAAAAAA/3N1Ym1pc3Npb24ucHkASklNU0grzUsuyczPM9TQtOJSUFBQKEotKS3KUwgpKk3l4kJWYaRRlpiDqqgsMUdBW8GQCxAAAP//PpwmbkkAAAA="
+                    },
+                    "output-files-gzip": {
+                        "result.json": "H4sICAAAAAAA/3Jlc3VsdC5qc29uAMSSvQqDMBSFd5/iNrNDDPUnPkHX0qFDKRI0SEBja1JoEd+9mIptg1YyNdPl3HPO5YN0HgAAkqzmKAW0O2Lkv6TrjSstGqlQCicjDa+bpq/cPhhj06Zm9+zSCKmHfGAtVd60fEavuVKsNI12X9myQsgyU5q1OtPC3A0iSuMtTggJKVkIcFnM2id376/Skb/ThW50oQPdQT8q/hMQLwDa+gegKQWhIK84kxtn3sSFNyLxm9dM5/ETr97BlnGhn3q99wwAAP//PProBisDAAA="
+                    },
+                    "stdout": "Autograder transcript for assignment: HW0.\nGrading started at 2023-11-11 22:13 and ended at 2023-11-11 22:13.\nQ1: 1 / 1\nQ2: 1 / 1\nStyle: 0 / 0\n   Style is clean!\n\nTotal: 2 / 2\n",
+                    "stderr": ""
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"filter-role\":\"unknown\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/course/scores\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/course/scores",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.course.scores",
+        "arguments": {
+            "filter-role": "unknown"
+        },
+        "output": {
+            "submission-infos": {
+                "course-admin@test.edulinq.org": null,
+                "course-grader@test.edulinq.org": null,
+                "course-other@test.edulinq.org": null,
+                "course-owner@test.edulinq.org": null,
+                "course-student@test.edulinq.org": {
+                    "id": "course101::hw0::course-student@test.edulinq.org::1697406272",
+                    "short-id": "1697406272",
+                    "course-id": "course101",
+                    "assignment-id": "hw0",
+                    "user": "course-student@test.edulinq.org",
+                    "message": "",
+                    "max_points": 2,
+                    "score": 2,
+                    "grading_start_time": 1697406273000
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"filter-role\":\"grader\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/course/scores\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/course/scores",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.course.scores",
+        "arguments": {
+            "filter-role": "grader"
+        },
+        "output": {
+            "submission-infos": {
+                "course-grader@test.edulinq.org": null
+            }
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"filter-role\":\"student\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/course/scores\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/course/scores",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.course.scores",
+        "arguments": {
+            "filter-role": "student"
+        },
+        "output": {
+            "submission-infos": {
+                "course-student@test.edulinq.org": {
+                    "id": "course101::hw0::course-student@test.edulinq.org::1697406272",
+                    "short-id": "1697406272",
+                    "course-id": "course101",
+                    "assignment-id": "hw0",
+                    "user": "course-student@test.edulinq.org",
+                    "message": "",
+                    "max_points": 2,
+                    "score": 2,
+                    "grading_start_time": 1697406273000
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"ZZZ\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempt\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/user/attempt",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.user.attempt",
+        "arguments": {
+            "target-email": "ZZZ"
+        },
+        "output": {
+            "found-user": false,
+            "found-submission": false,
+            "grading-result": null
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempt\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/user/attempt",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.user.attempt",
+        "arguments": {
+            "target-email": "course-student@test.edulinq.org"
+        },
+        "output": {
+            "found-user": true,
+            "found-submission": true,
+            "grading-result": {
+                "info": {
+                    "id": "course101::hw0::course-student@test.edulinq.org::1697406272",
+                    "short-id": "1697406272",
+                    "course-id": "course101",
+                    "assignment-id": "hw0",
+                    "user": "course-student@test.edulinq.org",
+                    "message": "",
+                    "max_points": 2,
+                    "score": 2,
+                    "name": "HW0",
+                    "questions": [
+                        {
+                            "name": "Q1",
+                            "max_points": 1,
+                            "score": 1,
+                            "message": "",
+                            "grading_start_time": 1697406273000,
+                            "grading_end_time": 1697406273000
+                        },
+                        {
+                            "name": "Q2",
+                            "max_points": 1,
+                            "score": 1,
+                            "message": "",
+                            "grading_start_time": 1697406273000,
+                            "grading_end_time": 1697406273000
+                        },
+                        {
+                            "name": "Style",
+                            "max_points": 0,
+                            "score": 0,
+                            "message": "Style is clean!",
+                            "grading_start_time": 1697406273000,
+                            "grading_end_time": 1697406273000
+                        }
+                    ],
+                    "grading_start_time": 1697406273000,
+                    "grading_end_time": 1697406273000,
+                    "additional-info": null
+                },
+                "input-files-gzip": {
+                    "submission.py": "H4sICAAAAAAA/3N1Ym1pc3Npb24ucHkASklNU0grzUsuyczPM9TQtOJSUFBQKEotKS3KUwgpKk3l4kJWYaRRlpiDqqgsMUdBW8GQCxAAAP//PpwmbkkAAAA="
+                },
+                "output-files-gzip": {
+                    "result.json": "H4sICAAAAAAA/3Jlc3VsdC5qc29uAMSSvQqDMBSFd5/iNrNDDPUnPkHX0qFDKRI0SEBja1JoEd+9mIptg1YyNdPl3HPO5YN0HgAAkqzmKAW0O2Lkv6TrjSstGqlQCicjDa+bpq/cPhhj06Zm9+zSCKmHfGAtVd60fEavuVKsNI12X9myQsgyU5q1OtPC3A0iSuMtTggJKVkIcFnM2id376/Skb/ThW50oQPdQT8q/hMQLwDa+gegKQWhIK84kxtn3sSFNyLxm9dM5/ETr97BlnGhn3q99wwAAP//PProBisDAAA="
+                },
+                "stdout": "Autograder transcript for assignment: HW0.\nGrading started at 2023-11-11 22:13 and ended at 2023-11-11 22:13.\nQ1: 1 / 1\nQ2: 1 / 1\nStyle: 0 / 0\n   Style is clean!\n\nTotal: 2 / 2\n",
+                "stderr": ""
+            }
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"target-submission\":\"1697406265\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempt\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/user/attempt",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.user.attempt",
+        "arguments": {
+            "target-email": "course-student@test.edulinq.org",
+            "target-submission": "1697406265"
+        },
+        "output": {
+            "found-user": true,
+            "found-submission": true,
+            "grading-result": {
+                "info": {
+                    "id": "course101::hw0::course-student@test.edulinq.org::1697406265",
+                    "short-id": "1697406265",
+                    "course-id": "course101",
+                    "assignment-id": "hw0",
+                    "user": "course-student@test.edulinq.org",
+                    "message": "",
+                    "max_points": 2,
+                    "score": 1,
+                    "name": "HW0",
+                    "questions": [
+                        {
+                            "name": "Q1",
+                            "max_points": 1,
+                            "score": 1,
+                            "message": "",
+                            "grading_start_time": 1697406266000,
+                            "grading_end_time": 1697406266000
+                        },
+                        {
+                            "name": "Q2",
+                            "max_points": 1,
+                            "score": 0,
+                            "message": "NotImplemented returned.",
+                            "grading_start_time": 1697406266000,
+                            "grading_end_time": 1697406266000
+                        },
+                        {
+                            "name": "Style",
+                            "max_points": 0,
+                            "score": 0,
+                            "message": "Style is clean!",
+                            "grading_start_time": 1697406266000,
+                            "grading_end_time": 1697406266000
+                        }
+                    ],
+                    "grading_start_time": 1697406266000,
+                    "grading_end_time": 1697406266000,
+                    "additional-info": null
+                },
+                "input-files-gzip": {
+                    "submission.py": "H4sICAAAAAAA/3N1Ym1pc3Npb24ucHkASklNU0grzUsuyczPM9TQtOJSUFBQKEotKS3KUwgpKk3l4kJWYaRRlpiDqsgvv8QztyAnNTc1ryQ1hQsQAAD//6rUxttQAAAA"
+                },
+                "output-files-gzip": {
+                    "result.json": "H4sICAAAAAAA/3Jlc3VsdC5qc29uAJySzWrDMBCE736Krc6hSE5/7DxBeymUHnooxYhoMQJrlUobaAl59xI1uFTEcRWfltmZMd+iXQUAIEg7FCsQD69SLH6kjy1Gtp6iWMFbkg7fbpz+5J7VMTZunP7sNt4SH/IqW8a1D3hCdxij7lNj3tcHbSz1XWQduGOb/qvu2vb+Rja1atvbiQCSOWkf3fvFLF19EZ2cpnvy/Og2AzokRgMBeRsIzXUxdVNG3RRQv/DXgGfBc8B/gKdSsBHWA2q6KuOtpcxvfY63lkv5y5um9+Pjnr3rMjNO9KtqX30HAAD//xSSgptDAwAA"
+                },
+                "stdout": "Autograder transcript for assignment: HW0.\nGrading started at 2023-11-11 22:13 and ended at 2023-11-11 22:13.\nQ1: 1 / 1\nQ2: 0 / 1\n   NotImplemented returned.\nStyle: 0 / 0\n   Style is clean!\n\nTotal: 1 / 2\n",
+                "stderr": ""
+            }
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempt\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/user/attempt",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.user.attempt",
+        "arguments": {},
+        "output": {
+            "found-user": true,
+            "found-submission": false,
+            "grading-result": null
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-grader@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempts\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/user/attempts",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.user.attempts",
+        "arguments": {
+            "target-email": "course-grader@test.edulinq.org"
+        },
+        "output": {
+            "found-user": true,
+            "grading-results": []
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"ZZZ@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempts\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/user/attempts",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.user.attempts",
+        "arguments": {
+            "target-email": "ZZZ@test.edulinq.org"
+        },
+        "output": {
+            "found-user": false,
+            "grading-results": []
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempts\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/user/attempts",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.user.attempts",
+        "arguments": {
+            "target-email": "course-student@test.edulinq.org"
+        },
+        "output": {
+            "found-user": true,
+            "grading-results": [
+                {
+                    "info": {
+                        "id": "course101::hw0::course-student@test.edulinq.org::1697406256",
+                        "short-id": "1697406256",
+                        "course-id": "course101",
+                        "assignment-id": "hw0",
+                        "user": "course-student@test.edulinq.org",
+                        "message": "",
+                        "max_points": 2,
+                        "score": 0,
+                        "name": "HW0",
+                        "questions": [
+                            {
+                                "name": "Q1",
+                                "max_points": 1,
+                                "score": 0,
+                                "message": "NotImplemented returned.",
+                                "grading_start_time": 1697406256000,
+                                "grading_end_time": 1697406256000
+                            },
+                            {
+                                "name": "Q2",
+                                "max_points": 1,
+                                "score": 0,
+                                "message": "NotImplemented returned.",
+                                "grading_start_time": 1697406256000,
+                                "grading_end_time": 1697406256000
+                            },
+                            {
+                                "name": "Style",
+                                "max_points": 0,
+                                "score": 0,
+                                "message": "Style is clean!",
+                                "grading_start_time": 1697406256000,
+                                "grading_end_time": 1697406256000
+                            }
+                        ],
+                        "grading_start_time": 1697406256000,
+                        "grading_end_time": 1697406256000,
+                        "additional-info": null
+                    },
+                    "input-files-gzip": {
+                        "submission.py": "H4sICAAAAAAA/3N1Ym1pc3Npb24ucHkASklNU0grzUsuyczPM9TQtOJSUFBQKEotKS3KU/DLL/HMLchJzU3NK0lN4eJCVmukUZaYg1c5IAAA//8hrjgTWgAAAA=="
+                    },
+                    "output-files-gzip": {
+                        "result.json": "H4sICAAAAAAA/3Jlc3VsdC5qc29uAMySwWrDMAyG73kKzecy4rRrkz7BdhmMHXYYI5haBEMsd7YKG6XvPuIlGTFsWW7NSUj/J+UDnzMAAEHKotiDuH/Jxeq79X7CwMZREHt4ja3uO4/VhHuSPTZOrPqoj84Qd7xMhuHgfMflKYQhqCZufHT8YI8tWiRGDR755An1bXqn8UobaurAynPNJv6P3FbVbpOXhVxX6Y0BQNJDXEzyYsxfVrPexdV6r+e9J/EF1s/82eKf4qngP8TjUjABDi0qulnsu13iuynufnxj9dY/+7k7ZZkEf9m/yy7ZVwAAAP//do3jyV0DAAA="
+                    },
+                    "stdout": "Autograder transcript for assignment: HW0.\nGrading started at 2023-11-11 22:13 and ended at 2023-11-11 22:13.\nQ1: 0 / 1\n   NotImplemented returned.\nQ2: 0 / 1\n   NotImplemented returned.\nStyle: 0 / 0\n   Style is clean!\n\nTotal: 0 / 2\n",
+                    "stderr": "Dummy Stderr\n"
+                },
+                {
+                    "info": {
+                        "id": "course101::hw0::course-student@test.edulinq.org::1697406265",
+                        "short-id": "1697406265",
+                        "course-id": "course101",
+                        "assignment-id": "hw0",
+                        "user": "course-student@test.edulinq.org",
+                        "message": "",
+                        "max_points": 2,
+                        "score": 1,
+                        "name": "HW0",
+                        "questions": [
+                            {
+                                "name": "Q1",
+                                "max_points": 1,
+                                "score": 1,
+                                "message": "",
+                                "grading_start_time": 1697406266000,
+                                "grading_end_time": 1697406266000
+                            },
+                            {
+                                "name": "Q2",
+                                "max_points": 1,
+                                "score": 0,
+                                "message": "NotImplemented returned.",
+                                "grading_start_time": 1697406266000,
+                                "grading_end_time": 1697406266000
+                            },
+                            {
+                                "name": "Style",
+                                "max_points": 0,
+                                "score": 0,
+                                "message": "Style is clean!",
+                                "grading_start_time": 1697406266000,
+                                "grading_end_time": 1697406266000
+                            }
+                        ],
+                        "grading_start_time": 1697406266000,
+                        "grading_end_time": 1697406266000,
+                        "additional-info": null
+                    },
+                    "input-files-gzip": {
+                        "submission.py": "H4sICAAAAAAA/3N1Ym1pc3Npb24ucHkASklNU0grzUsuyczPM9TQtOJSUFBQKEotKS3KUwgpKk3l4kJWYaRRlpiDqsgvv8QztyAnNTc1ryQ1hQsQAAD//6rUxttQAAAA"
+                    },
+                    "output-files-gzip": {
+                        "result.json": "H4sICAAAAAAA/3Jlc3VsdC5qc29uAJySzWrDMBCE736Krc6hSE5/7DxBeymUHnooxYhoMQJrlUobaAl59xI1uFTEcRWfltmZMd+iXQUAIEg7FCsQD69SLH6kjy1Gtp6iWMFbkg7fbpz+5J7VMTZunP7sNt4SH/IqW8a1D3hCdxij7lNj3tcHbSz1XWQduGOb/qvu2vb+Rja1atvbiQCSOWkf3fvFLF19EZ2cpnvy/Og2AzokRgMBeRsIzXUxdVNG3RRQv/DXgGfBc8B/gKdSsBHWA2q6KuOtpcxvfY63lkv5y5um9+Pjnr3rMjNO9KtqX30HAAD//xSSgptDAwAA"
+                    },
+                    "stdout": "Autograder transcript for assignment: HW0.\nGrading started at 2023-11-11 22:13 and ended at 2023-11-11 22:13.\nQ1: 1 / 1\nQ2: 0 / 1\n   NotImplemented returned.\nStyle: 0 / 0\n   Style is clean!\n\nTotal: 1 / 2\n",
+                    "stderr": ""
+                },
+                {
+                    "info": {
+                        "id": "course101::hw0::course-student@test.edulinq.org::1697406272",
+                        "short-id": "1697406272",
+                        "course-id": "course101",
+                        "assignment-id": "hw0",
+                        "user": "course-student@test.edulinq.org",
+                        "message": "",
+                        "max_points": 2,
+                        "score": 2,
+                        "name": "HW0",
+                        "questions": [
+                            {
+                                "name": "Q1",
+                                "max_points": 1,
+                                "score": 1,
+                                "message": "",
+                                "grading_start_time": 1697406273000,
+                                "grading_end_time": 1697406273000
+                            },
+                            {
+                                "name": "Q2",
+                                "max_points": 1,
+                                "score": 1,
+                                "message": "",
+                                "grading_start_time": 1697406273000,
+                                "grading_end_time": 1697406273000
+                            },
+                            {
+                                "name": "Style",
+                                "max_points": 0,
+                                "score": 0,
+                                "message": "Style is clean!",
+                                "grading_start_time": 1697406273000,
+                                "grading_end_time": 1697406273000
+                            }
+                        ],
+                        "grading_start_time": 1697406273000,
+                        "grading_end_time": 1697406273000,
+                        "additional-info": null
+                    },
+                    "input-files-gzip": {
+                        "submission.py": "H4sICAAAAAAA/3N1Ym1pc3Npb24ucHkASklNU0grzUsuyczPM9TQtOJSUFBQKEotKS3KUwgpKk3l4kJWYaRRlpiDqqgsMUdBW8GQCxAAAP//PpwmbkkAAAA="
+                    },
+                    "output-files-gzip": {
+                        "result.json": "H4sICAAAAAAA/3Jlc3VsdC5qc29uAMSSvQqDMBSFd5/iNrNDDPUnPkHX0qFDKRI0SEBja1JoEd+9mIptg1YyNdPl3HPO5YN0HgAAkqzmKAW0O2Lkv6TrjSstGqlQCicjDa+bpq/cPhhj06Zm9+zSCKmHfGAtVd60fEavuVKsNI12X9myQsgyU5q1OtPC3A0iSuMtTggJKVkIcFnM2id376/Skb/ThW50oQPdQT8q/hMQLwDa+gegKQWhIK84kxtn3sSFNyLxm9dM5/ETr97BlnGhn3q99wwAAP//PProBisDAAA="
+                    },
+                    "stdout": "Autograder transcript for assignment: HW0.\nGrading started at 2023-11-11 22:13 and ended at 2023-11-11 22:13.\nQ1: 1 / 1\nQ2: 1 / 1\nStyle: 0 / 0\n   Style is clean!\n\nTotal: 2 / 2\n",
+                    "stderr": ""
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/attempts\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/user/attempts",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.user.attempts",
+        "arguments": {},
+        "output": {
+            "found-user": true,
+            "grading-results": []
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/history\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/user/history",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.user.history",
+        "arguments": {
+            "target-email": "course-student@test.edulinq.org"
+        },
+        "output": {
+            "found-user": true,
+            "history": [
+                {
+                    "id": "course101::hw0::course-student@test.edulinq.org::1697406256",
+                    "short-id": "1697406256",
+                    "course-id": "course101",
+                    "assignment-id": "hw0",
+                    "user": "course-student@test.edulinq.org",
+                    "message": "",
+                    "max_points": 2,
+                    "score": 0,
+                    "grading_start_time": 1697406256000
+                },
+                {
+                    "id": "course101::hw0::course-student@test.edulinq.org::1697406265",
+                    "short-id": "1697406265",
+                    "course-id": "course101",
+                    "assignment-id": "hw0",
+                    "user": "course-student@test.edulinq.org",
+                    "message": "",
+                    "max_points": 2,
+                    "score": 1,
+                    "grading_start_time": 1697406266000
+                },
+                {
+                    "id": "course101::hw0::course-student@test.edulinq.org::1697406272",
+                    "short-id": "1697406272",
+                    "course-id": "course101",
+                    "assignment-id": "hw0",
+                    "user": "course-student@test.edulinq.org",
+                    "message": "",
+                    "max_points": 2,
+                    "score": 2,
+                    "grading_start_time": 1697406273000
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-other@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/history\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/user/history",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.user.history",
+        "arguments": {
+            "target-email": "course-other@test.edulinq.org"
+        },
+        "output": {
+            "found-user": true,
+            "history": []
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"ZZZ\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/history\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/user/history",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.user.history",
+        "arguments": {
+            "target-email": "ZZZ"
+        },
+        "output": {
+            "found-user": false,
+            "history": []
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/history\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/user/history",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.user.history",
+        "arguments": {},
+        "output": {
+            "found-user": true,
+            "history": []
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"ZZZ\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/peek\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/user/peek",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.user.peek",
+        "arguments": {
+            "target-email": "ZZZ"
+        },
+        "output": {
+            "found-user": false,
+            "found-submission": false,
+            "submission-result": null
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/peek\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/user/peek",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.user.peek",
+        "arguments": {
+            "target-email": "course-student@test.edulinq.org"
+        },
+        "output": {
+            "found-user": true,
+            "found-submission": true,
+            "submission-result": {
+                "id": "course101::hw0::course-student@test.edulinq.org::1697406272",
+                "short-id": "1697406272",
+                "course-id": "course101",
+                "assignment-id": "hw0",
+                "user": "course-student@test.edulinq.org",
+                "message": "",
+                "max_points": 2,
+                "score": 2,
+                "name": "HW0",
+                "questions": [
+                    {
+                        "name": "Q1",
+                        "max_points": 1,
+                        "score": 1,
+                        "message": "",
+                        "grading_start_time": 1697406273000,
+                        "grading_end_time": 1697406273000
+                    },
+                    {
+                        "name": "Q2",
+                        "max_points": 1,
+                        "score": 1,
+                        "message": "",
+                        "grading_start_time": 1697406273000,
+                        "grading_end_time": 1697406273000
+                    },
+                    {
+                        "name": "Style",
+                        "max_points": 0,
+                        "score": 0,
+                        "message": "Style is clean!",
+                        "grading_start_time": 1697406273000,
+                        "grading_end_time": 1697406273000
+                    }
+                ],
+                "grading_start_time": 1697406273000,
+                "grading_end_time": 1697406273000,
+                "additional-info": null
+            }
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"target-submission\":\"1697406265\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/peek\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/user/peek",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.user.peek",
+        "arguments": {
+            "target-email": "course-student@test.edulinq.org",
+            "target-submission": "1697406265"
+        },
+        "output": {
+            "found-user": true,
+            "found-submission": true,
+            "submission-result": {
+                "id": "course101::hw0::course-student@test.edulinq.org::1697406265",
+                "short-id": "1697406265",
+                "course-id": "course101",
+                "assignment-id": "hw0",
+                "user": "course-student@test.edulinq.org",
+                "message": "",
+                "max_points": 2,
+                "score": 1,
+                "name": "HW0",
+                "questions": [
+                    {
+                        "name": "Q1",
+                        "max_points": 1,
+                        "score": 1,
+                        "message": "",
+                        "grading_start_time": 1697406266000,
+                        "grading_end_time": 1697406266000
+                    },
+                    {
+                        "name": "Q2",
+                        "max_points": 1,
+                        "score": 0,
+                        "message": "NotImplemented returned.",
+                        "grading_start_time": 1697406266000,
+                        "grading_end_time": 1697406266000
+                    },
+                    {
+                        "name": "Style",
+                        "max_points": 0,
+                        "score": 0,
+                        "message": "Style is clean!",
+                        "grading_start_time": 1697406266000,
+                        "grading_end_time": 1697406266000
+                    }
+                ],
+                "grading_start_time": 1697406266000,
+                "grading_end_time": 1697406266000,
+                "additional-info": null
+            }
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/fetch/user/peek\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/fetch/user/peek",
+        "module_name": "autograder.api.courses.assignments.submissions.fetch.user.peek",
+        "arguments": {},
+        "output": {
+            "found-user": true,
+            "found-submission": false,
+            "submission-result": null
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"ZZZ\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/remove\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/remove",
+        "module_name": "autograder.api.courses.assignments.submissions.remove",
+        "arguments": {
+            "target-email": "ZZZ"
+        },
+        "output": {
+            "found-user": false,
+            "found-submission": false
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/remove\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/remove",
+        "module_name": "autograder.api.courses.assignments.submissions.remove",
+        "arguments": {
+            "target-email": "course-student@test.edulinq.org"
+        },
+        "output": {
+            "found-user": true,
+            "found-submission": true
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"target-submission\":\"1697406265\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/remove\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/remove",
+        "module_name": "autograder.api.courses.assignments.submissions.remove",
+        "arguments": {
+            "target-email": "course-student@test.edulinq.org",
+            "target-submission": "1697406265"
+        },
+        "output": {
+            "found-user": true,
+            "found-submission": true
+        }
+    },
+    "{\"arguments\":{\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/remove\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/remove",
+        "module_name": "autograder.api.courses.assignments.submissions.remove",
+        "arguments": {},
+        "output": {
+            "found-user": true,
+            "found-submission": false
+        }
+    },
+    "{\"arguments\":{\"submissions\":[\"course101::hw0::course-student@test.edulinq.org::1697406256\",\"course101::hw0::course-student@test.edulinq.org::1697406265\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"wait-for-completion\":false},\"endpoint\":\"courses/assignments/submissions/analysis/individual\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/analysis/individual",
+        "module_name": "autograder.api.courses.assignments.submissions.analysis.individual",
+        "arguments": {
+            "submissions": [
+                "course101::hw0::course-student@test.edulinq.org::1697406256",
+                "course101::hw0::course-student@test.edulinq.org::1697406265"
+            ],
+            "wait-for-completion": false
+        },
+        "output": {
+            "complete": false,
+            "summary": {
+                "complete": false,
+                "complete-count": 0,
+                "pending-count": 2,
+                "first-timestamp": 0,
+                "last-timestamp": 0,
+                "aggregate-score": {
+                    "count": 0,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0
+                },
+                "aggregate-lines-of-code": {
+                    "count": 0,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0
+                },
+                "aggregate-lines-of-code-per-file": null,
+                "aggregate-submission-time-delta": {
+                    "count": 0,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0
+                },
+                "aggregate-lines-of-code-delta": {
+                    "count": 0,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0
+                },
+                "aggregate-score-delta": {
+                    "count": 0,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0
+                },
+                "aggregate-lines-of-code-per-hour": {
+                    "count": 0,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0
+                },
+                "aggregate-score-per-hour": {
+                    "count": 0,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0
+                }
+            },
+            "results": []
+        }
+    },
+    "{\"arguments\":{\"submissions\":[\"course101::hw0::course-student@test.edulinq.org::1697406256\",\"course101::hw0::course-student@test.edulinq.org::1697406265\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"wait-for-completion\":true},\"endpoint\":\"courses/assignments/submissions/analysis/individual\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/analysis/individual",
+        "module_name": "autograder.api.courses.assignments.submissions.analysis.individual",
+        "arguments": {
+            "submissions": [
+                "course101::hw0::course-student@test.edulinq.org::1697406256",
+                "course101::hw0::course-student@test.edulinq.org::1697406265"
+            ],
+            "wait-for-completion": true
+        },
+        "output": {
+            "complete": true,
+            "summary": {
+                "complete": true,
+                "complete-count": 2,
+                "pending-count": 0,
+                "first-timestamp": 1234567890123,
+                "last-timestamp": 1234567890123,
+                "aggregate-score": {
+                    "count": 2,
+                    "mean": 0.5,
+                    "median": 0.5,
+                    "min": 0,
+                    "max": 1
+                },
+                "aggregate-lines-of-code": {
+                    "count": 2,
+                    "mean": 4,
+                    "median": 4,
+                    "min": 4,
+                    "max": 4
+                },
+                "aggregate-lines-of-code-per-file": {
+                    "submission.py": {
+                        "count": 2,
+                        "mean": 4,
+                        "median": 4,
+                        "min": 4,
+                        "max": 4
+                    }
+                },
+                "aggregate-submission-time-delta": {
+                    "count": 2,
+                    "mean": 5000,
+                    "median": 5000,
+                    "min": 0,
+                    "max": 10000
+                },
+                "aggregate-lines-of-code-delta": {
+                    "count": 2,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0
+                },
+                "aggregate-score-delta": {
+                    "count": 2,
+                    "mean": 0.5,
+                    "median": 0.5,
+                    "min": 0,
+                    "max": 1
+                },
+                "aggregate-lines-of-code-per-hour": {
+                    "count": 2,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0
+                },
+                "aggregate-score-per-hour": {
+                    "count": 2,
+                    "mean": 180,
+                    "median": 180,
+                    "min": 0,
+                    "max": 360
+                }
+            },
+            "results": [
+                {
+                    "analysis-timestamp": 1234567890123,
+                    "submission-id": "course101::hw0::course-student@test.edulinq.org::1697406256",
+                    "short-id": "1697406256",
+                    "course-id": "course101",
+                    "assignment-id": "hw0",
+                    "user-email": "course-student@test.edulinq.org",
+                    "submission-start-time": 1234567890123,
+                    "score": 0,
+                    "files": [
+                        {
+                            "filename": "submission.py",
+                            "lines-of-code": 4
+                        }
+                    ],
+                    "lines-of-code": 4,
+                    "submission-time-delta": 0,
+                    "lines-of-code-delta": 0,
+                    "score-delta": 0,
+                    "lines-of-code-per-hour": 0,
+                    "score-per-hour": 0
+                },
+                {
+                    "analysis-timestamp": 1234567890123,
+                    "submission-id": "course101::hw0::course-student@test.edulinq.org::1697406265",
+                    "short-id": "1697406265",
+                    "course-id": "course101",
+                    "assignment-id": "hw0",
+                    "user-email": "course-student@test.edulinq.org",
+                    "submission-start-time": 1234567890123,
+                    "score": 1,
+                    "files": [
+                        {
+                            "filename": "submission.py",
+                            "lines-of-code": 4
+                        }
+                    ],
+                    "lines-of-code": 4,
+                    "submission-time-delta": 10000,
+                    "lines-of-code-delta": 0,
+                    "score-delta": 1,
+                    "lines-of-code-per-hour": 0,
+                    "score-per-hour": 360
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"submissions\":[\"course101::hw0::course-student@test.edulinq.org::1697406256\",\"course101::hw0::course-student@test.edulinq.org::1697406265\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"wait-for-completion\":false},\"endpoint\":\"courses/assignments/submissions/analysis/pairwise\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/analysis/pairwise",
+        "module_name": "autograder.api.courses.assignments.submissions.analysis.pairwise",
+        "arguments": {
+            "submissions": [
+                "course101::hw0::course-student@test.edulinq.org::1697406256",
+                "course101::hw0::course-student@test.edulinq.org::1697406265"
+            ],
+            "wait-for-completion": false
+        },
+        "output": {
+            "complete": false,
+            "summary": {
+                "complete": false,
+                "complete-count": 0,
+                "pending-count": 1,
+                "first-timestamp": 0,
+                "last-timestamp": 0,
+                "aggregate-mean-similarities": null,
+                "aggregate-total-mean-similarity": {
+                    "count": 0,
+                    "mean": 0,
+                    "median": 0,
+                    "min": 0,
+                    "max": 0
+                }
+            },
+            "results": []
+        }
+    },
+    "{\"arguments\":{\"submissions\":[\"course101::hw0::course-student@test.edulinq.org::1697406256\",\"course101::hw0::course-student@test.edulinq.org::1697406265\"],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"wait-for-completion\":true},\"endpoint\":\"courses/assignments/submissions/analysis/pairwise\",\"files\":[]}": {
+        "endpoint": "courses/assignments/submissions/analysis/pairwise",
+        "module_name": "autograder.api.courses.assignments.submissions.analysis.pairwise",
+        "arguments": {
+            "submissions": [
+                "course101::hw0::course-student@test.edulinq.org::1697406256",
+                "course101::hw0::course-student@test.edulinq.org::1697406265"
+            ],
+            "wait-for-completion": true
+        },
+        "output": {
+            "complete": true,
+            "summary": {
+                "complete": true,
+                "complete-count": 1,
+                "pending-count": 0,
+                "first-timestamp": 1234567890123,
+                "last-timestamp": 1234567890123,
+                "aggregate-mean-similarities": {
+                    "submission.py": {
+                        "count": 1,
+                        "mean": 0.13,
+                        "median": 0.13,
+                        "min": 0.13,
+                        "max": 0.13
+                    }
+                },
+                "aggregate-total-mean-similarity": {
+                    "count": 1,
+                    "mean": 0.13,
+                    "median": 0.13,
+                    "min": 0.13,
+                    "max": 0.13
+                }
+            },
+            "results": [
+                {
+                    "analysis-timestamp": 1234567890123,
+                    "submission-ids": [
+                        "course101::hw0::course-student@test.edulinq.org::1697406256",
+                        "course101::hw0::course-student@test.edulinq.org::1697406265"
+                    ],
+                    "similarities": {
+                        "submission.py": [
+                            {
+                                "filename": "submission.py",
+                                "tool": "fake",
+                                "version": "0.0.1",
+                                "score": 0.13
+                            }
+                        ]
+                    },
+                    "unmatched-files": [],
+                    "mean-similarities": {
+                        "submission.py": 0.13
+                    },
+                    "total-mean-similarity": 0.13
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"allow-late\":false,\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/submit\",\"files\":[\"__DATA_DIR__(hw0_solution.py)\"]}": {
+        "endpoint": "courses/assignments/submissions/submit",
+        "module_name": "autograder.api.courses.assignments.submissions.submit",
+        "arguments": {
+            "allow-late": false
+        },
+        "output": {
+            "rejected": false,
+            "message": "",
+            "grading-success": true,
+            "result": {
+                "id": "course101::hw0::course-admin@test.edulinq.org::1234567890",
+                "short-id": "1234567890",
+                "course-id": "course101",
+                "assignment-id": "hw0",
+                "user": "course-admin@test.edulinq.org",
+                "message": "",
+                "max_points": 2,
+                "score": 2,
+                "name": "HW0",
+                "questions": [
+                    {
+                        "name": "Q1",
+                        "max_points": 1,
+                        "score": 1,
+                        "message": "",
+                        "grading_start_time": 1234567890123,
+                        "grading_end_time": 1234567890123
+                    },
+                    {
+                        "name": "Q2",
+                        "max_points": 1,
+                        "score": 1,
+                        "message": "",
+                        "grading_start_time": 1234567890123,
+                        "grading_end_time": 1234567890123
+                    },
+                    {
+                        "name": "Style",
+                        "max_points": 0,
+                        "score": 0,
+                        "message": "Style is clean!",
+                        "grading_start_time": 1234567890123,
+                        "grading_end_time": 1234567890123
+                    }
+                ],
+                "grading_start_time": 1234567890123,
+                "grading_end_time": 1234567890123,
+                "additional-info": null
+            }
+        }
+    },
+    "{\"arguments\":{\"allow-late\":true,\"assignment-id\":\"bash\",\"course-id\":\"course-languages\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/submit\",\"files\":[\"__DATA_DIR__(assignment.sh)\"]}": {
+        "endpoint": "courses/assignments/submissions/submit",
+        "module_name": "autograder.api.courses.assignments.submissions.submit",
+        "arguments": {
+            "course": "course-languages",
+            "assignment": "bash",
+            "allow-late": true
+        },
+        "output": {
+            "rejected": false,
+            "message": "",
+            "grading-success": true,
+            "result": {
+                "id": "course-languages::bash::course-admin@test.edulinq.org::1234567890",
+                "short-id": "1234567890",
+                "course-id": "course-languages",
+                "assignment-id": "bash",
+                "user": "course-admin@test.edulinq.org",
+                "message": "",
+                "max_points": 10,
+                "score": 10,
+                "name": "bash",
+                "questions": [
+                    {
+                        "name": "Task 1: add()",
+                        "max_points": 10,
+                        "score": 10,
+                        "message": "",
+                        "grading_start_time": 1234567890123,
+                        "grading_end_time": 1234567890123
+                    }
+                ],
+                "grading_start_time": 1234567890123,
+                "grading_end_time": 1234567890123,
+                "additional-info": null
+            }
+        }
+    },
+    "{\"arguments\":{\"allow-late\":false,\"assignment-id\":\"bash\",\"course-id\":\"course-languages\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/submit\",\"files\":[\"__DATA_DIR__(assignment.sh)\"]}": {
+        "endpoint": "courses/assignments/submissions/submit",
+        "module_name": "autograder.api.courses.assignments.submissions.submit",
+        "arguments": {
+            "course": "course-languages",
+            "assignment": "bash",
+            "allow-late": false
+        },
+        "output": {
+            "rejected": true,
+            "message": "Attempting to submit assignment (A Simple Bash Assignment) late without the 'allow late' option. It was due on <timestamp:1234567890123> (which was <time-delta:1234567890123> ago). Use the 'allow late' option to submit an assignment late (e.g., `--allow-late`). See your interface's documentation for more information.",
+            "grading-success": false,
+            "result": null
+        }
+    },
+    "{\"arguments\":{\"allow-late\":false,\"assignment-id\":\"hw0\",\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/assignments/submissions/submit\",\"files\":[\"__DATA_DIR__(hw0_no_compile.py)\"]}": {
+        "endpoint": "courses/assignments/submissions/submit",
+        "module_name": "autograder.api.courses.assignments.submissions.submit",
+        "arguments": {
+            "allow-late": false
+        },
+        "output": {
+            "rejected": false,
+            "message": "",
+            "grading-success": true,
+            "result": {
+                "id": "course101::hw0::course-admin@test.edulinq.org::1234567890",
+                "short-id": "1234567890",
+                "course-id": "course101",
+                "assignment-id": "hw0",
+                "user": "course-admin@test.edulinq.org",
+                "message": "",
+                "max_points": 2,
+                "score": 0,
+                "name": "HW0",
+                "questions": [
+                    {
+                        "name": "Q1",
+                        "max_points": 1,
+                        "score": 0,
+                        "message": "Submission could not be graded.",
+                        "grading_start_time": 1234567890123,
+                        "grading_end_time": 1234567890123
+                    },
+                    {
+                        "name": "Q2",
+                        "max_points": 1,
+                        "score": 0,
+                        "message": "Submission could not be graded.",
+                        "grading_start_time": 1234567890123,
+                        "grading_end_time": 1234567890123
+                    },
+                    {
+                        "name": "Style",
+                        "max_points": 0,
+                        "score": 0,
+                        "message": "Submission could not be graded.",
+                        "grading_start_time": 1234567890123,
+                        "grading_end_time": 1234567890123
+                    }
+                ],
+                "grading_start_time": 1234567890123,
+                "grading_end_time": 1234567890123,
+                "additional-info": null
+            }
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/lms/scores/upload\",\"files\":[]}": {
+        "endpoint": "courses/lms/scores/upload",
+        "module_name": "autograder.api.courses.lms.scores.upload",
+        "arguments": {
+            "dry-run": false
+        },
+        "output": {
+            "dry-run": false,
+            "results": []
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":true,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/lms/scores/upload\",\"files\":[]}": {
+        "endpoint": "courses/lms/scores/upload",
+        "module_name": "autograder.api.courses.lms.scores.upload",
+        "arguments": {
+            "dry-run": true
+        },
+        "output": {
+            "dry-run": true,
+            "results": []
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/stats/query\",\"files\":[]}": {
+        "endpoint": "courses/stats/query",
+        "module_name": "autograder.api.courses.stats.query",
+        "arguments": {},
+        "output": {
+            "results": [
+                {
+                    "timestamp": 100,
+                    "type": "grading-time",
+                    "course": "course101",
+                    "assignment": "hw0",
+                    "user": "server-admin@test.edulinq.org",
+                    "duration": 100
+                },
+                {
+                    "timestamp": 200,
+                    "type": "grading-time",
+                    "course": "course101",
+                    "assignment": "hw0",
+                    "user": "server-admin@test.edulinq.org",
+                    "duration": 200
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":true,\"skip-build-images\":false,\"skip-emails\":false,\"skip-lms-sync\":false,\"skip-source-sync\":false,\"skip-tasks\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/upsert/zip\",\"files\":[\"__DATA_DIR__(course101.zip)\"]}": {
+        "endpoint": "courses/upsert/zip",
+        "module_name": "autograder.api.courses.upsert.zip",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "dry-run": true,
+            "skip-build-images": false,
+            "skip-emails": false,
+            "skip-lms-sync": false,
+            "skip-source-sync": false,
+            "skip-tasks": false
+        },
+        "output": {
+            "results": [
+                {
+                    "course-id": "course101",
+                    "success": true,
+                    "message": "",
+                    "created": false,
+                    "updated": true,
+                    "lms-sync-result": null,
+                    "built-assignment-images": [
+                        "autograder.__autograder_dryrun__course101.hw0"
+                    ]
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"skip-build-images\":false,\"skip-emails\":false,\"skip-lms-sync\":false,\"skip-source-sync\":false,\"skip-tasks\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/upsert/zip\",\"files\":[\"__DATA_DIR__(courses101-102.zip)\"]}": {
+        "endpoint": "courses/upsert/zip",
+        "module_name": "autograder.api.courses.upsert.zip",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "dry-run": false,
+            "skip-build-images": false,
+            "skip-emails": false,
+            "skip-lms-sync": false,
+            "skip-source-sync": false,
+            "skip-tasks": false
+        },
+        "output": {
+            "results": [
+                {
+                    "course-id": "course101",
+                    "success": true,
+                    "message": "",
+                    "created": false,
+                    "updated": true,
+                    "lms-sync-result": null,
+                    "built-assignment-images": [
+                        "autograder.course101.hw0"
+                    ]
+                },
+                {
+                    "course-id": "course102",
+                    "success": true,
+                    "message": "",
+                    "created": true,
+                    "updated": false,
+                    "lms-sync-result": null,
+                    "built-assignment-images": []
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"skip-build-images\":false,\"skip-emails\":false,\"skip-lms-sync\":false,\"skip-source-sync\":false,\"skip-tasks\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/upsert/zip\",\"files\":[\"__DATA_DIR__(course101.zip)\"]}": {
+        "endpoint": "courses/upsert/zip",
+        "module_name": "autograder.api.courses.upsert.zip",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "dry-run": false,
+            "skip-build-images": false,
+            "skip-emails": false,
+            "skip-lms-sync": false,
+            "skip-source-sync": false,
+            "skip-tasks": false
+        },
+        "output": {
+            "results": [
+                {
+                    "course-id": "course101",
+                    "success": true,
+                    "message": "",
+                    "created": false,
+                    "updated": true,
+                    "lms-sync-result": null,
+                    "built-assignment-images": [
+                        "autograder.course101.hw0"
+                    ]
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"skip-build-images\":true,\"skip-emails\":false,\"skip-lms-sync\":false,\"skip-source-sync\":false,\"skip-tasks\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/upsert/zip\",\"files\":[\"__DATA_DIR__(course101.zip)\"]}": {
+        "endpoint": "courses/upsert/zip",
+        "module_name": "autograder.api.courses.upsert.zip",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "dry-run": false,
+            "skip-build-images": true,
+            "skip-emails": false,
+            "skip-lms-sync": false,
+            "skip-source-sync": false,
+            "skip-tasks": false
+        },
+        "output": {
+            "results": [
+                {
+                    "course-id": "course101",
+                    "success": true,
+                    "message": "",
+                    "created": false,
+                    "updated": true,
+                    "lms-sync-result": null,
+                    "built-assignment-images": null
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/drop\",\"files\":[]}": {
+        "endpoint": "courses/users/drop",
+        "module_name": "autograder.api.courses.users.drop",
+        "arguments": {
+            "target-email": "course-student@test.edulinq.org"
+        },
+        "output": {
+            "found-user": true
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-email\":\"ZZZ@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/drop\",\"files\":[]}": {
+        "endpoint": "courses/users/drop",
+        "module_name": "autograder.api.courses.users.drop",
+        "arguments": {
+            "target-email": "ZZZ@test.edulinq.org"
+        },
+        "output": {
+            "found-user": false
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-email\":\"server-user@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/drop\",\"files\":[]}": {
+        "endpoint": "courses/users/drop",
+        "module_name": "autograder.api.courses.users.drop",
+        "arguments": {
+            "target-email": "server-user@test.edulinq.org"
+        },
+        "output": {
+            "found-user": false
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"student\",\"email\":\"new-user@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
+        "endpoint": "courses/users/enroll",
+        "module_name": "autograder.api.courses.users.enroll",
+        "arguments": {
+            "user": "course-admin@test.edulinq.org",
+            "pass": "course-admin",
+            "send-emails": true,
+            "skip-inserts": false,
+            "skip-updates": false,
+            "dry-run": false,
+            "raw-course-users": [
+                {
+                    "email": "new-user@test.edulinq.org",
+                    "name": "",
+                    "course-role": "student",
+                    "course-lms-id": ""
+                }
+            ]
+        },
+        "output": {
+            "results": [
+                {
+                    "email": "new-user@test.edulinq.org",
+                    "added": true,
+                    "emailed": true,
+                    "enrolled": [
+                        "course101"
+                    ]
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"student\",\"email\":\"new-user@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
+        "endpoint": "courses/users/enroll",
+        "module_name": "autograder.api.courses.users.enroll",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "send-emails": true,
+            "skip-inserts": false,
+            "skip-updates": false,
+            "dry-run": false,
+            "raw-course-users": [
+                {
+                    "email": "new-user@test.edulinq.org",
+                    "name": "",
+                    "course-role": "student",
+                    "course-lms-id": ""
+                }
+            ]
+        },
+        "output": {
+            "results": [
+                {
+                    "email": "new-user@test.edulinq.org",
+                    "added": true,
+                    "emailed": true,
+                    "enrolled": [
+                        "course101"
+                    ]
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"student\",\"email\":\"new-user-1@test.edulinq.org\",\"name\":\"\"},{\"course-lms-id\":\"\",\"course-role\":\"grader\",\"email\":\"new-user-2@test.edulinq.org\",\"name\":\"\"},{\"course-lms-id\":\"\",\"course-role\":\"admin\",\"email\":\"new-user-3@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
+        "endpoint": "courses/users/enroll",
+        "module_name": "autograder.api.courses.users.enroll",
+        "arguments": {
+            "user": "course-admin@test.edulinq.org",
+            "pass": "course-admin",
+            "send-emails": true,
+            "skip-inserts": false,
+            "skip-updates": false,
+            "dry-run": false,
+            "raw-course-users": [
+                {
+                    "email": "new-user-1@test.edulinq.org",
+                    "name": "",
+                    "course-role": "student",
+                    "course-lms-id": ""
+                },
+                {
+                    "email": "new-user-2@test.edulinq.org",
+                    "name": "",
+                    "course-role": "grader",
+                    "course-lms-id": ""
+                },
+                {
+                    "email": "new-user-3@test.edulinq.org",
+                    "name": "",
+                    "course-role": "admin",
+                    "course-lms-id": ""
+                }
+            ]
+        },
+        "output": {
+            "results": [
+                {
+                    "email": "new-user-1@test.edulinq.org",
+                    "added": true,
+                    "emailed": true,
+                    "enrolled": [
+                        "course101"
+                    ]
+                },
+                {
+                    "email": "new-user-2@test.edulinq.org",
+                    "added": true,
+                    "emailed": true,
+                    "enrolled": [
+                        "course101"
+                    ]
+                },
+                {
+                    "email": "new-user-3@test.edulinq.org",
+                    "added": true,
+                    "emailed": true,
+                    "enrolled": [
+                        "course101"
+                    ]
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"student\",\"email\":\"new-user-1@test.edulinq.org\",\"name\":\"\"},{\"course-lms-id\":\"\",\"course-role\":\"grader\",\"email\":\"new-user-2@test.edulinq.org\",\"name\":\"\"},{\"course-lms-id\":\"\",\"course-role\":\"admin\",\"email\":\"new-user-3@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
+        "endpoint": "courses/users/enroll",
+        "module_name": "autograder.api.courses.users.enroll",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "send-emails": true,
+            "skip-inserts": false,
+            "skip-updates": false,
+            "dry-run": false,
+            "raw-course-users": [
+                {
+                    "email": "new-user-1@test.edulinq.org",
+                    "name": "",
+                    "course-role": "student",
+                    "course-lms-id": ""
+                },
+                {
+                    "email": "new-user-2@test.edulinq.org",
+                    "name": "",
+                    "course-role": "grader",
+                    "course-lms-id": ""
+                },
+                {
+                    "email": "new-user-3@test.edulinq.org",
+                    "name": "",
+                    "course-role": "admin",
+                    "course-lms-id": ""
+                }
+            ]
+        },
+        "output": {
+            "results": [
+                {
+                    "email": "new-user-1@test.edulinq.org",
+                    "added": true,
+                    "emailed": true,
+                    "enrolled": [
+                        "course101"
+                    ]
+                },
+                {
+                    "email": "new-user-2@test.edulinq.org",
+                    "added": true,
+                    "emailed": true,
+                    "enrolled": [
+                        "course101"
+                    ]
+                },
+                {
+                    "email": "new-user-3@test.edulinq.org",
+                    "added": true,
+                    "emailed": true,
+                    "enrolled": [
+                        "course101"
+                    ]
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"grader\",\"email\":\"course-student@test.edulinq.org\",\"name\":\"\"},{\"course-lms-id\":\"new-lms-id\",\"course-role\":\"grader\",\"email\":\"course-grader@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
+        "endpoint": "courses/users/enroll",
+        "module_name": "autograder.api.courses.users.enroll",
+        "arguments": {
+            "user": "course-admin@test.edulinq.org",
+            "pass": "course-admin",
+            "send-emails": true,
+            "skip-inserts": false,
+            "skip-updates": false,
+            "dry-run": false,
+            "raw-course-users": [
+                {
+                    "email": "course-student@test.edulinq.org",
+                    "name": "",
+                    "course-role": "grader",
+                    "course-lms-id": ""
+                },
+                {
+                    "email": "course-grader@test.edulinq.org",
+                    "name": "",
+                    "course-role": "grader",
+                    "course-lms-id": "new-lms-id"
+                }
+            ]
+        },
+        "output": {
+            "results": [
+                {
+                    "email": "course-grader@test.edulinq.org",
+                    "modified": true
+                },
+                {
+                    "email": "course-student@test.edulinq.org",
+                    "modified": true
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"owner\",\"email\":\"course-student@test.edulinq.org\",\"name\":\"\"},{\"course-lms-id\":\"\",\"course-role\":\"owner\",\"email\":\"course-grader@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
+        "endpoint": "courses/users/enroll",
+        "module_name": "autograder.api.courses.users.enroll",
+        "arguments": {
+            "user": "course-admin@test.edulinq.org",
+            "pass": "course-admin",
+            "send-emails": true,
+            "skip-inserts": false,
+            "skip-updates": false,
+            "dry-run": false,
+            "raw-course-users": [
+                {
+                    "email": "course-student@test.edulinq.org",
+                    "name": "",
+                    "course-role": "owner",
+                    "course-lms-id": ""
+                },
+                {
+                    "email": "course-grader@test.edulinq.org",
+                    "name": "",
+                    "course-role": "owner",
+                    "course-lms-id": ""
+                }
+            ]
+        },
+        "output": {
+            "results": [
+                {
+                    "email": "course-grader@test.edulinq.org",
+                    "validation-error": {
+                        "locator": "",
+                        "message": "You have insufficient permissions for the requested operation."
+                    }
+                },
+                {
+                    "email": "course-student@test.edulinq.org",
+                    "validation-error": {
+                        "locator": "",
+                        "message": "You have insufficient permissions for the requested operation."
+                    }
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"new-lms-id\",\"course-role\":\"student\",\"email\":\"course-student@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
+        "endpoint": "courses/users/enroll",
+        "module_name": "autograder.api.courses.users.enroll",
+        "arguments": {
+            "user": "course-admin@test.edulinq.org",
+            "pass": "course-admin",
+            "send-emails": true,
+            "skip-inserts": false,
+            "skip-updates": false,
+            "dry-run": false,
+            "raw-course-users": [
+                {
+                    "email": "course-student@test.edulinq.org",
+                    "name": "",
+                    "course-role": "student",
+                    "course-lms-id": "new-lms-id"
+                }
+            ]
+        },
+        "output": {
+            "results": [
+                {
+                    "email": "course-student@test.edulinq.org",
+                    "modified": true
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"grader\",\"email\":\"course-student@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
+        "endpoint": "courses/users/enroll",
+        "module_name": "autograder.api.courses.users.enroll",
+        "arguments": {
+            "user": "course-admin@test.edulinq.org",
+            "pass": "course-admin",
+            "send-emails": true,
+            "skip-inserts": false,
+            "skip-updates": false,
+            "dry-run": false,
+            "raw-course-users": [
+                {
+                    "email": "course-student@test.edulinq.org",
+                    "name": "",
+                    "course-role": "grader",
+                    "course-lms-id": ""
+                }
+            ]
+        },
+        "output": {
+            "results": [
+                {
+                    "email": "course-student@test.edulinq.org",
+                    "modified": true
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"dry-run\":false,\"raw-course-users\":[{\"course-lms-id\":\"\",\"course-role\":\"owner\",\"email\":\"course-student@test.edulinq.org\",\"name\":\"\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/enroll\",\"files\":[]}": {
+        "endpoint": "courses/users/enroll",
+        "module_name": "autograder.api.courses.users.enroll",
+        "arguments": {
+            "user": "course-admin@test.edulinq.org",
+            "pass": "course-admin",
+            "send-emails": true,
+            "skip-inserts": false,
+            "skip-updates": false,
+            "dry-run": false,
+            "raw-course-users": [
+                {
+                    "email": "course-student@test.edulinq.org",
+                    "name": "",
+                    "course-role": "owner",
+                    "course-lms-id": ""
+                }
+            ]
+        },
+        "output": {
+            "results": [
+                {
+                    "email": "course-student@test.edulinq.org",
+                    "validation-error": {
+                        "locator": "",
+                        "message": "You have insufficient permissions for the requested operation."
+                    }
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/get\",\"files\":[]}": {
+        "endpoint": "courses/users/get",
+        "module_name": "autograder.api.courses.users.get",
+        "arguments": {
+            "target-email": "course-student@test.edulinq.org"
+        },
+        "output": {
+            "found": true,
+            "user": {
+                "type": "course",
+                "email": "course-student@test.edulinq.org",
+                "name": "course-student",
+                "role": "student",
+                "lms-id": "lms-course-student@test.edulinq.org"
+            }
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-email\":\"ZZZ@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/get\",\"files\":[]}": {
+        "endpoint": "courses/users/get",
+        "module_name": "autograder.api.courses.users.get",
+        "arguments": {
+            "target-email": "ZZZ@test.edulinq.org"
+        },
+        "output": {
+            "found": false,
+            "user": null
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-email\":\"server-user@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/get\",\"files\":[]}": {
+        "endpoint": "courses/users/get",
+        "module_name": "autograder.api.courses.users.get",
+        "arguments": {
+            "target-email": "server-user@test.edulinq.org"
+        },
+        "output": {
+            "found": false,
+            "user": null
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/get\",\"files\":[]}": {
+        "endpoint": "courses/users/get",
+        "module_name": "autograder.api.courses.users.get",
+        "arguments": {},
+        "output": {
+            "found": true,
+            "user": {
+                "type": "course",
+                "email": "course-admin@test.edulinq.org",
+                "name": "course-admin",
+                "role": "admin",
+                "lms-id": "lms-course-admin@test.edulinq.org"
+            }
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"courses/users/list\",\"files\":[]}": {
+        "endpoint": "courses/users/list",
+        "module_name": "autograder.api.courses.users.list",
+        "arguments": {},
+        "output": {
+            "users": [
+                {
+                    "type": "course",
+                    "email": "course-admin@test.edulinq.org",
+                    "name": "course-admin",
+                    "role": "admin",
+                    "lms-id": "lms-course-admin@test.edulinq.org"
+                },
+                {
+                    "type": "course",
+                    "email": "course-grader@test.edulinq.org",
+                    "name": "course-grader",
+                    "role": "grader",
+                    "lms-id": "lms-course-grader@test.edulinq.org"
+                },
+                {
+                    "type": "course",
+                    "email": "course-other@test.edulinq.org",
+                    "name": "course-other",
+                    "role": "other",
+                    "lms-id": "lms-course-other@test.edulinq.org"
+                },
+                {
+                    "type": "course",
+                    "email": "course-owner@test.edulinq.org",
+                    "name": "course-owner",
+                    "role": "owner",
+                    "lms-id": "lms-course-owner@test.edulinq.org"
+                },
+                {
+                    "type": "course",
+                    "email": "course-student@test.edulinq.org",
+                    "name": "course-student",
+                    "role": "student",
+                    "lms-id": "lms-course-student@test.edulinq.org"
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"assignment-lms-id\":\"12345\",\"course-id\":\"COURSE101\",\"scores\":[{\"email\":\"course-student@test.edulinq.org\",\"score\":10},{\"email\":\"zzz@test.edulinq.org\",\"score\":10}],\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"lms/upload/scores\",\"files\":[]}": {
+        "endpoint": "lms/upload/scores",
+        "module_name": "autograder.api.lms.uploadscores",
+        "arguments": {
+            "assignment-lms-id": "12345",
+            "scores": [
+                {
+                    "email": "course-student@test.edulinq.org",
+                    "score": 10
+                },
+                {
+                    "email": "zzz@test.edulinq.org",
+                    "score": 10
+                }
+            ]
+        },
+        "output": {
+            "count": 1,
+            "error-count": 1,
+            "unrecognized-users": [
+                {
+                    "row": 1,
+                    "entry": "zzz@test.edulinq.org"
+                }
+            ],
+            "no-lms-id-users": []
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"lms/user/get\",\"files\":[]}": {
+        "endpoint": "lms/user/get",
+        "module_name": "autograder.api.lms.userget",
+        "arguments": {
+            "target-email": "course-student@test.edulinq.org"
+        },
+        "output": {
+            "found-autograder-user": true,
+            "found-lms-user": true,
+            "user": {
+                "type": "course",
+                "email": "course-student@test.edulinq.org",
+                "name": "course-student",
+                "role": "student",
+                "lms-id": "lms-course-student@test.edulinq.org"
+            }
+        }
+    },
+    "{\"arguments\":{\"course-id\":\"COURSE101\",\"target-email\":\"ZZZ@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"lms/user/get\",\"files\":[]}": {
+        "endpoint": "lms/user/get",
+        "module_name": "autograder.api.lms.userget",
+        "arguments": {
+            "target-email": "ZZZ@test.edulinq.org"
+        },
+        "output": {
+            "found-autograder-user": false,
+            "found-lms-user": false,
+            "user": null
+        }
+    },
+    "{\"arguments\":{\"level\":\"INFO\",\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"logs/query\",\"files\":[]}": {
+        "endpoint": "logs/query",
+        "module_name": "autograder.api.logs.query",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "level": "INFO"
+        },
+        "output": {
+            "success": true,
+            "error": null,
+            "results": [
+                {
+                    "level": 0,
+                    "message": "API Server Started.",
+                    "timestamp": 0,
+                    "attributes": {
+                        "port": 8080,
+                        "path": "/some/path/course.json",
+                        "unix_socket": "/tmp/autograder.sock"
+                    }
+                },
+                {
+                    "level": 0,
+                    "message": "Unix Socket Server Started.",
+                    "timestamp": 0,
+                    "attributes": {
+                        "unix_socket": "/tmp/autograder.sock",
+                        "path": "/some/path/course.json",
+                        "port": 8080
+                    }
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"level\":\"INFO\",\"target-course\":\"course101\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"logs/query\",\"files\":[]}": {
+        "endpoint": "logs/query",
+        "module_name": "autograder.api.logs.query",
+        "arguments": {
+            "target-course": "course101",
+            "level": "INFO"
+        },
+        "output": {
+            "success": true,
+            "error": null,
+            "results": []
+        }
+    },
+    "{\"arguments\":{\"level\":\"INFO\",\"target-assignment\":\"HW0\",\"target-course\":\"course101\",\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"logs/query\",\"files\":[]}": {
+        "endpoint": "logs/query",
+        "module_name": "autograder.api.logs.query",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "level": "INFO",
+            "target-course": "course101",
+            "target-assignment": "HW0"
+        },
+        "output": {
+            "success": true,
+            "error": null,
+            "results": []
+        }
+    },
+    "{\"arguments\":{\"level\":\"DEBUG\",\"target-email\":\"course-other@test.edulinq.org\",\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"logs/query\",\"files\":[]}": {
+        "endpoint": "logs/query",
+        "module_name": "autograder.api.logs.query",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "level": "DEBUG",
+            "target-email": "course-other@test.edulinq.org"
+        },
+        "output": {
+            "success": true,
+            "error": null,
+            "results": []
+        }
+    },
+    "{\"arguments\":{\"level\":\"DEBUG\",\"target-email\":\"ZZZ\",\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"logs/query\",\"files\":[]}": {
+        "endpoint": "logs/query",
+        "module_name": "autograder.api.logs.query",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "level": "DEBUG",
+            "target-email": "ZZZ"
+        },
+        "output": {
+            "success": false,
+            "error": {
+                "locator": "-1102",
+                "message": "Failed to validate log query: 'Could not find user with email 'ZZZ'.'."
+            },
+            "results": null
+        }
+    },
+    "{\"arguments\":{\"level\":\"ERROR\",\"past\":\"24h\",\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"logs/query\",\"files\":[]}": {
+        "endpoint": "logs/query",
+        "module_name": "autograder.api.logs.query",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "level": "ERROR",
+            "past": "24h"
+        },
+        "output": {
+            "success": true,
+            "error": null,
+            "results": []
+        }
+    },
+    "{\"arguments\":{\"level\":\"INFO\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"logs/query\",\"files\":[]}": {
+        "endpoint": "logs/query",
+        "module_name": "autograder.api.logs.query",
+        "arguments": {
+            "level": "INFO"
+        },
+        "output": {
+            "success": false,
+            "error": {
+                "locator": "",
+                "message": "You do not have the correct permissions to execute this log query."
+            },
+            "results": null
+        }
+    },
+    "{\"arguments\":{\"level\":\"INFO\",\"target-email\":\"course-other@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"logs/query\",\"files\":[]}": {
+        "endpoint": "logs/query",
+        "module_name": "autograder.api.logs.query",
+        "arguments": {
+            "target-email": "course-other@test.edulinq.org",
+            "level": "INFO"
+        },
+        "output": {
+            "success": false,
+            "error": {
+                "locator": "",
+                "message": "You do not have the correct permissions to execute this log query."
+            },
+            "results": null
+        }
+    },
+    "{\"arguments\":{\"level\":\"INFO\",\"target-email\":\"course-admin@test.edulinq.org\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"logs/query\",\"files\":[]}": {
+        "endpoint": "logs/query",
+        "module_name": "autograder.api.logs.query",
+        "arguments": {
+            "target-email": "course-admin@test.edulinq.org",
+            "level": "INFO"
+        },
+        "output": {
+            "success": true,
+            "error": null,
+            "results": []
+        }
+    },
+    "{\"arguments\":{\"after\":\"1970-01-01T00:00:00+00:00\",\"level\":\"INFO\",\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"logs/query\",\"files\":[]}": {
+        "endpoint": "logs/query",
+        "module_name": "autograder.api.logs.query",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "after": "1970-01-01T00:00:00+00:00",
+            "level": "INFO"
+        },
+        "output": {
+            "success": true,
+            "error": null,
+            "results": [
+                {
+                    "level": 0,
+                    "message": "API Server Started.",
+                    "timestamp": 0,
+                    "attributes": {
+                        "port": 8080,
+                        "path": "/some/path/course.json",
+                        "unix_socket": "/tmp/autograder.sock"
+                    }
+                },
+                {
+                    "level": 0,
+                    "message": "Unix Socket Server Started.",
+                    "timestamp": 0,
+                    "attributes": {
+                        "unix_socket": "/tmp/autograder.sock",
+                        "path": "/some/path/course.json",
+                        "port": 8080
+                    }
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"after\":\"2999-01-01T00:00:00+00:00\",\"level\":\"DEBUG\",\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"logs/query\",\"files\":[]}": {
+        "endpoint": "logs/query",
+        "module_name": "autograder.api.logs.query",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "level": "DEBUG",
+            "after": "2999-01-01T00:00:00+00:00"
+        },
+        "output": {
+            "success": true,
+            "error": null,
+            "results": []
+        }
+    },
+    "{\"arguments\":{},\"endpoint\":\"metadata/describe\",\"files\":[]}": {
+        "endpoint": "metadata/describe",
+        "module_name": "autograder.api.metadata.describe",
+        "arguments": {},
+        "output": {
+            "endpoints": {
+                "courses/admin/update": {
+                    "request-type": "*admin.UpdateRequest",
+                    "response-type": "*admin.UpdateResponse",
+                    "description": "Update an existing course."
+                },
+                "courses/assignments/get": {
+                    "request-type": "*assignments.GetRequest",
+                    "response-type": "*assignments.GetResponse",
+                    "description": "Get the information for a course assignment."
+                },
+                "courses/assignments/list": {
+                    "request-type": "*assignments.ListRequest",
+                    "response-type": "*assignments.ListResponse",
+                    "description": "List the assignments in the course."
+                },
+                "courses/assignments/submissions/analysis/individual": {
+                    "request-type": "*analysis.IndividualRequest",
+                    "response-type": "*analysis.IndividualResponse",
+                    "description": "Get the result of a individual analysis for the specified submissions."
+                },
+                "courses/assignments/submissions/analysis/pairwise": {
+                    "request-type": "*analysis.PairwiseRequest",
+                    "response-type": "*analysis.PairwiseResponse",
+                    "description": "Get the result of a pairwise analysis for the specified submissions."
+                },
+                "courses/assignments/submissions/fetch/course/attempts": {
+                    "request-type": "*course.FetchCourseAttemptsRequest",
+                    "response-type": "*course.FetchCourseAttemptsResponse",
+                    "description": "Get all recent submissions and grading information for this assignment."
+                },
+                "courses/assignments/submissions/fetch/course/scores": {
+                    "request-type": "*course.FetchCourseScoresRequest",
+                    "response-type": "*course.FetchCourseScoresResponse",
+                    "description": "Get a summary of the most recent scores for this assignment."
+                },
+                "courses/assignments/submissions/fetch/user/attempt": {
+                    "request-type": "*user.FetchUserAttemptRequest",
+                    "response-type": "*user.FetchUserAttemptResponse",
+                    "description": "Get a submission along with all grading information."
+                },
+                "courses/assignments/submissions/fetch/user/attempts": {
+                    "request-type": "*user.FetchUserAttemptsRequest",
+                    "response-type": "*user.FetchUserAttemptsResponse",
+                    "description": "Get all submission attempts made by a user along with all grading information."
+                },
+                "courses/assignments/submissions/fetch/user/history": {
+                    "request-type": "*user.FetchUserHistoryRequest",
+                    "response-type": "*user.FetchUserHistoryResponse",
+                    "description": "Get a summary of the submissions for this assignment."
+                },
+                "courses/assignments/submissions/fetch/user/peek": {
+                    "request-type": "*user.FetchUserPeekRequest",
+                    "response-type": "*user.FetchUserPeekResponse",
+                    "description": "Get a copy of the grading report for the specified submission. Does not submit a new submission."
+                },
+                "courses/assignments/submissions/remove": {
+                    "request-type": "*submissions.RemoveRequest",
+                    "response-type": "*submissions.RemoveResponse",
+                    "description": "Remove a specified submission. Defaults to the most recent submission."
+                },
+                "courses/assignments/submissions/submit": {
+                    "request-type": "*submissions.SubmitRequest",
+                    "response-type": "*submissions.SubmitResponse",
+                    "description": "Submit an assignment submission to the autograder."
+                },
+                "courses/lms/scores/upload": {
+                    "request-type": "*scores.UploadRequest",
+                    "response-type": "*scores.UploadResponse",
+                    "description": "Perform a full scoring and upload scores to the course's LMS."
+                },
+                "courses/stats/query": {
+                    "request-type": "*stats.QueryRequest",
+                    "response-type": "*stats.QueryResponse",
+                    "description": "Query metrics for a specific course.\nOnly the context course can be queried for, the target-course field will be ignored for this endpoint."
+                },
+                "courses/upsert/filespec": {
+                    "request-type": "*upsert.FileSpecRequest",
+                    "response-type": "*upsert.UpsertResponse",
+                    "description": "Upsert a course using a filespec."
+                },
+                "courses/upsert/zip": {
+                    "request-type": "*upsert.ZipFileRequest",
+                    "response-type": "*upsert.UpsertResponse",
+                    "description": "Upsert a course using a zip file."
+                },
+                "courses/users/drop": {
+                    "request-type": "*users.DropRequest",
+                    "response-type": "*users.DropResponse",
+                    "description": "Drop a user from the course."
+                },
+                "courses/users/enroll": {
+                    "request-type": "*users.EnrollRequest",
+                    "response-type": "*users.EnrollResponse",
+                    "description": "Enroll one or more users to the course."
+                },
+                "courses/users/get": {
+                    "request-type": "*users.GetRequest",
+                    "response-type": "*users.GetResponse",
+                    "description": "Get the information for a course user."
+                },
+                "courses/users/list": {
+                    "request-type": "*users.ListRequest",
+                    "response-type": "*users.ListResponse",
+                    "description": "List the users in the course."
+                },
+                "lms/upload/scores": {
+                    "request-type": "*upload.UploadScoresRequest",
+                    "response-type": "*upload.UploadScoresResponse",
+                    "description": "Upload scores from a tab-separated file to the course's LMS.\nThe file should not have headers, and should have two columns: email and score."
+                },
+                "lms/user/get": {
+                    "request-type": "*user.UserGetRequest",
+                    "response-type": "*user.UserGetResponse",
+                    "description": "Get information for an LMS user."
+                },
+                "logs/query": {
+                    "request-type": "*logs.QueryRequest",
+                    "response-type": "*logs.QueryResponse",
+                    "description": "Query log entries from the autograder server."
+                },
+                "metadata/describe": {
+                    "request-type": "*metadata.DescribeRequest",
+                    "response-type": "*metadata.DescribeResponse",
+                    "description": "Describe all endpoints on the server."
+                },
+                "stats/system/query": {
+                    "request-type": "*system.QueryRequest",
+                    "response-type": "*system.QueryResponse",
+                    "description": "Query the system stats for the server."
+                },
+                "users/auth": {
+                    "request-type": "*users.AuthRequest",
+                    "response-type": "*users.AuthResponse",
+                    "description": "Authenticate as a user."
+                },
+                "users/get": {
+                    "request-type": "*users.GetRequest",
+                    "response-type": "*users.GetResponse",
+                    "description": "Get the information for a server user."
+                },
+                "users/list": {
+                    "request-type": "*users.ListRequest",
+                    "response-type": "*users.ListResponse",
+                    "description": "List the users on the server."
+                },
+                "users/password/change": {
+                    "request-type": "*password.PasswordChangeRequest",
+                    "response-type": "*password.PasswordChangeResponse",
+                    "description": "Change your password to the one provided."
+                },
+                "users/password/reset": {
+                    "request-type": "*password.PasswordResetRequest",
+                    "response-type": "*password.PasswordResetResponse",
+                    "description": "Reset to a random password that will be emailed to you."
+                },
+                "users/remove": {
+                    "request-type": "*users.RemoveRequest",
+                    "response-type": "*users.RemoveResponse",
+                    "description": "Remove a user from the server."
+                },
+                "users/tokens/create": {
+                    "request-type": "*tokens.TokensCreateRequest",
+                    "response-type": "*tokens.TokensCreateResponse",
+                    "description": "Create a new authentication token."
+                },
+                "users/tokens/delete": {
+                    "request-type": "*tokens.TokensDeleteRequest",
+                    "response-type": "*tokens.TokensDeleteResponse",
+                    "description": "Delete an authentication token."
+                },
+                "users/upsert": {
+                    "request-type": "*users.UpsertRequest",
+                    "response-type": "*users.UpsertResponse",
+                    "description": "Upsert one or more users to the server (update if exists, insert otherwise)."
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"stats/system/query\",\"files\":[]}": {
+        "endpoint": "stats/system/query",
+        "module_name": "autograder.api.stats.system.query",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin"
+        },
+        "output": {
+            "results": [
+                {
+                    "timestamp": 100,
+                    "cpu-percent": 1,
+                    "mem-percent": 1,
+                    "net-bytes-sent": 1,
+                    "net-bytes-received": 1
+                },
+                {
+                    "timestamp": 200,
+                    "cpu-percent": 2,
+                    "mem-percent": 2,
+                    "net-bytes-sent": 2,
+                    "net-bytes-received": 2
+                },
+                {
+                    "timestamp": 300,
+                    "cpu-percent": 3,
+                    "mem-percent": 3,
+                    "net-bytes-sent": 3,
+                    "net-bytes-received": 3
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae\"},\"endpoint\":\"users/auth\",\"files\":[]}": {
+        "endpoint": "users/auth",
+        "module_name": "autograder.api.users.auth",
+        "arguments": {
+            "pass": "foo"
+        },
+        "output": {
+            "code": 401,
+            "message": "Authentication failure, check email and password.",
+            "python-message": "Failed to complete operation: Authentication failure, check email and password."
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"ZZZ\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"users/auth\",\"files\":[]}": {
+        "endpoint": "users/auth",
+        "module_name": "autograder.api.users.auth",
+        "arguments": {
+            "user": "ZZZ"
+        },
+        "output": {
+            "code": 401,
+            "message": "Authentication failure, check email and password.",
+            "python-message": "Failed to complete operation: Authentication failure, check email and password."
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"users/auth\",\"files\":[]}": {
+        "endpoint": "users/auth",
+        "module_name": "autograder.api.users.auth",
+        "arguments": {},
+        "output": {
+            "success": true
+        }
+    },
+    "{\"arguments\":{\"target-email\":\"server-user@test.edulinq.org\",\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"users/get\",\"files\":[]}": {
+        "endpoint": "users/get",
+        "module_name": "autograder.api.users.get",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "target-email": "server-user@test.edulinq.org"
+        },
+        "output": {
+            "found": true,
+            "user": {
+                "type": "server",
+                "email": "server-user@test.edulinq.org",
+                "name": "server-user",
+                "role": "user",
+                "courses": {}
+            }
+        }
+    },
+    "{\"arguments\":{\"target-email\":\"course-student@test.edulinq.org\",\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"users/get\",\"files\":[]}": {
+        "endpoint": "users/get",
+        "module_name": "autograder.api.users.get",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "target-email": "course-student@test.edulinq.org"
+        },
+        "output": {
+            "found": true,
+            "user": {
+                "type": "server",
+                "email": "course-student@test.edulinq.org",
+                "name": "course-student",
+                "role": "user",
+                "courses": {
+                    "course-languages": {
+                        "id": "course-languages",
+                        "name": "Course Using Different Languages.",
+                        "role": "student"
+                    },
+                    "course101": {
+                        "id": "course101",
+                        "name": "Course 101",
+                        "role": "student"
+                    }
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"target-email\":\"ZZZ@test.edulinq.org\",\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"users/get\",\"files\":[]}": {
+        "endpoint": "users/get",
+        "module_name": "autograder.api.users.get",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "target-email": "ZZZ@test.edulinq.org"
+        },
+        "output": {
+            "found": false,
+            "user": null
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"users/get\",\"files\":[]}": {
+        "endpoint": "users/get",
+        "module_name": "autograder.api.users.get",
+        "arguments": {},
+        "output": {
+            "found": true,
+            "user": {
+                "type": "server",
+                "email": "course-admin@test.edulinq.org",
+                "name": "course-admin",
+                "role": "user",
+                "courses": {
+                    "course-languages": {
+                        "id": "course-languages",
+                        "name": "Course Using Different Languages.",
+                        "role": "admin"
+                    },
+                    "course101": {
+                        "id": "course101",
+                        "name": "Course 101",
+                        "role": "admin"
+                    }
+                }
+            }
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"users/list\",\"files\":[]}": {
+        "endpoint": "users/list",
+        "module_name": "autograder.api.users.list",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin"
+        },
+        "output": {
+            "users": [
+                {
+                    "type": "server",
+                    "email": "course-admin@test.edulinq.org",
+                    "name": "course-admin",
+                    "role": "user",
+                    "courses": {
+                        "course-languages": {
+                            "id": "course-languages",
+                            "name": "Course Using Different Languages.",
+                            "role": "admin"
+                        },
+                        "course101": {
+                            "id": "course101",
+                            "name": "Course 101",
+                            "role": "admin"
+                        }
+                    }
+                },
+                {
+                    "type": "server",
+                    "email": "course-grader@test.edulinq.org",
+                    "name": "course-grader",
+                    "role": "user",
+                    "courses": {
+                        "course-languages": {
+                            "id": "course-languages",
+                            "name": "Course Using Different Languages.",
+                            "role": "grader"
+                        },
+                        "course101": {
+                            "id": "course101",
+                            "name": "Course 101",
+                            "role": "grader"
+                        }
+                    }
+                },
+                {
+                    "type": "server",
+                    "email": "course-other@test.edulinq.org",
+                    "name": "course-other",
+                    "role": "user",
+                    "courses": {
+                        "course-languages": {
+                            "id": "course-languages",
+                            "name": "Course Using Different Languages.",
+                            "role": "other"
+                        },
+                        "course101": {
+                            "id": "course101",
+                            "name": "Course 101",
+                            "role": "other"
+                        }
+                    }
+                },
+                {
+                    "type": "server",
+                    "email": "course-owner@test.edulinq.org",
+                    "name": "course-owner",
+                    "role": "user",
+                    "courses": {
+                        "course-languages": {
+                            "id": "course-languages",
+                            "name": "Course Using Different Languages.",
+                            "role": "owner"
+                        },
+                        "course101": {
+                            "id": "course101",
+                            "name": "Course 101",
+                            "role": "owner"
+                        }
+                    }
+                },
+                {
+                    "type": "server",
+                    "email": "course-student@test.edulinq.org",
+                    "name": "course-student",
+                    "role": "user",
+                    "courses": {
+                        "course-languages": {
+                            "id": "course-languages",
+                            "name": "Course Using Different Languages.",
+                            "role": "student"
+                        },
+                        "course101": {
+                            "id": "course101",
+                            "name": "Course 101",
+                            "role": "student"
+                        }
+                    }
+                },
+                {
+                    "type": "server",
+                    "email": "root",
+                    "name": "root",
+                    "role": "root",
+                    "courses": {}
+                },
+                {
+                    "type": "server",
+                    "email": "server-admin@test.edulinq.org",
+                    "name": "server-admin",
+                    "role": "admin",
+                    "courses": {}
+                },
+                {
+                    "type": "server",
+                    "email": "server-creator@test.edulinq.org",
+                    "name": "server-creator",
+                    "role": "creator",
+                    "courses": {}
+                },
+                {
+                    "type": "server",
+                    "email": "server-owner@test.edulinq.org",
+                    "name": "server-owner",
+                    "role": "owner",
+                    "courses": {}
+                },
+                {
+                    "type": "server",
+                    "email": "server-user@test.edulinq.org",
+                    "name": "server-user",
+                    "role": "user",
+                    "courses": {}
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"new-pass\":\"73740548d223792c35f0e1df5a5c543221786947281313a06fcf872af283816e\",\"user-email\":\"course-student@test.edulinq.org\",\"user-pass\":\"10a24248efef33e125728f7252d097d4c9022ad82244f0924969fd0ea87d712a\"},\"endpoint\":\"users/password/change\",\"files\":[]}": {
+        "endpoint": "users/password/change",
+        "module_name": "autograder.api.users.password.change",
+        "arguments": {
+            "user": "course-student@test.edulinq.org",
+            "pass": "course-student",
+            "new-pass": "spooky"
+        },
+        "output": {
+            "success": true,
+            "duplicate": false
+        }
+    },
+    "{\"arguments\":{\"new-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"users/password/change\",\"files\":[]}": {
+        "endpoint": "users/password/change",
+        "module_name": "autograder.api.users.password.change",
+        "arguments": {
+            "new-pass": "course-admin"
+        },
+        "output": {
+            "success": true,
+            "duplicate": true
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"course-other@test.edulinq.org\"},\"endpoint\":\"users/password/reset\",\"files\":[]}": {
+        "endpoint": "users/password/reset",
+        "module_name": "autograder.api.users.password.reset",
+        "arguments": {
+            "user": "course-other@test.edulinq.org"
+        },
+        "output": {}
+    },
+    "{\"arguments\":{\"target-email\":\"server-user@test.edulinq.org\",\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"users/remove\",\"files\":[]}": {
+        "endpoint": "users/remove",
+        "module_name": "autograder.api.users.remove",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "target-email": "server-user@test.edulinq.org"
+        },
+        "output": {
+            "found-user": true
+        }
+    },
+    "{\"arguments\":{\"target-email\":\"ZZZ@test.edulinq.org\",\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"users/remove\",\"files\":[]}": {
+        "endpoint": "users/remove",
+        "module_name": "autograder.api.users.remove",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "target-email": "ZZZ@test.edulinq.org"
+        },
+        "output": {
+            "found-user": false
+        }
+    },
+    "{\"arguments\":{\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"users/tokens/create\",\"files\":[]}": {
+        "endpoint": "users/tokens/create",
+        "module_name": "autograder.api.users.tokens.create",
+        "arguments": {},
+        "output": {
+            "token-id": "<TOKEN_ID>",
+            "token-cleartext": "<TOKEN_CLEARTEXT>"
+        }
+    },
+    "{\"arguments\":{\"name\":\"foo\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"users/tokens/create\",\"files\":[]}": {
+        "endpoint": "users/tokens/create",
+        "module_name": "autograder.api.users.tokens.create",
+        "arguments": {
+            "name": "foo"
+        },
+        "output": {
+            "token-id": "<TOKEN_ID>",
+            "token-cleartext": "<TOKEN_CLEARTEXT>"
+        }
+    },
+    "{\"arguments\":{\"token-id\":\"df0a1f16-9cd8-4395-8509-10ae314fe6fc\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"users/tokens/delete\",\"files\":[]}": {
+        "endpoint": "users/tokens/delete",
+        "module_name": "autograder.api.users.tokens.delete",
+        "arguments": {
+            "token-id": "df0a1f16-9cd8-4395-8509-10ae314fe6fc"
+        },
+        "output": {
+            "found": true
+        }
+    },
+    "{\"arguments\":{\"token-id\":\"ZZZ\",\"user-email\":\"course-admin@test.edulinq.org\",\"user-pass\":\"c22755f48fa0ef601e8d57a3ba169eeda80e9b2d4eaecc2c2ca2ffc887722f7c\"},\"endpoint\":\"users/tokens/delete\",\"files\":[]}": {
+        "endpoint": "users/tokens/delete",
+        "module_name": "autograder.api.users.tokens.delete",
+        "arguments": {
+            "token-id": "ZZZ"
+        },
+        "output": {
+            "found": false
+        }
+    },
+    "{\"arguments\":{\"dry-run\":false,\"raw-users\":[{\"course\":\"\",\"course-lms-id\":\"\",\"course-role\":\"student\",\"email\":\"new-user@test.edulinq.org\",\"name\":\"\",\"pass\":\"\",\"role\":\"user\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"users/upsert\",\"files\":[]}": {
+        "endpoint": "users/upsert",
+        "module_name": "autograder.api.users.upsert",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "send-emails": true,
+            "skip-inserts": false,
+            "skip-updates": false,
+            "dry-run": false,
+            "raw-users": [
+                {
+                    "email": "new-user@test.edulinq.org",
+                    "name": "",
+                    "role": "user",
+                    "pass": "",
+                    "course": "",
+                    "course-role": "student",
+                    "course-lms-id": ""
+                }
+            ]
+        },
+        "output": {
+            "results": [
+                {
+                    "email": "new-user@test.edulinq.org",
+                    "added": true,
+                    "emailed": true
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"dry-run\":false,\"raw-users\":[{\"course\":\"\",\"course-lms-id\":\"\",\"course-role\":\"unknown\",\"email\":\"file-new-user-1@test.edulinq.org\",\"name\":\"\",\"pass\":\"\",\"role\":\"user\"},{\"course\":\"\",\"course-lms-id\":\"\",\"course-role\":\"unknown\",\"email\":\"file-new-user-2@test.edulinq.org\",\"name\":\"\",\"pass\":\"\",\"role\":\"user\"},{\"course\":\"\",\"course-lms-id\":\"\",\"course-role\":\"unknown\",\"email\":\"file-new-user-3@test.edulinq.org\",\"name\":\"\",\"pass\":\"\",\"role\":\"user\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"users/upsert\",\"files\":[]}": {
+        "endpoint": "users/upsert",
+        "module_name": "autograder.api.users.upsert",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "send-emails": true,
+            "skip-inserts": false,
+            "skip-updates": false,
+            "dry-run": false,
+            "raw-users": [
+                {
+                    "email": "file-new-user-1@test.edulinq.org",
+                    "name": "",
+                    "role": "user",
+                    "pass": "",
+                    "course": "",
+                    "course-role": "unknown",
+                    "course-lms-id": ""
+                },
+                {
+                    "email": "file-new-user-2@test.edulinq.org",
+                    "name": "",
+                    "role": "user",
+                    "pass": "",
+                    "course": "",
+                    "course-role": "unknown",
+                    "course-lms-id": ""
+                },
+                {
+                    "email": "file-new-user-3@test.edulinq.org",
+                    "name": "",
+                    "role": "user",
+                    "pass": "",
+                    "course": "",
+                    "course-role": "unknown",
+                    "course-lms-id": ""
+                }
+            ]
+        },
+        "output": {
+            "results": [
+                {
+                    "email": "file-new-user-1@test.edulinq.org",
+                    "added": true,
+                    "emailed": true
+                },
+                {
+                    "email": "file-new-user-2@test.edulinq.org",
+                    "added": true,
+                    "emailed": true
+                },
+                {
+                    "email": "file-new-user-3@test.edulinq.org",
+                    "added": true,
+                    "emailed": true
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"dry-run\":false,\"raw-users\":[{\"course\":\"course101\",\"course-lms-id\":\"first-lms-id\",\"course-role\":\"student\",\"email\":\"first@test.edulinq.org\",\"name\":\"first\",\"pass\":\"\",\"role\":\"user\"},{\"course\":\"\",\"course-lms-id\":\"\",\"course-role\":\"unknown\",\"email\":\"second@test.edulinq.org\",\"name\":\"second\",\"pass\":\"\",\"role\":\"creator\"},{\"course\":\"\",\"course-lms-id\":\"\",\"course-role\":\"unknown\",\"email\":\"val-error@test.edulinq.org\",\"name\":\"val-error\",\"pass\":\"\",\"role\":\"owner\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"users/upsert\",\"files\":[]}": {
+        "endpoint": "users/upsert",
+        "module_name": "autograder.api.users.upsert",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "send-emails": true,
+            "skip-inserts": false,
+            "skip-updates": false,
+            "dry-run": false,
+            "raw-users": [
+                {
+                    "email": "first@test.edulinq.org",
+                    "name": "first",
+                    "role": "user",
+                    "pass": "",
+                    "course": "course101",
+                    "course-role": "student",
+                    "course-lms-id": "first-lms-id"
+                },
+                {
+                    "email": "second@test.edulinq.org",
+                    "name": "second",
+                    "role": "creator",
+                    "pass": "",
+                    "course": "",
+                    "course-role": "unknown",
+                    "course-lms-id": ""
+                },
+                {
+                    "email": "val-error@test.edulinq.org",
+                    "name": "val-error",
+                    "role": "owner",
+                    "pass": "",
+                    "course": "",
+                    "course-role": "unknown",
+                    "course-lms-id": ""
+                }
+            ]
+        },
+        "output": {
+            "results": [
+                {
+                    "email": "first@test.edulinq.org",
+                    "added": true,
+                    "emailed": true,
+                    "enrolled": [
+                        "course101"
+                    ]
+                },
+                {
+                    "email": "second@test.edulinq.org",
+                    "added": true,
+                    "emailed": true
+                },
+                {
+                    "email": "val-error@test.edulinq.org",
+                    "validation-error": {
+                        "locator": "",
+                        "message": "You have insufficient permissions for the requested operation."
+                    }
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"dry-run\":false,\"raw-users\":[{\"course\":\"\",\"course-lms-id\":\"\",\"course-role\":\"unknown\",\"email\":\"server-user@test.edulinq.org\",\"name\":\"sammy\",\"pass\":\"\",\"role\":\"user\"},{\"course\":\"\",\"course-lms-id\":\"\",\"course-role\":\"unknown\",\"email\":\"server-creator@test.edulinq.org\",\"name\":\"\",\"pass\":\"\",\"role\":\"user\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"users/upsert\",\"files\":[]}": {
+        "endpoint": "users/upsert",
+        "module_name": "autograder.api.users.upsert",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "send-emails": true,
+            "skip-inserts": false,
+            "skip-updates": false,
+            "dry-run": false,
+            "raw-users": [
+                {
+                    "email": "server-user@test.edulinq.org",
+                    "name": "sammy",
+                    "role": "user",
+                    "pass": "",
+                    "course": "",
+                    "course-role": "unknown",
+                    "course-lms-id": ""
+                },
+                {
+                    "email": "server-creator@test.edulinq.org",
+                    "name": "",
+                    "role": "user",
+                    "pass": "",
+                    "course": "",
+                    "course-role": "unknown",
+                    "course-lms-id": ""
+                }
+            ]
+        },
+        "output": {
+            "results": [
+                {
+                    "email": "server-creator@test.edulinq.org",
+                    "modified": true
+                },
+                {
+                    "email": "server-user@test.edulinq.org",
+                    "modified": true
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"dry-run\":false,\"raw-users\":[{\"course\":\"\",\"course-lms-id\":\"\",\"course-role\":\"unknown\",\"email\":\"error@test.edulinq.org\",\"name\":\"\",\"pass\":\"\",\"role\":\"owner\"},{\"course\":\"\",\"course-lms-id\":\"\",\"course-role\":\"unknown\",\"email\":\"server-user@test.edulinq.org\",\"name\":\"\",\"pass\":\"\",\"role\":\"owner\"},{\"course\":\"\",\"course-lms-id\":\"\",\"course-role\":\"unknown\",\"email\":\"server-owner@test.edulinq.org\",\"name\":\"\",\"pass\":\"\",\"role\":\"user\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"users/upsert\",\"files\":[]}": {
+        "endpoint": "users/upsert",
+        "module_name": "autograder.api.users.upsert",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "send-emails": true,
+            "skip-inserts": false,
+            "skip-updates": false,
+            "dry-run": false,
+            "raw-users": [
+                {
+                    "email": "error@test.edulinq.org",
+                    "name": "",
+                    "role": "owner",
+                    "pass": "",
+                    "course": "",
+                    "course-role": "unknown",
+                    "course-lms-id": ""
+                },
+                {
+                    "email": "server-user@test.edulinq.org",
+                    "name": "",
+                    "role": "owner",
+                    "pass": "",
+                    "course": "",
+                    "course-role": "unknown",
+                    "course-lms-id": ""
+                },
+                {
+                    "email": "server-owner@test.edulinq.org",
+                    "name": "",
+                    "role": "user",
+                    "pass": "",
+                    "course": "",
+                    "course-role": "unknown",
+                    "course-lms-id": ""
+                }
+            ]
+        },
+        "output": {
+            "results": [
+                {
+                    "email": "error@test.edulinq.org",
+                    "validation-error": {
+                        "locator": "",
+                        "message": "You have insufficient permissions for the requested operation."
+                    }
+                },
+                {
+                    "email": "server-owner@test.edulinq.org",
+                    "validation-error": {
+                        "locator": "",
+                        "message": "You have insufficient permissions for the requested operation."
+                    }
+                },
+                {
+                    "email": "server-user@test.edulinq.org",
+                    "validation-error": {
+                        "locator": "",
+                        "message": "You have insufficient permissions for the requested operation."
+                    }
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"dry-run\":false,\"raw-users\":[{\"course\":\"\",\"course-lms-id\":\"\",\"course-role\":\"student\",\"email\":\"server-user@test.edulinq.org\",\"name\":\"\",\"pass\":\"\",\"role\":\"creator\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"users/upsert\",\"files\":[]}": {
+        "endpoint": "users/upsert",
+        "module_name": "autograder.api.users.upsert",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "send-emails": true,
+            "skip-inserts": false,
+            "skip-updates": false,
+            "dry-run": false,
+            "raw-users": [
+                {
+                    "email": "server-user@test.edulinq.org",
+                    "name": "",
+                    "role": "creator",
+                    "pass": "",
+                    "course": "",
+                    "course-role": "student",
+                    "course-lms-id": ""
+                }
+            ]
+        },
+        "output": {
+            "results": [
+                {
+                    "email": "server-user@test.edulinq.org",
+                    "modified": true
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"dry-run\":false,\"raw-users\":[{\"course\":\"\",\"course-lms-id\":\"\",\"course-role\":\"student\",\"email\":\"alt-new-user@test.edulinq.org\",\"name\":\"\",\"pass\":\"\",\"role\":\"user\"}],\"send-emails\":true,\"skip-inserts\":true,\"skip-updates\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"users/upsert\",\"files\":[]}": {
+        "endpoint": "users/upsert",
+        "module_name": "autograder.api.users.upsert",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "send-emails": true,
+            "skip-inserts": true,
+            "skip-updates": false,
+            "dry-run": false,
+            "raw-users": [
+                {
+                    "email": "alt-new-user@test.edulinq.org",
+                    "name": "",
+                    "role": "user",
+                    "pass": "",
+                    "course": "",
+                    "course-role": "student",
+                    "course-lms-id": ""
+                }
+            ]
+        },
+        "output": {
+            "results": [
+                {
+                    "email": "alt-new-user@test.edulinq.org",
+                    "skipped": true
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"dry-run\":false,\"raw-users\":[{\"course\":\"\",\"course-lms-id\":\"\",\"course-role\":\"student\",\"email\":\"server-user@test.edulinq.org\",\"name\":\"\",\"pass\":\"\",\"role\":\"creator\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":true,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"users/upsert\",\"files\":[]}": {
+        "endpoint": "users/upsert",
+        "module_name": "autograder.api.users.upsert",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "send-emails": true,
+            "skip-inserts": false,
+            "skip-updates": true,
+            "dry-run": false,
+            "raw-users": [
+                {
+                    "email": "server-user@test.edulinq.org",
+                    "name": "",
+                    "role": "creator",
+                    "pass": "",
+                    "course": "",
+                    "course-role": "student",
+                    "course-lms-id": ""
+                }
+            ]
+        },
+        "output": {
+            "results": [
+                {
+                    "email": "server-user@test.edulinq.org",
+                    "skipped": true
+                }
+            ]
+        }
+    },
+    "{\"arguments\":{\"dry-run\":false,\"raw-users\":[{\"course\":\"\",\"course-lms-id\":\"\",\"course-role\":\"student\",\"email\":\"server-user@test.edulinq.org\",\"name\":\"\",\"pass\":\"\",\"role\":\"owner\"}],\"send-emails\":true,\"skip-inserts\":false,\"skip-updates\":false,\"user-email\":\"server-admin@test.edulinq.org\",\"user-pass\":\"0bbd8baf32ffe3b12b8f0901cc7adb562a62aad964d48cc394c76af9609a8f81\"},\"endpoint\":\"users/upsert\",\"files\":[]}": {
+        "endpoint": "users/upsert",
+        "module_name": "autograder.api.users.upsert",
+        "arguments": {
+            "user": "server-admin@test.edulinq.org",
+            "pass": "server-admin",
+            "send-emails": true,
+            "skip-inserts": false,
+            "skip-updates": false,
+            "dry-run": false,
+            "raw-users": [
+                {
+                    "email": "server-user@test.edulinq.org",
+                    "name": "",
+                    "role": "owner",
+                    "pass": "",
+                    "course": "",
+                    "course-role": "student",
+                    "course-lms-id": ""
+                }
+            ]
+        },
+        "output": {
+            "results": [
+                {
+                    "email": "server-user@test.edulinq.org",
+                    "validation-error": {
+                        "locator": "",
+                        "message": "You have insufficient permissions for the requested operation."
+                    }
+                }
+            ]
+        }
+    }
+}

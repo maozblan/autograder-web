@@ -55,7 +55,6 @@ function createToken(email, cleartext) {
         endpoint: 'users/tokens/create',
         override_email: email,
         override_cleartext: cleartext,
-        cache: false,
     });
 }
 
@@ -65,11 +64,18 @@ function get() {
     });
 }
 
+function listServerUsers() {
+    return Core.sendRequest({
+        endpoint: 'users/list',
+    });
+}
+
 export {
     createToken,
     getCourseRoleValue,
     getServerRoleValue,
     get,
+    listServerUsers,
 
     COURSE_ROLE_UNKNOWN,
     COURSE_ROLE_OTHER,

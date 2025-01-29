@@ -1,0 +1,137 @@
+import * as Users from './users.js'
+
+test("listServerUsers base", function() {
+    const expected = {
+        'users': serverUsers,
+    };
+
+    expect(Users.listServerUsers()).resolves.toStrictEqual(expected);
+});
+
+const serverUsers = [
+    {
+        "type": "server",
+        "email": "course-admin@test.edulinq.org",
+        "name": "course-admin",
+        "role": "user",
+        "courses": {
+            "course-languages": {
+                "id": "course-languages",
+                "name": "Course Using Different Languages.",
+                "role": "admin"
+            },
+            "course101": {
+                "id": "course101",
+                "name": "Course 101",
+                "role": "admin"
+            }
+        }
+    },
+    {
+        "type": "server",
+        "email": "course-grader@test.edulinq.org",
+        "name": "course-grader",
+        "role": "user",
+        "courses": {
+            "course-languages": {
+                "id": "course-languages",
+                "name": "Course Using Different Languages.",
+                "role": "grader"
+            },
+            "course101": {
+                "id": "course101",
+                "name": "Course 101",
+                "role": "grader"
+            }
+        }
+    },
+    {
+        "type": "server",
+        "email": "course-other@test.edulinq.org",
+        "name": "course-other",
+        "role": "user",
+        "courses": {
+            "course-languages": {
+                "id": "course-languages",
+                "name": "Course Using Different Languages.",
+                "role": "other"
+            },
+            "course101": {
+                "id": "course101",
+                "name": "Course 101",
+                "role": "other"
+            }
+        }
+    },
+    {
+        "type": "server",
+        "email": "course-owner@test.edulinq.org",
+        "name": "course-owner",
+        "role": "user",
+        "courses": {
+            "course-languages": {
+                "id": "course-languages",
+                "name": "Course Using Different Languages.",
+                "role": "owner"
+            },
+            "course101": {
+                "id": "course101",
+                "name": "Course 101",
+                "role": "owner"
+            }
+        }
+    },
+    {
+        "type": "server",
+        "email": "course-student@test.edulinq.org",
+        "name": "course-student",
+        "role": "user",
+        "courses": {
+            "course-languages": {
+                "id": "course-languages",
+                "name": "Course Using Different Languages.",
+                "role": "student"
+            },
+            "course101": {
+                "id": "course101",
+                "name": "Course 101",
+                "role": "student"
+            }
+        }
+    },
+    {
+        "type": "server",
+        "email": "root",
+        "name": "root",
+        "role": "root",
+        "courses": {}
+    },
+    {
+        "type": "server",
+        "email": "server-admin@test.edulinq.org",
+        "name": "server-admin",
+        "role": "admin",
+        "courses": {}
+    },
+    {
+        "type": "server",
+        "email": "server-creator@test.edulinq.org",
+        "name": "server-creator",
+        "role": "creator",
+        "courses": {}
+    },
+    {
+        "type": "server",
+        "email": "server-owner@test.edulinq.org",
+        "name": "server-owner",
+        "role": "owner",
+        "courses": {}
+    },
+    {
+        "type": "server",
+        "email": "server-user@test.edulinq.org",
+        "name": "server-user",
+        "role": "user",
+        "courses": {}
+    }
+];

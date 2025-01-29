@@ -1,24 +1,35 @@
 {
-  "name": "autograder-web",
-  "version": "0.0.1",
-  "description": "A web-based GUI for the EduLinq autograder.",
-  "homepage": "https://github.com/edulinq/autograder-web#readme",
-  "bugs": {
-    "url": "https://github.com/edulinq/autograder-web/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/edulinq/autograder-web.git"
-  },
-  "license": "MIT",
-  "author": "Eriq Augustine <eriq@edulinq.org>",
-  "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
-  },
-  "devDependencies": {
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0"
-  }
+    "name": "autograder-web",
+    "version": "0.0.1",
+    "description": "A web-based GUI for the EduLinq autograder.",
+    "homepage": "https://github.com/edulinq/autograder-web#readme",
+    "bugs": {
+        "url": "https://github.com/edulinq/autograder-web/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/edulinq/autograder-web.git"
+    },
+    "license": "MIT",
+    "author": "Eriq Augustine <eriq@edulinq.org>",
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    },
+    "devDependencies": {
+        "jest": "^29.7.0",
+        "jest-environment-jsdom": "^29.7.0"
+    },
+    "jest": {
+        "testEnvironment": "jsdom",
+        "clearMocks": true,
+        "collectCoverage": true,
+        "coverageDirectory": "coverage",
+        "setupFilesAfterEnv": [
+            "<rootDir>/js/modules/autograder/test/server.js"
+        ],
+        "transform": {},
+        "verbose": true
+    }
 }
