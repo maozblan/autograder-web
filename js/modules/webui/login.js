@@ -1,12 +1,12 @@
 import * as Autograder from '/js/modules/autograder/base.js'
 import * as Core from './core.js'
 import * as Log from './log.js'
-import * as Routes from './routes.js'
+import * as Routing from './routing.js'
 import * as Util from './util.js'
 
 function init() {
-    Routes.addRoute(/^login$/, handlerLogin, 'login', {login: false});
-    Routes.addRoute(/^logout$/, handlerLogout, 'logout');
+    Routing.addRoute(/^login$/, handlerLogin, 'login', {login: false});
+    Routing.addRoute(/^logout$/, handlerLogout, 'logout');
 }
 
 function handlerLogin(path, params, context) {

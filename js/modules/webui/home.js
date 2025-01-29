@@ -1,10 +1,10 @@
 import * as Autograder from '/js/modules/autograder/base.js'
 import * as Core from './core.js'
-import * as Routes from './routes.js'
+import * as Routing from './routing.js'
 import * as Util from './util.js'
 
 function init() {
-    Routes.addRoute(/^$/, handlerHome, 'home');
+    Routing.addRoute(/^$/, handlerHome, 'home');
 }
 
 function handlerHome(path, params, context) {

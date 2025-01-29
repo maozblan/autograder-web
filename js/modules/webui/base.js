@@ -4,7 +4,7 @@ import * as Course from './course.js'
 import * as Home from './home.js'
 import * as Log from './log.js'
 import * as Login from './login.js'
-import * as Routes from './routes.js'
+import * as Routing from './routing.js'
 import * as User from './user.js'
 import * as Util from './util.js'
 
@@ -22,7 +22,7 @@ function init() {
     User.init();
 
     // Init routes last (since it will route).
-    Routes.init();
+    Routing.init();
 }
 
 function initHandlers() {
@@ -33,7 +33,7 @@ function initHandlers() {
 }
 
 export {
-    Routes,
+    Routing,
     Util,
 
     init,

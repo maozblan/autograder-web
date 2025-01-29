@@ -1,11 +1,11 @@
 import * as Autograder from '/js/modules/autograder/base.js'
 import * as Core from './core.js'
 import * as Log from './log.js'
-import * as Routes from './routes.js'
+import * as Routing from './routing.js'
 
 function init() {
     let requirements = {course: true};
-    Routes.addRoute(/^course$/, handlerCourse, 'course', requirements);
+    Routing.addRoute(/^course$/, handlerCourse, 'course', requirements);
 }
 
 function handlerCourse(path, params, context) {

@@ -1,15 +1,15 @@
 import * as Autograder from '/js/modules/autograder/base.js'
 import * as Core from './core.js'
 import * as Log from './log.js'
-import * as Routes from './routes.js'
+import * as Routing from './routing.js'
 import * as Util from './util.js'
 
 function init() {
     let requirements = {assignment: true};
-    Routes.addRoute(/^course\/assignment$/, handlerAssignment, 'assignment', requirements);
-    Routes.addRoute(/^course\/assignment\/peek$/, handlerPeek, 'assignment-peek', requirements);
-    Routes.addRoute(/^course\/assignment\/history$/, handlerHistory, 'assignment-history', requirements);
-    Routes.addRoute(/^course\/assignment\/submit$/, handlerSubmit, 'assignment-submit', requirements);
+    Routing.addRoute(/^course\/assignment$/, handlerAssignment, 'assignment', requirements);
+    Routing.addRoute(/^course\/assignment\/peek$/, handlerPeek, 'assignment-peek', requirements);
+    Routing.addRoute(/^course\/assignment\/history$/, handlerHistory, 'assignment-history', requirements);
+    Routing.addRoute(/^course\/assignment\/submit$/, handlerSubmit, 'assignment-submit', requirements);
 }
 
 function handlerAssignment(path, params, context) {
