@@ -18,10 +18,6 @@ const LEVEL_TO_STRING = {
 
 let records = [];
 
-function init() {
-    records = [];
-}
-
 function log(level, message, context = {}, notify = false) {
     if (level <= LEVEL_OFF) {
         return;
@@ -85,8 +81,6 @@ function getRecords() {
 }
 
 export {
-    init,
-
     log,
     trace,
     debug,

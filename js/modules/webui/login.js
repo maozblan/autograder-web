@@ -1,67 +1,86 @@
 import * as Autograder from '/js/modules/autograder/base.js'
-import * as Core from './core.js'
+import * as Context from './context.js'
 import * as Log from './log.js'
 import * as Routing from './routing.js'
-import * as Util from './util.js'
 
 function init() {
-    Routing.addRoute(/^login$/, handlerLogin, 'login', {login: false});
-    Routing.addRoute(/^logout$/, handlerLogout, 'logout');
+    Routing.addRoute(/^login$/, handlerLogin, 'Login', {login: false});
+    Routing.addRoute(/^logout$/, handlerLogout, 'Logout');
 }
 
-function handlerLogin(path, params, context) {
-    let content = `
+function handlerLogin(path, params, context, container) {
+    container.innerHTML = `
         <h2>Login</h2>
         <div class='login'>
             <div>
                 <label for='email'>Email:</label>
-                <input type='email' name='email' placeholder='email'
-                        onkeypress='window.ag.handlers.onKeyEvent(event, this, ["Enter"], window.ag.handlers.login)' />
+                <input type='email' name='email' placeholder='email' />
             </div>
             <div>
                 <label for='password'>Password:</label>
-                <input type='password' name='password' placeholder='password'
-                        onkeypress='window.ag.handlers.onKeyEvent(event, this, ["Enter"], window.ag.handlers.login)' />
+                <input type='password' name='password' placeholder='password' />
             </div>
-            <button onclick='window.ag.handlers.login(null, this)'>Login</button>
+            <button>Login</button>
         </div>
     `;
 
-    document.querySelector('.content').innerHTML = content;
+    container.querySelectorAll('.login input').forEach(function(element) {
+        element.addEventListener('keydown', function(event) {
+            if (event.code != 'Enter') {
+                return
+            }
+
+            let email = container.querySelector('input[name="email"]').value;
+            let cleartext = container.querySelector('input[name="password"]').value;
+
+            login(email, cleartext);
+        });
+    });
+
+    container.querySelector('.login button').addEventListener('click', function(event) {
+        let email = container.querySelector('input[name="email"]').value;
+        let cleartext = container.querySelector('input[name="password"]').value;
+
+        login(email, cleartext);
+    });
 }
 
-function handlerLogout(path, params, context) {
-    Core.clearContextUser();
+function handlerLogout(path, params, context, container) {
+    Context.clear();
     Autograder.clearCredentials();
-    return Core.redirectLogin();
+    Routing.redirectLogin();
 }
 
-function login(event, context) {
+function login(email, cleartext) {
     if (Autograder.hasCredentials()) {
-        Log.warn("Already logged in. Logout first to login again.", context);
+        Log.warn("Already logged in. Logout first to login again.");
         return;
     }
 
-    let container = Util.queryAncestor(context, 'div.login');
-    let email = container.querySelector('input[name="email"]').value;
-    let cleartext = container.querySelector('input[name="password"]').value;
-
     if (email.length < 1) {
-        Log.warn("No email provided for login.", context);
+        Log.warn("No email provided for login.")
         return;
     }
 
     if (cleartext.length < 1) {
-        Log.warn("No password provided for login.", context);
+        Log.warn("No password provided for login.")
         return;
     }
+
+    Routing.loadingStart();
 
     Autograder.Users.createToken(email, cleartext)
         .then(function(token) {
             Autograder.setCredentials(email, token['token-id'], token['token-cleartext']);
-            Core.redirectHome();
+            Routing.redirectHome();
         })
-        .catch(Log.warn);
+        .catch(function(result) {
+            Log.warn("Unable to login.", result);
+        })
+        .finally(function() {
+            Routing.loadingStop();
+        })
+    ;
 }
 
 export {

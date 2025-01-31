@@ -1,11 +1,13 @@
 import * as Autograder from '/js/modules/autograder/base.js'
-import * as Core from './core.js'
+import * as Context from './context.js'
 import * as Log from './log.js'
-import * as Util from './util.js'
 
 let routes = [];
 
 const DEFAULT_HANDLER = handlerNotFound
+
+const PARAM_COURSE = 'course-id';
+const PARAM_ASSIGNMENT = 'assignment-id';
 
 // The current hash/location we are routed to.
 // Should be prefixed with a hash symbol.
@@ -21,10 +23,11 @@ function init() {
 }
 
 // Add a route to the router.
-// Handlers should take three parameters: handler(path, pathParams, context).
+// Handlers should take four parameters: handler(path, pathParams, context, container).
 // Where |path| the the canonical path being handle (without any query parameters),
 // |pathParams| are any query parameters on the original path,
-// and |context| is any context resolved by the router while preparing the request.
+// |context| is any context resolved by the router while preparing the request,
+// and |container| is an element to render into.
 // Possible fields for |context| are: user, courseID, course, and assignmentID.
 function addRoute(pattern, handler,
         pageName = undefined,
@@ -41,13 +44,13 @@ function addRoute(pattern, handler,
 // the loading page will be activated when the request it made.
 function route(rawPath = undefined) {
     if (!rawPath) {
-        rawPath = Util.getLocationHash();
+        rawPath = getLocationHash();
     }
 
     let [path, params] = parsePath(rawPath);
 
     // Form the canonical path we are on.
-    let newHash = Core.formHashPath(path, params);
+    let newHash = formHashPath(path, params);
 
     // Skip any routing if we are on the current path.
     // This let's us avoid infinite loops when routing internally.
@@ -75,7 +78,7 @@ function route(rawPath = undefined) {
 // Parse a raw path (which may have come from a hash)
 // into a clean path and params (which can be empty).
 function parsePath(rawPath) {
-    rawPath = Core.basicPathClean(rawPath);
+    rawPath = basicPathClean(rawPath);
 
     // Parse the raw path as a url to pull out parameters.
     let url = URL.parse(rawPath, 'http://localhost');
@@ -96,75 +99,81 @@ function parsePath(rawPath) {
 }
 
 // Do any setup for a handler, call the handler, then do any teardown.
-function handlerWrapper(handler, path, params, pageName, requirements, context = {}) {
-    let loggedIn = Autograder.hasCredentials();
-
+function handlerWrapper(handler, path, params, pageName, requirements) {
     // Redirect to a login if required.
-    if (requirements.login && !loggedIn) {
-        return Core.redirectLogin();
+    if (requirements.login && !Autograder.hasCredentials()) {
+        redirectLogin();
+        return;
     }
 
-    // Anything that needs a login also needs a context user.
-    context.user = Core.getContextUser();
-    if (requirements.login && !context.user) {
-        return fetchContextUser()
+    // If we need user info and the context does not exist, load the context.
+    if (requirements.login && !Context.exists()) {
+        Context.load()
             .then(function(result) {
-                // Call this function again to complete all checks.
+                // Call this function again to complete all checks and call the wrapper.
                 return handlerWrapper(handler, path, params, pageName, requirements);
             })
             .catch(function(result) {
-                return Core.redirectLogout();
-            });
+                Log.warn('Failed to load context.', result);
+                return redirectLogout();
+            })
+        ;
+        return;
     }
+
+    // Check for any requested courses or assignments.
+    let context = Context.get()
 
     // Check course.
     if (requirements.course) {
-        context.courseID = params['course-id'];
-        if (!context.courseID) {
-            Log.warn(`No course id specified for path '${path}'.`, context);
-            return Core.redirectHome();
+        let courseID = params[PARAM_COURSE];
+        if (!courseID) {
+            Log.warn(`No course id specified for path '${path}'.`, null, true);
+            return;
         }
 
-        context.course = context.user.courses[context.courseID];
-        if (!context.course) {
-            Log.warn(`Could not find specified course ('${context.courseID}') for path '${path}'.`, context);
-            return Core.redirectHome();
-        }
-    }
-
-    // Check assignment.
-    if (requirements.assignment) {
-        context.assignmentID = params['assignment-id'];
-        if (!context.assignmentID) {
-            Log.warn(`No assignment id specified for path '${path}'.`, context);
-            return Core.redirectHome();
+        if (!Object.hasOwn(context.user.courses, courseID)) {
+            Log.warn(`User ('${context.user.email}') is not enrolled in course ('${courseID}').`, null, true);
+            return;
         }
 
-        // Fetch the assignment and re-call the wrapper (with additional context).
-        if (!context.assignment) {
-            // Non-trivial route.
-            Core.loading();
+        // Check assignment (requires course).
+        if (requirements.assignment) {
+            let assignmentID = params[PARAM_ASSIGNMENT];
+            if (!assignmentID) {
+                Log.warn(`No assignment id specified for path '${path}'.`, null, true);
+                return;
+            }
 
-            return Autograder.Assignments.get(context.courseID, context.assignmentID)
-                .then(function(result) {
-                    context.assignment = result.assignment;
-                    return handlerWrapper(handler, path, params, pageName, requirements, context);
-                })
-                .catch(function(result) {
-                    Log.warn(result, context);
-                    return Core.redirectHome();
-                });
+            if (!Object.hasOwn(context.courses[courseID].assignments, assignmentID)) {
+                Log.warn(`Course ('${courseID}') does not have assignment ('${assignmentID}').`, null, true);
+                return;
+            }
         }
     }
 
-    // This path has everything it needs.
-
-    // Set the nav menu.
-    Core.setNav();
+    // This path now has everything it needs.
 
     // Set the context user.
+    setContextUserDisplay();
+
+    let container = mainConatiner();
+
+    // Set the page inforamtion.
+    if (pageName) {
+        container.setAttribute('data-page', pageName.toLowerCase())
+        document.querySelector('.header .page-title').innerHTML = `<h2>${pageName}</h2>`;
+    }
+
+    // Call the handler.
+    handler(path, params, context, container);
+}
+
+function setContextUserDisplay() {
+    let context = Context.get()
+
     let currentUserHTML = '';
-    if (context.user) {
+    if (context?.user) {
         let name = context.user.name ?? context.user.email;
         currentUserHTML = `
             <div>
@@ -174,50 +183,112 @@ function handlerWrapper(handler, path, params, pageName, requirements, context =
             </div>
         `;
     }
+
     document.querySelector('.header .current-user').innerHTML = currentUserHTML;
-
-    // Set the page inforamtion.
-    if (pageName) {
-        document.querySelector('.content').setAttribute('data-page', pageName);
-    }
-
-    // Call the handler.
-    return handler(path, params, context);
 }
 
-function fetchContextUser() {
-    if (Core.getContextUser()) {
-        return Promise.resolve(Core.getContextUser());
-    }
-
-    // Non-trivial route.
-    Core.loading();
-
-    return Autograder.Users.get()
-        .then(function(result) {
-            if (!result.found) {
-                Log.warn("Server could not find context user.");
-                return Promist.reject(result);
-            }
-
-            Core.setContextUser(result.user);
-            return result.user;
-        })
-        .catch(function(result) {
-            Log.warn(result);
-            return result;
-        });
+function mainConatiner() {
+    return document.querySelector('.page-body .content');
 }
 
-function handlerNotFound(path, params) {
-    document.querySelector('.content').innerHTML = `
+function handlerNotFound(path, params, context, container) {
+    container.innerHTML = `
         <h2>Location Not Found</h2>
         <p>We could not find the location '${path}'.</p>
     `;
 }
 
+// Return a standardized location that always has as leading hash.
+function getLocationHash() {
+    let hash = window.location.hash.trim();
+
+    if (hash.length === 0) {
+        return '#';
+    }
+
+    return hash;
+}
+
+// Form a path (location.hash).
+// The returned path will be standardized so it can be compared directly,
+// and include a leading hash symbol.
+function formHashPath(path, params = {}) {
+    path = basicPathClean(path);
+
+    // Create a fake URL for parsing and formatting.
+    let url = URL.parse(path, 'http://localhost');
+
+    // Add the params.
+    for (const [key, value] of Object.entries(params)) {
+        url.searchParams.append(key, value);
+    }
+
+    // Sort the params.
+    url.searchParams.sort();
+
+    // Pull out the path (which comes with a leading slash).
+    path = url.pathname.replace(/^\//, '');
+
+    // Add on the params
+    // (empty if there are none and includes the leading '?' if there are).
+    path += url.search;
+
+    return '#' + path;
+}
+
+function basicPathClean(path) {
+    path = path.trim();
+
+    // Remove leading hashes, slashes, and spaces.
+    path = path.replace(/^[\s\/#]+/, '');
+
+    // Remove tailing slashes and spaces.
+    path = path.replace(/[\/\s]+$/, '');
+
+    return path;
+}
+
+function redirect(path = '') {
+    window.location.hash = path;
+}
+
+function redirectHome() {
+    redirect('');
+}
+
+function redirectLogin() {
+    redirect('login');
+}
+
+function redirectLogout() {
+    redirect('logout');
+}
+
+function loadingStart(container = undefined) {
+    container = container ?? mainConatiner();
+
+    // TODO
+    console.log("Loading");
+}
+
+function loadingStop(container = undefined) {
+    container = container ?? mainConatiner();
+
+    // TODO
+    console.log("Stop Loading");
+}
+
 export {
-    init,
     addRoute,
-    route,
+    formHashPath,
+    init,
+    loadingStart,
+    loadingStop,
+    redirect,
+    redirectHome,
+    redirectLogin,
+    redirectLogout,
+
+    PARAM_COURSE,
+    PARAM_ASSIGNMENT,
 }

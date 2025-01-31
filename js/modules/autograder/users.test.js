@@ -17,15 +17,13 @@ const serverUsers = [
         "courses": {
             "course-languages": {
                 "id": "course-languages",
-                "name": "Course Using Different Languages.",
-                "role": "admin"
+                "role": "admin",
             },
             "course101": {
                 "id": "course101",
-                "name": "Course 101",
-                "role": "admin"
-            }
-        }
+                "role": "admin",
+            },
+        },
     },
     {
         "type": "server",
@@ -35,15 +33,13 @@ const serverUsers = [
         "courses": {
             "course-languages": {
                 "id": "course-languages",
-                "name": "Course Using Different Languages.",
-                "role": "grader"
+                "role": "grader",
             },
             "course101": {
                 "id": "course101",
-                "name": "Course 101",
-                "role": "grader"
-            }
-        }
+                "role": "grader",
+            },
+        },
     },
     {
         "type": "server",
@@ -53,15 +49,13 @@ const serverUsers = [
         "courses": {
             "course-languages": {
                 "id": "course-languages",
-                "name": "Course Using Different Languages.",
-                "role": "other"
+                "role": "other",
             },
             "course101": {
                 "id": "course101",
-                "name": "Course 101",
-                "role": "other"
-            }
-        }
+                "role": "other",
+            },
+        },
     },
     {
         "type": "server",
@@ -71,15 +65,13 @@ const serverUsers = [
         "courses": {
             "course-languages": {
                 "id": "course-languages",
-                "name": "Course Using Different Languages.",
-                "role": "owner"
+                "role": "owner",
             },
             "course101": {
                 "id": "course101",
-                "name": "Course 101",
-                "role": "owner"
-            }
-        }
+                "role": "owner",
+            },
+        },
     },
     {
         "type": "server",
@@ -89,49 +81,47 @@ const serverUsers = [
         "courses": {
             "course-languages": {
                 "id": "course-languages",
-                "name": "Course Using Different Languages.",
-                "role": "student"
+                "role": "student",
             },
             "course101": {
                 "id": "course101",
-                "name": "Course 101",
-                "role": "student"
-            }
-        }
+                "role": "student",
+            },
+        },
     },
     {
         "type": "server",
         "email": "root",
         "name": "root",
         "role": "root",
-        "courses": {}
+        "courses": {},
     },
     {
         "type": "server",
         "email": "server-admin@test.edulinq.org",
         "name": "server-admin",
         "role": "admin",
-        "courses": {}
+        "courses": {},
     },
     {
         "type": "server",
         "email": "server-creator@test.edulinq.org",
         "name": "server-creator",
         "role": "creator",
-        "courses": {}
+        "courses": {},
     },
     {
         "type": "server",
         "email": "server-owner@test.edulinq.org",
         "name": "server-owner",
         "role": "owner",
-        "courses": {}
+        "courses": {},
     },
     {
         "type": "server",
         "email": "server-user@test.edulinq.org",
         "name": "server-user",
         "role": "user",
-        "courses": {}
-    }
+        "courses": {},
+    },
 ];
