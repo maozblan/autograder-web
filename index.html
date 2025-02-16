@@ -17,12 +17,28 @@
     <body>
         <div class='page'>
             <div class='header'>
-                <div class='site-icon'>
+                <div class='nav'>
+                    <div class='nav-item' data-target='home'>
+                        <a href='#'>Home</a>
+                    </div>
+                    <div class='nav-item' data-target='courses'>
+                        <a href='#courses'>Courses</a>
+                    </div>
                 </div>
-                <div class='page-title'>
-                    <h2>Autograder</h2>
-                </div>
-                <div class='current-user'>
+                <div class='user-info'>
+                    <div class='bright-mode-toggle'>
+                        <fieldset>
+                            <label for="header-bright-toggle-light">Light ☀</label>
+                            <input type="radio" id='header-bright-toggle-light' name="bright-toggle" data-islight=true value="light" />
+
+                            <input type="radio" id='header-bright-toggle-dark' name="bright-toggle" data-islight=false value="dark" />
+                            <label for="header-bright-toggle-dark">☾ Dark</label>
+                        </fieldset>
+                    </div>
+                    <div class='login-area'>
+                    </div>
+                    <div class='current-user'>
+                    </div>
                 </div>
             </div>
 

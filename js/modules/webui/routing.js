@@ -161,8 +161,8 @@ function handlerWrapper(handler, path, params, pageName, requirements) {
 
     // Set the page inforamtion.
     if (pageName) {
-        container.setAttribute('data-page', pageName.toLowerCase())
-        document.querySelector('.header .page-title').innerHTML = `<h2>${pageName}</h2>`;
+        container.setAttribute('data-page', pageName.toLowerCase());
+        document.title = `Autograder :: ${pageName}`;
     }
 
     // Call the handler.
@@ -173,18 +173,26 @@ function setContextUserDisplay() {
     let context = Context.get()
 
     let currentUserHTML = '';
+    let loginAreaHTML = '';
+
     if (context?.user) {
         let name = context.user.name ?? context.user.email;
         currentUserHTML = `
-            <div>
-                <span>Logged in as</span>
-                <br />
-                <span>${name}</span>
-            </div>
+            <span>${name}</span>
+        `;
+
+        loginAreaHTML = `
+            <a href='#logout'>Log Out</span>
+        `;
+    } else {
+        currentUserHTML = '';
+        loginAreaHTML = `
+            <a href='#login'>Log In</span>
         `;
     }
 
-    document.querySelector('.header .current-user').innerHTML = currentUserHTML;
+    document.querySelector('.header .user-info .current-user').innerHTML = currentUserHTML;
+    document.querySelector('.header .user-info .login-area').innerHTML = loginAreaHTML;
 }
 
 function mainConatiner() {
