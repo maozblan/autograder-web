@@ -1,4 +1,4 @@
-import * as Autograder from '/js/modules/autograder/base.js'
+import * as Autograder from '../autograder/base.js'
 import * as Context from './context.js'
 import * as Log from './log.js'
 
@@ -14,12 +14,14 @@ const PARAM_ASSIGNMENT = 'assignment-id';
 let currentHash = undefined;
 
 // Start listening for routing events and do an initial route.
-function init() {
+function init(initialRoute = true) {
     window.addEventListener("hashchange", function() {
         route();
     });
 
-    route();
+    if (initialRoute) {
+        route();
+    }
 }
 
 // Add a route to the router.

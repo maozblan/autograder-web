@@ -1,4 +1,4 @@
-import * as Autograder from '/js/modules/autograder/base.js'
+import * as Autograder from '../autograder/base.js'
 import * as Util from './util.js'
 
 let context = undefined;

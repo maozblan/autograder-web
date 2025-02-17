@@ -1,4 +1,4 @@
-import * as Autograder from '/js/modules/autograder/base.js'
+import * as Autograder from '../autograder/base.js'
 import * as Context from './context.js'
 import * as Log from './log.js'
 import * as Routing from './routing.js'
