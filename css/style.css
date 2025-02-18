@@ -21,6 +21,8 @@
 
     --color-dark-bg-accent-primary: rgb(130, 130, 255);
 
+    --color-bg-shadow: #000000;
+
     --curve-radius: 5px;
 
     --font-size-larger: 1.25rem;
@@ -238,9 +240,12 @@ fieldset {
 
     border-radius: 10px;
     background-color: var(--color-bg-secondary);
-    box-shadow: 2px 2px 1px var(--color-bg-tertiary);
+    box-shadow: 2px 2px 1px var(--color-bg-shadow);
     font-size: var(--font-size-larger);
     text-align: center;
+
+    outline: 5px solid var(--color-bg-accent-primary);
+    outline-offset: -3px;
 }
 
 .card a {
