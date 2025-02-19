@@ -280,15 +280,19 @@ function redirectLogout() {
 function loadingStart(container = undefined) {
     container = container ?? mainConatiner();
 
-    // TODO
-    console.log("Loading");
+    container.innerHTML = `
+        <div class='loading-container'>
+            <div class='loading'>
+                <img src='/images/loading-basic-edq.png' />
+            </div>
+        </div>
+    `;
 }
 
 function loadingStop(container = undefined) {
     container = container ?? mainConatiner();
 
-    // TODO
-    console.log("Stop Loading");
+    container.innerHTML = '';
 }
 
 export {
