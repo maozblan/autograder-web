@@ -1,3 +1,4 @@
+import * as Assignment from './assignment.js'
 import * as Course from './course.js'
 import * as Home from './home.js'
 import * as Login from './login.js'
@@ -10,6 +11,7 @@ function init(initialRoute = true) {
     System.init();
 
     // Init handlers.
+    Assignment.init();
     Course.init();
     Home.init();
     Login.init();

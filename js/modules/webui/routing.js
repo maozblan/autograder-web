@@ -164,11 +164,15 @@ function handlerWrapper(handler, path, params, pageName, requirements) {
     // Set the page inforamtion.
     if (pageName) {
         container.setAttribute('data-page', pageName.toLowerCase());
-        document.title = `Autograder :: ${pageName}`;
+        setTitle(pageName);
     }
 
     // Call the handler.
     handler(path, params, context, container);
+}
+
+function setTitle(title) {
+    document.title = `${title} :: Autograder`;
 }
 
 function setContextUserDisplay() {
@@ -178,9 +182,8 @@ function setContextUserDisplay() {
     let loginAreaHTML = '';
 
     if (context?.user) {
-        let name = context.user.name ?? context.user.email;
         currentUserHTML = `
-            <span>${name}</span>
+            <span>${context.user.name}</span>
         `;
 
         loginAreaHTML = `
@@ -298,6 +301,7 @@ export {
     redirectHome,
     redirectLogin,
     redirectLogout,
+    setTitle,
 
     PARAM_COURSE,
     PARAM_ASSIGNMENT,

@@ -1,4 +1,5 @@
 import * as Autograder from '../autograder/base.js'
+import * as Log from './log.js'
 import * as Util from './util.js'
 
 let context = undefined;
@@ -19,10 +20,7 @@ function load() {
                 return Promist.reject(result);
             }
 
-            context = {
-                user: result.user,
-                courses: result.courses,
-            };
+            context = makeContext(result);
 
             return null;
         })
@@ -31,6 +29,19 @@ function load() {
             return result;
         })
     ;
+}
+
+function makeContext(result) {
+    result.user.name = result.user.name || result.user.email;
+
+    for (const [key, course] of Object.entries(result.courses)) {
+        course.name = course.name || course.id;
+    }
+
+    return {
+        user: result.user,
+        courses: result.courses,
+    };
 }
 
 function exists() {

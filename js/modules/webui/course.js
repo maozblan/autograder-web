@@ -20,13 +20,23 @@ function handlerCourses(path, params, context, container) {
 function handlerCourse(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
 
+    Routing.setTitle(course.name);
+
     let cards = [];
     for (const [id, assignment] of Object.entries(course.assignments)) {
-        let link = Routing.formHashPath('assignment', {[Routing.PARAM_ASSIGNMENT]: assignment.id});
+        let args = {
+            [Routing.PARAM_COURSE]: course.id,
+            [Routing.PARAM_ASSIGNMENT]: assignment.id,
+        };
+
+        let link = Routing.formHashPath('course/assignment', args);
         cards.push(Render.makeCardObject('assignment', assignment.name, link));
     }
 
-    container.innerHTML = Render.cards(cards);
+    container.innerHTML = `
+        <h2>${course.name}</h2>
+        ${Render.cards(cards)}
+    `;
 }
 
 export {

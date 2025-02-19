@@ -5,7 +5,7 @@ function init() {
 }
 
 function handlerHome(path, params, context, container) {
-    // TEST
+    // TODO
     container.innerHTML = `
         <p>Welcome to the EduLinq Autograder.</p>
         <p>TODO: Intorduction</p>
