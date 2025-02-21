@@ -6,8 +6,9 @@ let routes = [];
 
 const DEFAULT_HANDLER = handlerNotFound
 
-const PARAM_COURSE = 'course-id';
-const PARAM_ASSIGNMENT = 'assignment-id';
+const PARAM_COURSE = 'course';
+const PARAM_ASSIGNMENT = 'assignment';
+const PARAM_SUBMISSION = 'submission';
 
 // The current hash/location we are routed to.
 // Should be prefixed with a hash symbol.
@@ -233,6 +234,10 @@ function formHashPath(path, params = {}) {
 
     // Add the params.
     for (const [key, value] of Object.entries(params)) {
+        if (!value) {
+            continue;
+        }
+
         url.searchParams.append(key, value);
     }
 
@@ -309,4 +314,5 @@ export {
 
     PARAM_COURSE,
     PARAM_ASSIGNMENT,
+    PARAM_SUBMISSION,
 }
