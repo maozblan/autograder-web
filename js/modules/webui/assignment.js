@@ -46,8 +46,8 @@ function handlerPeek(path, params, context, container) {
             <div class='peek-controls page-controls'>
                 <button>Peek</button>
                 <div>
-                    <label>Submission ID:</label>
-                    <input type='text' placeholder='Most Recent'>
+                    <label for='submission'>Submission ID:</label>
+                    <input type='text' name='submission' placeholder='Most Recent'>
                 </div>
             </div>
             <div class='peek-results'>
@@ -146,7 +146,75 @@ function doHistory(context, course, assignment, container) {
 }
 
 function handlerSubmit(path, params, context, container) {
-    // TODO
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+
+    container.innerHTML = `
+        <div class='submit'>
+            <div class='submit-controls page-controls'>
+                <button disabled>Submit</button>
+                <div>
+                    <label for='files'>Files:</label>
+                    <input type='file' multiple='true' name='files' placeholder='Submission Files' />
+                </div>
+            </div>
+            <div class='submit-results'>
+            </div>
+        </div>
+    `;
+
+    let button = container.querySelector('.submit-controls button');
+    let input = container.querySelector('.submit-controls input');
+    let results = container.querySelector('.submit-results');
+
+    // Enable the button if there are files.
+    input.addEventListener('change', function(event) {
+        if (input.files) {
+            button.disabled = false;
+        } else {
+            button.disabled = true;
+        }
+    });
+
+    button.addEventListener('click', function() {
+        doSubmit(context, course, assignment, input.files, results);
+    });
+}
+
+function doSubmit(context, course, assignment, files, container) {
+    if (files.length < 1) {
+        container.innerHTML = `
+            <p>No submission files provided.</p>
+        `;
+        return;
+    }
+
+    Routing.loadingStart(container);
+
+    Autograder.Submissions.submit(course.id, assignment.id, files)
+        .then(function(result) {
+            let html = "";
+
+            if (result.rejected) {
+                html = `
+                    <h3>Submission Rejected</h3>
+                    <p>${result.message}</p>
+                `;
+            } else if (!result['grading-success']) {
+                html = `
+                    <h3>Grading Failed</h3>
+                    <p>${result.message}</p>
+                `;
+            } else {
+                html = Render.submission(course, assignment, result.result);
+            }
+
+            container.innerHTML = html;
+        })
+        .catch(function(message) {
+            container.innerHTML = Render.autograderError(message);
+        })
+    ;
 }
 
 export {

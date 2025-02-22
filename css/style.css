@@ -5,19 +5,29 @@
 
     --color-light-bg-accent-primary: rgb(130, 130, 255);
 
-    --color-light-text-primary: rgba(0, 0, 0, 0.75);
-    --color-light-text-secondary: rgba(0, 0, 0, 0.60);
-    --color-light-text-tertiary: rgba(0, 0, 0, 0.40);
+    --color-light-text-primary: rgba(0, 0, 0, 0.90);
+    --color-light-text-secondary: rgba(0, 0, 0, 0.70);
+    --color-light-text-tertiary: rgba(0, 0, 0, 0.50);
+
     --color-light-text-link: rgba(40, 40, 255, 0.75);
+
+    --color-light-text-primary-low: rgba(0, 0, 0, 0.45);
+    --color-light-text-secondary-low: rgba(0, 0, 0, 0.35);
+    --color-light-text-tertiary-low: rgba(0, 0, 0, 0.20);
 
     --color-dark-bg-primary: #303030;
     --color-dark-bg-secondary: #151515;
     --color-dark-bg-tertiary: #000000;
 
-    --color-dark-text-primary: rgba(255, 255, 255, 0.85);
-    --color-dark-text-secondary: rgba(255, 255, 255, 0.75);
-    --color-dark-text-tertiary: rgba(255, 255, 255, 0.65);
+    --color-dark-text-primary: rgba(255, 255, 255, 0.90);
+    --color-dark-text-secondary: rgba(255, 255, 255, 0.80);
+    --color-dark-text-tertiary: rgba(255, 255, 255, 0.70);
+
     --color-dark-text-link: rgba(130, 130, 255, 0.85);
+
+    --color-dark-text-primary-low: rgba(255, 255, 255, 0.45);
+    --color-dark-text-secondary-low: rgba(255, 255, 255, 0.40);
+    --color-dark-text-tertiary-low: rgba(255, 255, 255, 0.35);
 
     --color-dark-bg-accent-primary: rgb(130, 130, 255);
 
@@ -43,7 +53,12 @@ html {
     --color-text-primary: var(--color-light-text-primary);
     --color-text-secondary: var(--color-light-text-secondary);
     --color-text-tertiary: var(--color-light-text-tertiary);
+
     --color-text-link: var(--color-light-text-link);
+
+    --color-text-primary-low: var(--color-light-text-primary-low);
+    --color-text-secondary-low: var(--color-light-text-secondary-low);
+    --color-text-tertiary-low: var(--color-light-text-tertiary-low);
 }
 
 /* Let system setting override default color scheme. */
@@ -58,7 +73,12 @@ html {
         --color-text-primary: var(--color-light-text-primary);
         --color-text-secondary: var(--color-light-text-secondary);
         --color-text-tertiary: var(--color-light-text-tertiary);
+
         --color-text-link: var(--color-light-text-link);
+
+        --color-text-primary-low: var(--color-light-text-primary-low);
+        --color-text-secondary-low: var(--color-light-text-secondary-low);
+        --color-text-tertiary-low: var(--color-light-text-tertiary-low);
     }
 }
 
@@ -73,7 +93,12 @@ html {
         --color-text-primary: var(--color-dark-text-primary);
         --color-text-secondary: var(--color-dark-text-secondary);
         --color-text-tertiary: var(--color-dark-text-tertiary);
+
         --color-text-link: var(--color-dark-text-link);
+
+        --color-text-primary-low: var(--color-dark-text-primary-low);
+        --color-text-secondary-low: var(--color-dark-text-secondary-low);
+        --color-text-tertiary-low: var(--color-dark-text-tertiary-low);
     }
 }
 
@@ -88,7 +113,12 @@ html.light {
     --color-text-primary: var(--color-light-text-primary);
     --color-text-secondary: var(--color-light-text-secondary);
     --color-text-tertiary: var(--color-light-text-tertiary);
+
     --color-text-link: var(--color-light-text-link);
+
+    --color-text-primary-low: var(--color-light-text-primary-low);
+    --color-text-secondary-low: var(--color-light-text-secondary-low);
+    --color-text-tertiary-low: var(--color-light-text-tertiary-low);
 }
 
 html.dark {
@@ -101,7 +131,12 @@ html.dark {
     --color-text-primary: var(--color-dark-text-primary);
     --color-text-secondary: var(--color-dark-text-secondary);
     --color-text-tertiary: var(--color-dark-text-tertiary);
+
     --color-text-link: var(--color-dark-text-link);
+
+    --color-text-primary-low: var(--color-dark-text-primary-low);
+    --color-text-secondary-low: var(--color-dark-text-secondary-low);
+    --color-text-tertiary-low: var(--color-dark-text-tertiary-low);
 }
 
 html {
@@ -119,9 +154,14 @@ input {
     background-color: var(--color-bg-secondary);
     color: var(--color-text-secondary);
     border-width: medium;
+    cursor: pointer;
 }
 
-input {
+button:disabled,
+input:disabled {
+    background-color: var(--color-bg-secondary-low);
+    color: var(--color-text-secondary-low);
+    cursor: no-drop;
 }
 
 button {
