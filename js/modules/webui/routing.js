@@ -10,6 +10,12 @@ const PARAM_COURSE = 'course';
 const PARAM_ASSIGNMENT = 'assignment';
 const PARAM_SUBMISSION = 'submission';
 
+const PATH_COURSE = 'course';
+const PATH_ASSIGNMENT = `${PATH_COURSE}/assignment`;
+const PATH_SUBMIT = `${PATH_ASSIGNMENT}/submit`;
+const PATH_PEEK = `${PATH_ASSIGNMENT}/peek`;
+const PATH_HISTORY = `${PATH_ASSIGNMENT}/history`;
+
 // The current hash/location we are routed to.
 // Should be prefixed with a hash symbol.
 let currentHash = undefined;
@@ -315,4 +321,10 @@ export {
     PARAM_COURSE,
     PARAM_ASSIGNMENT,
     PARAM_SUBMISSION,
+
+    PATH_COURSE,
+    PATH_ASSIGNMENT,
+    PATH_SUBMIT,
+    PATH_PEEK,
+    PATH_HISTORY,
 }

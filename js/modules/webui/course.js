@@ -10,7 +10,7 @@ function init() {
 function handlerCourses(path, params, context, container) {
     let cards = [];
     for (const [id, course] of Object.entries(context.courses)) {
-        let link = Routing.formHashPath('course', {[Routing.PARAM_COURSE]: course.id});
+        let link = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
         cards.push(Render.makeCardObject('course', course.name, link));
     }
 
@@ -29,7 +29,7 @@ function handlerCourse(path, params, context, container) {
             [Routing.PARAM_ASSIGNMENT]: assignment.id,
         };
 
-        let link = Routing.formHashPath('course/assignment', args);
+        let link = Routing.formHashPath(Routing.PATH_ASSIGNMENT, args);
         cards.push(Render.makeCardObject('assignment', assignment.name, link));
     }
 

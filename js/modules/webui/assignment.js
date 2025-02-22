@@ -3,10 +3,7 @@ import * as Autograder from '../autograder/base.js'
 import * as Log from './log.js'
 import * as Render from './render.js'
 import * as Routing from './routing.js'
-
-const PATH_SUBMIT = 'course/assignment/submit';
-const PATH_PEEK = 'course/assignment/peek';
-const PATH_HISTORY = 'course/assignment/history';
+import * as Util from './util.js'
 
 function init() {
     let requirements = {assignment: true};
@@ -28,9 +25,9 @@ function handlerAssignment(path, params, context, container) {
     };
 
     let cards = [
-        Render.makeCardObject('assignment-action', 'Submit', Routing.formHashPath(PATH_SUBMIT, args)),
-        Render.makeCardObject('assignment-action', 'Peek a Previous Submission', Routing.formHashPath(PATH_PEEK, args)),
-        Render.makeCardObject('assignment-action', 'View Submission History', Routing.formHashPath(PATH_HISTORY, args)),
+        Render.makeCardObject('assignment-action', 'Submit', Routing.formHashPath(Routing.PATH_SUBMIT, args)),
+        Render.makeCardObject('assignment-action', 'Peek a Previous Submission', Routing.formHashPath(Routing.PATH_PEEK, args)),
+        Render.makeCardObject('assignment-action', 'View Submission History', Routing.formHashPath(Routing.PATH_HISTORY, args)),
     ];
 
     container.innerHTML = `
@@ -69,7 +66,7 @@ function handlerPeek(path, params, context, container) {
     button.addEventListener('click', function(event) {
         params[Routing.PARAM_SUBMISSION] = input.value || undefined;
 
-        let path = Routing.formHashPath(PATH_PEEK, params);
+        let path = Routing.formHashPath(Routing.PATH_PEEK, params);
         Routing.redirect(path);
     });
 
@@ -84,7 +81,7 @@ function doPeek(context, course, assignment, container, submission) {
             let html = "";
 
             if (!result['found-user']) {
-                html = `<p>Could not find submission user: '${context.user.name}'.</p>`;
+                html = `<p>Could not find user: '${context.user.name}'.</p>`;
             } else if (!result['found-submission']) {
                 if (submission) {
                     html = `<p>Could not find submission: '${submission}'.</p>`;
@@ -92,107 +89,64 @@ function doPeek(context, course, assignment, container, submission) {
                     html = `<p>Could not find most recent submission.</p>`;
                 }
             } else {
-                html = submissionToHTML(assignment, result['submission-result']);
+                html = Render.submission(course, assignment, result['submission-result']);
             }
 
             container.innerHTML = html;
         })
         .catch(function(message) {
-            container.innerHTML = Util.renderAutograderError(message);
+            container.innerHTML = Render.autograderError(message);
         })
     ;
 }
 
 function handlerHistory(path, params, context, container) {
-    // TODO
-}
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-function handlerSubmit(path, params, context, container) {
-    // TODO
-}
-
-function submissionToHTML(assignment, submission) {
-    let submissionTime = (new Date(submission['grading_start_time'])).toLocaleString();
-
-    let messageHTML = '';
-    if (submission.message) {
-        messageHTML = makeTableRow('Message', submission['message'], 'message');
-    }
-
-    let html = `
-        <div class='submission'>
-            <h2>${assignment.name}: Submission ${submission['short-id']}</h2>
-            <div class='submission-metadata'>
-                <h3>Summary</h3>
-                <table>
-                    <tbody>
-                        ${makeTableRow('Short Submission ID', submission['short-id'], 'short-id')}
-                        ${makeTableRow('Full Submission ID', submission['id'], 'id')}
-                        ${makeTableRow('User', submission['user'], 'user')}
-                        ${makeTableRow('Course ID', submission['course-id'], 'course-id')}
-                        ${makeTableRow('Assignment ID', submission['assignment-id'], 'assignment-id')}
-                        ${makeTableRow('Submission Time', submissionTime, 'submission-time')}
-                        ${makeTableRow('Max Points', submission['max_points'], 'max-points')}
-                        ${makeTableRow('Score', submission['score'], 'score')}
-                        ${messageHTML}
-                    </tbody>
-                </table>
+    container.innerHTML = `
+        <div class='history'>
+            <div class='history-controls page-controls'>
+                <button>Fetch History</button>
             </div>
-            <div class='submission-questions-area'>
-                <h3>Questions</h3>
-                ${questionsToHTML(submission.questions)}
+            <div class='history-results'>
             </div>
         </div>
     `;
 
-    return html;
+    let button = container.querySelector('.history-controls button');
+    let results = container.querySelector('.history-results');
+
+    button.addEventListener('click', function(event) {
+        doHistory(context, course, assignment, results);
+    });
+
+    doHistory(context, course, assignment, results);
 }
 
-function questionsToHTML(questions) {
-    let questionsHTML = [
-        `<div class='submission-questions'>`,
-    ];
+function doHistory(context, course, assignment, container) {
+    Routing.loadingStart(container);
 
-    for (const [i, question] of questions.entries()) {
-        let messageHTML = '';
-        if (question.message) {
-            messageHTML = makeTableRow('Message', question['message'], 'message');
-        }
+    Autograder.Submissions.history(course.id, assignment.id)
+        .then(function(result) {
+            let html = "";
 
-        questionsHTML.push(`
-            <div class='submission-question'>
-                <h4 data-index='${i}' data-name='${question['name']}'>
-                    ${question['name']}
-                </h4>
-                <table data-index='${i}' data-name='${question['name']}'>
-                    <tbody>
-                        ${makeTableRow('Name', question['name'], 'name')}
-                        ${makeTableRow('Max Points', question['max_points'], 'max-points')}
-                        ${makeTableRow('Score', question['score'], 'score')}
-                        ${messageHTML}
-                    </tbody>
-                </table>
-            </div>
-        `);
-    }
+            if (!result['found-user']) {
+                html = `<p>Could not find user: '${context.user.name}'.</p>`;
+            } else {
+                html = Render.submissionHistory(course, assignment, result['history']);
+            }
 
-    questions.push('</div>');
-
-    return questionsHTML.join('');
+            container.innerHTML = html;
+        })
+        .catch(function(message) {
+            container.innerHTML = Render.autograderError(message);
+        })
+    ;
 }
 
-function makeTableRow(label, value, name = undefined) {
-    let nameHTML = '';
-    if (name) {
-        nameHTML = `data-name='${name}'`;
-    }
-
-    return `
-        <tr ${nameHTML}>
-            <th class='label'>${label}</th>
-            <td class='value'>${value}</td>
-        </tr>
-    `;
+function handlerSubmit(path, params, context, container) {
+    // TODO
 }
 
 export {
