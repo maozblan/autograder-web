@@ -237,6 +237,17 @@ fieldset {
     }
 }
 
+.bright-mode-toggle {
+    cursor: pointer;
+    color: var(--color-text-primary-low);
+}
+
+.bright-mode-toggle span.active {
+    font-weight: bold;
+    text-decoration: underline;
+    color: var(--color-text-primary);
+}
+
 .page {
     display: flex;
     flex-direction: column;

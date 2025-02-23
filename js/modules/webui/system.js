@@ -7,12 +7,11 @@ function init() {
 function initBrightMode() {
     setBrightMode(isSystemLightMode());
 
-    // Watch for radio button changes.
-    let fieldset = document.querySelector('.bright-mode-toggle fieldset');
-    if (fieldset) {
-        fieldset.addEventListener('change', function(event) {
-            let radio = document.querySelector('.bright-mode-toggle input[data-islight=true]');
-            setBrightMode(radio.checked);
+    let toggle = document.querySelector('.bright-mode-toggle');
+    if (toggle) {
+        toggle.addEventListener('click', function(event) {
+            let lightSelection = document.querySelector('.bright-mode-toggle .light');
+            setBrightMode(!lightSelection.classList.contains('active'));
         });
     }
 
@@ -28,10 +27,13 @@ function setBrightMode(isLight) {
     _isLightMode = isLight;
 
     // Set UI beight mode selector.
-    let toggle = document.querySelector(`.bright-mode-toggle input[data-islight=${_isLightMode}]`);
-    if (toggle) {
-        toggle.checked = true;
-    }
+    document.querySelectorAll('.bright-mode-toggle .selector').forEach(function(element) {
+        if ((isLight && element.classList.contains('light')) || (!isLight && element.classList.contains('dark'))) {
+            element.classList.add('active');
+        } else {
+            element.classList.remove('active');
+        }
+    });
 
     // Set the page's mode.
     if (isLight) {
