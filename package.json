@@ -27,7 +27,7 @@
         "collectCoverage": true,
         "coverageDirectory": "coverage",
         "setupFilesAfterEnv": [
-            "<rootDir>/js/modules/autograder/test/server.js"
+            "<rootDir>/site/js/modules/autograder/test/server.js"
         ],
         "transform": {},
         "verbose": true

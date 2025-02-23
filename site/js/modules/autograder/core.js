@@ -1,5 +1,7 @@
 import * as Util from './util.js'
 
+const BASE_URL = '/api'
+
 const API_VESION = 'v03';
 const CREDENTIALS_KEY = 'AUTOGRADER.CREDENTIALS';
 
@@ -113,7 +115,7 @@ function sendRequest({
         payload[REQUEST_USER_PASS_KEY] = Util.sha256(override_cleartext);
     }
 
-    let url = `/api/${API_VESION}/${endpoint}`;
+    let url = `${BASE_URL}/${API_VESION}/${endpoint}`;
 
     let body = new FormData();
     body.set('content', JSON.stringify(payload));

@@ -294,7 +294,7 @@ function loadingStart(container = undefined) {
     container.innerHTML = `
         <div class='loading-container'>
             <div class='loading'>
-                <img src='/images/loading-basic-edq.png' />
+                <img src='images/loading-basic-edq.png' />
             </div>
         </div>
     `;

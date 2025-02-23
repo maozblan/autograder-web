@@ -57,7 +57,7 @@ global.fetch = function(url, options = {}) {
 
 // Load the test data from ./api_test_data.json.
 function loadAPITestData() {
-    const text = fs.readFileSync(path.join('js', 'modules', 'autograder', 'test', 'api_test_data.json'), 'utf8');
+    const text = fs.readFileSync(path.join('site', 'js', 'modules', 'autograder', 'test', 'api_test_data.json'), 'utf8');
     testData = JSON.parse(text)
 }
 

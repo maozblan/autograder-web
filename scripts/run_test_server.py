@@ -7,7 +7,7 @@ import os
 import sys
 
 THIS_DIR = os.path.abspath(os.path.dirname(os.path.realpath(__file__)))
-ROOT_DIR = os.path.abspath(os.path.join(THIS_DIR, '..'))
+ROOT_DIR = os.path.abspath(os.path.join(THIS_DIR, '..', 'site'))
 
 DEFAULT_PORT = 12345
 
