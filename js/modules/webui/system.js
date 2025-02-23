@@ -36,13 +36,16 @@ function setBrightMode(isLight) {
     });
 
     // Set the page's mode.
+    let html = document.querySelector('html');
     if (isLight) {
-        document.querySelector('html').classList.remove('dark');
-        document.querySelector('html').classList.add('light');
+        html.classList.remove('dark');
+        html.classList.add('light');
     } else {
-        document.querySelector('html').classList.remove('light');
-        document.querySelector('html').classList.add('dark');
+        html.classList.remove('light');
+        html.classList.add('dark');
     }
+
+    html.classList.remove('no-brightness-selection');
 }
 
 function isSystemLightMode() {
