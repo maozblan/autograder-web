@@ -1,6 +1,7 @@
 import * as Autograder from '../autograder/base.js'
+
 import * as Context from './context.js'
-import * as Log from './log.js'
+import * as Render from './render.js'
 import * as Routing from './routing.js'
 
 function init() {
@@ -10,38 +11,55 @@ function init() {
 
 function handlerLogin(path, params, context, container) {
     container.innerHTML = `
-        <h2>Login</h2>
         <div class='login'>
-            <div>
-                <label for='email'>Email:</label>
-                <input type='email' name='email' placeholder='email' />
+            <div class='login-controls page-controls'>
+                <button>Login</button>
+                <div>
+                    <label for='email'>Email:</label>
+                    <input type='email' name='email' placeholder='email' autofocus />
+                </div>
+                <div>
+                    <label for='password'>Password:</label>
+                    <input type='password' name='password' placeholder='password' />
+                </div>
             </div>
-            <div>
-                <label for='password'>Password:</label>
-                <input type='password' name='password' placeholder='password' />
+            <div class='login-results'>
             </div>
-            <button>Login</button>
         </div>
     `;
 
-    container.querySelectorAll('.login input').forEach(function(element) {
+    let button = container.querySelector('.login-controls button');
+    let emailInput = container.querySelector('.login-controls input[name="email"]');
+    let passwordInput = container.querySelector('.login-controls input[name="password"]');
+    let results = container.querySelector('.login-results');
+
+    function doLogin() {
+        let email = emailInput.value;
+        let password = passwordInput.value;
+
+        if (!email || !password) {
+            return;
+        }
+
+        // Avoid duplicate submissions.
+        emailInput.value = '';
+        passwordInput.value = '';
+
+        login(email, password, results);
+    }
+
+    container.querySelectorAll('.login-controls input').forEach(function(element) {
         element.addEventListener('keydown', function(event) {
-            if (event.code != 'Enter') {
+            if (!['Enter', 'NumpadEnter'].includes(event.code)) {
                 return
             }
 
-            let email = container.querySelector('input[name="email"]').value;
-            let cleartext = container.querySelector('input[name="password"]').value;
-
-            login(email, cleartext);
+            doLogin()
         });
     });
 
-    container.querySelector('.login button').addEventListener('click', function(event) {
-        let email = container.querySelector('input[name="email"]').value;
-        let cleartext = container.querySelector('input[name="password"]').value;
-
-        login(email, cleartext);
+    button.addEventListener('click', function(event) {
+        doLogin()
     });
 }
 
@@ -51,34 +69,35 @@ function handlerLogout(path, params, context, container) {
     Routing.redirectLogin();
 }
 
-function login(email, cleartext) {
+function login(email, cleartext, container) {
     if (Autograder.hasCredentials()) {
-        Log.warn("Already logged in. Logout first to login again.");
+        container.innerHTML = `
+            <p>Already logged in.</p>
+            <p>Logout first to login again.</p>
+        `;
         return;
     }
 
     if (email.length < 1) {
-        Log.warn("No email provided for login.")
+        container.innerHTML = `<p>No email provided for login.</p>`;
         return;
     }
 
     if (cleartext.length < 1) {
-        Log.warn("No password provided for login.")
+        container.innerHTML = `<p>No password provided for login.</p>`;
         return;
     }
 
-    Routing.loadingStart();
+    Routing.loadingStart(container);
 
     Autograder.Users.createToken(email, cleartext)
         .then(function(token) {
             Autograder.setCredentials(email, token['token-id'], token['token-cleartext']);
+            container.innerHTML = `<p>Successfully logged in.</p>`;
             Routing.redirectHome();
         })
-        .catch(function(result) {
-            Log.warn("Unable to login.", result);
-        })
-        .finally(function() {
-            Routing.loadingStop();
+        .catch(function(message) {
+            container.innerHTML = Render.autograderError(message);
         })
     ;
 }
