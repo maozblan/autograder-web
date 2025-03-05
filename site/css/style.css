@@ -199,6 +199,15 @@ ul, ol {
     padding: 0;
 }
 
+.page p {
+    margin-bottom: 1em;
+}
+
+.page ul,
+.page ol {
+    margin-left: 2em;
+}
+
 fieldset {
     padding: 0;
     outline: none;

@@ -5,12 +5,29 @@ function init() {
 }
 
 function handlerHome(path, params, context, container) {
-    // TODO
     container.innerHTML = `
-        <p>Welcome to the EduLinq Autograder.</p>
-        <p>TODO: Intorduction</p>
-        <p>TODO: Basic Instructions</p>
-        <p>TODO: Links to other resources</p>
+        <div class='home'>
+            <p>
+                Welcome to the EduLinq Autograder.
+            </p>
+
+            <p>
+                You are currently using the <a href='https://github.com/edulinq/autograder-web'>web frontend</a>
+                for the autograder running on <a href='${document.location.href}'><strong>${document.location.hostname}</strong></a>.
+            </p>
+
+            <p>
+                This frontend has a subset of the full functionality,
+                which you access with command-line clients such as the <a href='https://github.com/edulinq/autograder-py'>Python CLI</a>.
+            </p>
+
+            <span>Other EduLinq Autograder Resources:</span>
+            <ul>
+                <li><a href='https://github.com/edulinq/autograder-server'>Server</a></li>
+                <li><a href='https://github.com/edulinq/autograder-web'>Web Frontend</a></li>
+                <li><a href='https://github.com/edulinq/autograder-py'>Python Interface</a></li>
+            </ul>
+        </home>
     `;
 }
 

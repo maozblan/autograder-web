@@ -14,7 +14,7 @@ function card(card = {type: 'unknown', text: '', link: '#'}) {
     return `
         <div class='card card-${card.type}'>
             <a href='${card.link}' alt='${card.text}'>
-                <p>${card.text}</p>
+                <span>${card.text}</span>
             </a>
         </div>
     `;
@@ -182,7 +182,7 @@ function autograderError(message) {
 
     if (message) {
         result += `
-            <p>Message from the autograder:<p>
+            <span>Message from the autograder:<span>
             <p>${message}</p>
         `;
     }
