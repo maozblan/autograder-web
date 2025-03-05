@@ -13,11 +13,30 @@ function init() {
     Routing.addRoute(/^course\/assignment\/submit$/, handlerSubmit, 'Assignment Submit', requirements);
 }
 
+function setAssignmentTitle(course, assignment) {
+    let args = {
+        [Routing.PARAM_COURSE]: course.id,
+        [Routing.PARAM_ASSIGNMENT]: assignment.id,
+    };
+
+    let courseLink = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
+    let assignmentLink = Routing.formHashPath(Routing.PATH_ASSIGNMENT, args);
+    let titleHTML = `
+        <span>
+            <a href='${courseLink}'>${course.id}</a>
+            /
+            <a href='${assignmentLink}'>${assignment.id}</a>
+        </span>
+    `;
+
+    Routing.setTitle(assignment.id, titleHTML);
+}
+
 function handlerAssignment(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    Routing.setTitle(assignment.name);
+    setAssignmentTitle(course, assignment);
 
     let args = {
         [Routing.PARAM_COURSE]: course.id,
@@ -40,6 +59,8 @@ function handlerPeek(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
     let submission = params[Routing.PARAM_SUBMISSION] || undefined;
+
+    setAssignmentTitle(course, assignment);
 
     container.innerHTML = `
         <div class='peek'>
@@ -104,6 +125,8 @@ function handlerHistory(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
+    setAssignmentTitle(course, assignment);
+
     container.innerHTML = `
         <div class='history'>
             <div class='history-controls page-controls'>
@@ -148,6 +171,8 @@ function doHistory(context, course, assignment, container) {
 function handlerSubmit(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+
+    setAssignmentTitle(course, assignment);
 
     container.innerHTML = `
         <div class='submit'>

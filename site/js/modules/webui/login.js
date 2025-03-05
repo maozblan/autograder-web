@@ -13,7 +13,6 @@ function handlerLogin(path, params, context, container) {
     container.innerHTML = `
         <div class='login'>
             <div class='login-controls page-controls'>
-                <button>Login</button>
                 <div>
                     <label for='email'>Email:</label>
                     <input type='email' name='email' placeholder='email' autofocus />
@@ -22,6 +21,7 @@ function handlerLogin(path, params, context, container) {
                     <label for='password'>Password:</label>
                     <input type='password' name='password' placeholder='password' />
                 </div>
+                <button>Login</button>
             </div>
             <div class='login-results'>
             </div>

@@ -3,7 +3,7 @@ import * as Routing from './routing.js'
 
 function init() {
     let requirements = {course: true};
-    Routing.addRoute(/^courses$/, handlerCourses, 'Courses');
+    Routing.addRoute(/^courses$/, handlerCourses, 'Enrolled Courses');
     Routing.addRoute(/^course$/, handlerCourse, 'Course', {course: true});
 }
 
@@ -14,13 +14,15 @@ function handlerCourses(path, params, context, container) {
         cards.push(Render.makeCardObject('course', course.name, link));
     }
 
-    container.innerHTML = Render.cards(cards);
+    container.innerHTML = `
+        ${Render.cards(cards)}
+    `;
 }
 
 function handlerCourse(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
 
-    Routing.setTitle(course.name);
+    Routing.setTitle(course.id);
 
     let cards = [];
     for (const [id, assignment] of Object.entries(course.assignments)) {

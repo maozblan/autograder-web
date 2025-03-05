@@ -178,7 +178,13 @@ function handlerWrapper(handler, path, params, pageName, requirements) {
     handler(path, params, context, container);
 }
 
-function setTitle(title) {
+function setTitle(title, titleHTML = undefined) {
+    if (titleHTML) {
+        document.querySelector('.page .page-title').innerHTML = titleHTML;
+    } else {
+        document.querySelector('.page .page-title').innerHTML = `<span>${title}</span>`;
+    }
+
     document.title = `${title} :: Autograder`;
 }
 
