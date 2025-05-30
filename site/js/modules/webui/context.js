@@ -18,7 +18,7 @@ function load() {
         .then(function(result) {
             if (!result.found) {
                 Log.warn("Server could not find context user.");
-                return Promist.reject(result);
+                return Promise.reject(result);
             }
 
             context = makeContext(result);
