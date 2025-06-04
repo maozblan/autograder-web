@@ -190,6 +190,40 @@ function autograderError(message) {
     return result;
 }
 
+function table(table = {head: [], body: [], name: ''}) {
+    const vertical = false;
+    if (vertical) {
+        return `
+            <table data-name='${table.name}'>
+                <thead>
+                    <tr>
+                        ${table.head.map(label => `<th>${label}</th>`).join('')}
+                    </tr>
+                </thead>
+                <tbody>
+                    ${table.body.map(row => `
+                        <tr>
+                            ${row.map(value => `<td>${value}</td>`).join('')}
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+    } else {
+        return `
+            <table data-name='${table.name}'>
+                ${table.head.map((label, index) => {
+                    let html = `<tr><th>${label}</th>`;
+                    table.body.forEach(row => {
+                        html += `<td>${row[index]}</td>`;
+                    });
+                    return html + `</tr>`;
+                }).join('')}
+            </table>
+        `;
+    }
+}
+
 export {
     autograderError,
     card,
@@ -197,4 +231,5 @@ export {
     makeCardObject,
     submission,
     submissionHistory,
+    table,
 }
