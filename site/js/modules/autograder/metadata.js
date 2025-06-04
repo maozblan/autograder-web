@@ -1,11 +1,11 @@
 import * as Core from './core.js';
 
-function get() {
+function describe() {
 	return Core.sendRequest({
         endpoint: 'metadata/describe',
     });
 }
 
 export {
-    get,
+    describe,
 }

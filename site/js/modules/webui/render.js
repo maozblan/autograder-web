@@ -1,6 +1,6 @@
-import * as Assignment from './assignment.js'
-import * as Routing from './routing.js'
-import * as Util from './util.js'
+import * as Assignment from './assignment.js';
+import * as Routing from './routing.js';
+import * as Util from './util.js';
 
 function makeCardObject(type = 'unknown', text = '', link = '#') {
     return {
@@ -190,9 +190,8 @@ function autograderError(message) {
     return result;
 }
 
-function table(table = {head: [], body: [], name: ''}) {
-    const vertical = false;
-    if (vertical) {
+function table(table = {head: [], body: [], name: ''}, settings = { vertical: true }) {
+    if (settings.vertical) {
         return `
             <table data-name='${table.name}'>
                 <thead>
