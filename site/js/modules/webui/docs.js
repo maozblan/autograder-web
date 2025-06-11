@@ -4,9 +4,24 @@ import * as Routing from "./routing.js";
 
 function init() {
     Routing.addRoute(/^docs$/, handlerDocs, "API Documentation");
+    Routing.addRoute(/^docs\/endpoints$/, handlerEndpoints, "API Endpoints");
+    Routing.addRoute(/^docs\/types$/, handlerTypes, "API Types");
 }
 
 function handlerDocs(path, params, context, container) {
+    Routing.setTitle("API Documentation", "API Documentation");
+
+    let html = `
+        <ul>
+            <li><a href="${Routing.formHashPath('docs/endpoints')}">Endpoints</a></li>
+            <li><a href="${Routing.formHashPath('docs/types')}">Types</a></li>
+        </ul>
+    `;
+
+    container.innerHTML = html;
+}
+
+function handlerEndpoints(path, params, context, container) {
     Routing.setTitle("API Documentation", "API Documentation");
 
     // metadata/describe display
@@ -14,16 +29,9 @@ function handlerDocs(path, params, context, container) {
         .then(function(result) {
             let html = Render.comboBox({id: "endpoint-combo-box", options: Object.keys(result.endpoints)});
             html += displayEndpoints(result.endpoints)
-            html += displayTypes(result.types);
             container.innerHTML = html;
 
-            document.getElementById("endpoint-combo-box").addEventListener("change", function(event) {
-                const endpoint = event.target.value;
-                document.querySelector(`div.endpoint[data-route='${endpoint}']`).scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                });
-            });
+            createComboBoxCallback("endpoint");
         })
         .catch(function (message) {
             container.innerHTML = Render.autograderError(message);
@@ -34,7 +42,7 @@ function displayEndpoints(endpointData) {
     let html = "<h1>Endpoints</h1>";
     Object.entries(endpointData).forEach(function([endpoint, data]) {
         html += `
-            <div class='endpoint' data-route='${endpoint}'>
+            <div class='endpoint' data-tag='${endpoint}'>
                 <h3>${endpoint}</h3>
                 <p>${data.description}</p>
                 <h4>Input</h4>
@@ -59,11 +67,29 @@ function displayEndpoints(endpointData) {
     return html;
 }
 
+function handlerTypes(path, params, context, container) {
+    Routing.setTitle("API Types", "API Types");
+
+    // metadata/describe display
+    Autograder.Metadata.describe()
+        .then(function(result) {
+            let html = Render.comboBox({id: "type-combo-box", options: Object.keys(result.types)});
+            html += displayTypes(result.types);
+            container.innerHTML = html;
+
+            createComboBoxCallback("type");
+        })
+        .catch(function (message) {
+            container.innerHTML = Render.autograderError(message);
+        });
+}
+
+
 function displayTypes(typeData) {
     let html = "<h1>Types</h1>";
     Object.entries(typeData).forEach(function([type, data]) {
         html += `
-            <div class='type'>
+            <div class='type' data-tag='${type}'>
                 <h3>${type}</h3>
                 <p>${data.description ?? ""}</p>
                 <h4>Category</h4>
@@ -83,6 +109,16 @@ function displayTypes(typeData) {
         `;
     });
     return html;
+}
+
+function createComboBoxCallback(id) {
+    document.getElementById(`${id}-combo-box`).addEventListener("change", function(event) {
+        const selection = event.target.value;
+        document.querySelector(`div.${id}[data-tag='${selection}']`).scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+        });
+    });
 }
 
 export {
