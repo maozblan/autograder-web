@@ -157,7 +157,8 @@ a {
 }
 
 button,
-input {
+input,
+select {
     background-color: var(--color-bg-secondary);
     color: var(--color-text-secondary);
     border-width: medium;
@@ -165,7 +166,8 @@ input {
 }
 
 button:disabled,
-input:disabled {
+input:disabled,
+select:disabled {
     background-color: var(--color-bg-secondary-low);
     color: var(--color-text-secondary-low);
     cursor: no-drop;
@@ -173,6 +175,7 @@ input:disabled {
 
 button {
     border-radius: 5px;
+    padding: 0.25em;
 }
 
 /* Set basic relative font sizing. */
@@ -219,16 +222,8 @@ fieldset {
 }
 
 .loading-container .loading {
-    z-index: 100;
-
     height: 100%;
     width: 100%;
-
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    background-color: #80808082;
 
     display: flex;
     flex-direction: row;
@@ -236,6 +231,16 @@ fieldset {
     align-items: flex-start;
 
     margin-top: 2em;
+}
+
+.loading-container .loading-modal {
+    z-index: 100;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    background-color: #80808082;
 }
 
 .loading-container .loading img {
@@ -427,8 +432,68 @@ fieldset {
     margin-bottom: 1em;
 }
 
-.page-controls button {
-    padding: 0.25em;
+.page-controls select {
+    max-width: 95vw;
+}
+
+.endpoint-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    border-bottom: 3px solid var(--color-text-secondary);
+}
+
+.endpoint-area:empty {
+    display: none;
+}
+
+.endpoint-area fieldset {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+
+    gap: 1em;
+    padding: 1.5em;
+    margin-bottom: 1em;
+
+    color: var(--color-text-secondary);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--curve-radius);
+    box-shadow: 2px 2px 1px var(--color-bg-shadow);
+}
+
+.endpoint-area .input-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.endpoint-area label {
+    margin-bottom: 0.25em;
+}
+
+.endpoint-area input {
+    padding: 0.5em;
+}
+
+.results-area .code {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    gap: 1em;
+
+    overflow-x: scroll;
+    padding: 1.5em;
+    margin-bottom: 1em;
+
+    border-radius: var(--curve-radius);
+    box-shadow: 2px 2px 1px var(--color-bg-shadow);
+
+    color: var(--color-text-secondary);
+    background-color: var(--color-bg-secondary);
 }
 
 .submission table,
