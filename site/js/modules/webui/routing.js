@@ -9,12 +9,16 @@ const DEFAULT_HANDLER = handlerNotFound
 const PARAM_COURSE = 'course';
 const PARAM_ASSIGNMENT = 'assignment';
 const PARAM_SUBMISSION = 'submission';
+const PARAM_TARGET_ENDPOINT = 'endpoint';
 
 const PATH_COURSE = 'course';
 const PATH_ASSIGNMENT = `${PATH_COURSE}/assignment`;
 const PATH_SUBMIT = `${PATH_ASSIGNMENT}/submit`;
 const PATH_PEEK = `${PATH_ASSIGNMENT}/peek`;
 const PATH_HISTORY = `${PATH_ASSIGNMENT}/history`;
+
+const PATH_SERVER = 'server';
+const PATH_SERVER_CALL_API = `${PATH_SERVER}/call-api`;
 
 // The current hash/location we are routed to.
 // Should be prefixed with a hash symbol.
@@ -294,12 +298,17 @@ function redirectLogout() {
     redirect('logout');
 }
 
-function loadingStart(container = undefined) {
+function loadingStart(container = undefined, modal = true) {
     container = container ?? mainConatiner();
+
+    let loadingClass = 'loading';
+    if (modal) {
+        loadingClass += ' loading-modal';
+    }
 
     container.innerHTML = `
         <div class='loading-container'>
-            <div class='loading'>
+            <div class='${loadingClass}'>
                 <img src='images/loading-basic-edq.png' />
             </div>
         </div>
@@ -327,10 +336,13 @@ export {
     PARAM_COURSE,
     PARAM_ASSIGNMENT,
     PARAM_SUBMISSION,
+    PARAM_TARGET_ENDPOINT,
 
     PATH_COURSE,
     PATH_ASSIGNMENT,
     PATH_SUBMIT,
     PATH_PEEK,
     PATH_HISTORY,
+    PATH_SERVER,
+    PATH_SERVER_CALL_API,
 }
