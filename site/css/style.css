@@ -525,17 +525,26 @@ fieldset {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 1em;
-    justify-content: space-between;
-    /* issues with scroll because no overflow */
-    /* height: 100%; */
+    justify-content: space-around;
     height: 80vh;
 
+    * {
+        text-align: center;
+    }
+
+    .scrollable {
+        overflow-y: auto;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+    }
+
     &> div {
-        width: 48%;
+        width: 45%;
         min-width: 500px;
         height: 100%;
-        overflow-y: auto;
+        padding: 1rem;
 
         .endpoint .details,
         .type .details {
@@ -574,6 +583,6 @@ fieldset {
     .endpoints, .types {
         display: flex;
         flex-direction: column;
-        gap: 4em;
+        gap: 1em;
     }
 }
