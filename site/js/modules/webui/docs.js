@@ -4,34 +4,48 @@ import * as Routing from "./routing.js";
 
 function init() {
     Routing.addRoute(/^docs$/, handlerDocs, "API Documentation");
-    Routing.addRoute(/^docs\/endpoints$/, handlerEndpoints, "API Endpoints");
-    Routing.addRoute(/^docs\/types$/, handlerTypes, "API Types");
 }
 
 function handlerDocs(path, params, context, container) {
     Routing.setTitle("API Documentation", "API Documentation");
 
-    let html = `
-        <ul>
-            <li><a href="${Routing.formHashPath('docs/endpoints')}">Endpoints</a></li>
-            <li><a href="${Routing.formHashPath('docs/types')}">Types</a></li>
-        </ul>
-    `;
-
-    container.innerHTML = html;
-}
-
-function handlerEndpoints(path, params, context, container) {
-    Routing.setTitle("API Documentation", "API Documentation");
-
-    // metadata/describe display
     Autograder.Metadata.describe()
         .then(function(result) {
-            let html = Render.comboBox({id: "endpoint-combo-box", options: Object.keys(result.endpoints)});
-            html += displayEndpoints(result.endpoints)
+            let html = `
+                <div class="api-docs">
+                	<div class="endpoints">
+                    	<input type="text" id="endpoint-filter" placeholder="Filter Endpoints">
+                        ${displayEndpoints(result.endpoints)}
+                    </div>
+                	<div class="types">
+                    	<input type="text" id="type-filter" placeholder="Filter Types">
+                        ${displayTypes(result.types)}
+                    </div>
+                </div>
+            `;
+
             container.innerHTML = html;
 
-            createComboBoxCallback("endpoint");
+            document.querySelector("#endpoint-filter").addEventListener("input", function(event) {
+                document.querySelectorAll(".endpoint").forEach(function(endpointDiv) {
+                    let tag = endpointDiv.getAttribute("data-tag");
+                    if (tag.toLowerCase().includes(event.target.value.toLowerCase())) {
+                        endpointDiv.style.display = "";
+                    } else {
+                        endpointDiv.style.display = "none";
+                    }
+                })
+            });
+            document.querySelector("#type-filter").addEventListener("input", function(event) {
+                document.querySelectorAll(".type").forEach(function(typeDiv) {
+                    let tag = typeDiv.getAttribute("data-tag");
+                    if (tag.toLowerCase().includes(event.target.value.toLowerCase())) {
+                        typeDiv.style.display = "";
+                    } else {
+                        typeDiv.style.display = "none";
+                    }
+                })
+            });
         })
         .catch(function (message) {
             container.innerHTML = Render.autograderError(message);
@@ -45,45 +59,33 @@ function displayEndpoints(endpointData) {
             <div class='endpoint' data-tag='${endpoint}'>
                 <h3>${endpoint}</h3>
                 <p>${data.description}</p>
-                <h4>Input</h4>
-                ${
-                    Render.table({
-                        head: ["Name", "Type"],
-                        body: data.input.map((input) => [input.name, input.type]),
-                        name: endpoint + "-input",
-                    })
-                }
-                <h4>Output</h4>
-                ${
-                    Render.table({
-                        head: ["Name", "Type"],
-                        body: data.output.map((output) => [output.name, output.type]),
-                        name: endpoint + "-output",
-                    })
-                }
+                <div class="details">
+                    <div>
+                        <h4>Input</h4>
+                        ${
+                            Render.table({
+                                head: ["Name", "Type"],
+                                body: data.input.map((input) => [input.name, input.type]),
+                                name: endpoint + "-input",
+                            })
+                        }
+                    </div>
+                    <div>
+                        <h4>Output</h4>
+                        ${
+                            Render.table({
+                                head: ["Name", "Type"],
+                                body: data.output.map((output) => [output.name, output.type]),
+                                name: endpoint + "-output",
+                            })
+                        }
+                    </div>
+                </div>
             </div>
         `;
     });
     return html;
 }
-
-function handlerTypes(path, params, context, container) {
-    Routing.setTitle("API Types", "API Types");
-
-    // metadata/describe display
-    Autograder.Metadata.describe()
-        .then(function(result) {
-            let html = Render.comboBox({id: "type-combo-box", options: Object.keys(result.types)});
-            html += displayTypes(result.types);
-            container.innerHTML = html;
-
-            createComboBoxCallback("type");
-        })
-        .catch(function (message) {
-            container.innerHTML = Render.autograderError(message);
-        });
-}
-
 
 function displayTypes(typeData) {
     let html = "<h1>Types</h1>";
@@ -96,29 +98,25 @@ function displayTypes(typeData) {
                 <p>${data.category}</p>
         `;
 
-        if (!data.fields) return;
-        html += `
-                <h4>Fields</h4>
-            ${
-                Render.table({
-                    head: ["Name", "Type"],
-                    body: data.fields.map((field) => [field.name, field.type]),
-                    name: type + "-fields",
-                })
-            }
-        `;
+        if (data.fields) {
+            html += `
+            	<div class="details">
+                    <div>
+                    <h4>Fields</h4>
+                    ${
+                        Render.table({
+                            head: ["Name", "Type"],
+                            body: data.fields.map((field) => [field.name, field.type]),
+                            name: type + "-fields",
+                        })
+                    }
+                    </div>
+                </div>
+            `;
+        }
+        html += `</div>`;
     });
     return html;
-}
-
-function createComboBoxCallback(id) {
-    document.getElementById(`${id}-combo-box`).addEventListener("change", function(event) {
-        const selection = event.target.value;
-        document.querySelector(`div.${id}[data-tag='${selection}']`).scrollIntoView({
-            behavior: "smooth",
-            block: "start",
-        });
-    });
 }
 
 export {

@@ -223,25 +223,10 @@ function table(table = {head: [], body: [], name: ''}, settings = { vertical: tr
     }
 }
 
-function comboBox(data = {id: '', options: []}) {
-    let options = data.options.map(option => {
-        return `<option value='${option}'>${option}</option>`;
-    }).join('');
-
-    const listId = Date.now();
-    return `
-        <input type='text' id="${data.id}" list='${listId}' placeholder='Select or type...' />
-        <datalist id='${listId}'>
-            ${options}
-        </datalist>
-    `;
-}
-
 export {
     autograderError,
     card,
     cards,
-    comboBox,
     makeCardObject,
     submission,
     submissionHistory,
