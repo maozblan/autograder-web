@@ -61,9 +61,13 @@ function handlerDocs(path, params, context, container) {
 function displayEndpoints(endpointData) {
     let html = "";
     Object.entries(endpointData).forEach(function([endpoint, data]) {
+        const args = {
+            [Routing.PARAM_TARGET_ENDPOINT]: endpoint,
+        };
+
         html += `
             <div class='endpoint' data-endpoint='${endpoint}'>
-                <h3>${endpoint}</h3>
+                <a href="${Routing.formHashPath(Routing.PATH_SERVER_CALL_API, args)}"><h3>${endpoint}</h3></a>
                 <p>${data.description}</p>
                 <div class="details">
                     <div>
