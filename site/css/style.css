@@ -527,62 +527,57 @@ fieldset {
     flex-wrap: wrap;
     justify-content: space-around;
     height: 80vh;
+    text-align: center;
+    overflow-y: auto;
+    word-break: break-word;
+}
 
-    * {
-        text-align: center;
-    }
+.api-docs > div {
+    width: 100%;
+    max-width: 42rem;
+    height: 100%;
+    padding: 1rem;
+}
 
-    .scrollable {
-        overflow-y: auto;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 3rem;
-    }
+.api-docs .scrollable {
+    overflow-y: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
 
-    &> div {
-        width: 45%;
-        min-width: 500px;
-        height: 100%;
-        padding: 1rem;
+.api-docs .details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1em;
+}
 
-        .endpoint .details,
-        .type .details {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            gap: 1em;
+.api-docs .details > div {
+    flex: 1;
+    max-width: 27rem;
+}
 
-            &> div {
-                flex: 1;
-                max-width: 50%;
-            }
+.api-docs table {
+    flex: 1;
+    border-collapse: collapse;
+    width: 100%;
+}
 
-            h4 {
-                text-align: center;
-            }
+.api-docs table th,
+.api-docs table tr:not(:last-child) {
+    border-bottom: 1px solid var(--color-text-secondary);
+}
 
-            table {
-                flex: 1;
-                border-collapse: collapse;
-                width: 100%;
-                tr {
-                    word-break: break-all;
-                }
-                th, tr:not(:last-child) {
-                    border-bottom: 1px solid var(--color-text-secondary);
-                }
-            }
-        }
-    }
+.hide {
+    display: none;
+}
 
-    .hide {
-        display: none;
-    }
-
-    .endpoints, .types {
-        display: flex;
-        flex-direction: column;
-        gap: 1em;
-    }
+.endpoints,
+.types {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 }

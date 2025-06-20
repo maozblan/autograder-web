@@ -191,9 +191,10 @@ function autograderError(message) {
 }
 
 function table(table = {head: [], body: [], name: ''}, settings = { vertical: true }) {
+    let html = `<table data-name='${table.name}'>`;
+
     if (settings.vertical) {
-        return `
-            <table data-name='${table.name}'>
+        html += `
                 <thead>
                     <tr>
                         ${table.head.map(label => `<th>${label}</th>`).join('')}
@@ -206,21 +207,18 @@ function table(table = {head: [], body: [], name: ''}, settings = { vertical: tr
                         </tr>
                     `).join('')}
                 </tbody>
-            </table>
         `;
     } else {
-        return `
-            <table data-name='${table.name}'>
-                ${table.head.map((label, index) => {
-                    let html = `<tr><th>${label}</th>`;
-                    table.body.forEach(row => {
-                        html += `<td>${row[index]}</td>`;
-                    });
-                    return html + `</tr>`;
-                }).join('')}
-            </table>
-        `;
+        html += table.head.map((label, index) => {
+                let html = `<tr><th>${label}</th>`;
+                table.body.forEach(row => {
+                    html += `<td>${row[index]}</td>`;
+                });
+                return html + `</tr>`;
+            }).join('');
     }
+
+    return html + '</table>';
 }
 
 export {
@@ -231,4 +229,4 @@ export {
     submission,
     submissionHistory,
     table,
-}
+};

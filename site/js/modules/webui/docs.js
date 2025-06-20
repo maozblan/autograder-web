@@ -9,20 +9,20 @@ function init() {
 function handlerDocs(path, params, context, container) {
     Routing.setTitle("API Documentation", "API Documentation");
 
-    Autograder.Metadata.describe()
+    Autograder.Server.describe()
         .then(function(result) {
             let html = `
                 <div class="api-docs">
                 	<div class="endpoints">
                         <h1>Endpoints</h1>
-                        <input type="text" id="endpoint-filter" placeholder="Filter Endpoints">
+                        <input type="text" placeholder="Filter Endpoints">
                         <div class="scrollable">
                             ${displayEndpoints(result.endpoints)}
                         </div>
                     </div>
                 	<div class="types">
                         <h1>Types</h1>
-                        <input type="text" id="type-filter" placeholder="Filter Types">
+                        <input type="text" placeholder="Filter Types">
                         <div class="scrollable">
                             ${displayTypes(result.types)}
                         </div>
@@ -32,7 +32,7 @@ function handlerDocs(path, params, context, container) {
 
             container.innerHTML = html;
 
-            document.querySelector("#endpoint-filter").addEventListener("input", function(event) {
+            document.querySelector(".endpoints input").addEventListener("input", function(event) {
                 document.querySelectorAll(".endpoint").forEach(function(endpointDiv) {
                     let tag = endpointDiv.getAttribute("data-endpoint");
                     if (tag.toLowerCase().includes(event.target.value.toLowerCase())) {
@@ -42,7 +42,8 @@ function handlerDocs(path, params, context, container) {
                     }
                 })
             });
-            document.querySelector("#type-filter").addEventListener("input", function(event) {
+
+            document.querySelector(".types input").addEventListener("input", function(event) {
                 document.querySelectorAll(".type").forEach(function(typeDiv) {
                     let tag = typeDiv.getAttribute("data-type");
                     if (tag.toLowerCase().includes(event.target.value.toLowerCase())) {
@@ -60,6 +61,7 @@ function handlerDocs(path, params, context, container) {
 
 function displayEndpoints(endpointData) {
     let html = "";
+
     Object.entries(endpointData).forEach(function([endpoint, data]) {
         const args = {
             [Routing.PARAM_TARGET_ENDPOINT]: endpoint,
@@ -94,11 +96,13 @@ function displayEndpoints(endpointData) {
             </div>
         `;
     });
+
     return html;
 }
 
 function displayTypes(typeData) {
     let html = ""
+
     Object.entries(typeData).forEach(function([type, data]) {
         html += `
             <div class='type' data-type='${type}'>
@@ -126,6 +130,7 @@ function displayTypes(typeData) {
         }
         html += `</div>`;
     });
+
     return html;
 }
 

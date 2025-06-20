@@ -25,7 +25,7 @@ function handlerServer(path, params, context, container) {
     };
 
     let cards = [
-        Render.makeCardObject('server-action', 'API Documentation', Routing.formHashPath(Routing.PATH_SERVER_API_DOCS)),
+        Render.makeCardObject('server-action', 'API Documentation', Routing.formHashPath(Routing.PATH_SERVER_DOCS)),
         Render.makeCardObject('server-action', 'Call API', Routing.formHashPath(Routing.PATH_SERVER_CALL_API, args)),
     ];
 
