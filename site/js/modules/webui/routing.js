@@ -1,6 +1,6 @@
-import * as Autograder from '../autograder/base.js'
-import * as Context from './context.js'
-import * as Log from './log.js'
+import * as Autograder from '../autograder/base.js';
+import * as Context from './context.js';
+import * as Log from './log.js';
 
 let routes = [];
 
@@ -18,8 +18,8 @@ const PATH_PEEK = `${PATH_ASSIGNMENT}/peek`;
 const PATH_HISTORY = `${PATH_ASSIGNMENT}/history`;
 
 const PATH_SERVER = 'server';
-const PATH_SERVER_DOCS = `${PATH_SERVER}/docs`;
 const PATH_SERVER_CALL_API = `${PATH_SERVER}/call-api`;
+const PATH_SERVER_DOCS = `${PATH_SERVER}/docs`;
 
 // The current hash/location we are routed to.
 // Should be prefixed with a hash symbol.
@@ -345,6 +345,6 @@ export {
     PATH_PEEK,
     PATH_HISTORY,
     PATH_SERVER,
-    PATH_SERVER_DOCS,
     PATH_SERVER_CALL_API,
-}
+    PATH_SERVER_DOCS,
+};

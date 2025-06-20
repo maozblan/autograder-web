@@ -1,7 +1,6 @@
-import * as Autograder from '../autograder/base.js'
-
-import * as Render from './render.js'
-import * as Routing from './routing.js'
+import * as Autograder from '../autograder/base.js';
+import * as Render from './render.js';
+import * as Routing from './routing.js';
 
 // The priority of the field to show first.
 // Items later in the list have the highest priority.
@@ -199,4 +198,4 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
 
 export {
     init,
-}
+};

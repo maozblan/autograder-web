@@ -11,7 +11,7 @@ function handlerDocs(path, params, context, container) {
 
     Autograder.Server.describe()
         .then(function(result) {
-            let html = `
+            container.innerHTML = `
                 <div class="api-docs">
                 	<div class="endpoints">
                         <h1>Endpoints</h1>
@@ -30,26 +30,24 @@ function handlerDocs(path, params, context, container) {
                 </div>
             `;
 
-            container.innerHTML = html;
-
             document.querySelector(".endpoints input").addEventListener("input", function(event) {
                 document.querySelectorAll(".endpoint").forEach(function(endpointDiv) {
                     let tag = endpointDiv.getAttribute("data-endpoint");
                     if (tag.toLowerCase().includes(event.target.value.toLowerCase())) {
-                        endpointDiv.style.display = "";
+                        endpointDiv.classList.remove("hidden");
                     } else {
-                        endpointDiv.style.display = "none";
+                        endpointDiv.classList.add("hidden");
                     }
-                })
+                });
             });
 
             document.querySelector(".types input").addEventListener("input", function(event) {
                 document.querySelectorAll(".type").forEach(function(typeDiv) {
                     let tag = typeDiv.getAttribute("data-type");
                     if (tag.toLowerCase().includes(event.target.value.toLowerCase())) {
-                        typeDiv.style.display = "";
+                        endpointDiv.classList.remove("hidden");
                     } else {
-                        typeDiv.style.display = "none";
+                        endpointDiv.classList.add("hidden");
                     }
                 })
             });
@@ -128,6 +126,7 @@ function displayTypes(typeData) {
                 </div>
             `;
         }
+
         html += `</div>`;
     });
 
