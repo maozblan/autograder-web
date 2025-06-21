@@ -520,3 +520,20 @@ fieldset {
     flex-direction: column;
     gap: 1em;
 }
+
+.course-users {
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+}
+
+.course-users table {
+    width: 100%;
+    max-width: 50rem;
+    border-collapse: collapse;
+}
+
+.course-users table th,
+.course-users table tr:not(:last-child) {
+    border-bottom: 1px solid var(--color-text-secondary);
+}

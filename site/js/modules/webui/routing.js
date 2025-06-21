@@ -1,6 +1,6 @@
-import * as Autograder from '../autograder/base.js'
-import * as Context from './context.js'
-import * as Log from './log.js'
+import * as Autograder from '../autograder/base.js';
+import * as Context from './context.js';
+import * as Log from './log.js';
 
 let routes = [];
 
@@ -16,6 +16,7 @@ const PATH_ASSIGNMENT = `${PATH_COURSE}/assignment`;
 const PATH_SUBMIT = `${PATH_ASSIGNMENT}/submit`;
 const PATH_PEEK = `${PATH_ASSIGNMENT}/peek`;
 const PATH_HISTORY = `${PATH_ASSIGNMENT}/history`;
+const PATH_USERS = `${PATH_COURSE}/users`;
 
 const PATH_SERVER = 'server';
 const PATH_SERVER_CALL_API = `${PATH_SERVER}/call-api`;
@@ -345,4 +346,5 @@ export {
     PATH_HISTORY,
     PATH_SERVER,
     PATH_SERVER_CALL_API,
+    PATH_USERS,
 }

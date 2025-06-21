@@ -64,6 +64,17 @@ function get() {
     });
 }
 
+function listCourseUsers(courseID) {
+    let args = {
+        'course-id': courseID,
+    };
+
+    return Core.sendRequest({
+        endpoint: 'courses/users/list',
+        payload: args,
+    });
+}
+
 function listServerUsers() {
     return Core.sendRequest({
         endpoint: 'users/list',
@@ -75,6 +86,7 @@ export {
     getCourseRoleValue,
     getServerRoleValue,
     get,
+    listCourseUsers,
     listServerUsers,
 
     COURSE_ROLE_UNKNOWN,
