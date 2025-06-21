@@ -73,20 +73,18 @@ function displayEndpoints(endpointData) {
                     <div>
                         <h4>Input</h4>
                         ${
-                            Render.table({
-                                head: ["Name", "Type"],
-                                body: data.input.map((input) => [input.name, input.type]),
-                                name: endpoint + "-input",
+                            Render.tableFromDictionaries({
+                                head: [["name", "Name"], ["type", "Type"]],
+                                body: data.input,
                             })
                         }
                     </div>
                     <div>
                         <h4>Output</h4>
                         ${
-                            Render.table({
-                                head: ["Name", "Type"],
-                                body: data.output.map((output) => [output.name, output.type]),
-                                name: endpoint + "-output",
+                            Render.tableFromDictionaries({
+                                head: [["name", "Name"], ["type", "Type"]],
+                                body: data.output,
                             })
                         }
                     </div>
@@ -116,10 +114,9 @@ function displayTypes(typeData) {
                     <div>
                     <h4>Fields</h4>
                     ${
-                        Render.table({
-                            head: ["Name", "Type"],
-                            body: data.fields.map((field) => [field.name, field.type]),
-                            name: type + "-fields",
+                        Render.tableFromDictionaries({
+                            head: [["name", "Name"], ["type", "Type"]],
+                            body: data.fields,
                         })
                     }
                     </div>

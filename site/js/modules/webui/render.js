@@ -190,35 +190,39 @@ function autograderError(message) {
     return result;
 }
 
-function table(table = {head: [], body: [], name: ''}, settings = { vertical: true }) {
-    let html = `<table data-name='${table.name}'>`;
+function tableFromLists(table = {head: [], body: [], classes: []}) {
+    const tableHead = table.head.map(label => `<th>${label}</th>`);
+    const tableBody = table.body.map(function(row) {
+            return `<tr>${row.map(value => `<td>${value}</td>`).join('')}</tr>`;
+        });
 
-    if (settings.vertical) {
-        html += `
-                <thead>
-                    <tr>
-                        ${table.head.map(label => `<th>${label}</th>`).join('')}
-                    </tr>
-                </thead>
-                <tbody>
-                    ${table.body.map(row => `
-                        <tr>
-                            ${row.map(value => `<td>${value}</td>`).join('')}
-                        </tr>
-                    `).join('')}
-                </tbody>
-        `;
-    } else {
-        html += table.head.map((label, index) => {
-                let html = `<tr><th>${label}</th>`;
-                table.body.forEach(row => {
-                    html += `<td>${row[index]}</td>`;
-                });
-                return html + `</tr>`;
-            }).join('');
-    }
+    return `
+        <table class='standard-table ${table.classes.join(' ')}'>
+            <thead>
+                <tr>
+                    ${tableHead.join('')}
+                </tr>
+            </thead>
+            <tbody>
+                ${tableBody.join('')}
+            </tbody>
+        </table>
+    `;
+}
 
-    return html + '</table>';
+function tableFromDictionaries(table = {head: [], body: [], classes: []}) {
+    let keys = table.head.map(label => label[0]);
+    let head = table.head.map(label => label[1]);
+
+    let body = table.body.map(function(row) {
+        let items = [];
+        keys.forEach(function(key) {
+            items.push(row[key] || '');
+        });
+        return items;
+    });
+
+    return tableFromLists({head, body, classes: table.classes ?? []});
 }
 
 export {
@@ -228,5 +232,6 @@ export {
     makeCardObject,
     submission,
     submissionHistory,
-    table,
+    tableFromDictionaries,
+    tableFromLists,
 };

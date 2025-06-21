@@ -416,6 +416,19 @@ fieldset {
     color: var(--color-text-primary);
 }
 
+table.standard-table {
+    border-collapse: collapse;
+}
+
+table.standard-table th,
+table.standard-table tr:not(:last-child) {
+    border-bottom: 1px solid var(--color-text-secondary);
+}
+
+.hidden {
+    display: none;
+}
+
 .page-controls {
     display: flex;
     flex-direction: row;
@@ -562,17 +575,7 @@ fieldset {
 
 .api-docs table {
     flex: 1;
-    border-collapse: collapse;
     width: 100%;
-}
-
-.api-docs table th,
-.api-docs table tr:not(:last-child) {
-    border-bottom: 1px solid var(--color-text-secondary);
-}
-
-.hidden {
-    display: none;
 }
 
 .endpoints,
