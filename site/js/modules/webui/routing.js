@@ -1,6 +1,6 @@
-import * as Autograder from '../autograder/base.js'
-import * as Context from './context.js'
-import * as Log from './log.js'
+import * as Autograder from '../autograder/base.js';
+import * as Context from './context.js';
+import * as Log from './log.js';
 
 let routes = [];
 
@@ -11,8 +11,16 @@ const PARAM_ASSIGNMENT = 'assignment';
 const PARAM_SUBMISSION = 'submission';
 const PARAM_TARGET_ENDPOINT = 'endpoint';
 
+const PARAM_EMAIL_BCC = 'bcc';
+const PARAM_EMAIL_BODY = 'body';
+const PARAM_EMAIL_CC = 'cc';
+const PARAM_EMAIL_COURSE = 'course-id';
+const PARAM_EMAIL_SUBJECT = 'subject';
+const PARAM_EMAIL_TO = 'to';
+
 const PATH_COURSE = 'course';
 const PATH_ASSIGNMENT = `${PATH_COURSE}/assignment`;
+const PATH_EMAIL = `${PATH_COURSE}/email`;
 const PATH_SUBMIT = `${PATH_ASSIGNMENT}/submit`;
 const PATH_PEEK = `${PATH_ASSIGNMENT}/peek`;
 const PATH_HISTORY = `${PATH_ASSIGNMENT}/history`;
@@ -338,11 +346,19 @@ export {
     PARAM_SUBMISSION,
     PARAM_TARGET_ENDPOINT,
 
+    PARAM_EMAIL_BCC,
+    PARAM_EMAIL_BODY,
+    PARAM_EMAIL_CC,
+    PARAM_EMAIL_COURSE,
+    PARAM_EMAIL_SUBJECT,
+    PARAM_EMAIL_TO,
+
     PATH_COURSE,
     PATH_ASSIGNMENT,
+    PATH_EMAIL,
     PATH_SUBMIT,
     PATH_PEEK,
     PATH_HISTORY,
     PATH_SERVER,
     PATH_SERVER_CALL_API,
-}
+};

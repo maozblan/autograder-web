@@ -1,10 +1,12 @@
-import * as Render from './render.js'
-import * as Routing from './routing.js'
+import * as Autograder from '../autograder/base.js';
+import * as Render from './render.js';
+import * as Routing from './routing.js';
 
 function init() {
     let requirements = {course: true};
     Routing.addRoute(/^courses$/, handlerCourses, 'Enrolled Courses');
     Routing.addRoute(/^course$/, handlerCourse, 'Course', {course: true});
+    Routing.addRoute(/^course\/email$/, handlerUsers, 'Email', {course: true});
 }
 
 function handlerCourses(path, params, context, container) {
@@ -35,12 +37,97 @@ function handlerCourse(path, params, context, container) {
         cards.push(Render.makeCardObject('assignment', assignment.name, link));
     }
 
+    cards.push(Render.makeCardObject(
+        "course-action",
+        "Email Users",
+        Routing.formHashPath(Routing.PATH_EMAIL, {
+            [Routing.PARAM_COURSE]: course.id,
+        }),
+    ));
+
     container.innerHTML = `
         <h2>${course.name}</h2>
         ${Render.cards(cards)}
     `;
 }
 
+function handlerUsers(path, params, context, container) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    const courseLink = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
+
+    const titleHTML = `
+        <span>
+            <a href='${courseLink}'>${course.id}</a>
+            / email
+        </span>
+    `;
+    Routing.setTitle(course.id, titleHTML);
+
+    container.innerHTML = `
+        <h2>Email Users</h2>
+        <p>Sumbitting this form will send an email to all users enrolled in the course.</p>
+        <p>Please separate email addresses with commas.</p>
+        <fieldset>
+        	<div>
+                <label for='email-to'>To</label>
+                <input type='text' id='email-to' name='to' placeholder='Recipients' required />
+        	<div>
+                <label for='email-cc'>CC</label>
+                <input type='text' id='email-cc' name='cc' placeholder='CC' />
+        	<div>
+                <label for='email-bcc'>BCC</label>
+                <input type='text' id='email-bcc' name='bcc' placeholder='BCC' />
+            </div>
+            <div>
+                <label for='email-subject'>Subject</label>
+                <input type='text' id='email-subject' name='subject' required />
+            </div>
+            <div>
+                <textarea name='body' rows='10' required></textarea>
+            </div>
+        </fieldset>
+        <button class="send-email">Send</button>
+        <div class="results-area"></div>
+    `;
+
+    document.querySelector('button.send-email').addEventListener('click', function(event) {
+        let extractEmails = function(emailString) {
+            return emailString
+                .split(',')
+                .map(email => email.trim())
+                .filter(email => email.length > 0)
+            ;
+        }
+
+        let args = {
+            [Routing.PARAM_EMAIL_COURSE]: course.id,
+            [Routing.PARAM_EMAIL_TO]: extractEmails(container.querySelector("fieldset [name='to']").value),
+            [Routing.PARAM_EMAIL_CC]: extractEmails(container.querySelector("fieldset [name='cc']").value),
+            [Routing.PARAM_EMAIL_BCC]: extractEmails(container.querySelector("fieldset [name='bcc']").value),
+            [Routing.PARAM_EMAIL_SUBJECT]: container.querySelector("fieldset [name='subject']").value,
+            [Routing.PARAM_EMAIL_BODY]: container.querySelector("fieldset [name='body']").value,
+        };
+
+        for (const key in args) {
+            if (args[key] === '' || 
+                (Array.isArray(args[key]) && args[key].length === 0)) {
+                delete args[key];
+            }
+        }
+
+        let resultsArea = container.querySelector(".results-area");
+
+        Autograder.Course.emailUsers(args)
+            .then(function() {
+                resultsArea.innerHTML = '<p>Email sent successfully!</p>';
+            })
+            .catch(function(message) {
+                resultsArea.innerHTML = Render.autograderError(message);
+            })
+        ;
+    });
+}
+
 export {
     init,
-}
+};
