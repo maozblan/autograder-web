@@ -30,8 +30,8 @@ function handlerDocs(path, params, context, container) {
                 </div>
             `;
 
-            document.querySelector(".endpoints input").addEventListener("input", function(event) {
-                document.querySelectorAll(".endpoint").forEach(function(endpointDiv) {
+            container.querySelector(".endpoints input").addEventListener("input", function(event) {
+                container.querySelectorAll(".endpoint").forEach(function(endpointDiv) {
                     let endpoint = endpointDiv.getAttribute("data-endpoint");
                     if (endpoint.toLowerCase().includes(event.target.value.toLowerCase())) {
                         endpointDiv.classList.remove("hidden");
@@ -41,8 +41,8 @@ function handlerDocs(path, params, context, container) {
                 });
             });
 
-            document.querySelector(".types input").addEventListener("input", function(event) {
-                document.querySelectorAll(".type").forEach(function(typeDiv) {
+            container.querySelector(".types input").addEventListener("input", function(event) {
+                container.querySelectorAll(".type").forEach(function(typeDiv) {
                     let type = typeDiv.getAttribute("data-type");
                     if (type.toLowerCase().includes(event.target.value.toLowerCase())) {
                         typeDiv.classList.remove("hidden");
