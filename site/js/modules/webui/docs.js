@@ -53,13 +53,14 @@ function handlerDocs(path, params, context, container) {
             });
         })
         .catch(function (message) {
+            console.error(message);
             container.innerHTML = Render.autograderError(message);
         })
     ;
 }
 
 function displayEndpoints(endpointData) {
-    let html = "";
+    let endpoints = [];
 
     Object.entries(endpointData).forEach(function([endpoint, data]) {
         let args = {
@@ -76,7 +77,7 @@ function displayEndpoints(endpointData) {
             body: data.output,
         });
 
-        html += `
+        endpoints.push(`
             <div class='endpoint' data-endpoint='${endpoint}'>
                 <a href="${Routing.formHashPath(Routing.PATH_SERVER_CALL_API, args)}">
                     <h3>${endpoint}</h3>
@@ -93,31 +94,24 @@ function displayEndpoints(endpointData) {
                     </div>
                 </div>
             </div>
-        `;
+        `);
     });
 
-    return html;
+    return endpoints.join("\n");
 }
 
 function displayTypes(typeData) {
-    let html = ""
+    let types = [];
 
     Object.entries(typeData).forEach(function([type, data]) {
-        html += `
-            <div class='type' data-type='${type}'>
-                <h3>${type}</h3>
-                <p>${data.description ?? ""}</p>
-                <h4>Category</h4>
-                <p>${data.category}</p>
-        `;
-
+        let fieldData = "";
         if (data.fields) {
             let fieldTypes = Render.tableFromDictionaries({
                 head: [["name", "Name"], ["type", "Type"]],
                 body: data.fields,
             });
 
-            html += `
+            fieldData = `
             	<div class="details">
                     <div>
                     <h4>Fields</h4>
@@ -127,10 +121,18 @@ function displayTypes(typeData) {
             `;
         }
 
-        html += `</div>`;
+        types.push(`
+            <div class='type' data-type='${type}'>
+                <h3>${type}</h3>
+                <p>${data.description ?? ""}</p>
+                <h4>Category</h4>
+                <p>${data.category}</p>
+                ${fieldData}
+            </div>
+        `);
     });
 
-    return html;
+    return types.join("\n");
 }
 
 export {
