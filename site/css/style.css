@@ -158,7 +158,8 @@ a {
 
 button,
 input,
-select {
+select,
+textarea {
     background-color: var(--color-bg-secondary);
     color: var(--color-text-secondary);
     border-width: medium;
@@ -436,7 +437,8 @@ fieldset {
     max-width: 95vw;
 }
 
-.endpoint-area {
+.endpoint-area,
+.email-area {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -451,7 +453,8 @@ fieldset {
     display: none;
 }
 
-.endpoint-area fieldset {
+.endpoint-area fieldset,
+.email-area fieldset {
     display: flex;
     flex-direction: column;
     align-self: stretch;
@@ -466,16 +469,19 @@ fieldset {
     box-shadow: 2px 2px 1px var(--color-bg-shadow);
 }
 
-.endpoint-area .input-field {
+.endpoint-area .input-field,
+.email-area .input-field {
     display: flex;
     flex-direction: column;
 }
 
-.endpoint-area label {
+.endpoint-area label,
+.email-area label {
     margin-bottom: 0.25em;
 }
 
-.endpoint-area input {
+.endpoint-area input,
+.email-area input {
     padding: 0.5em;
 }
 

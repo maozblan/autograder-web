@@ -65,28 +65,33 @@ function handlerUsers(path, params, context, container) {
 
     container.innerHTML = `
         <h2>Email Users</h2>
-        <p>Sumbitting this form will send an email to all users enrolled in the course.</p>
-        <p>Please separate email addresses with commas.</p>
-        <fieldset>
-        	<div>
-                <label for='email-to'>To</label>
-                <input type='text' id='email-to' name='to' placeholder='Recipients' required />
-        	<div>
-                <label for='email-cc'>CC</label>
-                <input type='text' id='email-cc' name='cc' placeholder='CC' />
-        	<div>
-                <label for='email-bcc'>BCC</label>
-                <input type='text' id='email-bcc' name='bcc' placeholder='BCC' />
-            </div>
-            <div>
-                <label for='email-subject'>Subject</label>
-                <input type='text' id='email-subject' name='subject' required />
-            </div>
-            <div>
-                <textarea name='body' rows='10' required></textarea>
-            </div>
-        </fieldset>
-        <button class="send-email">Send</button>
+        <div class="email-area">
+            <p>Sumbitting this form will send an email to all users enrolled in the course.</p>
+            <p>Please separate email addresses with commas.</p>
+            <fieldset>
+                <div class="input-field">
+                    <label for="email-to">To</label>
+                    <input type="text" id="email-to" name="to" placeholder="Recipients" required />
+                </div>
+                <div class="input-field">
+                    <label for="email-cc">CC</label>
+                    <input type="text" id="email-cc" name="cc" placeholder="CC" />
+                </div>
+                <div class="input-field">
+                    <label for="email-bcc">BCC</label>
+                    <input type="text" id="email-bcc" name="bcc" placeholder="BCC" />
+                </div>
+                <div class="input-field">
+                    <label for="email-subject">Subject</label>
+                    <input type="text" id="email-subject" name="subject" required />
+                </div>
+                <div class="input-field">
+                    <label for="email-body">Content</label>
+                    <textarea id="email-body" name="body" rows="10" required></textarea>
+                </div>
+            </fieldset>
+            <button class="send-email">Send Email</button>
+        </div>
         <div class="results-area"></div>
     `;
 
