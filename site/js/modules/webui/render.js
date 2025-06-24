@@ -191,10 +191,11 @@ function autograderError(message) {
 }
 
 function tableFromLists(table = {head: [], body: [], classes: []}) {
-    const tableHead = table.head.map(label => `<th>${label}</th>`);
-    const tableBody = table.body.map(function(row) {
+    let tableHead = table.head.map(label => `<th>${label}</th>`);
+    let tableBody = table.body.map(function(row) {
             return `<tr>${row.map(value => `<td>${value}</td>`).join('')}</tr>`;
-        });
+        })
+    ;
 
     return `
         <table class='standard-table ${table.classes.join(' ')}'>
@@ -219,6 +220,7 @@ function tableFromDictionaries(table = {head: [], body: [], classes: []}) {
         keys.forEach(function(key) {
             items.push(row[key] || '');
         });
+
         return items;
     });
 

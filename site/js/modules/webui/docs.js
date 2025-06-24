@@ -32,8 +32,8 @@ function handlerDocs(path, params, context, container) {
 
             document.querySelector(".endpoints input").addEventListener("input", function(event) {
                 document.querySelectorAll(".endpoint").forEach(function(endpointDiv) {
-                    let tag = endpointDiv.getAttribute("data-endpoint");
-                    if (tag.toLowerCase().includes(event.target.value.toLowerCase())) {
+                    let endpoint = endpointDiv.getAttribute("data-endpoint");
+                    if (endpoint.toLowerCase().includes(event.target.value.toLowerCase())) {
                         endpointDiv.classList.remove("hidden");
                     } else {
                         endpointDiv.classList.add("hidden");
@@ -43,50 +43,53 @@ function handlerDocs(path, params, context, container) {
 
             document.querySelector(".types input").addEventListener("input", function(event) {
                 document.querySelectorAll(".type").forEach(function(typeDiv) {
-                    let tag = typeDiv.getAttribute("data-type");
-                    if (tag.toLowerCase().includes(event.target.value.toLowerCase())) {
-                        endpointDiv.classList.remove("hidden");
+                    let type = typeDiv.getAttribute("data-type");
+                    if (type.toLowerCase().includes(event.target.value.toLowerCase())) {
+                        typeDiv.classList.remove("hidden");
                     } else {
-                        endpointDiv.classList.add("hidden");
+                        typeDiv.classList.add("hidden");
                     }
-                })
+                });
             });
         })
         .catch(function (message) {
             container.innerHTML = Render.autograderError(message);
-        });
+        })
+    ;
 }
 
 function displayEndpoints(endpointData) {
     let html = "";
 
     Object.entries(endpointData).forEach(function([endpoint, data]) {
-        const args = {
+        let args = {
             [Routing.PARAM_TARGET_ENDPOINT]: endpoint,
         };
 
+        let inputTypes = Render.tableFromDictionaries({
+            head: [["name", "Name"], ["type", "Type"]],
+            body: data.input,
+        });
+
+        let outputTypes = Render.tableFromDictionaries({
+            head: [["name", "Name"], ["type", "Type"]],
+            body: data.output,
+        });
+
         html += `
             <div class='endpoint' data-endpoint='${endpoint}'>
-                <a href="${Routing.formHashPath(Routing.PATH_SERVER_CALL_API, args)}"><h3>${endpoint}</h3></a>
+                <a href="${Routing.formHashPath(Routing.PATH_SERVER_CALL_API, args)}">
+                    <h3>${endpoint}</h3>
+                </a>
                 <p>${data.description}</p>
                 <div class="details">
                     <div>
                         <h4>Input</h4>
-                        ${
-                            Render.tableFromDictionaries({
-                                head: [["name", "Name"], ["type", "Type"]],
-                                body: data.input,
-                            })
-                        }
+                        ${inputTypes}
                     </div>
                     <div>
                         <h4>Output</h4>
-                        ${
-                            Render.tableFromDictionaries({
-                                head: [["name", "Name"], ["type", "Type"]],
-                                body: data.output,
-                            })
-                        }
+                        ${outputTypes}
                     </div>
                 </div>
             </div>
@@ -109,16 +112,16 @@ function displayTypes(typeData) {
         `;
 
         if (data.fields) {
+            let fieldTypes = Render.tableFromDictionaries({
+                head: [["name", "Name"], ["type", "Type"]],
+                body: data.fields,
+            });
+
             html += `
             	<div class="details">
                     <div>
                     <h4>Fields</h4>
-                    ${
-                        Render.tableFromDictionaries({
-                            head: [["name", "Name"], ["type", "Type"]],
-                            body: data.fields,
-                        })
-                    }
+                    ${fieldTypes}
                     </div>
                 </div>
             `;
