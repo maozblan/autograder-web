@@ -55,12 +55,16 @@ function render(endpoints, selectedEndpoint, context, container) {
     let endpointArea = renderEndpointArea(endpoints, selectedEndpoint, context);
 
     container.innerHTML = `
-        <div class="page-controls">${selector}</div>
-        <div class="endpoint-area">${endpointArea}</div>
-        <div class="results-area"></div>
+        <div class="endpoint-page">
+            <div class="endpoint-content">
+                <div class="endpoint-controls">${selector}</div>
+                <div class="endpoint-input">${endpointArea}</div>
+                <div class="results-area"></div>
+            </div>
+        </div>
     `;
 
-    container.querySelector(".page-controls select").addEventListener("change", function(event) {
+    container.querySelector(".endpoint-controls select").addEventListener("change", function(event) {
         let newParams = {
             [Routing.PARAM_TARGET_ENDPOINT]: event.target.value,
         };
@@ -69,12 +73,12 @@ function render(endpoints, selectedEndpoint, context, container) {
         Routing.redirect(path);
     });
 
-    let button = container.querySelector(".endpoint-area button");
+    let button = container.querySelector(".endpoint-input button");
     button?.addEventListener("click", function(event) {
         callEndpoint(selectedEndpoint, endpoints[selectedEndpoint]["input"], context, container);
     });
 
-    let fieldset = container.querySelector(".endpoint-area fieldset");
+    let fieldset = container.querySelector(".endpoint-input fieldset");
     fieldset?.addEventListener("keydown", function(event) {
         if (event.key != "Enter") {
             return
@@ -136,19 +140,23 @@ function renderEndpointArea(endpoints, selectedEndpoint, context) {
         inputFields.push(`
             <div class="input-field">
                 <label for="${field.name}">${field.name} (expects: ${field.type})</label>
-                <input type="${inputType}" id="${field.name}" name="${field.name}" placeholder="${placeholder}">
+                <input class="tertiary-color drop-shadow" type="${inputType}" id="${field.name}" name="${field.name}" placeholder="${placeholder}">
             </div>
         `);
     }
 
     return `
-        <h2>
-            ${selectedEndpoint}
-        </h2>
+        <div class="endpoint-title secondary-color drop-shadow">
+            <h2>
+                ${selectedEndpoint}
+            </h2>
+        </div>
 
-        <fieldset>
-            ${inputFields.join("\n")}
-        </fieldset>
+        <div class="user-input-fields secondary-color drop-shadow">
+            <fieldset>
+                ${inputFields.join("\n")}
+            </fieldset>
+        </div>
 
         <button class="call-endpoint">
             Call Endpoint
@@ -161,7 +169,7 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
 
     let params = {};
     for (let field of inputFields) {
-        let input = container.querySelector(`.endpoint-area fieldset [name="${field.name}"]`);
+        let input = container.querySelector(`.endpoint-input fieldset [name="${field.name}"]`);
         if (!input || input.value === "") {
             continue
         }
@@ -186,12 +194,17 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
     Autograder.Server.callEndpoint(targetEndpoint, params)
         .then(function(result) {
             resultsArea.innerHTML = `
-                <pre><code class="code code-block" data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>
+                <pre><code class="result code code-block secondary-color drop-shadow" data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>
             `;
         })
         .catch(function(message) {
             console.error(message)
-            resultsArea.innerHTML = Render.autograderError(message);
+            let errorHTML = Render.autograderError(message);
+            resultsArea.innerHTML = `
+                <div class="result secondary-color drop-shadow">
+                    ${errorHTML}
+                </div>
+            `;
         })
     ;
 }
