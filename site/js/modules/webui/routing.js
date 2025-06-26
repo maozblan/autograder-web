@@ -15,6 +15,8 @@ const PARAM_EMAIL_BCC = 'bcc';
 const PARAM_EMAIL_BODY = 'body';
 const PARAM_EMAIL_CC = 'cc';
 const PARAM_EMAIL_COURSE = 'course-id';
+const PARAM_EMAIL_DRY_RUN = 'dry-run';
+const PARAM_EMAIL_HTML = 'html';
 const PARAM_EMAIL_SUBJECT = 'subject';
 const PARAM_EMAIL_TO = 'to';
 
@@ -350,6 +352,8 @@ export {
     PARAM_EMAIL_BODY,
     PARAM_EMAIL_CC,
     PARAM_EMAIL_COURSE,
+    PARAM_EMAIL_DRY_RUN,
+    PARAM_EMAIL_HTML,
     PARAM_EMAIL_SUBJECT,
     PARAM_EMAIL_TO,
 

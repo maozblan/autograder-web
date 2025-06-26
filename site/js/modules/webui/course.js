@@ -89,6 +89,14 @@ function handlerUsers(path, params, context, container) {
                     <label for="email-body">Content</label>
                     <textarea id="email-body" name="body" rows="10" required></textarea>
                 </div>
+                <div class="checkbox-field">
+                    <input type="checkbox" id="dry-run" name="dry-run" />
+                	<label for="dry-run">Send as Dry Run</label>
+                </div>
+                <div class="checkbox-field">
+                    <input type="checkbox" id="html-format" name="html-format" />
+                	<label for="html-format">Content is in HTML</label>
+                </div>
             </fieldset>
             <button class="send-email">Send Email</button>
         </div>
@@ -111,6 +119,8 @@ function handlerUsers(path, params, context, container) {
             [Routing.PARAM_EMAIL_BCC]: extractEmails(container.querySelector("fieldset [name='bcc']").value),
             [Routing.PARAM_EMAIL_SUBJECT]: container.querySelector("fieldset [name='subject']").value,
             [Routing.PARAM_EMAIL_BODY]: container.querySelector("fieldset [name='body']").value,
+            [Routing.PARAM_EMAIL_DRY_RUN]: container.querySelector("fieldset [name='dry-run']").checked,
+            [Routing.PARAM_EMAIL_HTML]: container.querySelector("fieldset [name='html-format']").checked,
         };
 
         for (const key in args) {
@@ -124,9 +134,10 @@ function handlerUsers(path, params, context, container) {
 
         Autograder.Course.emailUsers(args)
             .then(function() {
-                resultsArea.innerHTML = '<p>Email sent successfully!</p>';
+                resultsArea.innerHTML = '<p>Email sent successfully.</p>';
             })
             .catch(function(message) {
+                console.error(message);
                 resultsArea.innerHTML = Render.autograderError(message);
             })
         ;

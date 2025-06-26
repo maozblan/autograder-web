@@ -485,6 +485,10 @@ fieldset {
     padding: 0.5em;
 }
 
+.email-area textarea {
+    resize: none;
+}
+
 .results-area .code {
     display: flex;
     flex-direction: column;
