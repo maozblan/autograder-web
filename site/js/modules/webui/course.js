@@ -163,12 +163,8 @@ function handlerEmail(path, params, context, container) {
 function extractRecipients(recipientString) {
     return recipientString
         .split(',')
-        .map(function(recipient) {
-           return recipient.trim();
-        })
-        .filter(function(recipient) {
-            return recipient.length > 0;
-        })
+        .map((recipient) => (recipient.trim()))
+        .filter((recipient) => (recipient.length > 0))
     ;
 }
 
