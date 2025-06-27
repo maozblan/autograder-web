@@ -10,15 +10,14 @@ const PARAM_ASSIGNMENT = 'assignment';
 const PARAM_COURSE = 'course';
 const PARAM_COURSE_ID = 'course-id';
 const PARAM_DRY_RUN = 'dry-run';
-const PARAM_SUBMISSION = 'submission';
-const PARAM_TARGET_ENDPOINT = 'endpoint';
-
 const PARAM_EMAIL_BCC = 'bcc';
 const PARAM_EMAIL_BODY = 'body';
 const PARAM_EMAIL_CC = 'cc';
 const PARAM_EMAIL_HTML = 'html';
 const PARAM_EMAIL_SUBJECT = 'subject';
 const PARAM_EMAIL_TO = 'to';
+const PARAM_SUBMISSION = 'submission';
+const PARAM_TARGET_ENDPOINT = 'endpoint';
 
 const PATH_COURSE = 'course';
 const PATH_ASSIGNMENT = `${PATH_COURSE}/assignment`;

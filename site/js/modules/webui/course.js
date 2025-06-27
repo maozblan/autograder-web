@@ -2,6 +2,8 @@ import * as Autograder from '../autograder/base.js';
 import * as Render from './render.js';
 import * as Routing from './routing.js';
 
+const recipientDocsLink = "https://github.com/edulinq/autograder-server/blob/main/docs/types.md#course-user-reference-courseuserreference";
+
 function init() {
     let requirements = {course: true};
     Routing.addRoute(/^courses$/, handlerCourses, 'Enrolled Courses');
@@ -63,14 +65,16 @@ function handlerEmail(path, params, context, container) {
     `;
     Routing.setTitle(course.id, titleHTML);
 
-    let recipientDocsLink = "https://github.com/edulinq/autograder-server/blob/main/docs/types.md#course-user-reference-courseuserreference";
-
     container.innerHTML = `
         <div class="email-page">
             <div class="email-content">
                 <h2>Email Users</h2>
                 <div class="description">
-                    <p>Please separate recipient values with commas. For valid recipient values reference <a href=${recipientDocsLink} target="_blank">documentation</a>.</p>
+                    <p>
+                        Separate recipient values with commas.
+                        For valid recipient values reference 
+                            <a href=${recipientDocsLink} target="_blank">documentation</a>.
+                    </p>
                 </div>
                 <div class="user-input-fields secondary-color drop-shadow">
                     <fieldset>
@@ -137,8 +141,16 @@ function handlerEmail(path, params, context, container) {
         }
 
         Autograder.Course.email(args)
-            .then(function() {
-                renderResult('<p>Email sent successfully.</p>');
+            .then(function(result) {
+                renderResult(`
+                    <p>Email sent successfully.</p>
+                    <p><strong>Recipients</strong> (total ${result[Routing.PARAM_EMAIL_TO].length})</p>
+                    <p>${result[Routing.PARAM_EMAIL_TO].join(', ')}</p>
+                    <p><strong>CC-ed Recipients</strong> (total ${result[Routing.PARAM_EMAIL_CC].length})</p>
+                    <p>${result[Routing.PARAM_EMAIL_CC].join(', ')}</p>
+                    <p><strong>BCC-ed Recipients</strong> (total ${result[Routing.PARAM_EMAIL_BCC].length})</p>
+                    <p>${result[Routing.PARAM_EMAIL_BCC].join(', ')}</p>
+                `);
             })
             .catch(function(message) {
                 console.error(message);
