@@ -64,43 +64,49 @@ function handlerUsers(path, params, context, container) {
     Routing.setTitle(course.id, titleHTML);
 
     container.innerHTML = `
-        <h2>Email Users</h2>
-        <div class="email-area">
-            <p>Sumbitting this form will send an email to all users enrolled in the course.</p>
-            <p>Please separate email addresses with commas.</p>
-            <fieldset>
-                <div class="input-field">
-                    <label for="email-to">To</label>
-                    <input type="text" id="email-to" name="to" placeholder="Recipients" required />
+        <div class="email-page">
+            <div class="email-content">
+                <h2>Email Users</h2>
+                <div class="description">
+                    <p>Sumbitting this form will send an email to all users enrolled in the course.</p>
+                    <p>Please separate email addresses with commas.</p>
                 </div>
-                <div class="input-field">
-                    <label for="email-cc">CC</label>
-                    <input type="text" id="email-cc" name="cc" placeholder="CC" />
+                <div class="user-input-fields secondary-color drop-shadow">
+                    <fieldset>
+                        <div class="input-field">
+                            <label for="email-to">To</label>
+                            <input type="text" id="email-to" name="to" placeholder="Recipients" required />
+                        </div>
+                        <div class="input-field">
+                            <label for="email-cc">CC</label>
+                            <input type="text" id="email-cc" name="cc" placeholder="CC" />
+                        </div>
+                        <div class="input-field">
+                            <label for="email-bcc">BCC</label>
+                            <input type="text" id="email-bcc" name="bcc" placeholder="BCC" />
+                        </div>
+                        <div class="input-field">
+                            <label for="email-subject">Subject</label>
+                            <input type="text" id="email-subject" name="subject" required />
+                        </div>
+                        <div class="input-field">
+                            <label for="email-body">Content</label>
+                            <textarea id="email-body" name="body" rows="10" required></textarea>
+                        </div>
+                        <div class="checkbox-field">
+                            <input type="checkbox" id="dry-run" name="dry-run" />
+                            <label for="dry-run">Send as Dry Run</label>
+                        </div>
+                        <div class="checkbox-field">
+                            <input type="checkbox" id="html-format" name="html-format" />
+                            <label for="html-format">Content is in HTML</label>
+                        </div>
+                    </fieldset>
                 </div>
-                <div class="input-field">
-                    <label for="email-bcc">BCC</label>
-                    <input type="text" id="email-bcc" name="bcc" placeholder="BCC" />
-                </div>
-                <div class="input-field">
-                    <label for="email-subject">Subject</label>
-                    <input type="text" id="email-subject" name="subject" required />
-                </div>
-                <div class="input-field">
-                    <label for="email-body">Content</label>
-                    <textarea id="email-body" name="body" rows="10" required></textarea>
-                </div>
-                <div class="checkbox-field">
-                    <input type="checkbox" id="dry-run" name="dry-run" />
-                	<label for="dry-run">Send as Dry Run</label>
-                </div>
-                <div class="checkbox-field">
-                    <input type="checkbox" id="html-format" name="html-format" />
-                	<label for="html-format">Content is in HTML</label>
-                </div>
-            </fieldset>
-            <button class="send-email">Send Email</button>
+                <button class="send-email">Send Email</button>
+                <div class="results-area"></div>
+            </div>
         </div>
-        <div class="results-area"></div>
     `;
 
     document.querySelector('button.send-email').addEventListener('click', function(event) {
@@ -132,13 +138,17 @@ function handlerUsers(path, params, context, container) {
 
         let resultsArea = container.querySelector(".results-area");
 
+        let renderResult = function(message) {
+            resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${message}</div>`;
+        };
+
         Autograder.Course.emailUsers(args)
             .then(function() {
-                resultsArea.innerHTML = '<p>Email sent successfully.</p>';
+                renderResult('<p>Email sent successfully.</p>');
             })
             .catch(function(message) {
                 console.error(message);
-                resultsArea.innerHTML = Render.autograderError(message);
+                renderResult(Render.autograderError(message));
             })
         ;
     });
