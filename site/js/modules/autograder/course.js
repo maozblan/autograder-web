@@ -1,6 +1,6 @@
 import * as Core from './core.js';
 
-function emailUsers(params) {
+function email(params) {
     return Core.sendRequest({
         endpoint: 'courses/admin/email',
         payload: params,
@@ -8,5 +8,5 @@ function emailUsers(params) {
 }
 
 export {
-    emailUsers,
+    email,
 };

@@ -53,9 +53,9 @@ function handlerCourse(path, params, context, container) {
 
 function handlerEmail(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
-    const courseLink = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
+    let courseLink = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
 
-    const titleHTML = `
+    let titleHTML = `
         <span>
             <a href='${courseLink}'>${course.id}</a>
             / email
@@ -63,27 +63,28 @@ function handlerEmail(path, params, context, container) {
     `;
     Routing.setTitle(course.id, titleHTML);
 
+    let recipientDocsLink = "https://github.com/edulinq/autograder-server/blob/main/docs/types.md#course-user-reference-courseuserreference";
+
     container.innerHTML = `
         <div class="email-page">
             <div class="email-content">
                 <h2>Email Users</h2>
                 <div class="description">
-                    <p>Sumbitting this form will send an email to all users enrolled in the course.</p>
-                    <p>Please separate email addresses with commas.</p>
+                    <p>Please separate recipient values with commas. For valid recipient values reference <a href=${recipientDocsLink} target="_blank">documentation</a>.</p>
                 </div>
                 <div class="user-input-fields secondary-color drop-shadow">
                     <fieldset>
                         <div class="input-field">
                             <label for="email-to">To</label>
-                            <input type="text" id="email-to" name="to" placeholder="Recipients" required />
+                            <input type="text" id="email-to" name="to" />
                         </div>
                         <div class="input-field">
                             <label for="email-cc">CC</label>
-                            <input type="text" id="email-cc" name="cc" placeholder="CC" />
+                            <input type="text" id="email-cc" name="cc" />
                         </div>
                         <div class="input-field">
                             <label for="email-bcc">BCC</label>
-                            <input type="text" id="email-bcc" name="bcc" placeholder="BCC" />
+                            <input type="text" id="email-bcc" name="bcc" />
                         </div>
                         <div class="input-field">
                             <label for="email-subject">Subject</label>
@@ -91,7 +92,7 @@ function handlerEmail(path, params, context, container) {
                         </div>
                         <div class="input-field">
                             <label for="email-body">Content</label>
-                            <textarea id="email-body" name="body" rows="10" required></textarea>
+                            <textarea id="email-body" name="body" rows="10"></textarea>
                         </div>
                         <div class="checkbox-field">
                             <input type="checkbox" id="dry-run" name="dry-run" />
@@ -110,39 +111,32 @@ function handlerEmail(path, params, context, container) {
     `;
 
     document.querySelector('button.send-email').addEventListener('click', function(event) {
-        let extractEmails = function(emailString) {
-            return emailString
-                .split(',')
-                .map(email => email.trim())
-                .filter(email => email.length > 0)
-            ;
-        }
+        Routing.loadingStart(container.querySelector(".results-area"), false);
 
         let args = {
-            [Routing.PARAM_EMAIL_COURSE]: course.id,
-            [Routing.PARAM_EMAIL_TO]: extractEmails(container.querySelector("fieldset [name='to']").value),
-            [Routing.PARAM_EMAIL_CC]: extractEmails(container.querySelector("fieldset [name='cc']").value),
-            [Routing.PARAM_EMAIL_BCC]: extractEmails(container.querySelector("fieldset [name='bcc']").value),
+            [Routing.PARAM_COURSE_ID]: course.id,
+            [Routing.PARAM_EMAIL_TO]: extractRecipients(container.querySelector("fieldset [name='to']").value),
+            [Routing.PARAM_EMAIL_CC]: extractRecipients(container.querySelector("fieldset [name='cc']").value),
+            [Routing.PARAM_EMAIL_BCC]: extractRecipients(container.querySelector("fieldset [name='bcc']").value),
             [Routing.PARAM_EMAIL_SUBJECT]: container.querySelector("fieldset [name='subject']").value,
             [Routing.PARAM_EMAIL_BODY]: container.querySelector("fieldset [name='body']").value,
-            [Routing.PARAM_EMAIL_DRY_RUN]: container.querySelector("fieldset [name='dry-run']").checked,
+            [Routing.PARAM_DRY_RUN]: container.querySelector("fieldset [name='dry-run']").checked,
             [Routing.PARAM_EMAIL_HTML]: container.querySelector("fieldset [name='html-format']").checked,
         };
 
-        for (const key in args) {
-            if (args[key] === '' || 
-                (Array.isArray(args[key]) && args[key].length === 0)) {
-                delete args[key];
-            }
+        if (args[Routing.PARAM_EMAIL_TO].length === 0 &&
+                args[Routing.PARAM_EMAIL_CC].length === 0 &&
+                args[Routing.PARAM_EMAIL_BCC].length === 0) {
+            renderResult('<p>Please specify at least one recipient.</p>');
+            return;
         }
 
-        let resultsArea = container.querySelector(".results-area");
+        if (args[Routing.PARAM_EMAIL_SUBJECT].length === 0) {
+            renderResult('<p>Please include a subject.</p>');
+            return;
+        }
 
-        let renderResult = function(message) {
-            resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${message}</div>`;
-        };
-
-        Autograder.Course.emailUsers(args)
+        Autograder.Course.email(args)
             .then(function() {
                 renderResult('<p>Email sent successfully.</p>');
             })
@@ -152,6 +146,23 @@ function handlerEmail(path, params, context, container) {
             })
         ;
     });
+}
+
+function extractRecipients(recipientString) {
+    return recipientString
+        .split(',')
+        .map(function(recipient) {
+           return recipient.trim();
+        })
+        .filter(function(recipient) {
+            return recipient.length > 0;
+        })
+    ;
+}
+
+function renderResult(message) {
+    let resultsArea = document.querySelector(".results-area");
+    resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${message}</div>`;
 }
 
 export {

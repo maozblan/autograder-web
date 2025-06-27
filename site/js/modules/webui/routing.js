@@ -6,16 +6,16 @@ let routes = [];
 
 const DEFAULT_HANDLER = handlerNotFound
 
-const PARAM_COURSE = 'course';
 const PARAM_ASSIGNMENT = 'assignment';
+const PARAM_COURSE = 'course';
+const PARAM_COURSE_ID = 'course-id';
+const PARAM_DRY_RUN = 'dry-run';
 const PARAM_SUBMISSION = 'submission';
 const PARAM_TARGET_ENDPOINT = 'endpoint';
 
 const PARAM_EMAIL_BCC = 'bcc';
 const PARAM_EMAIL_BODY = 'body';
 const PARAM_EMAIL_CC = 'cc';
-const PARAM_EMAIL_COURSE = 'course-id';
-const PARAM_EMAIL_DRY_RUN = 'dry-run';
 const PARAM_EMAIL_HTML = 'html';
 const PARAM_EMAIL_SUBJECT = 'subject';
 const PARAM_EMAIL_TO = 'to';
@@ -343,19 +343,18 @@ export {
     redirectLogout,
     setTitle,
 
-    PARAM_COURSE,
     PARAM_ASSIGNMENT,
-    PARAM_SUBMISSION,
-    PARAM_TARGET_ENDPOINT,
-
+    PARAM_COURSE,
+    PARAM_COURSE_ID,
+    PARAM_DRY_RUN,
     PARAM_EMAIL_BCC,
     PARAM_EMAIL_BODY,
     PARAM_EMAIL_CC,
-    PARAM_EMAIL_COURSE,
-    PARAM_EMAIL_DRY_RUN,
     PARAM_EMAIL_HTML,
     PARAM_EMAIL_SUBJECT,
     PARAM_EMAIL_TO,
+    PARAM_SUBMISSION,
+    PARAM_TARGET_ENDPOINT,
 
     PATH_COURSE,
     PATH_ASSIGNMENT,
