@@ -6,7 +6,7 @@ function init() {
     let requirements = {course: true};
     Routing.addRoute(/^courses$/, handlerCourses, 'Enrolled Courses');
     Routing.addRoute(/^course$/, handlerCourse, 'Course', {course: true});
-    Routing.addRoute(/^course\/email$/, handlerUsers, 'Email', {course: true});
+    Routing.addRoute(/^course\/email$/, handlerEmail, 'Email', {course: true});
 }
 
 function handlerCourses(path, params, context, container) {
@@ -51,7 +51,7 @@ function handlerCourse(path, params, context, container) {
     `;
 }
 
-function handlerUsers(path, params, context, container) {
+function handlerEmail(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     const courseLink = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
 
