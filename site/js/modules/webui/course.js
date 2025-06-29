@@ -2,7 +2,7 @@ import * as Autograder from '../autograder/base.js';
 import * as Render from './render.js';
 import * as Routing from './routing.js';
 
-const recipientDocsLink = "https://github.com/edulinq/autograder-server/blob/main/docs/types.md#course-user-reference-courseuserreference";
+const EMAIL_RECIPIENT_DOCS_LINK = "https://github.com/edulinq/autograder-server/blob/main/docs/types.md#course-user-reference-courseuserreference";
 
 function init() {
     let requirements = {course: true};
@@ -72,8 +72,8 @@ function handlerEmail(path, params, context, container) {
                 <div class="description">
                     <p>
                         Separate recipient values with commas.
-                        For valid recipient values reference 
-                            <a href=${recipientDocsLink} target="_blank">documentation</a>.
+                        For valid recipient values reference this 
+                        <a href=${EMAIL_RECIPIENT_DOCS_LINK} target="_blank">documentation</a>.
                     </p>
                 </div>
                 <div class="user-input-fields secondary-color drop-shadow">
@@ -131,12 +131,12 @@ function handlerEmail(path, params, context, container) {
         if (args[Routing.PARAM_EMAIL_TO].length === 0 &&
                 args[Routing.PARAM_EMAIL_CC].length === 0 &&
                 args[Routing.PARAM_EMAIL_BCC].length === 0) {
-            renderResult('<p>Please specify at least one recipient.</p>');
+            renderResult('<p>Specify at least one recipient.</p>');
             return;
         }
 
         if (args[Routing.PARAM_EMAIL_SUBJECT].length === 0) {
-            renderResult('<p>Please include a subject.</p>');
+            renderResult('<p>Include a subject.</p>');
             return;
         }
 
@@ -144,12 +144,7 @@ function handlerEmail(path, params, context, container) {
             .then(function(result) {
                 renderResult(`
                     <p>Email sent successfully.</p>
-                    <p><strong>Recipients</strong> (total ${result[Routing.PARAM_EMAIL_TO].length})</p>
-                    <p>${result[Routing.PARAM_EMAIL_TO].join(', ')}</p>
-                    <p><strong>CC-ed Recipients</strong> (total ${result[Routing.PARAM_EMAIL_CC].length})</p>
-                    <p>${result[Routing.PARAM_EMAIL_CC].join(', ')}</p>
-                    <p><strong>BCC-ed Recipients</strong> (total ${result[Routing.PARAM_EMAIL_BCC].length})</p>
-                    <p>${result[Routing.PARAM_EMAIL_BCC].join(', ')}</p>
+                    <pre><code data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>
                 `);
             })
             .catch(function(message) {
