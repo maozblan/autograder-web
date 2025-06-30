@@ -4,25 +4,23 @@
 
 This projet heavily prefers the use of the `function` keyword over the use of
 [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions).
-Arrow functions may be used for one line callbacks.
+Arrow functions may only be used for one line callbacks.
 If the RHS of the arrow function is more than a single expression,
 use the `function` keyword instead.
-
 Both the RHS and LHS of the arrow must be wrapped in parentheses.
-For example:
+
+Consider the following cases:
 ```javascript
-/* Good */
-// One line, parentheses on both sides.
+// Good: One line, parentheses on both sides.
 numbers.map((number) => (number * 2));
 
-/* Bad */
-// Missing parentheses on both sides.
+// Bad: Missing parentheses on both sides.
 numbers.map(number => number * 2);
 
-// Missing parentheses on RHS.
+// Bad: Missing parentheses on RHS.
 numbers.map((number) => number * 2);
 
-// Using multiple lines.
+// Bad: Using multiple lines.
 numbers.map((number) => {
     return (number * 2);
 });
