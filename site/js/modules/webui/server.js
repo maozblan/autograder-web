@@ -167,11 +167,25 @@ function renderEndpointArea(endpoints, selectedEndpoint, context) {
 function callEndpoint(targetEndpoint, inputFields, context, container) {
     Routing.loadingStart(container.querySelector(".results-area"), false);
 
+    let overrideEmail = undefined;
+    let overrideCleartext = undefined;
+
     let params = {};
+
     for (let field of inputFields) {
         let input = container.querySelector(`.endpoint-input fieldset [name="${field.name}"]`);
         if (!input || input.value === "") {
-            continue
+            continue;
+        }
+
+        if (field.name === "user-email") {
+            overrideEmail = input.value;
+            continue;
+        }
+
+        if (field.name === "user-pass") {
+            overrideCleartext = input.value;
+            continue;
         }
 
         if (field.type === "string") {
@@ -191,8 +205,13 @@ function callEndpoint(targetEndpoint, inputFields, context, container) {
 
     let resultsArea = container.querySelector(".results-area");
 
-    Autograder.Server.callEndpoint(targetEndpoint, params)
-        .then(function(result) {
+    Autograder.Server.callEndpoint({
+            targetEndpoint: targetEndpoint,
+            params: params,
+            overrideEmail: overrideEmail,
+            overrideCleartext: overrideCleartext,
+            clearContextUser: false,
+        }).then(function(result) {
             resultsArea.innerHTML = `
                 <pre><code class="result code code-block secondary-color drop-shadow" data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>
             `;
