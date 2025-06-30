@@ -2,25 +2,28 @@
 
 ## Arrow Functions
 
-This projet heavily prefers the use of the `function` keyword over the use of 
-[arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) 
-in most cases.
-Arrow functions may be used for one line callbacks within methods such as `Array.map()` and `Array.filter()`.
-If the right hand side of the arrow function is more than a single expression,
+This projet heavily prefers the use of the `function` keyword over the use of
+[arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions).
+Arrow functions may be used for one line callbacks.
+If the RHS of the arrow function is more than a single expression,
 use the `function` keyword instead.
 
-
-Ensure that both the righthand side and lefthand side of the arrow wrapped in parentheses.
+Both the RHS and LHS of the arrow must be wrapped in parentheses.
 For example:
-
 ```javascript
-// Good
+/* Good */
+// One line, parentheses on both sides.
 numbers.map((number) => (number * 2));
 
-// Bad
+/* Bad */
+// Missing parentheses on both sides.
 numbers.map(number => number * 2);
-numbers.map(number => {
-		return number * 2;
-});
+
+// Missing parentheses on RHS.
 numbers.map((number) => number * 2);
+
+// Using multiple lines.
+numbers.map((number) => {
+    return (number * 2);
+});
 ```
