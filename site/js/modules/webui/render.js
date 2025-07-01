@@ -191,20 +191,11 @@ function autograderError(message) {
 }
 
 function tableFromLists(table = {head: [], body: [], classes: []}) {
-    let tableHead = [];
-    for (const label of table.head) {
-        tableHead.push(`<th>${label}</th>`);
-    }
-
-    let tableBody = [];
-    for (const row of table.body) {
-        let rowContent = [];
-        for (const value of row) {
-            rowContent.push(`<td>${value}</td>`);
-        }
-
-        tableBody.push(`<tr>${rowContent.join('')}</tr>`);
-    }
+    let tableHead = table.head.map((label) => (`<th>${label}</th>`));
+    let tableBody = table.body.map(function(row) {
+            return `<tr>${row.map((value) => (`<td>${value}</td>`)).join('')}</tr>`;
+        })
+    ;
 
     return `
         <table class='standard-table ${table.classes.join(' ')}'>
@@ -221,12 +212,8 @@ function tableFromLists(table = {head: [], body: [], classes: []}) {
 }
 
 function tableFromDictionaries(table = {head: [], body: [], classes: []}) {
-    let keys = [];
-    let head = [];
-    for (const [key, label] of table.head) {
-        keys.push(key);
-        head.push(label);
-    }
+    let keys = table.head.map((label) => (label[0]));
+    let head = table.head.map((label) => (label[1]));
 
     let body = table.body.map(function(row) {
         let items = [];
