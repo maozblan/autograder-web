@@ -247,6 +247,10 @@ html {
     box-shadow: 2px 2px 1px var(--color-bg-shadow);
 }
 
+.required-color {
+    color: var(--color-text-error);
+}
+
 a {
     color: var(--color-text-link);
 }
@@ -287,7 +291,7 @@ select {
     padding: 0.75em 1em;
 }
 
-input:invalid {
+input:invalid.touched {
     border-color: var(--color-text-error);
 }
 
@@ -296,6 +300,11 @@ select:focus,
 input:focus {
     accent-color: var(--color-bg-accent-primary);
     border-color: var(--color-bg-accent-primary);
+}
+
+input[type="checkbox"] {
+    height: 1.25em;
+    width: 1.25em;
 }
 
 /* Set basic relative font sizing. */
@@ -598,6 +607,7 @@ fieldset {
 }
 
 .user-input-fields .checkbox-field label {
+    margin-bottom: 0em;
     margin-left: 0.5em;
 }
 
