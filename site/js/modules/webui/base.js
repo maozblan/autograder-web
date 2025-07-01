@@ -1,6 +1,5 @@
 import * as Assignment from './assignment.js';
 import * as Course from './course.js';
-import * as Docs from './docs.js';
 import * as Home from './home.js';
 import * as Login from './login.js';
 import * as Routing from './routing.js';
@@ -15,7 +14,6 @@ function init(initialRoute = true) {
     // Init handlers.
     Assignment.init();
     Course.init();
-    Docs.init();
     Home.init();
     Login.init();
     Server.init();
