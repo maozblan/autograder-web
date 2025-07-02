@@ -179,6 +179,10 @@ html {
     font-style: normal;
 }
 
+.hidden {
+    display: none;
+}
+
 .primary-color {
     background-color: var(--color-bg-primary);
     color: var(--color-text-primary);
@@ -564,10 +568,6 @@ table.standard-table tr:not(:last-child) {
     border-bottom: 1px solid var(--color-text-secondary);
 }
 
-.hidden {
-    display: none;
-}
-
 .page-controls {
     display: flex;
     flex-direction: row;
@@ -722,7 +722,7 @@ table.standard-table tr:not(:last-child) {
 
 .api-docs > div {
     width: 100%;
-    max-width: 42rem;
+    max-width: 42%;
     height: 100%;
     padding: 1rem;
 }
@@ -735,7 +735,8 @@ table.standard-table tr:not(:last-child) {
     gap: 3rem;
 }
 
-.api-docs .details {
+.api-docs .endpoint-details,
+.api-docs .api-type-details {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -743,7 +744,8 @@ table.standard-table tr:not(:last-child) {
     gap: 1em;
 }
 
-.api-docs .details > div {
+.api-docs .endpoint-details > div,
+.api-docs .api-type-details > div {
     flex: 1;
     max-width: 27rem;
 }
@@ -753,8 +755,8 @@ table.standard-table tr:not(:last-child) {
     width: 100%;
 }
 
-.endpoints,
-.types {
+.api-docs .endpoints,
+.api-docs .api-types {
     display: flex;
     flex-direction: column;
     gap: 1em;

@@ -190,15 +190,18 @@ function autograderError(message) {
     return result;
 }
 
-function tableFromLists(table = {head: [], body: [], classes: []}) {
-    let tableHead = table.head.map((label) => (`<th>${label}</th>`));
-    let tableBody = table.body.map(function(row) {
+// Head is an array of table head values.
+// Body is an array of arrays formatted as [["column1", "column2"]],
+// one sub-array per row.
+function tableFromLists(head, body, classes = []) {
+    let tableHead = head.map((label) => (`<th>${label}</th>`));
+    let tableBody = body.map(function(row) {
             return `<tr>${row.map((value) => (`<td>${value}</td>`)).join('')}</tr>`;
         })
     ;
 
     return `
-        <table class='standard-table ${table.classes.join(' ')}'>
+        <table class='standard-table ${classes.join(' ')}'>
             <thead>
                 <tr>
                     ${tableHead.join('')}
@@ -211,20 +214,24 @@ function tableFromLists(table = {head: [], body: [], classes: []}) {
     `;
 }
 
-function tableFromDictionaries(table = {head: [], body: [], classes: []}) {
-    let keys = table.head.map((label) => (label[0]));
-    let head = table.head.map((label) => (label[1]));
+// Head is an array of arrays in the format of [["key", "displayValue"]],
+// both being strings.
+// Body is a list of dictionaries in the format of [{key: displayValue}],
+// keys matching the head array.
+function tableFromDictionaries(head, body, classes = []) {
+    let keys = head.map((label) => (label[0]));
+    let tableHead = head.map((label) => (label[1]));
 
-    let body = table.body.map(function(row) {
+    let tableBody = body.map(function(row) {
         let items = [];
         keys.forEach(function(key) {
-            items.push(row[key] || '');
+            items.push(row[key] ?? '');
         });
 
         return items;
     });
 
-    return tableFromLists({head, body, classes: table.classes ?? []});
+    return tableFromLists(tableHead, tableBody, classes);
 }
 
 export {
