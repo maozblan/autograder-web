@@ -177,6 +177,7 @@ html {
     font-optical-sizing: auto;
     font-weight: var(--font-weight-normal);
     font-style: normal;
+    word-break: break-word;
 }
 
 .hidden {
@@ -717,14 +718,14 @@ table.standard-table tr:not(:last-child) {
     height: 80vh;
     text-align: center;
     overflow-y: auto;
-    word-break: break-word;
 }
 
 .api-docs > div {
     width: 100%;
-    max-width: 42%;
+    max-width: 47%;
+    min-width: 350px;
     height: 100%;
-    padding: 1rem;
+    padding: 1em;
 }
 
 .api-docs .scrollable {
@@ -732,7 +733,7 @@ table.standard-table tr:not(:last-child) {
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 3em;
 }
 
 .api-docs .endpoint-details,
@@ -747,12 +748,12 @@ table.standard-table tr:not(:last-child) {
 .api-docs .endpoint-details > div,
 .api-docs .api-type-details > div {
     flex: 1;
-    max-width: 27rem;
 }
 
 .api-docs table {
     flex: 1;
     width: 100%;
+    min-width: 250px;
 }
 
 .api-docs .endpoints,
