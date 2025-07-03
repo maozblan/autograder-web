@@ -190,9 +190,8 @@ function autograderError(message) {
     return result;
 }
 
-// Head is an array of table head values.
-// Body is an array of arrays formatted as [["column1", "column2"]],
-// one sub-array per row.
+// Creates a table using an array of arrays for table content
+// and an array of strings for table header.
 function tableFromLists(head, body, classes = []) {
     let tableHead = head.map((label) => (`<th>${label}</th>`));
     let tableBody = body.map(function(row) {
@@ -214,10 +213,9 @@ function tableFromLists(head, body, classes = []) {
     `;
 }
 
-// Head is an array of arrays in the format of [["key", "displayValue"]],
-// both being strings.
-// Body is a list of dictionaries in the format of [{key: displayValue}],
-// keys matching the head array.
+// Creates a table using array of dictionaries.
+// Dictionary keys and column order defined in head,
+// formatted as [["key", "displayValue"], ...].
 function tableFromDictionaries(head, body, classes = []) {
     let keys = head.map((label) => (label[0]));
     let tableHead = head.map((label) => (label[1]));
