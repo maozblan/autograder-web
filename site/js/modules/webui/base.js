@@ -1,11 +1,11 @@
-import * as Assignment from './assignment.js'
-import * as Course from './course.js'
-import * as Home from './home.js'
-import * as Login from './login.js'
-import * as Routing from './routing.js'
-import * as Server from './server.js'
-import * as System from './system.js'
-import * as Util from './util.js'
+import * as Assignment from './assignment.js';
+import * as Course from './course.js';
+import * as Home from './home.js';
+import * as Login from './login.js';
+import * as Routing from './routing.js';
+import * as Server from './server.js';
+import * as System from './system.js';
+import * as Util from './util.js';
 
 function init(initialRoute = true) {
     // Init base libs.
@@ -24,4 +24,4 @@ function init(initialRoute = true) {
 
 export {
     init,
-}
+};

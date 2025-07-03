@@ -28,6 +28,7 @@ const PATH_HISTORY = `${PATH_ASSIGNMENT}/history`;
 
 const PATH_SERVER = 'server';
 const PATH_SERVER_CALL_API = `${PATH_SERVER}/call-api`;
+const PATH_SERVER_DOCS = `${PATH_SERVER}/docs`;
 
 // The current hash/location we are routed to.
 // Should be prefixed with a hash symbol.
@@ -363,4 +364,5 @@ export {
     PATH_HISTORY,
     PATH_SERVER,
     PATH_SERVER_CALL_API,
+    PATH_SERVER_DOCS,
 };

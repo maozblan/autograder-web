@@ -177,6 +177,11 @@ html {
     font-optical-sizing: auto;
     font-weight: var(--font-weight-normal);
     font-style: normal;
+    word-break: break-word;
+}
+
+.hidden {
+    display: none;
 }
 
 .primary-color {
@@ -555,6 +560,15 @@ fieldset {
     max-width: fit-content;
 }
 
+table.standard-table {
+    border-collapse: collapse;
+}
+
+table.standard-table th,
+table.standard-table tr:not(:last-child) {
+    border-bottom: 1px solid var(--color-text-secondary);
+}
+
 .page-controls {
     display: flex;
     flex-direction: row;
@@ -691,6 +705,58 @@ fieldset {
 .submission-questions {
     margin-left: 2em;
 
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.api-docs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    height: 80vh;
+    text-align: center;
+    overflow-y: auto;
+}
+
+.api-docs > div {
+    max-width: 47%;
+    min-width: 350px;
+    height: 100%;
+    padding: 1em;
+}
+
+.api-docs .scrollable {
+    overflow-y: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+}
+
+.api-docs .endpoint-details,
+.api-docs .api-type-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.api-docs .endpoint-details > div,
+.api-docs .api-type-details > div {
+    flex: 1;
+}
+
+.api-docs table {
+    flex: 1;
+    width: 100%;
+    min-width: 250px;
+}
+
+.api-docs .endpoints,
+.api-docs .api-types {
     display: flex;
     flex-direction: column;
     gap: 1em;
