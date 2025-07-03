@@ -326,27 +326,7 @@ function handlerDocs(path, params, context, container) {
         .then(function(result) {
             container.innerHTML = displayDocumentation(result);
 
-            container.querySelector(".endpoints input").addEventListener("input", function(event) {
-                container.querySelectorAll(".api-docs .endpoints .endpoint").forEach(function(endpointDiv) {
-                    let endpoint = endpointDiv.getAttribute("data-endpoint");
-                    if (endpoint.toLowerCase().includes(event.target.value.toLowerCase())) {
-                        endpointDiv.classList.remove("hidden");
-                    } else {
-                        endpointDiv.classList.add("hidden");
-                    }
-                });
-            });
-
-            container.querySelector(".api-types input").addEventListener("input", function(event) {
-                container.querySelectorAll(".api-docs .api-types .api-type").forEach(function(typeDiv) {
-                    let type = typeDiv.getAttribute("data-api-type");
-                    if (type.toLowerCase().includes(event.target.value.toLowerCase())) {
-                        typeDiv.classList.remove("hidden");
-                    } else {
-                        typeDiv.classList.add("hidden");
-                    }
-                });
-            });
+            setupFilters(container);
         })
         .catch(function (message) {
             console.error(message);
@@ -374,6 +354,30 @@ function displayDocumentation(data) {
             </div>
         </div>
     `;
+}
+
+function setupFilters(container) {
+    container.querySelector(".endpoints input").addEventListener("input", function(event) {
+        container.querySelectorAll(".api-docs .endpoints .endpoint").forEach(function(endpointDiv) {
+            let endpoint = endpointDiv.getAttribute("data-endpoint");
+            if (endpoint.toLowerCase().includes(event.target.value.toLowerCase())) {
+                endpointDiv.classList.remove("hidden");
+            } else {
+                endpointDiv.classList.add("hidden");
+            }
+        });
+    });
+
+    container.querySelector(".api-types input").addEventListener("input", function(event) {
+        container.querySelectorAll(".api-docs .api-types .api-type").forEach(function(typeDiv) {
+            let type = typeDiv.getAttribute("data-api-type");
+            if (type.toLowerCase().includes(event.target.value.toLowerCase())) {
+                typeDiv.classList.remove("hidden");
+            } else {
+                typeDiv.classList.add("hidden");
+            }
+        });
+    });
 }
 
 function displayEndpoints(endpointData) {

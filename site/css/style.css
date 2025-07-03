@@ -721,7 +721,6 @@ table.standard-table tr:not(:last-child) {
 }
 
 .api-docs > div {
-    width: 100%;
     max-width: 47%;
     min-width: 350px;
     height: 100%;
