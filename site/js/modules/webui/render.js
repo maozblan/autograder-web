@@ -190,11 +190,13 @@ function autograderError(message) {
     return result;
 }
 
-// Creates a table using an array of arrays for table content
-// and an array of strings for table header.
-function tableFromLists(head, body, classes = []) {
-    let tableHead = head.map((label) => (`<th>${label}</th>`));
-    let tableBody = body.map(function(row) {
+// Create a table using an array of arrays.
+// Each header is a string.
+// Each row is an array of strings.
+// A list of HTML classes may be added to aid styling.
+function tableFromLists(headers, rows, classes = []) {
+    let tableHead = headers.map((label) => (`<th>${label}</th>`));
+    let tableBody = rows.map(function(row) {
             return `<tr>${row.map((value) => (`<td>${value}</td>`)).join('')}</tr>`;
         })
     ;
@@ -213,14 +215,17 @@ function tableFromLists(head, body, classes = []) {
     `;
 }
 
-// Creates a table using array of dictionaries.
-// Dictionary keys and column order defined in head,
-// formatted as [["key", "displayValue"], ...].
-function tableFromDictionaries(head, body, classes = []) {
-    let keys = head.map((label) => (label[0]));
-    let tableHead = head.map((label) => (label[1]));
+// Create a table using array of dictionaries.
+// Each row is representated a dictionary.
+// Each header is represented as an array,
+// ex. ["key", "displayValue"],
+// where keys match the keys in the row dictionaries.
+// A list of HTML classes may be added to aid styling.
+function tableFromDictionaries(headers, rows, classes = []) {
+    let keys = headers.map((label) => (label[0]));
+    let tableHead = headers.map((label) => (label[1]));
 
-    let tableBody = body.map(function(row) {
+    let tableBody = rows.map(function(row) {
         let items = [];
         keys.forEach(function(key) {
             items.push(row[key] ?? '');
