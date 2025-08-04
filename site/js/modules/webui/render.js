@@ -72,31 +72,37 @@ function makeCardSection(sectionName, sectionCards) {
 // The page inputs expects a list of Input.Fields, see ./input.js for more information.
 function makePage(
         params, context, container, onSubmitFunc,
-        page = {className: '', controlAreaHTML: '', header: '', description: '', inputs: [], buttonName: 'Submit'}) {
-    let controlAreaHTML = '';
-    if ((page.controlAreaHTML) && (page.controlAreaHTML != '')) {
+        {
+            className = '',
+            controlAreaHTML = '',
+            header = '',
+            description = '',
+            inputs = [],
+            buttonName = 'Submit',
+        }) {
+    if ((controlAreaHTML) && (controlAreaHTML != '')) {
         controlAreaHTML = `
             <div class="template-control-area secondary-color drop-shadow">
-                ${page.controlAreaHTML}
+                ${controlAreaHTML}
             </div>
         `;
     }
 
     let headerHTML = '';
-    if ((page.header) && (page.header != '')) {
+    if ((header) && (header != '')) {
         headerHTML = `
             <div class="template-header">
-                <h2>${page.header}</h2>
+                <h2>${header}</h2>
             </div>
         `;
     }
 
     let descriptionHTML = '';
-    if ((page.description) && (page.description != '')) {
+    if ((description) && (description != '')) {
         descriptionHTML = `
             <div class="template-description">
                 <p>
-                    ${page.description}
+                    ${description}
                 </p>
             </div>
         `;
@@ -113,9 +119,9 @@ function makePage(
     }
 
     let inputFieldsHTML = '';
-    if ((page.inputs) && (page.inputs.length > 0)) {
+    if ((inputs) && (inputs.length > 0)) {
         let inputHTML = '';
-        for (const input of page.inputs) {
+        for (const input of inputs) {
             inputHTML += input.toHTML();
         }
 
@@ -130,7 +136,7 @@ function makePage(
 
     let buttonHTML = '';
     if (onSubmitFunc) {
-        buttonHTML = `<button class="template-button">${page.buttonName}</button>`;
+        buttonHTML = `<button class="template-button">${buttonName}</button>`;
     }
 
     let inputSectionHTML = `
@@ -141,7 +147,7 @@ function makePage(
     `;
 
     container.innerHTML = `
-        <div class="template-page ${page.className}">
+        <div class="template-page ${className}">
             <div class="template-content">
                 ${controlAreaHTML}
                 ${infoHTML}
@@ -152,7 +158,7 @@ function makePage(
     `;
 
     container.querySelector(".input-area .template-button")?.addEventListener("click", function(event) {
-        submitInputs(params, context, container, page.inputs, onSubmitFunc);
+        submitInputs(params, context, container, inputs, onSubmitFunc);
     });
 
     container.querySelector(".user-input-fields fieldset")?.addEventListener("keydown", function(event) {
@@ -160,7 +166,7 @@ function makePage(
             return;
         }
 
-        submitInputs(params, context, container, page.inputs, onSubmitFunc);
+        submitInputs(params, context, container, inputs, onSubmitFunc);
     });
 
     container.querySelectorAll(".user-input-fields fieldset input")?.forEach(function(input) {

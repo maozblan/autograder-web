@@ -37,6 +37,17 @@ function submit(course, assignment, files) {
     });
 }
 
+function fetchCourseScores(course, assignment, targetUsers = []) {
+    return Core.sendRequest({
+        endpoint: 'courses/assignments/submissions/fetch/course/scores',
+        payload: {
+            'course-id': course,
+            'assignment-id': assignment,
+            'target-users': targetUsers,
+        },
+    });
+}
+
 function proxyResubmit(args) {
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/proxy/resubmit',
@@ -46,6 +57,7 @@ function proxyResubmit(args) {
 
 export {
     history,
+    fetchCourseScores,
     peek,
     submit,
     proxyResubmit,
