@@ -88,20 +88,26 @@ function handlerEmail(path, params, context, container) {
     `;
 
     let inputFields = [
-        new Input.FieldType(context, 'to', 'To', {}),
-        new Input.FieldType(context, 'cc', 'CC', {}),
-        new Input.FieldType(context, 'bcc', 'BCC', {}),
-        new Input.FieldType(context, 'subject', 'Subject', {
+        new Input.FieldType(context, Routing.PARAM_EMAIL_TO, 'To', {
+            extractInputFunc: extractRecipients,
+        }),
+        new Input.FieldType(context, Routing.PARAM_EMAIL_CC, 'CC', {
+            extractInputFunc: extractRecipients,
+        }),
+        new Input.FieldType(context, Routing.PARAM_EMAIL_BCC, 'BCC', {
+            extractInputFunc: extractRecipients,
+        }),
+        new Input.FieldType(context, Routing.PARAM_EMAIL_SUBJECT, 'Subject', {
             required: true,
         }),
-        new Input.FieldType(context, 'content', 'Content', {
+        new Input.FieldType(context, Routing.PARAM_EMAIL_BODY, 'Content', {
             type: Input.INPUT_TYPE_TEXTAREA,
             additionalAttributes: 'rows="10"',
         }),
-        new Input.FieldType(context, 'dryRun', 'Send as Dry Run', {
+        new Input.FieldType(context, Routing.PARAM_DRY_RUN, 'Send as Dry Run', {
             type: Input.INPUT_TYPE_BOOL,
         }),
-        new Input.FieldType(context, 'html', 'Content in HTML', {
+        new Input.FieldType(context, Routing.PARAM_EMAIL_HTML, 'Content in HTML', {
             type: Input.INPUT_TYPE_BOOL,
         }),
     ];
@@ -119,16 +125,7 @@ function handlerEmail(path, params, context, container) {
 }
 
 function sendEmail(params, context, container, inputParams) {
-    let args = {
-        [Routing.PARAM_COURSE_ID]: context.courses[params[Routing.PARAM_COURSE]].id,
-        [Routing.PARAM_EMAIL_TO]: extractRecipients(inputParams.to),
-        [Routing.PARAM_EMAIL_CC]: extractRecipients(inputParams.cc),
-        [Routing.PARAM_EMAIL_BCC]: extractRecipients(inputParams.bcc),
-        [Routing.PARAM_EMAIL_SUBJECT]: inputParams.subject,
-        [Routing.PARAM_EMAIL_BODY]: inputParams.content ?? "",
-        [Routing.PARAM_DRY_RUN]: inputParams.dryRun,
-        [Routing.PARAM_EMAIL_HTML]: inputParams.html,
-    };
+    inputParams[Routing.PARAM_COURSE_ID] = context.courses[params[Routing.PARAM_COURSE]].id;
 
     return Autograder.Course.email(args)
         .then(function(result) {
