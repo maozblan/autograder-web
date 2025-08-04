@@ -22,6 +22,7 @@ const PARAM_TARGET_USERS = 'target-users';
 
 const PATH_COURSE = 'course';
 const PATH_ASSIGNMENT = `${PATH_COURSE}/assignment`;
+const PATH_ASSIGNMENT_FETCH_COURSE_SCORES = `${PATH_ASSIGNMENT}/fetch/course/scores`;
 const PATH_EMAIL = `${PATH_COURSE}/email`;
 const PATH_COURSE_USERS_LIST = `${PATH_COURSE}/list`;
 const PATH_SUBMIT = `${PATH_ASSIGNMENT}/submit`;
@@ -361,6 +362,7 @@ export {
 
     PATH_COURSE,
     PATH_ASSIGNMENT,
+    PATH_ASSIGNMENT_FETCH_COURSE_SCORES,
     PATH_EMAIL,
     PATH_COURSE_USERS_LIST,
     PATH_SUBMIT,

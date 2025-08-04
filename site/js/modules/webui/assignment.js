@@ -1,5 +1,6 @@
 import * as Autograder from '../autograder/base.js'
 
+import * as Input from './input.js'
 import * as Log from './log.js'
 import * as Render from './render.js'
 import * as Routing from './routing.js'
@@ -11,6 +12,7 @@ function init() {
     Routing.addRoute(/^course\/assignment\/peek$/, handlerPeek, 'Assignment Peek', requirements);
     Routing.addRoute(/^course\/assignment\/history$/, handlerHistory, 'Assignment History', requirements);
     Routing.addRoute(/^course\/assignment\/submit$/, handlerSubmit, 'Assignment Submit', requirements);
+    Routing.addRoute(/^course\/assignment\/fetch\/course\/scores$/, handlerFetchCourseScores, 'Fetch Course Assignment Scores', requirements);
 }
 
 function setAssignmentTitle(course, assignment) {
@@ -44,9 +46,29 @@ function handlerAssignment(path, params, context, container) {
     };
 
     let cards = [
-        Render.makeCardObject('assignment-action', 'Submit', Routing.formHashPath(Routing.PATH_SUBMIT, args)),
-        Render.makeCardObject('assignment-action', 'Peek a Previous Submission', Routing.formHashPath(Routing.PATH_PEEK, args)),
-        Render.makeCardObject('assignment-action', 'View Submission History', Routing.formHashPath(Routing.PATH_HISTORY, args)),
+        // Simple Actions
+        Render.makeCardObject(
+            'assignment-action',
+            'Submit',
+            Routing.formHashPath(Routing.PATH_SUBMIT, args),
+        ),
+        Render.makeCardObject(
+            'assignment-action',
+            'Peek a Previous Submission',
+            Routing.formHashPath(Routing.PATH_PEEK, args),
+        ),
+        Render.makeCardObject(
+            'assignment-action',
+            'View Submission History',
+            Routing.formHashPath(Routing.PATH_HISTORY, args),
+        ),
+
+        // Advanced Actions
+        Render.makeCardObject(
+            'assignment-action',
+            'Fetch Course Scores',
+            Routing.formHashPath(Routing.PATH_ASSIGNMENT_FETCH_COURSE_SCORES, args),
+        ),
     ];
 
     container.innerHTML = `
@@ -238,6 +260,45 @@ function doSubmit(context, course, assignment, files, container) {
         })
         .catch(function(message) {
             container.innerHTML = Render.autograderError(message);
+        })
+    ;
+}
+
+function handlerFetchCourseScores(path, params, context, container) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+
+    setAssignmentTitle(course, assignment);
+
+    let inputFields = [
+        new Input.FieldType(context, 'target-users', 'Target Users', {
+            type: '[]model.CourseUserReference',
+        }),
+    ];
+
+    Render.makePage(
+            params, context, container, fetchCourseScores,
+            {
+                header: 'Fetch Course Scores',
+                description: 'Fetch the most recent scores for this assignment.',
+                inputs: inputFields,
+                buttonName: 'Fetch',
+            },
+        )
+    ;
+}
+
+function fetchCourseScores(params, context, container, inputParams) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+
+    return Autograder.Submissions.fetchCourseScores(course.id, assignment.id, inputParams['target-users'])
+        .then(function(result) {
+            return `<pre><code data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>`
+        })
+        .catch(function(message) {
+            console.error(message);
+            return message;
         })
     ;
 }
