@@ -79,6 +79,8 @@ function makePage(
             description = '',
             inputs = [],
             buttonName = 'Submit',
+            // Click the submit button as soon as the page is created.
+            submitOnCreation = false,
         }) {
     if ((controlAreaHTML) && (controlAreaHTML != '')) {
         controlAreaHTML = `
@@ -157,7 +159,8 @@ function makePage(
         </div>
     `;
 
-    container.querySelector(".input-area .template-button")?.addEventListener("click", function(event) {
+    let button = container.querySelector(".input-area .template-button")
+    button?.addEventListener("click", function(event) {
         submitInputs(params, context, container, inputs, onSubmitFunc);
     });
 
@@ -174,6 +177,10 @@ function makePage(
             input.classList.add("touched");
         });
     });
+
+    if (submitOnCreation) {
+        button?.click();
+    }
 }
 
 function submitInputs(params, context, container, inputs, onSubmitFunc) {

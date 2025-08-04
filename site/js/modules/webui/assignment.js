@@ -92,54 +92,43 @@ function handlerAssignment(path, params, context, container) {
 function handlerPeek(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
-    let submission = params[Routing.PARAM_SUBMISSION] || undefined;
+    let submission = params[Routing.PARAM_SUBMISSION] || '';
 
     setAssignmentTitle(course, assignment);
 
-    container.innerHTML = `
-        <div class='peek'>
-            <div class='peek-controls page-controls'>
-                <button>Peek</button>
-                <div>
-                    <label for='submission'>Submission ID:</label>
-                    <input type='text' name='submission' placeholder='Most Recent'>
-                </div>
-            </div>
-            <div class='peek-results'>
-            </div>
-        </div>
-    `;
+    let inputFields = [
+        new Input.FieldType(context, 'submission', 'Submission ID', {
+            defaultValue: submission,
+        }),
+    ];
 
-    let button = container.querySelector('.peek-controls button');
-    let input = container.querySelector('.peek-controls input');
-    let results = container.querySelector('.peek-results');
-
-    if (submission) {
-        input.value = submission;
-    }
-
-    button.addEventListener('click', function(event) {
-        params[Routing.PARAM_SUBMISSION] = input.value || undefined;
-
-        let path = Routing.formHashPath(Routing.PATH_PEEK, params);
-        Routing.redirect(path);
-    });
-
-    doPeek(context, course, assignment, results, submission);
+    Render.makePage(
+            params, context, container, peek,
+            {
+                header: 'Peek a Submission',
+                description: 'View a past submission. If no submission ID is provided, the most recent submission is used.',
+                inputs: inputFields,
+                buttonName: 'Peek',
+                // Auto-submit if we were passed an existing submission ID.
+                submitOnCreation: (submission != ''),
+            },
+        )
+    ;
 }
 
-function doPeek(context, course, assignment, container, submission) {
-    Routing.loadingStart(container);
+function peek(params, context, container, inputParams) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    Autograder.Submissions.peek(course.id, assignment.id, submission)
+    return Autograder.Submissions.peek(course.id, assignment.id, inputParams.submission)
         .then(function(result) {
             let html = "";
 
             if (!result['found-user']) {
                 html = `<p>Could not find user: '${context.user.name}'.</p>`;
             } else if (!result['found-submission']) {
-                if (submission) {
-                    html = `<p>Could not find submission: '${submission}'.</p>`;
+                if (inputParams.submission) {
+                    html = `<p>Could not find submission: '${inputParams.submission}'.</p>`;
                 } else {
                     html = `<p>Could not find most recent submission.</p>`;
                 }
@@ -147,10 +136,11 @@ function doPeek(context, course, assignment, container, submission) {
                 html = Render.submission(course, assignment, result['submission-result']);
             }
 
-            container.innerHTML = html;
+            return html;
         })
         .catch(function(message) {
-            container.innerHTML = Render.autograderError(message);
+            console.error(message);
+            return message;
         })
     ;
 }
@@ -161,30 +151,21 @@ function handlerHistory(path, params, context, container) {
 
     setAssignmentTitle(course, assignment);
 
-    container.innerHTML = `
-        <div class='history'>
-            <div class='history-controls page-controls'>
-                <button>Fetch History</button>
-            </div>
-            <div class='history-results'>
-            </div>
-        </div>
-    `;
-
-    let button = container.querySelector('.history-controls button');
-    let results = container.querySelector('.history-results');
-
-    button.addEventListener('click', function(event) {
-        doHistory(context, course, assignment, results);
-    });
-
-    doHistory(context, course, assignment, results);
+    Render.makePage(
+            params, context, container, history,
+            {
+                header: 'Fetch Submission History',
+                buttonName: 'Fetch',
+            },
+        )
+    ;
 }
 
-function doHistory(context, course, assignment, container) {
-    Routing.loadingStart(container);
+function history(params, context, container, inputParams) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    Autograder.Submissions.history(course.id, assignment.id)
+    return Autograder.Submissions.history(course.id, assignment.id)
         .then(function(result) {
             let html = "";
 
@@ -194,10 +175,11 @@ function doHistory(context, course, assignment, container) {
                 html = Render.submissionHistory(course, assignment, result['history']);
             }
 
-            container.innerHTML = html;
+            return html;
         })
         .catch(function(message) {
-            container.innerHTML = Render.autograderError(message);
+            console.error(message);
+            return message;
         })
     ;
 }
