@@ -96,6 +96,7 @@ function handlerEmail(path, params, context, container) {
         }),
         new Input.FieldType(context, 'content', 'Content', {
             type: "textarea",
+            additionalAttributes: 'rows="10"',
         }),
         new Input.FieldType(context, 'dryRun', 'Send as Dry Run', {
             type: "bool",
