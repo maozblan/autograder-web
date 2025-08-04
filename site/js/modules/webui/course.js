@@ -127,7 +127,7 @@ function handlerEmail(path, params, context, container) {
 function sendEmail(params, context, container, inputParams) {
     inputParams[Routing.PARAM_COURSE_ID] = context.courses[params[Routing.PARAM_COURSE]].id;
 
-    return Autograder.Course.email(args)
+    return Autograder.Course.email(inputParams)
         .then(function(result) {
             return `
                 <p>Email sent successfully.</p>
@@ -208,7 +208,9 @@ function listCourseUsers(users) {
     return messages.join("\n\n");
 }
 
-function extractRecipients(recipientString) {
+function extractRecipients(input) {
+    let recipientString = input.value;
+
     if (recipientString === undefined) return [];
 
     return recipientString

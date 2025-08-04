@@ -65,7 +65,7 @@ class FieldType {
                 type = INPUT_TYPE_STRING, parsedType = undefined, required = false, placeholder = '',
                 defaultValue = '', inputClasses = '', additionalAttributes = '', choices = [],
                 labelBefore = true, extractInputFunc = undefined, inputValidationFunc = undefined,
-            }) {
+            } = {}) {
         // The name of the field.
         this.name = name;
 
@@ -155,7 +155,7 @@ class FieldType {
         } else if (this.type === INPUT_TYPE_PASSWORD) {
             this.#parsedType = INPUT_TYPE_PASSWORD;
         } else if (this.type === INPUT_TYPE_TEXTAREA) {
-            this.#parsedType === INPUT_TYPE_TEXTAREA;
+            this.#parsedType = INPUT_TYPE_TEXTAREA;
         } else if (PATTERN_TARGET_SELF_OR.test(this.type)) {
             this.#parsedType = INPUT_TYPE_EMAIL;
             this.placeholder = context.user.email;
