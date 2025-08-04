@@ -218,7 +218,7 @@ class FieldType {
             }
 
             listOfFieldHTML.push(
-                `<input type="${htmlType}" ${fieldInformation} placeholder="${this.placeholder}"/>`,
+                `<input type="${htmlType}" ${fieldInformation} placeholder="${this.placeholder}" value="${this.defaultValue}"/>`,
             );
         }
 
