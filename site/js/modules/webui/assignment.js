@@ -13,6 +13,7 @@ function init() {
     Routing.addRoute(/^course\/assignment\/history$/, handlerHistory, 'Assignment History', requirements);
     Routing.addRoute(/^course\/assignment\/submit$/, handlerSubmit, 'Assignment Submit', requirements);
     Routing.addRoute(/^course\/assignment\/fetch\/course\/scores$/, handlerFetchCourseScores, 'Fetch Course Assignment Scores', requirements);
+    Routing.addRoute(/^course\/assignment\/proxy-regrade$/, handlerProxyRegrade, 'Assignment Proxy Regrade', requirements);
     Routing.addRoute(/^course\/assignment\/proxy-resubmit$/, handlerProxyResubmit, 'Assignment Proxy Resubmit', requirements);
 }
 
@@ -69,6 +70,11 @@ function handlerAssignment(path, params, context, container) {
             'assignment-action',
             'Fetch Course Scores',
             Routing.formHashPath(Routing.PATH_ASSIGNMENT_FETCH_COURSE_SCORES, args),
+        ),
+        Render.makeCardObject(
+            'assignment-action',
+            'Proxy Regrade',
+            Routing.formHashPath(Routing.PATH_PROXY_REGRADE, args),
         ),
         Render.makeCardObject(
             'assignment-action',
@@ -293,6 +299,64 @@ function fetchCourseScores(params, context, container, inputParams) {
     ;
 }
 
+function handlerProxyRegrade(path, params, context, container) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+
+    setAssignmentTitle(course, assignment);
+
+    let inputFields = [
+        new Input.FieldType(context, 'dryRun', 'Dry Run', {
+            type: Input.INPUT_TYPE_BOOL,
+        }),
+        new Input.FieldType(context, 'overwrite', 'Overwrite Records', {
+            type: Input.INPUT_TYPE_BOOL,
+        }),
+        new Input.FieldType(context, 'cutoff', 'Regrade Cutoff', {
+            type: Input.INPUT_TYPE_INT,
+        }),
+        new Input.FieldType(context, 'users', 'Target Users', {
+            type: Input.COURSE_USER_REFERENCE_LIST_FIELD_TYPE,
+            required: true,
+        }),
+        new Input.FieldType(context, 'wait', 'Wait for Completion', {
+            type: Input.INPUT_TYPE_BOOL,
+        })
+    ];
+
+    Render.makePage(
+            params, context, container, proxyRegrade,
+            {
+                header: 'Proxy Regrade',
+                description: 'Proxy regrade an assignment for all target users using their most recent submission.',
+                inputs: inputFields,
+                buttonName: 'Regrade',
+            },
+        )
+    ;
+}
+
+function proxyRegrade(params, context, container, inputParams) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+
+    return Autograder.Submissions.proxyRegrade(
+            course.id, assignment.id,
+            inputParams.dryRun, inputParams.overwrite,
+            inputParams.cutoff, inputParams.target, inputParams.wait
+        )
+        .then(function(result) {
+            return `
+                <pre><code class="code code-block" data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>
+            `;
+        })
+        .catch(function(message) {
+            console.error(message);
+            return message;
+        })
+    ;
+}
+
 function handlerProxyResubmit(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
@@ -300,15 +364,15 @@ function handlerProxyResubmit(path, params, context, container) {
     setAssignmentTitle(course, assignment);
 
     let inputFields = [
-        new Input.FieldType(context, Routing.PARAM_PROXY_EMAIL, 'Target User', {
+        new Input.FieldType(context, 'email', 'Target User', {
             type: Input.INPUT_TYPE_EMAIL,
             required: true,
             placeholder: 'Email',
         }),
-        new Input.FieldType(context, Routing.PARAM_PROXY_TIME, 'Proxy Time', {
+        new Input.FieldType(context, 'time', 'Proxy Time', {
             type: Input.INPUT_TYPE_INT,
         }),
-        new Input.FieldType(context, Routing.PARAM_TARGET_SUBMISSION, 'Submission', {
+        new Input.FieldType(context, 'submission', 'Submission', {
             placeholder: 'Most Recent',
         })
     ];
@@ -316,6 +380,8 @@ function handlerProxyResubmit(path, params, context, container) {
     Render.makePage(
             params, context, container, proxyResubmit,
             {
+                header: 'Proxy Resubmit',
+                description: 'Proxy resubmit an assignment submission to the autograder.',
                 inputs: inputFields,
                 buttonName: 'Resubmit',
             },
@@ -327,10 +393,11 @@ function proxyResubmit(params, context, container, inputParams) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    inputParams['course-id'] = course.id;
-    inputParams['assignment-id'] = assignment.id;
-
-    return Autograder.Submissions.proxyResubmit(inputParams)
+    return Autograder.Submissions.proxyResubmit(
+            course.id, assignment.id,
+            inputParams.email, inputParams.time,
+            inputParams.submission
+        )
         .then(function(result) {
             return getSubmissionResultHTML(course, assignment, result);
         })
