@@ -130,12 +130,6 @@ function sendEmail(params, context, container, inputParams) {
         [Routing.PARAM_EMAIL_HTML]: inputParams.html,
     };
 
-    if (args[Routing.PARAM_EMAIL_TO].length === 0 &&
-            args[Routing.PARAM_EMAIL_CC].length === 0 &&
-            args[Routing.PARAM_EMAIL_BCC].length === 0) {
-        return '<p>Specify at least one recipient.</p>';
-    }
-
     return Autograder.Course.email(args)
         .then(function(result) {
             return `
