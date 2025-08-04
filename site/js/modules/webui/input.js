@@ -4,21 +4,32 @@ const PATTERN_TARGET_SELF_OR = /^core\.Target((Course)|(Server))UserSelfOr[a-zA-
 
 const COURSE_USER_REFERENCE_LIST_FIELD_TYPE = '[]model.CourseUserReference';
 
+const INPUT_TYPE_BOOL = 'bool';
+const INPUT_TYPE_CHECKBOX = 'checkbox';
+const INPUT_TYPE_EMAIL = 'email';
+const INPUT_TYPE_JSON = 'json';
+const INPUT_TYPE_NUMBER = 'number';
+const INPUT_TYPE_PASSWORD = 'password';
+const INPUT_TYPE_SELECT = 'select';
+const INPUT_TYPE_STRING = 'string';
+const INPUT_TYPE_TEXT = 'text';
+const INPUT_TYPE_TEXTAREA = 'textarea';
+
 // The set of valid types for a FieldType.
-const validFieldTypes = [
-    "checkbox",
-    "email",
-    "json",
-    "number",
-    "password",
-    "select",
-    "text",
-    "textarea",
+const VALID_PARSED_TYPES = [
+    INPUT_TYPE_CHECKBOX,
+    INPUT_TYPE_EMAIL,
+    INPUT_TYPE_JSON,
+    INPUT_TYPE_NUMBER,
+    INPUT_TYPE_PASSWORD,
+    INPUT_TYPE_SELECT,
+    INPUT_TYPE_TEXT,
+    INPUT_TYPE_TEXTAREA,
 ];
 
 const standardTypes = [
-    "bool",
-    "string",
+    INPUT_TYPE_BOOL,
+    INPUT_TYPE_STRING,
 ];
 
 const standardTypePatterns = [
@@ -50,7 +61,7 @@ class FieldType {
     constructor(
             context, name, displayName,
             {
-                type = 'string', parsedType = undefined, required = false, placeholder = '',
+                type = INPUT_TYPE_STRING, parsedType = undefined, required = false, placeholder = '',
                 defaultValue = '', inputClasses = '', additionalAttributes = '', choices = [],
                 labelBefore = true, extractInputFunc = undefined, inputValidationFunc = undefined,
             }) {
@@ -84,7 +95,7 @@ class FieldType {
         this.additionalAttributes = additionalAttributes;
 
         // A list of choices for a dropdown.
-        // Only used when the parsedType is "select".
+        // Only used when the parsedType is INPUT_TYPE_SELECT.
         this.choices = choices;
 
         // Determines the position of the HTML label with respect to the input.
@@ -125,7 +136,7 @@ class FieldType {
     }
 
     isValidType() {
-        if (validFieldTypes.includes(this.#parsedType)) {
+        if (VALID_PARSED_TYPES.includes(this.#parsedType)) {
             return true;
         }
 
@@ -136,18 +147,24 @@ class FieldType {
     // infer the input type and field information.
     // This function must be called exactly once when the FieldType is created.
     inferFieldInformation(context) {
-        if (this.type === "string") {
-            this.#parsedType = "text";
+        if (this.type === INPUT_TYPE_STRING) {
+            this.#parsedType = INPUT_TYPE_TEXT;
+        } else if (this.type === INPUT_TYPE_EMAIL) {
+            this.#parsedType = INPUT_TYPE_EMAIL;
+        } else if (this.type === INPUT_TYPE_PASSWORD) {
+            this.#parsedType = INPUT_TYPE_PASSWORD;
+        } else if (this.type === INPUT_TYPE_TEXTAREA) {
+            this.#parsedType === INPUT_TYPE_TEXTAREA;
         } else if (PATTERN_TARGET_SELF_OR.test(this.type)) {
-            this.#parsedType = "email";
+            this.#parsedType = INPUT_TYPE_EMAIL;
             this.placeholder = context.user.email;
         } else if (PATTERN_TARGET_USER.test(this.type)) {
-            this.#parsedType = "email";
+            this.#parsedType = INPUT_TYPE_EMAIL;
         } else if (PATTERN_INT.test(this.type)) {
-            this.#parsedType = "number";
+            this.#parsedType = INPUT_TYPE_NUMBER;
             this.inputClasses += ` pattern="\d*"`;
-        } else if (this.type === "bool") {
-            this.#parsedType = "checkbox";
+        } else if (this.type === INPUT_TYPE_BOOL) {
+            this.#parsedType = INPUT_TYPE_CHECKBOX;
             this.inputClasses += " checkbox-field";
 
             let value = "true";
@@ -157,25 +174,21 @@ class FieldType {
 
             this.additionalAttributes += ` value="${value}"`;
             this.labelBefore = false;
-        } else if (this.type === "select") {
-            this.#parsedType = "select";
-        } else if (this.type === "textarea") {
-            this.#parsedType = "textarea";
+        } else if (this.type === INPUT_TYPE_SELECT) {
+            this.#parsedType = INPUT_TYPE_SELECT;
         } else {
-            this.#parsedType = "json";
+            this.#parsedType = INPUT_TYPE_JSON;
             this.displayName += ` (expects: ${this.type})`;
         }
 
         // Due to the context credentials, remind the user the email and pass fields are optional.
         if (this.name === "user-email") {
-            this.#parsedType = "email";
+            this.#parsedType = INPUT_TYPE_EMAIL;
             this.placeholder = context.user.email;
         } else if (this.name === "user-pass") {
-            this.#parsedType = "password";
+            this.#parsedType = INPUT_TYPE_PASSWORD;
             this.placeholder = "<current token>";
-        }
-
-        if ((this.required) && (this.placeholder === "")) {
+        } else if (this.required) {
             this.additionalAttributes += ' required';
             this.displayName += ` <span class="required-color">*</span>`;
         }
@@ -188,7 +201,7 @@ class FieldType {
 
         let fieldInformation = `id="${this.name}" name="${this.name}" class="tertiary-color" ${this.additionalAttributes}`;
 
-        if (this.#parsedType === "select") {
+        if (this.#parsedType === INPUT_TYPE_SELECT) {
             let choices = this.choices;
 
             // Add a help message as the first choice of the select.
@@ -201,7 +214,7 @@ class FieldType {
                     </select>
                 `,
             );
-        } else if (this.#parsedType === "textarea") {
+        } else if (this.#parsedType === INPUT_TYPE_TEXTAREA) {
             listOfFieldHTML.push(
                 `
                     <textarea ${fieldInformation} placeholder="${this.placeholder}"></textarea>
@@ -209,8 +222,8 @@ class FieldType {
             );
         } else {
             let htmlType = this.#parsedType;
-            if (htmlType === "json") {
-                htmlType = "text";
+            if (htmlType === INPUT_TYPE_JSON) {
+                htmlType = INPUT_TYPE_TEXT;
             }
 
             listOfFieldHTML.push(
@@ -288,7 +301,7 @@ class FieldInstance {
             return;
         }
 
-        if (this.#parsedType === "json") {
+        if (this.#parsedType === INPUT_TYPE_JSON) {
             // Throws an error on failure.
             JSON.parse(`${this.input.value}`);
         }
@@ -310,9 +323,9 @@ class FieldInstance {
         }
 
         let value = undefined;
-        if (this.input.type === "checkbox") {
+        if (this.input.type === INPUT_TYPE_CHECKBOX) {
             value = this.input.checked;
-        } else if ((this.#parsedType === "json") || (this.#parsedType === "number")) {
+        } else if ((this.#parsedType === INPUT_TYPE_JSON) || (this.#parsedType === INPUT_TYPE_NUMBER)) {
             value = this.valueFromJSON();
         } else {
             value = this.input.value;
@@ -356,6 +369,17 @@ function getSelectChoicesHTML(choices, defaultValue) {
 }
 
 export {
+    INPUT_TYPE_BOOL,
+    INPUT_TYPE_CHECKBOX,
+    INPUT_TYPE_EMAIL,
+    INPUT_TYPE_JSON,
+    INPUT_TYPE_NUMBER,
+    INPUT_TYPE_PASSWORD,
+    INPUT_TYPE_SELECT,
+    INPUT_TYPE_STRING,
+    INPUT_TYPE_TEXT,
+    INPUT_TYPE_TEXTAREA,
+
     FieldInstance,
     FieldType,
     SelectOption,
