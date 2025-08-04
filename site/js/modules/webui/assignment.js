@@ -86,11 +86,14 @@ function handlerAssignment(path, params, context, container) {
 function handlerPeek(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+    let submission = params[Routing.PARAM_SUBMISSION] || '';
 
     setAssignmentTitle(course, assignment);
 
     let inputFields = [
-        new Input.FieldType(context, 'submission', 'Submission ID'),
+        new Input.FieldType(context, 'submission', 'Submission ID', {
+            defaultValue: submission,
+        }),
     ];
 
     Render.makePage(
@@ -100,6 +103,8 @@ function handlerPeek(path, params, context, container) {
                 description: 'View a past submission. If no submission ID is provided, the most recent submission is used.',
                 inputs: inputFields,
                 buttonName: 'Peek',
+                // Auto-submit if we were passed an existing submission ID.
+                submitOnCreation: (submission != ''),
             },
         )
     ;
