@@ -13,6 +13,7 @@ const validFieldTypes = [
     "password",
     "select",
     "text",
+    "textarea",
 ];
 
 const standardTypes = [
@@ -158,6 +159,8 @@ class FieldType {
             this.labelBefore = false;
         } else if (this.type === "select") {
             this.#parsedType = "select";
+        } else if (this.type === "textarea") {
+            this.#parsedType = "textarea";
         } else {
             this.#parsedType = "json";
             this.displayName += ` (expects: ${this.type})`;
@@ -196,7 +199,13 @@ class FieldType {
                     <select ${fieldInformation}>
                         ${getSelectChoicesHTML(choices, this.defaultValue)}
                     </select>
+                `,
+            );
+        } else if (this.#parsedType === "textarea") {
+            listOfFieldHTML.push(
                 `
+                    <textarea ${fieldInformation} placeholder="${this.placeholder}"></textarea>
+                `,
             );
         } else {
             let htmlType = this.#parsedType;
