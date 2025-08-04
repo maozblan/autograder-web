@@ -48,9 +48,17 @@ function fetchCourseScores(course, assignment, targetUsers = []) {
     });
 }
 
+function proxyResubmit(args) {
+    return Core.sendRequest({
+        endpoint: 'courses/assignments/submissions/proxy/resubmit',
+        payload: args,
+    });
+}
+
 export {
     history,
     fetchCourseScores,
     peek,
     submit,
+    proxyResubmit,
 }

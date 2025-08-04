@@ -13,6 +13,7 @@ function init() {
     Routing.addRoute(/^course\/assignment\/history$/, handlerHistory, 'Assignment History', requirements);
     Routing.addRoute(/^course\/assignment\/submit$/, handlerSubmit, 'Assignment Submit', requirements);
     Routing.addRoute(/^course\/assignment\/fetch\/course\/scores$/, handlerFetchCourseScores, 'Fetch Course Assignment Scores', requirements);
+    Routing.addRoute(/^course\/assignment\/proxy-resubmit$/, handlerProxyResubmit, 'Assignment Proxy Resubmit', requirements);
 }
 
 function setAssignmentTitle(course, assignment) {
@@ -68,6 +69,11 @@ function handlerAssignment(path, params, context, container) {
             'assignment-action',
             'Fetch Course Scores',
             Routing.formHashPath(Routing.PATH_ASSIGNMENT_FETCH_COURSE_SCORES, args),
+        ),
+        Render.makeCardObject(
+            'assignment-action',
+            'Proxy Resubmit',
+            Routing.formHashPath(Routing.PATH_PROXY_RESUBMIT, args),
         ),
     ];
 
@@ -240,23 +246,7 @@ function doSubmit(context, course, assignment, files, container) {
 
     Autograder.Submissions.submit(course.id, assignment.id, files)
         .then(function(result) {
-            let html = "";
-
-            if (result.rejected) {
-                html = `
-                    <h3>Submission Rejected</h3>
-                    <p>${result.message}</p>
-                `;
-            } else if (!result['grading-success']) {
-                html = `
-                    <h3>Grading Failed</h3>
-                    <p>${result.message}</p>
-                `;
-            } else {
-                html = Render.submission(course, assignment, result.result);
-            }
-
-            container.innerHTML = html;
+            container.innerHTML = getSubmissionResultHTML(course, assignment, result);
         })
         .catch(function(message) {
             container.innerHTML = Render.autograderError(message);
@@ -301,6 +291,70 @@ function fetchCourseScores(params, context, container, inputParams) {
             return message;
         })
     ;
+}
+
+function handlerProxyResubmit(path, params, context, container) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+
+    setAssignmentTitle(course, assignment);
+
+    let inputFields = [
+        new Input.FieldType(context, Routing.PARAM_PROXY_EMAIL, 'Target User', {
+            type: Input.INPUT_TYPE_EMAIL,
+            required: true,
+            placeholder: 'Email',
+        }),
+        new Input.FieldType(context, Routing.PARAM_PROXY_TIME, 'Proxy Time', {
+            type: Input.INPUT_TYPE_INT,
+        }),
+        new Input.FieldType(context, Routing.PARAM_TARGET_SUBMISSION, 'Submission', {
+            placeholder: 'Most Recent',
+        })
+    ];
+
+    Render.makePage(
+            params, context, container, proxyResubmit,
+            {
+                inputs: inputFields,
+                buttonName: 'Resubmit',
+            },
+        )
+    ;
+}
+
+function proxyResubmit(params, context, container, inputParams) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+
+    inputParams['course-id'] = course.id;
+    inputParams['assignment-id'] = assignment.id;
+
+    return Autograder.Submissions.proxyResubmit(inputParams)
+        .then(function(result) {
+            return getSubmissionResultHTML(course, assignment, result);
+        })
+        .catch(function(message) {
+            console.error(message);
+            return message;
+        })
+    ;
+}
+
+function getSubmissionResultHTML(course, assignment, result) {
+    if (result.rejected) {
+        return `
+            <h3>Submission Rejected</h3>
+            <p>${result.message}</p>
+        `;
+    } else if (!result['grading-success']) {
+        return `
+            <h3>Grading Failed</h3>
+            <p>${result.message}</p>
+        `;
+    } else {
+        return Render.submission(course, assignment, result.result);
+    }
 }
 
 export {
