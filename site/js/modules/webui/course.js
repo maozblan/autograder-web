@@ -217,7 +217,7 @@ function listCourseUsers(users) {
 }
 
 function extractRecipients(recipientString) {
-    if (recipientString === undefined) return "";
+    if (recipientString === undefined) return [];
 
     return recipientString
         .split(',')
