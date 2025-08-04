@@ -63,7 +63,7 @@ class FieldType {
                 type = INPUT_TYPE_STRING, parsedType = undefined, required = false, placeholder = '',
                 defaultValue = '', inputClasses = '', additionalAttributes = '', choices = [],
                 labelBefore = true, extractInputFunc = undefined, inputValidationFunc = undefined,
-            }) {
+            } = {}) {
         // The name of the field.
         this.name = name;
 
