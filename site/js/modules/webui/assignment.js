@@ -145,30 +145,21 @@ function handlerHistory(path, params, context, container) {
 
     setAssignmentTitle(course, assignment);
 
-    container.innerHTML = `
-        <div class='history'>
-            <div class='history-controls page-controls'>
-                <button>Fetch History</button>
-            </div>
-            <div class='history-results'>
-            </div>
-        </div>
-    `;
-
-    let button = container.querySelector('.history-controls button');
-    let results = container.querySelector('.history-results');
-
-    button.addEventListener('click', function(event) {
-        doHistory(context, course, assignment, results);
-    });
-
-    doHistory(context, course, assignment, results);
+    Render.makePage(
+            params, context, container, history,
+            {
+                header: 'Fetch Submission History',
+                buttonName: 'Fetch',
+            },
+        )
+    ;
 }
 
-function doHistory(context, course, assignment, container) {
-    Routing.loadingStart(container);
+function history(params, context, container, inputParams) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    Autograder.Submissions.history(course.id, assignment.id)
+    return Autograder.Submissions.history(course.id, assignment.id)
         .then(function(result) {
             let html = "";
 
@@ -178,10 +169,11 @@ function doHistory(context, course, assignment, container) {
                 html = Render.submissionHistory(course, assignment, result['history']);
             }
 
-            container.innerHTML = html;
+            return html;
         })
         .catch(function(message) {
-            container.innerHTML = Render.autograderError(message);
+            console.error(message);
+            return message;
         })
     ;
 }
