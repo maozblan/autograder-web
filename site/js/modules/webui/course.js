@@ -83,31 +83,31 @@ function handlerEmail(path, params, context, container) {
 
     let description = `
         Separate recipient values with commas.
-        For valid recipient values reference this 
-        <a href=${COURSE_USER_REFERENCE_DOC_LINK} target="_blank">documentation</a>.
+        For valid recipient values reference
+        this <a href=${COURSE_USER_REFERENCE_DOC_LINK} target="_blank">documentation</a>.
     `;
 
     let inputFields = [
-        new Input.FieldType(context, Routing.PARAM_EMAIL_TO, 'To', {
+        new Input.FieldType(context, 'to', 'To', {
             extractInputFunc: extractRecipients,
         }),
-        new Input.FieldType(context, Routing.PARAM_EMAIL_CC, 'CC', {
+        new Input.FieldType(context, 'cc', 'CC', {
             extractInputFunc: extractRecipients,
         }),
-        new Input.FieldType(context, Routing.PARAM_EMAIL_BCC, 'BCC', {
+        new Input.FieldType(context, 'bcc', 'BCC', {
             extractInputFunc: extractRecipients,
         }),
-        new Input.FieldType(context, Routing.PARAM_EMAIL_SUBJECT, 'Subject', {
+        new Input.FieldType(context, 'subject', 'Subject', {
             required: true,
         }),
-        new Input.FieldType(context, Routing.PARAM_EMAIL_BODY, 'Content', {
+        new Input.FieldType(context, 'content', 'Content', {
             type: Input.INPUT_TYPE_TEXTAREA,
             additionalAttributes: 'rows="10"',
         }),
-        new Input.FieldType(context, Routing.PARAM_DRY_RUN, 'Send as Dry Run', {
+        new Input.FieldType(context, 'dry-run', 'Send as Dry Run', {
             type: Input.INPUT_TYPE_BOOL,
         }),
-        new Input.FieldType(context, Routing.PARAM_EMAIL_HTML, 'Content in HTML', {
+        new Input.FieldType(context, 'html', 'Content in HTML', {
             type: Input.INPUT_TYPE_BOOL,
         }),
     ];
@@ -125,9 +125,18 @@ function handlerEmail(path, params, context, container) {
 }
 
 function sendEmail(params, context, container, inputParams) {
-    inputParams[Routing.PARAM_COURSE_ID] = context.courses[params[Routing.PARAM_COURSE]].id;
+    let args = {
+        [Routing.PARAM_COURSE_ID]: context.courses[params[Routing.PARAM_COURSE]].id,
+        [Routing.PARAM_EMAIL_TO]: inputParams.to,
+        [Routing.PARAM_EMAIL_CC]: inputParams.cc,
+        [Routing.PARAM_EMAIL_BCC]: inputParams.bcc,
+        [Routing.PARAM_EMAIL_SUBJECT]: inputParams.subject,
+        [Routing.PARAM_EMAIL_BODY]: inputParams.content,
+        [Routing.PARAM_DRY_RUN]: inputParams['dry-run'],
+        [Routing.PARAM_EMAIL_HTML]: inputParams.html,
+    };
 
-    return Autograder.Course.email(inputParams)
+    return Autograder.Course.email(args)
         .then(function(result) {
             return `
                 <p>Email sent successfully.</p>
@@ -210,8 +219,6 @@ function listCourseUsers(users) {
 
 function extractRecipients(input) {
     let recipientString = input.value;
-
-    if (recipientString === undefined) return [];
 
     return recipientString
         .split(',')
