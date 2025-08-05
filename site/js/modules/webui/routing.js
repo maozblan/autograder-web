@@ -16,11 +16,8 @@ const PARAM_EMAIL_CC = 'cc';
 const PARAM_EMAIL_HTML = 'html';
 const PARAM_EMAIL_SUBJECT = 'subject';
 const PARAM_EMAIL_TO = 'to';
-const PARAM_PROXY_EMAIL = 'proxy-email';
-const PARAM_PROXY_TIME = 'proxy-time';
 const PARAM_SUBMISSION = 'submission';
 const PARAM_TARGET_ENDPOINT = 'endpoint';
-const PARAM_TARGET_SUBMISSION = 'target-submission';
 const PARAM_TARGET_USERS = 'target-users';
 
 const PATH_COURSE = 'course';
@@ -31,6 +28,7 @@ const PATH_COURSE_USERS_LIST = `${PATH_COURSE}/list`;
 const PATH_SUBMIT = `${PATH_ASSIGNMENT}/submit`;
 const PATH_PEEK = `${PATH_ASSIGNMENT}/peek`;
 const PATH_HISTORY = `${PATH_ASSIGNMENT}/history`;
+const PATH_PROXY_REGRADE = `${PATH_ASSIGNMENT}/proxy-regrade`;
 const PATH_PROXY_RESUBMIT = `${PATH_ASSIGNMENT}/proxy-resubmit`;
 
 const PATH_SERVER = 'server';
@@ -360,11 +358,8 @@ export {
     PARAM_EMAIL_HTML,
     PARAM_EMAIL_SUBJECT,
     PARAM_EMAIL_TO,
-    PARAM_PROXY_EMAIL,
-    PARAM_PROXY_TIME,
     PARAM_SUBMISSION,
     PARAM_TARGET_ENDPOINT,
-    PARAM_TARGET_SUBMISSION,
     PARAM_TARGET_USERS,
 
     PATH_COURSE,
@@ -375,6 +370,7 @@ export {
     PATH_SUBMIT,
     PATH_PEEK,
     PATH_HISTORY,
+    PATH_PROXY_REGRADE,
     PATH_PROXY_RESUBMIT,
     PATH_SERVER,
     PATH_SERVER_CALL_API,

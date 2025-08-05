@@ -13,6 +13,7 @@ function init() {
     Routing.addRoute(/^course\/assignment\/history$/, handlerHistory, 'Assignment History', requirements);
     Routing.addRoute(/^course\/assignment\/submit$/, handlerSubmit, 'Assignment Submit', requirements);
     Routing.addRoute(/^course\/assignment\/fetch\/course\/scores$/, handlerFetchCourseScores, 'Fetch Course Assignment Scores', requirements);
+    Routing.addRoute(/^course\/assignment\/proxy-regrade$/, handlerProxyRegrade, 'Assignment Proxy Regrade', requirements);
     Routing.addRoute(/^course\/assignment\/proxy-resubmit$/, handlerProxyResubmit, 'Assignment Proxy Resubmit', requirements);
 }
 
@@ -72,6 +73,11 @@ function handlerAssignment(path, params, context, container) {
         ),
         Render.makeCardObject(
             'assignment-action',
+            'Proxy Regrade',
+            Routing.formHashPath(Routing.PATH_PROXY_REGRADE, args),
+        ),
+        Render.makeCardObject(
+            'assignment-action',
             'Proxy Resubmit',
             Routing.formHashPath(Routing.PATH_PROXY_RESUBMIT, args),
         ),
@@ -86,54 +92,43 @@ function handlerAssignment(path, params, context, container) {
 function handlerPeek(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
-    let submission = params[Routing.PARAM_SUBMISSION] || undefined;
+    let submission = params[Routing.PARAM_SUBMISSION] || '';
 
     setAssignmentTitle(course, assignment);
 
-    container.innerHTML = `
-        <div class='peek'>
-            <div class='peek-controls page-controls'>
-                <button>Peek</button>
-                <div>
-                    <label for='submission'>Submission ID:</label>
-                    <input type='text' name='submission' placeholder='Most Recent'>
-                </div>
-            </div>
-            <div class='peek-results'>
-            </div>
-        </div>
-    `;
+    let inputFields = [
+        new Input.FieldType(context, 'submission', 'Submission ID', {
+            defaultValue: submission,
+        }),
+    ];
 
-    let button = container.querySelector('.peek-controls button');
-    let input = container.querySelector('.peek-controls input');
-    let results = container.querySelector('.peek-results');
-
-    if (submission) {
-        input.value = submission;
-    }
-
-    button.addEventListener('click', function(event) {
-        params[Routing.PARAM_SUBMISSION] = input.value || undefined;
-
-        let path = Routing.formHashPath(Routing.PATH_PEEK, params);
-        Routing.redirect(path);
-    });
-
-    doPeek(context, course, assignment, results, submission);
+    Render.makePage(
+            params, context, container, peek,
+            {
+                header: 'Peek a Submission',
+                description: 'View a past submission. If no submission ID is provided, the most recent submission is used.',
+                inputs: inputFields,
+                buttonName: 'Peek',
+                // Auto-submit if we were passed an existing submission ID.
+                submitOnCreation: (submission != ''),
+            },
+        )
+    ;
 }
 
-function doPeek(context, course, assignment, container, submission) {
-    Routing.loadingStart(container);
+function peek(params, context, container, inputParams) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    Autograder.Submissions.peek(course.id, assignment.id, submission)
+    return Autograder.Submissions.peek(course.id, assignment.id, inputParams.submission)
         .then(function(result) {
             let html = "";
 
             if (!result['found-user']) {
                 html = `<p>Could not find user: '${context.user.name}'.</p>`;
             } else if (!result['found-submission']) {
-                if (submission) {
-                    html = `<p>Could not find submission: '${submission}'.</p>`;
+                if (inputParams.submission) {
+                    html = `<p>Could not find submission: '${inputParams.submission}'.</p>`;
                 } else {
                     html = `<p>Could not find most recent submission.</p>`;
                 }
@@ -141,10 +136,11 @@ function doPeek(context, course, assignment, container, submission) {
                 html = Render.submission(course, assignment, result['submission-result']);
             }
 
-            container.innerHTML = html;
+            return html;
         })
         .catch(function(message) {
-            container.innerHTML = Render.autograderError(message);
+            console.error(message);
+            return message;
         })
     ;
 }
@@ -155,30 +151,21 @@ function handlerHistory(path, params, context, container) {
 
     setAssignmentTitle(course, assignment);
 
-    container.innerHTML = `
-        <div class='history'>
-            <div class='history-controls page-controls'>
-                <button>Fetch History</button>
-            </div>
-            <div class='history-results'>
-            </div>
-        </div>
-    `;
-
-    let button = container.querySelector('.history-controls button');
-    let results = container.querySelector('.history-results');
-
-    button.addEventListener('click', function(event) {
-        doHistory(context, course, assignment, results);
-    });
-
-    doHistory(context, course, assignment, results);
+    Render.makePage(
+            params, context, container, history,
+            {
+                header: 'Fetch Submission History',
+                buttonName: 'Fetch',
+            },
+        )
+    ;
 }
 
-function doHistory(context, course, assignment, container) {
-    Routing.loadingStart(container);
+function history(params, context, container, inputParams) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    Autograder.Submissions.history(course.id, assignment.id)
+    return Autograder.Submissions.history(course.id, assignment.id)
         .then(function(result) {
             let html = "";
 
@@ -188,10 +175,11 @@ function doHistory(context, course, assignment, container) {
                 html = Render.submissionHistory(course, assignment, result['history']);
             }
 
-            container.innerHTML = html;
+            return html;
         })
         .catch(function(message) {
-            container.innerHTML = Render.autograderError(message);
+            console.error(message);
+            return message;
         })
     ;
 }
@@ -293,6 +281,64 @@ function fetchCourseScores(params, context, container, inputParams) {
     ;
 }
 
+function handlerProxyRegrade(path, params, context, container) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+
+    setAssignmentTitle(course, assignment);
+
+    let inputFields = [
+        new Input.FieldType(context, 'dryRun', 'Dry Run', {
+            type: Input.INPUT_TYPE_BOOL,
+        }),
+        new Input.FieldType(context, 'overwrite', 'Overwrite Records', {
+            type: Input.INPUT_TYPE_BOOL,
+        }),
+        new Input.FieldType(context, 'cutoff', 'Regrade Cutoff', {
+            type: Input.INPUT_TYPE_INT,
+        }),
+        new Input.FieldType(context, 'users', 'Target Users', {
+            type: Input.COURSE_USER_REFERENCE_LIST_FIELD_TYPE,
+            required: true,
+        }),
+        new Input.FieldType(context, 'wait', 'Wait for Completion', {
+            type: Input.INPUT_TYPE_BOOL,
+        })
+    ];
+
+    Render.makePage(
+            params, context, container, proxyRegrade,
+            {
+                header: 'Proxy Regrade',
+                description: 'Proxy regrade an assignment for all target users using their most recent submission.',
+                inputs: inputFields,
+                buttonName: 'Regrade',
+            },
+        )
+    ;
+}
+
+function proxyRegrade(params, context, container, inputParams) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+
+    return Autograder.Submissions.proxyRegrade(
+            course.id, assignment.id,
+            inputParams.dryRun, inputParams.overwrite,
+            inputParams.cutoff, inputParams.target, inputParams.wait
+        )
+        .then(function(result) {
+            return `
+                <pre><code class="code code-block" data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>
+            `;
+        })
+        .catch(function(message) {
+            console.error(message);
+            return message;
+        })
+    ;
+}
+
 function handlerProxyResubmit(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
@@ -300,15 +346,15 @@ function handlerProxyResubmit(path, params, context, container) {
     setAssignmentTitle(course, assignment);
 
     let inputFields = [
-        new Input.FieldType(context, Routing.PARAM_PROXY_EMAIL, 'Target User', {
+        new Input.FieldType(context, 'email', 'Target User', {
             type: Input.INPUT_TYPE_EMAIL,
             required: true,
             placeholder: 'Email',
         }),
-        new Input.FieldType(context, Routing.PARAM_PROXY_TIME, 'Proxy Time', {
+        new Input.FieldType(context, 'time', 'Proxy Time', {
             type: Input.INPUT_TYPE_INT,
         }),
-        new Input.FieldType(context, Routing.PARAM_TARGET_SUBMISSION, 'Submission', {
+        new Input.FieldType(context, 'submission', 'Submission', {
             placeholder: 'Most Recent',
         })
     ];
@@ -316,6 +362,8 @@ function handlerProxyResubmit(path, params, context, container) {
     Render.makePage(
             params, context, container, proxyResubmit,
             {
+                header: 'Proxy Resubmit',
+                description: 'Proxy resubmit an assignment submission to the autograder.',
                 inputs: inputFields,
                 buttonName: 'Resubmit',
             },
@@ -327,10 +375,11 @@ function proxyResubmit(params, context, container, inputParams) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    inputParams['course-id'] = course.id;
-    inputParams['assignment-id'] = assignment.id;
-
-    return Autograder.Submissions.proxyResubmit(inputParams)
+    return Autograder.Submissions.proxyResubmit(
+            course.id, assignment.id,
+            inputParams.email, inputParams.time,
+            inputParams.submission
+        )
         .then(function(result) {
             return getSubmissionResultHTML(course, assignment, result);
         })

@@ -48,10 +48,31 @@ function fetchCourseScores(course, assignment, targetUsers = []) {
     });
 }
 
-function proxyResubmit(args) {
+function proxyRegrade(course, assignment, dryRun, overwriteRecords, regradeCutoff, targetUsers, waitForCompletion) {
+    return Core.sendRequest({
+        endpoint: 'courses/assignments/submissions/proxy/regrade',
+        payload: {
+            'course-id': course,
+            'assignment-id': assignment,
+            'dry-run': dryRun,
+            'overwrite-records': overwriteRecords,
+            'regrade-cutoff': regradeCutoff,
+            'target-users': targetUsers,
+            'wait-for-completion': waitForCompletion,
+        },
+    });
+}
+
+function proxyResubmit(course, assignment, proxyEmail, proxyTime, targetSubmission) {
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/proxy/resubmit',
-        payload: args,
+        payload: {
+            'course-id': course,
+            'assignment-id': assignment,
+            'proxy-email': proxyEmail,
+            'proxy-time': proxyTime,
+            'target-submission': targetSubmission,
+        },
     });
 }
 
@@ -60,5 +81,6 @@ export {
     fetchCourseScores,
     peek,
     submit,
+    proxyRegrade,
     proxyResubmit,
 }
