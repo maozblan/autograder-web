@@ -217,9 +217,7 @@ class FieldType {
             );
         } else if (this.#parsedType === INPUT_TYPE_TEXTAREA) {
             listOfFieldHTML.push(
-                `
-                    <textarea ${fieldInformation} placeholder="${this.placeholder}"></textarea>
-                `,
+                `<textarea ${fieldInformation} placeholder="${this.placeholder}" value="${this.defaultValue}"></textarea>`,
             );
         } else {
             let htmlType = this.#parsedType;

@@ -82,9 +82,10 @@ function handlerEmail(path, params, context, container) {
     Routing.setTitle(course.id, titleHTML);
 
     let description = `
+        Send an email to course users.
         Separate recipient values with commas.
         For valid recipient values reference
-        this <a href=${COURSE_USER_REFERENCE_DOC_LINK} target="_blank">documentation</a>.
+        this <a href="${COURSE_USER_REFERENCE_DOC_LINK}" target="_blank">documentation</a>.
     `;
 
     let inputFields = [
@@ -104,10 +105,10 @@ function handlerEmail(path, params, context, container) {
             type: Input.INPUT_TYPE_TEXTAREA,
             additionalAttributes: 'rows="10"',
         }),
-        new Input.FieldType(context, 'dry-run', 'Send as Dry Run', {
+        new Input.FieldType(context, 'dryRun', 'Send as Dry Run', {
             type: Input.INPUT_TYPE_BOOL,
         }),
-        new Input.FieldType(context, 'html', 'Content in HTML', {
+        new Input.FieldType(context, 'html', 'Content is HTML', {
             type: Input.INPUT_TYPE_BOOL,
         }),
     ];
@@ -132,7 +133,7 @@ function sendEmail(params, context, container, inputParams) {
         [Routing.PARAM_EMAIL_BCC]: inputParams.bcc ?? [],
         [Routing.PARAM_EMAIL_SUBJECT]: inputParams.subject,
         [Routing.PARAM_EMAIL_BODY]: inputParams.content,
-        [Routing.PARAM_DRY_RUN]: inputParams['dry-run'],
+        [Routing.PARAM_DRY_RUN]: inputParams.dryRun,
         [Routing.PARAM_EMAIL_HTML]: inputParams.html,
     };
 
