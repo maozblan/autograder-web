@@ -127,14 +127,20 @@ function handlerEmail(path, params, context, container) {
 function sendEmail(params, context, container, inputParams) {
     let args = {
         [Routing.PARAM_COURSE_ID]: context.courses[params[Routing.PARAM_COURSE]].id,
-        [Routing.PARAM_EMAIL_TO]: inputParams.to,
-        [Routing.PARAM_EMAIL_CC]: inputParams.cc,
-        [Routing.PARAM_EMAIL_BCC]: inputParams.bcc,
+        [Routing.PARAM_EMAIL_TO]: inputParams.to ?? [],
+        [Routing.PARAM_EMAIL_CC]: inputParams.cc ?? [],
+        [Routing.PARAM_EMAIL_BCC]: inputParams.bcc ?? [],
         [Routing.PARAM_EMAIL_SUBJECT]: inputParams.subject,
         [Routing.PARAM_EMAIL_BODY]: inputParams.content,
         [Routing.PARAM_DRY_RUN]: inputParams['dry-run'],
         [Routing.PARAM_EMAIL_HTML]: inputParams.html,
     };
+
+    if (args[Routing.PARAM_EMAIL_TO].length === 0 &&
+            args[Routing.PARAM_EMAIL_CC].length === 0 &&
+            args[Routing.PARAM_EMAIL_BCC].length === 0) {
+        return Promise.resolve('<p>Specify at least one recipient.</p>');
+    }
 
     return Autograder.Course.email(args)
         .then(function(result) {
