@@ -13,11 +13,13 @@ const FIELD_PRIORITY = [
     "user-email",
 ];
 
+const INDENT = "    ";
+
 function init() {
     Routing.addRoute(/^server$/, handlerServer, 'Server Actions', undefined);
     Routing.addRoute(/^server\/call-api$/, handlerCallAPI, 'Call API', undefined);
     Routing.addRoute(/^server\/docs$/, handlerDocs, "API Documentation");
-    Routing.addRoute(/^server\/users$/, handlerUsers, "List Users");
+    Routing.addRoute(/^server\/users\/list$/, handlerUsers, "List Users");
 }
 
 function handlerServer(path, params, context, container) {
@@ -30,7 +32,7 @@ function handlerServer(path, params, context, container) {
     let cards = [
         Render.makeCardObject('server-action', 'API Documentation', Routing.formHashPath(Routing.PATH_SERVER_DOCS)),
         Render.makeCardObject('server-action', 'Call API', Routing.formHashPath(Routing.PATH_SERVER_CALL_API, args)),
-        Render.makeCardObject('server-action', 'List Users', Routing.formHashPath(Routing.PATH_SERVER_USERS, args)),
+        Render.makeCardObject('server-action', 'List Users', Routing.formHashPath(Routing.PATH_SERVER_USERS_LIST, args)),
     ];
 
     container.innerHTML = `
@@ -312,10 +314,12 @@ function displayTypes(typeData) {
 }
 
 function handlerUsers(path, params, context, container) {
+    Routing.setTitle("List Users", "List Users"); 
+
     let inputFields = [
         new Input.FieldType(context, 'users', 'Target Users', {
             type: '[]model.ServerUserReference',
-        })
+        }),
     ];
 
     Render.makePage(
@@ -352,8 +356,8 @@ function styleServerUsers(users) {
         let courses = [];
         Object.entries(user.courses).forEach(function([course, data]) {
             let courseContent = [
-                `    ID: ${course}`,
-                `    Role: ${data.role}`,
+                `${INDENT}ID: ${course}`,
+                `${INDENT}Role: ${data.role}`,
             ];
 
             courses.push(courseContent.join("\n"));
