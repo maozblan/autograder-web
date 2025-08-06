@@ -352,8 +352,8 @@ function styleServerUsers(users) {
         let courses = [];
         Object.entries(user.courses).forEach(function([course, data]) {
             let courseContent = [
-                `  ID: ${course}`,
-                `  Role: ${data.role}`,
+                `    ID: ${course}`,
+                `    Role: ${data.role}`,
             ];
 
             courses.push(courseContent.join("\n"));
