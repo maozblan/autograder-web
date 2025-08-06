@@ -175,6 +175,24 @@ function makePage(
     container.querySelectorAll(".user-input-fields fieldset input")?.forEach(function(input) {
         input.addEventListener("blur", function(event) {
             input.classList.add("touched");
+
+            let currentPageInput = undefined;
+            for (const pageInput of page.inputs) {
+                if (pageInput.name === input.name) {
+                    currentPageInput = pageInput;
+                    break;
+                }
+            }
+
+            // Validate the input after the field loses focus.
+            if (currentPageInput) {
+                try {
+                    currentPageInput.getFieldInstance(container);
+                } catch (error) {
+                    console.error(error);
+                    return;
+                }
+            }
         });
     });
 
@@ -200,7 +218,6 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
         try {
             result = input.getFieldInstance(container);
         } catch (error) {
-            console.error(error);
             errorMessages.push(error.message);
             continue;
         }
@@ -241,6 +258,37 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
             }
         })
     ;
+}
+
+// Set the page title given a list of title parts.
+// Each page title part is [display name, optional link].
+// If title parts is empty, the page title defaults to the tab title.
+function makeTitle(tabTitle, pageTitleParts = []) {
+    let titlePartsHTML = [];
+    for (const part of pageTitleParts) {
+        let displayName = part[0];
+        let link = part[1];
+
+        if (link) {
+            titlePartsHTML.push(`<a href='${link}'>${displayName}</a>`);
+        } else {
+            titlePartsHTML.push(displayName);
+        }
+    }
+
+    let titleHTML = '';
+    if (titlePartsHTML.length > 0) {
+        titleHTML = `
+            <span>
+                ${titlePartsHTML.join(" / ")}
+            </span>
+        `;
+    } else {
+        titleHTML = `<span>${tabTitle}</span>`;
+    }
+
+    document.querySelector('.page .page-title').innerHTML = titleHTML;
+    document.title = `${tabTitle} :: Autograder`;
 }
 
 function submissionHistory(course, assignment, history) {
@@ -449,6 +497,7 @@ export {
     makeCardSection,
     makeCardSections,
     makePage,
+    makeTitle,
     submission,
     submissionHistory,
     tableFromDictionaries,

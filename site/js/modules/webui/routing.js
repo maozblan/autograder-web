@@ -1,6 +1,7 @@
 import * as Autograder from '../autograder/base.js';
 import * as Context from './context.js';
 import * as Log from './log.js';
+import * as Render from './render.js';
 
 let routes = [];
 
@@ -191,21 +192,11 @@ function handlerWrapper(handler, path, params, pageName, requirements) {
     // Set the page inforamtion.
     if (pageName) {
         container.setAttribute('data-page', pageName.toLowerCase());
-        setTitle(pageName);
+        Render.makeTitle(pageName);
     }
 
     // Call the handler.
     handler(path, params, context, container);
-}
-
-function setTitle(title, titleHTML = undefined) {
-    if (titleHTML) {
-        document.querySelector('.page .page-title').innerHTML = titleHTML;
-    } else {
-        document.querySelector('.page .page-title').innerHTML = `<span>${title}</span>`;
-    }
-
-    document.title = `${title} :: Autograder`;
 }
 
 function setContextUserDisplay() {
@@ -347,7 +338,6 @@ export {
     redirectHome,
     redirectLogin,
     redirectLogout,
-    setTitle,
 
     PARAM_ASSIGNMENT,
     PARAM_COURSE,
