@@ -30,7 +30,7 @@ const PATH_PEEK = `${PATH_ASSIGNMENT}/peek`;
 const PATH_HISTORY = `${PATH_ASSIGNMENT}/history`;
 const PATH_PROXY_REGRADE = `${PATH_ASSIGNMENT}/proxy-regrade`;
 const PATH_PROXY_RESUBMIT = `${PATH_ASSIGNMENT}/proxy-resubmit`;
-const PATH_ANALYSIS_INDIVIDUAL = `${PATH_ASSIGNMENT}/analysis-individual`;
+const PATH_ANALYSIS_INDIVIDUAL = `${PATH_ASSIGNMENT}/analysis/individual`;
 
 const PATH_SERVER = 'server';
 const PATH_SERVER_CALL_API = `${PATH_SERVER}/call-api`;

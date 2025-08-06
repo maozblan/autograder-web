@@ -15,7 +15,7 @@ function init() {
     Routing.addRoute(/^course\/assignment\/fetch\/course\/scores$/, handlerFetchCourseScores, 'Fetch Course Assignment Scores', requirements);
     Routing.addRoute(/^course\/assignment\/proxy-regrade$/, handlerProxyRegrade, 'Assignment Proxy Regrade', requirements);
     Routing.addRoute(/^course\/assignment\/proxy-resubmit$/, handlerProxyResubmit, 'Assignment Proxy Resubmit', requirements);
-    Routing.addRoute(/^course\/assignment\/analysis-individual$/, handlerAnalysisIndividual, 'Assignment Individual Analysis', requirements);
+    Routing.addRoute(/^course\/assignment\/analysis\/individual$/, handlerAnalysisIndividual, 'Assignment Individual Analysis', requirements);
 }
 
 function setAssignmentTitle(course, assignment) {
@@ -447,14 +447,10 @@ function handlerAnalysisIndividual(path, params, context, container) {
 }
 
 function analysisIndividual(params, context, container, inputParams) {
-    let args = [
-        inputParams.submission,
-        inputParams.overwrite,
-        inputParams.wait,
-        inputParams.dryRun,
-    ];
-
-    return Autograder.Submissions.analysisIndividual(...args)
+    return Autograder.Submissions.analysisIndividual(
+            inputParams.submission, inputParams.overwrite,
+            inputParams.wait, inputParams.dryRun,
+        )
         .then(function(result) {
             return `<pre><code data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>`
         })
