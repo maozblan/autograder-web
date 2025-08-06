@@ -85,7 +85,7 @@ function analysisIndividual(submissions, overwriteRecords, waitForCompletion, dr
             'submissions': submissions,
             'wait-for-completion': waitForCompletion,
         }
-    })
+    });
 }
 
 export {
