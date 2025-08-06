@@ -17,6 +17,7 @@ function init() {
     Routing.addRoute(/^server$/, handlerServer, 'Server Actions', undefined);
     Routing.addRoute(/^server\/call-api$/, handlerCallAPI, 'Call API', undefined);
     Routing.addRoute(/^server\/docs$/, handlerDocs, "API Documentation");
+    Routing.addRoute(/^server\/users$/, handlerUsers, "Server Users");
 }
 
 function handlerServer(path, params, context, container) {
@@ -29,6 +30,7 @@ function handlerServer(path, params, context, container) {
     let cards = [
         Render.makeCardObject('server-action', 'API Documentation', Routing.formHashPath(Routing.PATH_SERVER_DOCS)),
         Render.makeCardObject('server-action', 'Call API', Routing.formHashPath(Routing.PATH_SERVER_CALL_API, args)),
+        Render.makeCardObject('server-action', 'List Users', Routing.formHashPath(Routing.PATH_SERVER_USERS, args)),
     ];
 
     container.innerHTML = `
@@ -307,6 +309,41 @@ function displayTypes(typeData) {
     });
 
     return types.join("\n");
+}
+
+function handlerUsers(path, params, context, container) {
+    let inputFields = [
+        new Input.FieldType(context, 'users', 'Target Users', {
+            type: '[]model.ServerUserReference',
+        })
+    ];
+
+    Render.makePage(
+         params, context, container, listServerUsers,
+            {
+                header: 'Server Users',
+                description: 'List the users on the server.',
+                inputs: inputFields,
+                buttonName: 'Call Endpoint',
+            },
+        )
+    ;
+}
+
+function listServerUsers(params, context, container, inputParams) {
+    return Autograder.Server.users(inputParams.users)
+        .then(function(result) {
+            if (result.users.length === 0) {
+                return '<p>Unable to find target users.</p>';
+            }
+
+            return `<pre><code data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>`;
+        })
+        .catch(function(message) {
+            console.error(message);
+            return message;
+        })
+    ;
 }
 
 export {
