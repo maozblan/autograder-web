@@ -441,10 +441,15 @@ function tableFromDictionaries(headers, rows, classes = []) {
     return tableFromLists(tableHead, tableBody, classes);
 }
 
+function displayJSON(json) {
+    return `<pre><code class="code code-block" data-lang="json">${JSON.stringify(json, null, 4)}</code></pre>`;
+}
+
 export {
     autograderError,
     card,
     cards,
+    displayJSON,
     makeCardObject,
     makeCardSection,
     makeCardSections,

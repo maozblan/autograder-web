@@ -278,7 +278,7 @@ function fetchCourseScores(params, context, container, inputParams) {
 
     return Autograder.Submissions.fetchCourseScores(course.id, assignment.id, inputParams['target-users'])
         .then(function(result) {
-            return `<pre><code data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>`
+            return Render.displayJSON(result);
         })
         .catch(function(message) {
             console.error(message);
@@ -334,9 +334,7 @@ function proxyRegrade(params, context, container, inputParams) {
             inputParams.cutoff, inputParams.target, inputParams.wait
         )
         .then(function(result) {
-            return `
-                <pre><code class="code code-block" data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>
-            `;
+            return Render.displayJSON(result);
         })
         .catch(function(message) {
             console.error(message);
@@ -452,7 +450,7 @@ function analysisIndividual(params, context, container, inputParams) {
             inputParams.wait, inputParams.dryRun,
         )
         .then(function(result) {
-            return `<pre><code data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>`
+            return Render.displayJSON(result);
         })
         .catch(function(message) {
             console.error(message);
