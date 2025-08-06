@@ -314,7 +314,7 @@ function displayTypes(typeData) {
 }
 
 function handlerUsers(path, params, context, container) {
-    Routing.setTitle("List Users", "List Users"); 
+    Routing.makeTitle("List Users"); 
 
     let inputFields = [
         new Input.FieldType(context, 'users', 'Target Users', {
