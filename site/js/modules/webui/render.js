@@ -165,7 +165,7 @@ function makePage(
     });
 
     container.querySelector(".user-input-fields fieldset")?.addEventListener("keydown", function(event) {
-        if (event.key != "Enter") {
+        if ((event.key != "Enter") || (event.target.tagName === "TEXTAREA")) {
             return;
         }
 
