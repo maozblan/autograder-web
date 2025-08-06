@@ -33,11 +33,11 @@ function describe() {
     ;
 }
 
-function users(target) {
+function users(targetUsers) {
     return Core.sendRequest({
         endpoint: 'users/list',
         payload: {
-            'target-users': target,
+            'target-users': targetUsers,
         }
     });
 }

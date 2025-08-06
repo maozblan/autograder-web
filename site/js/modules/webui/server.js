@@ -17,7 +17,7 @@ function init() {
     Routing.addRoute(/^server$/, handlerServer, 'Server Actions', undefined);
     Routing.addRoute(/^server\/call-api$/, handlerCallAPI, 'Call API', undefined);
     Routing.addRoute(/^server\/docs$/, handlerDocs, "API Documentation");
-    Routing.addRoute(/^server\/users$/, handlerUsers, "Server Users");
+    Routing.addRoute(/^server\/users$/, handlerUsers, "List Users");
 }
 
 function handlerServer(path, params, context, container) {
@@ -321,10 +321,10 @@ function handlerUsers(path, params, context, container) {
     Render.makePage(
          params, context, container, listServerUsers,
             {
-                header: 'Server Users',
-                description: 'List the users on the server.',
+                header: 'List Users',
+                description: 'List the users on the server (defaults to all users).',
                 inputs: inputFields,
-                buttonName: 'Call Endpoint',
+                buttonName: 'List Users',
             },
         )
     ;
