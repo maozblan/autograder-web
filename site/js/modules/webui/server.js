@@ -337,13 +337,41 @@ function listServerUsers(params, context, container, inputParams) {
                 return '<p>Unable to find target users.</p>';
             }
 
-            return `<pre><code data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>`;
+            return `<pre>${styleServerUsers(result.users)}</pre>`;
         })
         .catch(function(message) {
             console.error(message);
             return message;
         })
     ;
+}
+
+function styleServerUsers(users) {
+    let messages = [];
+    for (const user of users) {
+        let courses = [];
+        Object.entries(user.courses).forEach(function([course, data]) {
+            let courseContent = [
+                `  ID: ${course}`,
+                `  Role: ${data.role}`,
+            ];
+
+            courses.push(courseContent.join("\n"));
+        });
+
+        let userParts = [
+            `Email: ${user.email}`,
+            `Name: ${user.name}`,
+            `Role: ${user.role}`,
+            `Type: ${user.type}`,
+            `Courses:`,
+            courses.join("\n\n"),
+        ];
+
+        messages.push(`${userParts.join("\n")}`);
+    }
+
+    return messages.join("\n\n");
 }
 
 export {
