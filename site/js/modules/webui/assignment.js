@@ -433,7 +433,7 @@ function handlerAnalysisIndividual(path, params, context, container) {
             params, context, container, analysisIndividual,
             {
                 header: 'Individual Analysis',
-                description: 'Get the result of a individual analysis for the specified submissions.',
+                description: 'Get the result of an individual analysis for the specified submissions.',
                 inputs: inputFields,
                 buttonName: 'Analyze',
             },
