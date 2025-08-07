@@ -90,10 +90,10 @@ function analysisIndividual(submissions, overwriteRecords, waitForCompletion, dr
 
 export {
     analysisIndividual,
-    history,
     fetchCourseScores,
+    history,
     peek,
-    submit,
     proxyRegrade,
     proxyResubmit,
+    submit,
 }
