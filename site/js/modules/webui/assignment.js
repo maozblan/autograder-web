@@ -443,7 +443,7 @@ function handlerAnalysisIndividual(path, params, context, container) {
 
 function analysisIndividual(params, context, container, inputParams) {
     return Autograder.Submissions.analysisIndividual(
-            inputParams.submission, inputParams.overwrite,
+            inputParams.submissions, inputParams.overwrite,
             inputParams.wait, inputParams.dryRun,
         )
         .then(function(result) {
