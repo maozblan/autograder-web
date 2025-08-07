@@ -177,7 +177,7 @@ function makePage(
             input.classList.add("touched");
 
             let currentPageInput = undefined;
-            for (const pageInput of page.inputs) {
+            for (const pageInput of inputs) {
                 if (pageInput.name === input.name) {
                     currentPageInput = pageInput;
                     break;

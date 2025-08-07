@@ -36,6 +36,7 @@ const PATH_ANALYSIS_INDIVIDUAL = `${PATH_ASSIGNMENT}/analysis/individual`;
 const PATH_SERVER = 'server';
 const PATH_SERVER_CALL_API = `${PATH_SERVER}/call-api`;
 const PATH_SERVER_DOCS = `${PATH_SERVER}/docs`;
+const PATH_SERVER_USERS_LIST = `${PATH_SERVER}/users/list`;
 
 // The current hash/location we are routed to.
 // Should be prefixed with a hash symbol.
@@ -367,4 +368,5 @@ export {
     PATH_SERVER,
     PATH_SERVER_CALL_API,
     PATH_SERVER_DOCS,
+    PATH_SERVER_USERS_LIST,
 };
