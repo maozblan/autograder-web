@@ -76,11 +76,24 @@ function proxyResubmit(course, assignment, proxyEmail, proxyTime, targetSubmissi
     });
 }
 
+function remove(course, assignment, targetEmail, targetSubmission) {
+    return Core.sendRequest({
+        endpoint: 'courses/assignments/submissions/remove',
+        payload: {
+            'course-id': course,
+            'assignment-id': assignment,
+            'target-email': targetEmail,
+            'target-submission': targetSubmission,
+        },
+    });
+}
+
 export {
-    history,
     fetchCourseScores,
+    history,
     peek,
-    submit,
     proxyRegrade,
     proxyResubmit,
+    remove,
+    submit,
 }
