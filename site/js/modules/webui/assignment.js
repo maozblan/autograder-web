@@ -393,9 +393,7 @@ function proxyRegrade(params, context, container, inputParams) {
             inputParams.cutoff, inputParams.target, inputParams.wait
         )
         .then(function(result) {
-            return `
-                <pre><code class="code code-block" data-lang="json">${JSON.stringify(result, null, 4)}</code></pre>
-            `;
+            return Render.displayJSON(result);
         })
         .catch(function(message) {
             console.error(message);
