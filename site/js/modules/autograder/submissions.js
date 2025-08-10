@@ -76,6 +76,18 @@ function proxyResubmit(course, assignment, proxyEmail, proxyTime, targetSubmissi
     });
 }
 
+function analysisIndividual(submissions, overwriteRecords, waitForCompletion, dryRun) {
+    return Core.sendRequest({
+        endpoint: 'courses/assignments/submissions/analysis/individual',
+        payload: {
+            'dry-run': dryRun,
+            'overwrite-records': overwriteRecords,
+            'submissions': submissions,
+            'wait-for-completion': waitForCompletion,
+        }
+    });
+}
+
 function remove(course, assignment, targetEmail, targetSubmission) {
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/remove',
@@ -89,6 +101,7 @@ function remove(course, assignment, targetEmail, targetSubmission) {
 }
 
 export {
+    analysisIndividual,
     fetchCourseScores,
     history,
     peek,
