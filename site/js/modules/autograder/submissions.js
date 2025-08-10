@@ -88,7 +88,7 @@ function analysisIndividual(submissions, overwriteRecords, waitForCompletion, dr
     });
 }
 
-function remove(course, assignment, targetEmail, targetSubmission) {
+function remove(course, assignment, targetEmail = "", targetSubmission = "") {
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/remove',
         payload: {

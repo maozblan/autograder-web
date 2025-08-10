@@ -260,7 +260,7 @@ function handlerSubmissionRemove(path, params, context, container) {
 
     let inputFields = [
         new Input.FieldType(context, 'targetEmail', 'Target User Email', {
-            type: Input.INPUT_TYPE_EMAIL,
+            type: 'core.TargetCourseUserSelfOrGrader',
             placeholder: userEmail,
         }),
         new Input.FieldType(context, 'targetSubmission', 'Target Submission ID', {
