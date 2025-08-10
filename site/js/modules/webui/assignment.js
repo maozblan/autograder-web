@@ -12,6 +12,7 @@ function init() {
     Routing.addRoute(/^course\/assignment\/peek$/, handlerPeek, 'Assignment Peek', requirements);
     Routing.addRoute(/^course\/assignment\/history$/, handlerHistory, 'Assignment History', requirements);
     Routing.addRoute(/^course\/assignment\/submit$/, handlerSubmit, 'Assignment Submit', requirements);
+    Routing.addRoute(/^course\/assignment\/remove$/, handlerSubmissionRemove, 'Remove Submission', requirements);
     Routing.addRoute(/^course\/assignment\/fetch\/course\/scores$/, handlerFetchCourseScores, 'Fetch Course Assignment Scores', requirements);
     Routing.addRoute(/^course\/assignment\/proxy-regrade$/, handlerProxyRegrade, 'Assignment Proxy Regrade', requirements);
     Routing.addRoute(/^course\/assignment\/proxy-resubmit$/, handlerProxyResubmit, 'Assignment Proxy Resubmit', requirements);
@@ -83,6 +84,11 @@ function handlerAssignment(path, params, context, container) {
             'assignment-action',
             'Individual Analysis',
             Routing.formHashPath(Routing.PATH_ANALYSIS_INDIVIDUAL, args),
+        ),
+        Render.makeCardObject(
+            'assignment-action',
+            'Remove Submission',
+            Routing.formHashPath(Routing.PATH_SUBMIT_REMOVE, args),
         ),
     ];
 
@@ -241,6 +247,62 @@ function doSubmit(context, course, assignment, files, container) {
         })
         .catch(function(message) {
             container.innerHTML = Render.autograderError(message);
+        })
+    ;
+}
+
+function handlerSubmissionRemove(path, params, context, container) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+    let userEmail = context.user.email;
+
+    setAssignmentTitle(course, assignment);
+
+    let inputFields = [
+        new Input.FieldType(context, 'targetEmail', 'Target User Email', {
+            type: 'core.TargetCourseUserSelfOrGrader',
+            placeholder: userEmail,
+        }),
+        new Input.FieldType(context, 'targetSubmission', 'Target Submission ID', {
+            type: Input.INPUT_TYPE_STRING,
+        }),
+    ];
+
+    Render.makePage(
+            params, context, container, removeSubmission, {
+                header: 'Remove Assignment Submission',
+                description: 'Remove a specified submission. Defaults to the most recent submission.',
+                inputs: inputFields,
+                buttonName: 'Remove Submission'
+            }
+        )
+    ;
+}
+
+function removeSubmission(params, context, container, inputParams) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+
+    return Autograder.Submissions.remove(
+            course.id, assignment.id,
+            inputParams.targetEmail, inputParams.targetSubmission,
+        )
+        .then(function(result) {
+            let html = "";
+
+            if (!result['found-user']) {
+                html = `<p>Could not find user.</p>`;
+            } else if (!result['found-submission']) {
+                html = `<p>Could not find submission.</p>`;
+            } else {
+                html = `<p>Submission removed successfully.</p>`;
+            }
+
+            return html;
+        })
+        .catch(function(message) {
+            console.error(message);
+            return message;
         })
     ;
 }

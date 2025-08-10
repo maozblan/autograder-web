@@ -88,6 +88,18 @@ function analysisIndividual(submissions, overwriteRecords, waitForCompletion, dr
     });
 }
 
+function remove(course, assignment, targetEmail = "", targetSubmission = "") {
+    return Core.sendRequest({
+        endpoint: 'courses/assignments/submissions/remove',
+        payload: {
+            'course-id': course,
+            'assignment-id': assignment,
+            'target-email': targetEmail,
+            'target-submission': targetSubmission,
+        },
+    });
+}
+
 export {
     analysisIndividual,
     fetchCourseScores,
@@ -95,5 +107,6 @@ export {
     peek,
     proxyRegrade,
     proxyResubmit,
+    remove,
     submit,
 }
