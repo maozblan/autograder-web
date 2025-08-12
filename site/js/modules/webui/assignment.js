@@ -199,7 +199,7 @@ function handlerUserHistory(path, params, context, container) {
             params, context, container, history,
             {
                 header: 'Fetch User Submission History',
-                description: 'Get a summary of the submissions for this assignment.',
+                description: 'Fetch a summary of the submissions for this assignment.',
                 inputs: inputFields,
                 buttonName: 'Fetch',
             },
@@ -211,12 +211,14 @@ function history(params, context, container, inputParams) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    return Autograder.Submissions.history(course.id, assignment.id, inputParams.targetUser)
+    let targetEmail = inputParams.targetUser ?? context.user.email;
+
+    return Autograder.Submissions.history(course.id, assignment.id, targetEmail)
         .then(function(result) {
             let html = "";
 
             if (!result['found-user']) {
-                html = `<p>Could not find user: '${inputParams.targetUser ?? context.user.name}'.</p>`;
+                html = `<p>Could not find user: '${targetEmail}'.</p>`;
             } else {
                 html = Render.submissionHistory(course, assignment, result['history']);
             }
