@@ -88,6 +88,18 @@ function analysisIndividual(submissions, overwriteRecords, waitForCompletion, dr
     });
 }
 
+function analysisPairwise(submissions, overwriteRecords, waitForCompletion, dryRun) {
+    return Core.sendRequest({
+        endpoint: 'courses/assignments/submissions/analysis/pairwise',
+        payload: {
+            'dry-run': dryRun,
+            'overwrite-records': overwriteRecords,
+            'submissions': submissions,
+            'wait-for-completion': waitForCompletion,
+        }
+    });
+}
+
 function remove(course, assignment, targetEmail = "", targetSubmission = "") {
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/remove',
@@ -102,6 +114,7 @@ function remove(course, assignment, targetEmail = "", targetSubmission = "") {
 
 export {
     analysisIndividual,
+    analysisPairwise,
     fetchCourseScores,
     history,
     peek,
