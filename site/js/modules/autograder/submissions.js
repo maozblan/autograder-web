@@ -1,12 +1,18 @@
 import * as Core from './core.js'
 
-function history(course, assignment) {
+function history(course, assignment, targetEmail = undefined) {
+    let args = {
+        'course-id': course,
+        'assignment-id': assignment,
+    }
+
+    if (targetEmail) {
+        args['target-email'] = targetEmail;
+    }
+
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/fetch/user/history',
-        payload: {
-            'course-id': course,
-            'assignment-id': assignment,
-        },
+        payload: args,
     });
 }
 

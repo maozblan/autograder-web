@@ -18,6 +18,7 @@ function init() {
     Routing.addRoute(/^course\/assignment\/proxy-resubmit$/, handlerProxyResubmit, 'Assignment Proxy Resubmit', requirements);
     Routing.addRoute(/^course\/assignment\/analysis\/individual$/, handlerAnalysisIndividual, 'Assignment Individual Analysis', requirements);
     Routing.addRoute(/^course\/assignment\/analysis\/pairwise$/, handlerAnalysisPairwise, 'Assignment Pairwise Analysis', requirements);
+    Routing.addRoute(/^course\/assignment\/user\/history$/, handlerUserHistory, 'User Assignment History', requirements);
 }
 
 function setAssignmentTitle(course, assignment) {
@@ -95,6 +96,11 @@ function handlerAssignment(path, params, context, container) {
             'assignment-action',
             'Remove Submission',
             Routing.formHashPath(Routing.PATH_SUBMIT_REMOVE, args),
+        ),
+        Render.makeCardObject(
+            'assignment-action',
+            'View User History',
+            Routing.formHashPath(Routing.PATH_USER_HISTORY, args),
         ),
     ];
 
@@ -176,16 +182,43 @@ function handlerHistory(path, params, context, container) {
     ;
 }
 
+function handlerUserHistory(path, params, context, container) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+
+    setAssignmentTitle(course, assignment);
+
+    let inputFields = [
+        new Input.FieldType(context, 'targetUser', 'Target User', {
+            type: 'core.TargetCourseUserSelfOrGrader',
+            placeholder: context.user.email,
+        }),
+    ];
+
+    Render.makePage(
+            params, context, container, history,
+            {
+                header: 'Fetch User Submission History',
+                description: 'Fetch a summary of the submissions for this assignment.',
+                inputs: inputFields,
+                buttonName: 'Fetch',
+            },
+        )
+    ;
+}
+
 function history(params, context, container, inputParams) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    return Autograder.Submissions.history(course.id, assignment.id)
+    let targetEmail = inputParams.targetUser ?? context.user.email;
+
+    return Autograder.Submissions.history(course.id, assignment.id, targetEmail)
         .then(function(result) {
             let html = "";
 
             if (!result['found-user']) {
-                html = `<p>Could not find user: '${context.user.name}'.</p>`;
+                html = `<p>Could not find user: '${targetEmail}'.</p>`;
             } else {
                 html = Render.submissionHistory(course, assignment, result['history']);
             }
