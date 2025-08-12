@@ -17,6 +17,7 @@ function init() {
     Routing.addRoute(/^course\/assignment\/proxy-regrade$/, handlerProxyRegrade, 'Assignment Proxy Regrade', requirements);
     Routing.addRoute(/^course\/assignment\/proxy-resubmit$/, handlerProxyResubmit, 'Assignment Proxy Resubmit', requirements);
     Routing.addRoute(/^course\/assignment\/analysis\/individual$/, handlerAnalysisIndividual, 'Assignment Individual Analysis', requirements);
+    Routing.addRoute(/^course\/assignment\/analysis\/pairwise$/, handlerAnalysisPairwise, 'Assignment Pairwise Analysis', requirements);
 }
 
 function setAssignmentTitle(course, assignment) {
@@ -84,6 +85,11 @@ function handlerAssignment(path, params, context, container) {
             'assignment-action',
             'Individual Analysis',
             Routing.formHashPath(Routing.PATH_ANALYSIS_INDIVIDUAL, args),
+        ),
+        Render.makeCardObject(
+            'assignment-action',
+            'Pairwise Analysis',
+            Routing.formHashPath(Routing.PATH_ANALYSIS_PAIRWISE, args),
         ),
         Render.makeCardObject(
             'assignment-action',
@@ -505,6 +511,55 @@ function handlerAnalysisIndividual(path, params, context, container) {
 
 function analysisIndividual(params, context, container, inputParams) {
     return Autograder.Submissions.analysisIndividual(
+            inputParams.submissions, inputParams.overwrite,
+            inputParams.wait, inputParams.dryRun,
+        )
+        .then(function(result) {
+            return Render.displayJSON(result);
+        })
+        .catch(function(message) {
+            console.error(message);
+            return message;
+        })
+    ;
+}
+
+function handlerAnalysisPairwise(path, params, context, container) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+
+    setAssignmentTitle(course, assignment);
+
+    let inputFields = [
+        new Input.FieldType(context, 'submissions', 'List of Submission IDs', {
+            type: '[]string',
+            required: true,
+        }),
+        new Input.FieldType(context, 'wait', 'Wait for Completion', {
+            type: Input.INPUT_TYPE_BOOL,
+        }),
+        new Input.FieldType(context, 'overwrite', 'Overwrite Records', {
+            type: Input.INPUT_TYPE_BOOL,
+        }),
+        new Input.FieldType(context, 'dryRun', 'Dry Run', {
+            type: Input.INPUT_TYPE_BOOL,
+        }),
+    ];
+
+    Render.makePage(
+            params, context, container, analysisPairwise,
+            {
+                header: 'Pairwise Analysis',
+                description: 'Get the result of a pairwise analysis for the specified submissions.',
+                inputs: inputFields,
+                buttonName: 'Analyze',
+            },
+        )
+    ;
+}
+
+function analysisPairwise(params, context, container, inputParams) {
+    return Autograder.Submissions.analysisPairwise(
             inputParams.submissions, inputParams.overwrite,
             inputParams.wait, inputParams.dryRun,
         )

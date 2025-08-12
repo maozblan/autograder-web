@@ -33,6 +33,7 @@ const PATH_HISTORY = `${PATH_ASSIGNMENT}/history`;
 const PATH_PROXY_REGRADE = `${PATH_ASSIGNMENT}/proxy-regrade`;
 const PATH_PROXY_RESUBMIT = `${PATH_ASSIGNMENT}/proxy-resubmit`;
 const PATH_ANALYSIS_INDIVIDUAL = `${PATH_ASSIGNMENT}/analysis/individual`;
+const PATH_ANALYSIS_PAIRWISE = `${PATH_ASSIGNMENT}/analysis/pairwise`;
 
 const PATH_SERVER = 'server';
 const PATH_SERVER_CALL_API = `${PATH_SERVER}/call-api`;
@@ -357,6 +358,7 @@ export {
 
     PATH_COURSE,
     PATH_ANALYSIS_INDIVIDUAL,
+    PATH_ANALYSIS_PAIRWISE,
     PATH_ASSIGNMENT,
     PATH_ASSIGNMENT_FETCH_COURSE_SCORES,
     PATH_EMAIL,
