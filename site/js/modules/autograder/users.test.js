@@ -1,4 +1,4 @@
-import * as Users from './users.js'
+import * as Users from './users.js';
 
 test("listServerUsers base", function() {
     const expected = {
@@ -88,13 +88,6 @@ const serverUsers = [
                 "role": "student",
             },
         },
-    },
-    {
-        "type": "server",
-        "email": "root",
-        "name": "root",
-        "role": "root",
-        "courses": {},
     },
     {
         "type": "server",
