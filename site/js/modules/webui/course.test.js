@@ -39,19 +39,11 @@ test("Nav Course101", async function() {
 test('Course Users List', async function() {
     Base.init(false);
 
+    let targetCourse = 'course101';
     await TestUtil.loginUser('course-admin');
+    await navigateToCourseAction(targetCourse, Routing.PATH_COURSE_USERS_LIST);
 
-    let pathComponents = {
-        'path': Routing.PATH_COURSE_USERS_LIST,
-        'params': {
-            [Routing.PARAM_COURSE]: 'course101',
-        },
-    };
-
-    let coursesRenderedPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, pathComponents);
-
-    Routing.routeComponents(pathComponents);
-    await coursesRenderedPromise;
+    TestUtil.checkPageBasics(targetCourse, 'users');
 
     document.querySelector('.input-field[data-name="target-users"] input').value = '["student", "admin"]';
 
@@ -64,23 +56,42 @@ test('Course Users List', async function() {
     expect(userCount).toEqual(2);
 });
 
+test('Nav Homework 0', async function() {
+    Base.init(false);
+
+    await TestUtil.loginUser('course-student');
+
+    let targetCourse = 'course101';
+    let targetAssignment = 'hw0';
+    await navigateToAssignment(targetCourse, targetAssignment);
+
+    TestUtil.checkPageBasics(targetAssignment, 'assignment');
+
+    const expectedLabelNames = [
+        'Fetch Course Scores',
+        'Individual Analysis',
+        'Pairwise Analysis',
+        'Peek a Previous Submission',
+        'Proxy Regrade',
+        'Proxy Resubmit',
+        'Remove Submission',
+        'Submit',
+        'View Submission History',
+        'View User History',
+    ];
+    TestUtil.checkCards(expectedLabelNames);
+});
+
 test('Individual Analysis', async function() {
     Base.init(false);
 
     await TestUtil.loginUser('course-admin');
 
-    let pathComponents = {
-        'path': Routing.PATH_ANALYSIS_INDIVIDUAL,
-        'params': {
-            [Routing.PARAM_COURSE]: 'course101',
-            [Routing.PARAM_ASSIGNMENT]: 'hw0',
-        },
-    };
+    let targetCourse = 'course101';
+    let targetAssignment = 'hw0';
+    await navigateToAssignmentAction(targetCourse, targetAssignment, Routing.PATH_ANALYSIS_INDIVIDUAL);
 
-    let loadWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE);
-
-    Routing.routeComponents(pathComponents);
-    await loadWaitPromise;
+    TestUtil.checkPageBasics(targetAssignment, 'assignment individual analysis');
 
     document.querySelector('.input-field[data-name="submissions"] input').value = JSON.stringify([
             "course101::hw0::course-student@test.edulinq.org::1697406256",
@@ -102,18 +113,11 @@ test('Pairwise Analysis', async function() {
 
     await TestUtil.loginUser('course-admin');
 
-    let pathComponents = {
-        'path': Routing.PATH_ANALYSIS_PAIRWISE,
-        'params': {
-            [Routing.PARAM_COURSE]: 'course101',
-            [Routing.PARAM_ASSIGNMENT]: 'hw0',
-        },
-    };
+    let targetCourse = 'course101';
+    let targetAssignment = 'hw0';
+    await navigateToAssignmentAction(targetCourse, targetAssignment, Routing.PATH_ANALYSIS_PAIRWISE);
 
-    let loadWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE);
-
-    Routing.routeComponents(pathComponents);
-    await loadWaitPromise;
+    TestUtil.checkPageBasics(targetAssignment, 'assignment pairwise analysis');
 
     document.querySelector('.input-field[data-name="submissions"] input').value = JSON.stringify([
             "course101::hw0::course-student@test.edulinq.org::1697406256",
@@ -135,18 +139,11 @@ test('Fetch Course Scores', async function() {
 
     await TestUtil.loginUser('course-admin');
 
-    let pathComponents = {
-        'path': Routing.PATH_ASSIGNMENT_FETCH_COURSE_SCORES,
-        'params': {
-            [Routing.PARAM_COURSE]: 'course101',
-            [Routing.PARAM_ASSIGNMENT]: 'hw0',
-        },
-    };
+    let targetCourse = 'course101';
+    let targetAssignment = 'hw0';
+    await navigateToAssignmentAction(targetCourse, targetAssignment, Routing.PATH_ASSIGNMENT_FETCH_COURSE_SCORES);
 
-    let loadWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE);
-
-    Routing.routeComponents(pathComponents);
-    await loadWaitPromise;
+    TestUtil.checkPageBasics(targetAssignment, 'fetch course assignment scores');
 
     document.querySelector('.input-field[data-name="target-users"] input').value = '["student"]';
 
@@ -163,18 +160,11 @@ test('Fetch User History', async function() {
 
     await TestUtil.loginUser('course-admin');
 
-    let pathComponents = {
-        'path': Routing.PATH_USER_HISTORY,
-        'params': {
-            [Routing.PARAM_COURSE]: 'course101',
-            [Routing.PARAM_ASSIGNMENT]: 'hw0',
-        },
-    };
+    let targetCourse = 'course101';
+    let targetAssignment = 'hw0';
+    await navigateToAssignmentAction(targetCourse, targetAssignment, Routing.PATH_USER_HISTORY);
 
-    let loadWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE);
-
-    Routing.routeComponents(pathComponents);
-    await loadWaitPromise;
+    TestUtil.checkPageBasics(targetAssignment, 'user assignment history');
 
     document.querySelector('.input-field[data-name="targetUser"] input').value = 'course-student@test.edulinq.org';
 
@@ -202,6 +192,50 @@ async function navigateToCourse(courseId) {
     let pathComponents = {
         'path': Routing.PATH_COURSE,
         'params': {
+            [Routing.PARAM_COURSE]: courseId,
+        },
+    };
+
+    let courseRenderedPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, pathComponents);
+
+    Routing.routeComponents(pathComponents);
+    await courseRenderedPromise;
+}
+
+async function navigateToCourseAction(courseId, actionPath) {
+    let pathComponents = {
+        'path': actionPath,
+        'params': {
+            [Routing.PARAM_COURSE]: courseId,
+        },
+    };
+
+    let courseRenderedPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, pathComponents);
+
+    Routing.routeComponents(pathComponents);
+    await courseRenderedPromise;
+}
+
+async function navigateToAssignment(courseId, assignmentId) {
+    let pathComponents = {
+        'path': Routing.PATH_ASSIGNMENT,
+        'params': {
+            [Routing.PARAM_ASSIGNMENT]: assignmentId,
+            [Routing.PARAM_COURSE]: courseId,
+        },
+    };
+
+    let courseRenderedPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, pathComponents);
+
+    Routing.routeComponents(pathComponents);
+    await courseRenderedPromise;
+}
+
+async function navigateToAssignmentAction(courseId, assignmentId, actionPath) {
+    let pathComponents = {
+        'path': actionPath,
+        'params': {
+            [Routing.PARAM_ASSIGNMENT]: assignmentId,
             [Routing.PARAM_COURSE]: courseId,
         },
     };
