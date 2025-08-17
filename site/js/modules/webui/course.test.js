@@ -36,6 +36,34 @@ test("Nav Course101", async function() {
     TestUtil.checkCards(expectedLabelNames);
 });
 
+test('Course Users List', async function() {
+    Base.init(false);
+
+    await TestUtil.loginUser('course-admin');
+
+    let pathComponents = {
+        'path': Routing.PATH_COURSE_USERS_LIST,
+        'params': {
+            [Routing.PARAM_COURSE]: 'course101',
+        },
+    };
+
+    let coursesRenderedPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, pathComponents);
+
+    Routing.routeComponents(pathComponents);
+    await coursesRenderedPromise;
+
+    document.querySelector('.input-field[data-name="target-users"] input').value = '["student", "admin"]';
+
+    let resultWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_TEMPLATE_RESULT_COMPLETE);
+    document.querySelector('.template-button').click();
+    await resultWaitPromise;
+
+    let results = document.querySelector('.results-area').innerHTML;
+    let userCount = results.matchAll('Email:').toArray().length;
+    expect(userCount).toEqual(2);
+});
+
 async function navigateToEnrolledCourses() {
     let pathComponents = {
         'path': Routing.PATH_COURSES,
