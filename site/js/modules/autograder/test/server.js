@@ -12,6 +12,10 @@ const DEFAULT_ID_CLEARTEXT = 'server-admin';
 
 global.URL = url.URL;
 
+global.alert = function(message) {
+    console.log(`ALERT: ${message}`);
+}
+
 // Mock fetch to use our test data.
 global.fetch = function(url, options = {}) {
     let endpoint = url.replace(/^\/api\/v\d+\//, '');
