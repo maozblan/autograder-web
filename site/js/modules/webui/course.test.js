@@ -158,6 +158,35 @@ test('Fetch Course Scores', async function() {
     expect(results).toMatch('course101::hw0::course-student@test.edulinq.org::1697406272');
 });
 
+test('Fetch User History', async function() {
+    Base.init(false);
+
+    await TestUtil.loginUser('course-admin');
+
+    let pathComponents = {
+        'path': Routing.PATH_USER_HISTORY,
+        'params': {
+            [Routing.PARAM_COURSE]: 'course101',
+            [Routing.PARAM_ASSIGNMENT]: 'hw0',
+        },
+    };
+
+    let loadWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE);
+
+    Routing.routeComponents(pathComponents);
+    await loadWaitPromise;
+
+    document.querySelector('.input-field[data-name="targetUser"] input').value = 'course-student@test.edulinq.org';
+
+    let resultWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_TEMPLATE_RESULT_COMPLETE);
+    document.querySelector('.template-button').click();
+    await resultWaitPromise;
+
+    let results = document.querySelector('.results-area').innerHTML;
+    let tableRows = results.matchAll('<tr>').toArray().length;
+    expect(tableRows).toEqual(4);
+});
+
 async function navigateToEnrolledCourses() {
     let pathComponents = {
         'path': Routing.PATH_COURSES,
