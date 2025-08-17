@@ -64,6 +64,39 @@ test('Course Users List', async function() {
     expect(userCount).toEqual(2);
 });
 
+test('Individual Analysis', async function() {
+    Base.init(false);
+
+    await TestUtil.loginUser('course-admin');
+
+    let pathComponents = {
+        'path': Routing.PATH_ANALYSIS_INDIVIDUAL,
+        'params': {
+            [Routing.PARAM_COURSE]: 'course101',
+            [Routing.PARAM_ASSIGNMENT]: 'hw0',
+        },
+    };
+
+    let loadWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE);
+
+    Routing.routeComponents(pathComponents);
+    await loadWaitPromise;
+
+    document.querySelector('.input-field[data-name="submissions"] input').value = JSON.stringify([
+            "course101::hw0::course-student@test.edulinq.org::1697406256",
+            "course101::hw0::course-student@test.edulinq.org::1697406265",
+        ])
+    ;
+
+    let resultWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_TEMPLATE_RESULT_COMPLETE);
+    document.querySelector('.template-button').click();
+    await resultWaitPromise;
+
+    let results = document.querySelector('.results-area').innerHTML;
+    expect(results).toMatch(/"complete": false/);
+    expect(results).toMatch(/"pending-count": 2/);
+});
+
 async function navigateToEnrolledCourses() {
     let pathComponents = {
         'path': Routing.PATH_COURSES,

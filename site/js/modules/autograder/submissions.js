@@ -82,7 +82,7 @@ function proxyResubmit(course, assignment, proxyEmail, proxyTime, targetSubmissi
     });
 }
 
-function analysisIndividual(submissions, overwriteRecords, waitForCompletion, dryRun) {
+function analysisIndividual(submissions, overwriteRecords = false, waitForCompletion = false, dryRun = false) {
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/analysis/individual',
         payload: {
