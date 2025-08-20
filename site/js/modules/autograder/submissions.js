@@ -54,7 +54,10 @@ function fetchCourseScores(course, assignment, targetUsers = []) {
     });
 }
 
-function proxyRegrade(course, assignment, dryRun, overwriteRecords, regradeCutoff, targetUsers, waitForCompletion) {
+function proxyRegrade(
+        course, assignment, dryRun = false, overwriteRecords = false,
+        regradeCutoff, targetUsers, waitForCompletion = false,
+    ) {
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/proxy/regrade',
         payload: {

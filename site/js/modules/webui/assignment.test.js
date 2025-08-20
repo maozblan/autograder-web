@@ -124,6 +124,55 @@ test('Fetch User History', async function() {
     expect(tableRows).toEqual(4);
 });
 
+test('Proxy Regrade', async function() {
+	Base.init(false);
+
+    await TestUtil.loginUser('course-admin');
+
+    let targetCourse = 'course101';
+    let targetAssignment = 'hw0';
+    await navigateToAssignmentAction(targetCourse, targetAssignment, Routing.PATH_PROXY_REGRADE);
+
+    TestUtil.checkPageBasics(targetAssignment, 'assignment proxy regrade');
+
+    document.querySelector('.input-field[data-name="users"] input').value = JSON.stringify([
+            "*",
+            "-course-admin@test.edulinq.org",
+        ])
+    ;
+
+    let resultWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_TEMPLATE_RESULT_COMPLETE);
+    document.querySelector('.template-button').click();
+    await resultWaitPromise;
+
+    let results = document.querySelector('.results-area code').innerHTML;
+    let output = JSON.parse(results);
+    expect(output['resolved-users'].length).toEqual(4);
+});
+
+test('Proxy Resubmit', async function() {
+	Base.init(false);
+
+    await TestUtil.loginUser('course-admin');
+
+    let targetCourse = 'course101';
+    let targetAssignment = 'hw0';
+    await navigateToAssignmentAction(targetCourse, targetAssignment, Routing.PATH_PROXY_RESUBMIT);
+
+    TestUtil.checkPageBasics(targetAssignment, 'assignment proxy resubmit');
+
+    document.querySelector('.input-field[data-name="email"] input').value = 'course-student@test.edulinq.org';
+
+    let resultWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_TEMPLATE_RESULT_COMPLETE);
+    document.querySelector('.template-button').click();
+    await resultWaitPromise;
+
+    let results = document.querySelector('.results-area').innerHTML;
+    expect(results).toMatch(targetCourse);
+    expect(results).toMatch(targetAssignment);
+    expect(results).toMatch('course-student@test.edulinq.org');
+});
+
 async function navigateToAssignment(courseId, assignmentId) {
     let pathComponents = {
         'path': Routing.PATH_ASSIGNMENT,

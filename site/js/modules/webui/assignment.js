@@ -403,7 +403,6 @@ function handlerProxyRegrade(path, params, context, container) {
         }),
         new Input.FieldType(context, 'users', 'Target Users', {
             type: Input.COURSE_USER_REFERENCE_LIST_FIELD_TYPE,
-            required: true,
         }),
         new Input.FieldType(context, 'wait', 'Wait for Completion', {
             type: Input.INPUT_TYPE_BOOL,
@@ -414,7 +413,7 @@ function handlerProxyRegrade(path, params, context, container) {
             params, context, container, proxyRegrade,
             {
                 header: 'Proxy Regrade',
-                description: 'Proxy regrade an assignment for all target users using their most recent submission.',
+                description: 'Proxy regrade an assignment for all target users using their most recent submission. (Defaults to all users in course.)',
                 inputs: inputFields,
                 buttonName: 'Regrade',
             },
@@ -429,7 +428,7 @@ function proxyRegrade(params, context, container, inputParams) {
     return Autograder.Submissions.proxyRegrade(
             course.id, assignment.id,
             inputParams.dryRun, inputParams.overwrite,
-            inputParams.cutoff, inputParams.target, inputParams.wait
+            inputParams.cutoff, inputParams.users, inputParams.wait
         )
         .then(function(result) {
             return Render.displayJSON(result);
@@ -493,6 +492,7 @@ function proxyResubmit(params, context, container, inputParams) {
 }
 
 function getSubmissionResultHTML(course, assignment, result) {
+    console.log(result);
     if (result.rejected) {
         return `
             <h3>Submission Rejected</h3>
