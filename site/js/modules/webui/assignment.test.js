@@ -6,7 +6,7 @@ import * as Event from './event.js';
 import * as Routing from './routing.js';
 import * as TestUtil from './test/util.js';
 
-test('Submit testing', async function() {
+test('Submit', async function() {
     Base.init(false);
 
     const fileContent = fs.readFileSync(path.join('site', 'js', 'modules', 'autograder', 'test', 'data', 'hw0_solution.py'), 'utf8');

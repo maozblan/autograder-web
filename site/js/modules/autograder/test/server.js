@@ -20,7 +20,12 @@ global.fetch = function(url, options = {}) {
     // Create arguments by lexicographically traversing the content.
     let args = {};
     for (const key of Object.keys(content).sort()) {
-        args[key] = content[key]
+        args[key] = content[key];
+
+        // Capitalize Course ID to match test data format.
+        if (key === 'course-id') {
+            args[key] = args[key].toUpperCase();
+        }
     }
 
     let files = [];
