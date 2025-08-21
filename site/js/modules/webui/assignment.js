@@ -266,17 +266,34 @@ function handlerSubmit(path, params, context, container) {
     });
 
     button.addEventListener('click', function() {
-        doSubmit(context, course, assignment, input.files, results);
+        let files = [];
+        for (const file of input.files) {
+            files.push(file);
+        }
+
+        if (input['__test-files']) {
+            for (const file of input['__test-files']) {
+                files.push(file);
+            }
+        }
+
+        doSubmit(context, course, assignment, files, results);
     });
 }
 
 function doSubmit(context, course, assignment, files, container) {
+    console.log('entered dosubmit');
     if (files.length < 1) {
         container.innerHTML = `
             <p>No submission files provided.</p>
         `;
         return;
     }
+
+    for (const file of files) {
+        console.log(file.name);
+    }
+
 
     Routing.loadingStart(container);
 

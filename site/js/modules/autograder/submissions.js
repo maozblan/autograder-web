@@ -39,6 +39,8 @@ function submit(course, assignment, files) {
         payload: {
             'course-id': course,
             'assignment-id': assignment,
+            // TESTING ONLY DO NOT COMMIT
+            'allow-late': false,
         },
     });
 }

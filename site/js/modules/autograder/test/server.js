@@ -23,10 +23,19 @@ global.fetch = function(url, options = {}) {
         args[key] = content[key]
     }
 
+    let files = [];
+    for (const key of options?.body.keys()) {
+        if (key === "content") {
+            continue;
+        }
+
+        files.push(`__DATA_DIR__(${key})`);
+    }
+
     let keyData = {
         'arguments': args,
         'endpoint': endpoint,
-        'files': [],
+        'files': files,
     };
     let key = JSON.stringify(keyData);
 
