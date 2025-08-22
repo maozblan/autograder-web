@@ -6,7 +6,7 @@ import * as Event from './event.js';
 import * as Routing from './routing.js';
 import * as TestUtil from './test/util.js';
 
-test('Submit', async function() {
+test('Submit Assignment', async function() {
     Base.init(false);
 
     const fileContent = fs.readFileSync(path.join('site', 'js', 'modules', 'autograder', 'test', 'data', 'hw0_solution.py'), 'utf8');
@@ -24,20 +24,21 @@ test('Submit', async function() {
         },
     };
 
-    let courseRenderedPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, pathComponents);
+    let loadWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, pathComponents);
 
     Routing.routeComponents(pathComponents);
-    await courseRenderedPromise;
+    await loadWaitPromise;
 
     TestUtil.checkPageBasics(targetAssignment, 'assignment submit');
-    
-    document.querySelector('input[type="file"]')['__test-files'] = [fileObj];
+
+    document.querySelector('div[data-name="files"] input')['__test-files'] = [fileObj];
 
     let resultWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_TEMPLATE_RESULT_COMPLETE);
-    document.querySelector('.submit-controls button').disabled = false;
-    document.querySelector('.submit-controls button').click();
+    document.querySelector('.template-button').click();
     await resultWaitPromise;
 
-    let results = document.querySelector('.submit-results').innerHTML;
-    console.log(results);
+    let results = document.querySelector('.results-area').innerHTML;
+    expect(results).toMatch(targetCourse);
+    expect(results).toMatch(targetAssignment);
+    expect(results).toMatch('Score');
 });

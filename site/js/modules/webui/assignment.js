@@ -238,71 +238,43 @@ function handlerSubmit(path, params, context, container) {
 
     setAssignmentTitle(course, assignment);
 
-    container.innerHTML = `
-        <div class='submit'>
-            <div class='submit-controls page-controls'>
-                <button disabled>Submit</button>
-                <div>
-                    <label for='files'>Files:</label>
-                    <input type='file' multiple='true' name='files' placeholder='Submission Files' />
-                </div>
-            </div>
-            <div class='submit-results'>
-            </div>
-        </div>
-    `;
+    let inputFields = [
+        new Input.FieldType(context, 'files', 'Files', {
+            type: Input.INPUT_TYPE_FILE,
+            required: true,
+            placeholder: 'Submission Files',
+            additionalAttributes: 'multiple="true"'
+        }),
+        new Input.FieldType(context, 'message', 'Message', {
+            type: Input.INPUT_TYPE_STRING,
+        }),
+        new Input.FieldType(context, 'allowLate', 'Allow Late', {
+            type: Input.INPUT_TYPE_BOOL,
+        }),
+    ];
 
-    let button = container.querySelector('.submit-controls button');
-    let input = container.querySelector('.submit-controls input');
-    let results = container.querySelector('.submit-results');
-
-    // Enable the button if there are files.
-    input.addEventListener('change', function(event) {
-        if (input.files) {
-            button.disabled = false;
-        } else {
-            button.disabled = true;
-        }
-    });
-
-    button.addEventListener('click', function() {
-        let files = [];
-        for (const file of input.files) {
-            files.push(file);
-        }
-
-        if (input['__test-files']) {
-            for (const file of input['__test-files']) {
-                files.push(file);
+    Render.makePage(
+            params, context, container, doSubmit,
+            {
+                header: 'Submit Assignment',
+                inputs: inputFields,
+                buttonName: 'Submit',
             }
-        }
-
-        doSubmit(context, course, assignment, files, results);
-    });
+        )
+    ;
 }
 
-function doSubmit(context, course, assignment, files, container) {
-    console.log('entered dosubmit');
-    if (files.length < 1) {
-        container.innerHTML = `
-            <p>No submission files provided.</p>
-        `;
-        return;
-    }
+function doSubmit(params, context, container, inputParams) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    for (const file of files) {
-        console.log(file.name);
-    }
-
-
-    Routing.loadingStart(container);
-
-    Autograder.Submissions.submit(course.id, assignment.id, files)
+    return Autograder.Submissions.submit(course.id, assignment.id, inputParams.files, inputParams.allowLate, inputParams.message)
         .then(function(result) {
-            container.innerHTML = getSubmissionResultHTML(course, assignment, result);
+            return getSubmissionResultHTML(course, assignment, result);
         })
         .catch(function(message) {
-            container.innerHTML = Render.autograderError(message);
+            console.error(message);
+            return message;
         })
     ;
 }

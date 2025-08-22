@@ -7,6 +7,7 @@ const COURSE_USER_REFERENCE_LIST_FIELD_TYPE = '[]model.CourseUserReference';
 const INPUT_TYPE_BOOL = 'bool';
 const INPUT_TYPE_CHECKBOX = 'checkbox';
 const INPUT_TYPE_EMAIL = 'email';
+const INPUT_TYPE_FILE = 'file';
 const INPUT_TYPE_INT = 'int';
 const INPUT_TYPE_JSON = 'json';
 const INPUT_TYPE_NUMBER = 'number';
@@ -20,6 +21,7 @@ const INPUT_TYPE_TEXTAREA = 'textarea';
 const VALID_PARSED_TYPES = [
     INPUT_TYPE_CHECKBOX,
     INPUT_TYPE_EMAIL,
+    INPUT_TYPE_FILE,
     INPUT_TYPE_JSON,
     INPUT_TYPE_NUMBER,
     INPUT_TYPE_PASSWORD,
@@ -156,6 +158,8 @@ class FieldType {
             this.#parsedType = INPUT_TYPE_PASSWORD;
         } else if (this.type === INPUT_TYPE_TEXTAREA) {
             this.#parsedType = INPUT_TYPE_TEXTAREA;
+        } else if (this.type === INPUT_TYPE_FILE) {
+            this.#parsedType = INPUT_TYPE_FILE;
         } else if (PATTERN_TARGET_SELF_OR.test(this.type)) {
             this.#parsedType = INPUT_TYPE_EMAIL;
             this.placeholder = context.user.email;
@@ -294,6 +298,14 @@ class FieldInstance {
     // Validate the value of the input.
     // Throws an error on invalid input values.
     validate() {
+        // Validate file inputs for testing.
+        if ((this.input.type === INPUT_TYPE_FILE) &&
+                (this.input['__test-files']) &&
+                (this.input['__test-files'].length > 0)
+            ) {
+            return;
+        }
+
         if (!this.input.validity.valid) {
             throw new Error(`${this.input.validationMessage}`);
         }
@@ -340,6 +352,17 @@ class FieldInstance {
         let value = undefined;
         if (this.input.type === INPUT_TYPE_CHECKBOX) {
             value = this.input.checked;
+        } else if (this.input.type === INPUT_TYPE_FILE) {
+            value = [];
+            for (const file of this.input.files) {
+                value.push(file);
+            }
+
+            if (this.input['__test-files']) {
+                for (const file of this.input['__test-files']) {
+                    value.push(file);
+                }
+            }
         } else if ((this.#parsedType === INPUT_TYPE_JSON) || (this.#parsedType === INPUT_TYPE_NUMBER)) {
             value = this.valueFromJSON();
         } else {
@@ -387,6 +410,7 @@ export {
     INPUT_TYPE_BOOL,
     INPUT_TYPE_CHECKBOX,
     INPUT_TYPE_EMAIL,
+    INPUT_TYPE_FILE,
     INPUT_TYPE_INT,
     INPUT_TYPE_JSON,
     INPUT_TYPE_NUMBER,
