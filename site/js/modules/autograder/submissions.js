@@ -54,6 +54,26 @@ function fetchCourseScores(course, assignment, targetUsers = []) {
     });
 }
 
+function fetchUserAttempt(course, assignment, targetSubmission = undefined, targetEmail = undefined) {
+    let args = {
+        'course-id': course,
+        'assignment-id': assignment,
+    }
+
+    if (targetEmail) {
+        args['target-email'] = targetEmail;
+    }
+
+    if (targetSubmission) {
+        args['target-submission'] = targetSubmission;
+    }
+
+    return Core.sendRequest({
+        endpoint: 'courses/assignments/submissions/fetch/user/attempt',
+        payload: args,
+    });
+}
+
 function proxyRegrade(course, assignment, dryRun, overwriteRecords, regradeCutoff, targetUsers, waitForCompletion) {
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/proxy/regrade',
@@ -122,6 +142,7 @@ export {
     analysisIndividual,
     analysisPairwise,
     fetchCourseScores,
+    fetchUserAttempt,
     history,
     peek,
     proxyRegrade,

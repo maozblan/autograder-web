@@ -14,6 +14,7 @@ function init() {
     Routing.addRoute(/^course\/assignment\/submit$/, handlerSubmit, 'Assignment Submit', requirements);
     Routing.addRoute(/^course\/assignment\/remove$/, handlerSubmissionRemove, 'Remove Submission', requirements);
     Routing.addRoute(/^course\/assignment\/fetch\/course\/scores$/, handlerFetchCourseScores, 'Fetch Course Assignment Scores', requirements);
+    Routing.addRoute(/^course\/assignment\/fetch\/user\/attempt$/, handlerFetchUserAttempt, 'Fetch Submission Attempt', requirements);
     Routing.addRoute(/^course\/assignment\/proxy-regrade$/, handlerProxyRegrade, 'Assignment Proxy Regrade', requirements);
     Routing.addRoute(/^course\/assignment\/proxy-resubmit$/, handlerProxyResubmit, 'Assignment Proxy Resubmit', requirements);
     Routing.addRoute(/^course\/assignment\/analysis\/individual$/, handlerAnalysisIndividual, 'Assignment Individual Analysis', requirements);
@@ -71,6 +72,11 @@ function handlerAssignment(path, params, context, container) {
             'assignment-action',
             'Fetch Course Scores',
             Routing.formHashPath(Routing.PATH_ASSIGNMENT_FETCH_COURSE_SCORES, args),
+        ),
+        Render.makeCardObject(
+            'assignment-action',
+            'Fetch Submission Attempt',
+            Routing.formHashPath(Routing.PATH_ASSIGNMENT_FETCH_USER_ATTEMPT, args),
         ),
         Render.makeCardObject(
             'assignment-action',
@@ -382,6 +388,48 @@ function fetchCourseScores(params, context, container, inputParams) {
             console.error(message);
             return message;
         })
+    ;
+}
+
+function handlerFetchUserAttempt(path, params, context, container) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+    let userEmail = context.user.email;
+
+    setAssignmentTitle(course, assignment);
+
+    let inputFields = [
+        new Input.FieldType(context, 'targetEmail', 'Target User Email', {
+            type: 'core.TargetCourseUserSelfOrGrader',
+            placeholder: userEmail,
+        }),
+        new Input.FieldType(context, 'targetSubmission', 'Target Submission ID', {
+            type: Input.INPUT_TYPE_STRING,
+            placeholder: '< Most Recent >',
+        }),
+    ];
+
+    let fetchUserAttempt = function(params, context, container, inputParams) {
+        return Autograder.Submissions.fetchUserAttempt(course.id, assignment.id, inputParams.targetSubmission, inputParams.targetEmail)
+            .then(function(result) {
+                return Render.displayJSON(result);
+            })
+            .catch(function(message) {
+                console.error(message);
+                return message;
+            })
+        ;
+    }
+
+    Render.makePage(
+            params, context, container, fetchUserAttempt,
+            {
+                header: 'Fetch Submission Attempt',
+                description: 'Fetch a full submission attempt.',
+                inputs: inputFields,
+                buttonName: 'Fetch',
+            },
+        )
     ;
 }
 
