@@ -201,6 +201,14 @@ html {
     color: var(--color-text-primary-low);
 }
 
+.primry-color hr {
+    border-color: var(--color-text-primary);
+}
+
+.primry-color-low hr {
+    border-color: var(--color-text-primary-low);
+}
+
 .secondary-color {
     background-color: var(--color-bg-secondary);
     color: var(--color-text-secondary);
@@ -208,6 +216,10 @@ html {
 
 .secondary-color a {
     color: var(--color-text-secondary);
+}
+
+.secondary-color hr {
+    border-color: var(--color-text-secondary);
 }
 
 .secondary-color-low {
@@ -219,6 +231,10 @@ html {
     color: var(--color-text-secondary-low);
 }
 
+.secondary-color-low hr {
+    border-color: var(--color-text-secondary-low);
+}
+
 .tertiary-color {
     background-color: var(--color-bg-tertiary);
     color: var(--color-text-tertiary);
@@ -228,6 +244,10 @@ html {
     color: var(--color-text-tertiary);
 }
 
+.tertiary-color hr {
+    border-color: var(--color-text-tertiary);
+}
+
 .tertiary-color-low {
     background-color: var(--color-bg-tertiary);
     color: var(--color-text-tertiary-low);
@@ -235,6 +255,10 @@ html {
 
 .tertiary-color-low a {
     color: var(--color-text-tertiary-low);
+}
+
+.tertiary-color-low hr {
+    border-color: var(--color-text-tertiary-low);
 }
 
 .accent-color {
@@ -265,6 +289,11 @@ html {
 
 a {
     color: var(--color-text-link);
+}
+
+hr {
+    width: 100%;
+    border-width: 2px;
 }
 
 button,
@@ -709,6 +738,13 @@ table.standard-table tr:not(:last-child) {
     margin-bottom: 1em;
 
     border-radius: var(--curve-radius-small);
+}
+
+.results-area .results-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .template-control-area {

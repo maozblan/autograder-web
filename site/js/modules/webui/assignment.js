@@ -409,10 +409,28 @@ function handlerFetchUserAttempt(path, params, context, container) {
         }),
     ];
 
+    // Keep track of the result in case they are needed for downloading.
+    let _cached_result = undefined;
+
     let fetchUserAttempt = function(params, context, container, inputParams) {
         return Autograder.Submissions.fetchUserAttempt(course.id, assignment.id, inputParams.targetSubmission, inputParams.targetEmail)
             .then(function(result) {
-                return Render.displayJSON(result);
+                if (!result['found-submission']) {
+                    return Render.displayJSON(result);
+                }
+
+                // Stash the result for later use.
+                _cached_result = result;
+
+                return `
+                    <div class='results-controls'>
+                        <button class='download' disabled>Download Results</button>
+                    </div>
+                    <hr />
+                    <div>
+                        ${Render.displayJSON(result)}
+                    </div>
+                `;
             })
             .catch(function(message) {
                 console.error(message);
@@ -421,6 +439,36 @@ function handlerFetchUserAttempt(path, params, context, container) {
         ;
     }
 
+    // After the results are rendered, enable the download button.
+    let postResultsFunc = function(params, context, container, inputParams, resultHTML) {
+        let button = container.querySelector('.results-controls button.download');
+        if (!button) {
+            return;
+        }
+
+        button.addEventListener("click", function(event) {
+            // Disable the button again to avoid multiple downloads.
+            button.disabled = true;
+
+            // Bail if there are no results.
+            if (!_cached_result) {
+                return;
+            }
+
+            // Convert the results to a zip.
+            Autograder.Util.autograderGradingResultToJSFile(_cached_result['grading-result']).then(function(file) {
+                // Download the zip.
+                Util.downloadFile(file);
+
+                // Re-enable the button.
+                button.disabled = false;
+            });
+        });
+
+        // Enable the button.
+        button.disabled = false;
+    };
+
     Render.makePage(
             params, context, container, fetchUserAttempt,
             {
@@ -428,6 +476,7 @@ function handlerFetchUserAttempt(path, params, context, container) {
                 description: 'Fetch a full submission attempt.',
                 inputs: inputFields,
                 buttonName: 'Fetch',
+                postResultsFunc: postResultsFunc,
             },
         )
     ;

@@ -70,6 +70,8 @@ function makeCardSection(sectionName, sectionCards) {
 //   - Accept four parameters (params, context, container, inputParams).
 //   - Return a promise that resolves to the content to display in the results area.
 // The page inputs expects a list of Input.Fields, see ./input.js for more information.
+// The postResultsFunc (if provided) is called after the results are rendered,
+// it will be called with (params, context, container, inputParams, resultHTML).
 function makePage(
         params, context, container, onSubmitFunc,
         {
@@ -81,6 +83,7 @@ function makePage(
             buttonName = 'Submit',
             // Click the submit button as soon as the page is created.
             submitOnCreation = false,
+            postResultsFunc = undefined,
         }) {
     if ((controlAreaHTML) && (controlAreaHTML != '')) {
         controlAreaHTML = `
@@ -161,7 +164,7 @@ function makePage(
 
     let button = container.querySelector(".input-area .template-button")
     button?.addEventListener("click", function(event) {
-        submitInputs(params, context, container, inputs, onSubmitFunc);
+        submitInputs(params, context, container, inputs, onSubmitFunc, postResultsFunc);
     });
 
     container.querySelector(".user-input-fields fieldset")?.addEventListener("keydown", function(event) {
@@ -169,7 +172,7 @@ function makePage(
             return;
         }
 
-        submitInputs(params, context, container, inputs, onSubmitFunc);
+        submitInputs(params, context, container, inputs, onSubmitFunc, postResultsFunc);
     });
 
     container.querySelectorAll(".user-input-fields fieldset input")?.forEach(function(input) {
@@ -201,7 +204,7 @@ function makePage(
     }
 }
 
-function submitInputs(params, context, container, inputs, onSubmitFunc) {
+function submitInputs(params, context, container, inputs, onSubmitFunc, postResultsFunc) {
     // If the button is blocked, the server is processing the previous request.
     let button = container.querySelector(".input-area .template-button");
     if (button?.disabled) {
@@ -247,6 +250,10 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
     onSubmitFunc(params, context, container, inputParams)
         .then(function(result) {
             resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${result}</div>`;
+
+            if (postResultsFunc) {
+                postResultsFunc(params, context, container, inputParams, result)
+            }
         })
         .catch(function(message) {
             console.error(message);
