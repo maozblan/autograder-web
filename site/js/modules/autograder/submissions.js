@@ -58,7 +58,7 @@ function fetchUserAttempt(course, assignment, targetSubmission = undefined, targ
     let args = {
         'course-id': course,
         'assignment-id': assignment,
-    }
+    };
 
     if (targetEmail) {
         args['target-email'] = targetEmail;

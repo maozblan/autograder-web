@@ -47,8 +47,24 @@ function checkPageBasics(title, dataPage) {
     expect(pageContent).not.toBeNull();
 }
 
+async function navigate(path, params = undefined) {
+    let pathComponents = {
+        'path': path,
+    };
+
+    if (params) {
+        pathComponents['params'] = params;
+    }
+
+    let renderPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, pathComponents);
+
+    Routing.routeComponents(pathComponents);
+    await renderPromise;
+}
+
 export {
     checkCards,
     checkPageBasics,
     loginUser,
+    navigate,
 }

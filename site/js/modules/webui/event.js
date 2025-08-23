@@ -5,6 +5,7 @@
 // Every key-value pair in the provided details must be matched in the event.detail information.
 // To check for object equality, each value is compared via JSON.stringify().
 // If the value cannot be stringified, basic equality (===) will be used for the comparison.
+// Top-level keys will be sorted when stringified.
 
 // Keyed on the listener ID with a reference to the event name and callback function.
 const eventListeners = new Map();
@@ -62,7 +63,9 @@ function matchesFilter(eventDetails, details) {
 
     return Object.entries(details).every(function([key, value]) {
         try {
-            return JSON.stringify(eventDetails[key]) === JSON.stringify(value);
+            let eventJSON = JSON.stringify(eventDetails[key], Object.keys(eventDetails[key]).sort());
+            let valueJSON = JSON.stringify(value, Object.keys(value).sort());
+            return (eventJSON === valueJSON);
         } catch(error) {
             // If the values cannot be stringified, default to basic equality.
             return eventDetails[key] === value;

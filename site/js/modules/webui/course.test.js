@@ -7,7 +7,7 @@ test("Enrolled Courses", async function() {
     Base.init(false);
 
     await TestUtil.loginUser("course-student");
-    await navigateToEnrolledCourses();
+    await TestUtil.navigate(Routing.PATH_COURSES);
 
     TestUtil.checkPageBasics('Enrolled Courses', 'enrolled courses');
 
@@ -24,7 +24,7 @@ test("Nav Course101", async function() {
     await TestUtil.loginUser("course-student");
 
     let targetCourse = 'course101';
-    await navigateToCourse(targetCourse);
+    await TestUtil.navigate(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: targetCourse});
 
     TestUtil.checkPageBasics(targetCourse, 'course');
 
@@ -35,28 +35,3 @@ test("Nav Course101", async function() {
     ];
     TestUtil.checkCards(expectedLabelNames);
 });
-
-async function navigateToEnrolledCourses() {
-    let pathComponents = {
-        'path': Routing.PATH_COURSES,
-    };
-
-    let coursesRenderedPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, pathComponents);
-
-    Routing.routeComponents(pathComponents);
-    await coursesRenderedPromise;
-}
-
-async function navigateToCourse(courseId) {
-    let pathComponents = {
-        'path': Routing.PATH_COURSE,
-        'params': {
-            [Routing.PARAM_COURSE]: courseId,
-        },
-    };
-
-    let courseRenderedPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, pathComponents);
-
-    Routing.routeComponents(pathComponents);
-    await courseRenderedPromise;
-}

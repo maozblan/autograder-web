@@ -1,10 +1,10 @@
-import * as Autograder from '../autograder/base.js'
+import * as Autograder from '../autograder/base.js';
 
-import * as Input from './input.js'
-import * as Log from './log.js'
-import * as Render from './render.js'
-import * as Routing from './routing.js'
-import * as Util from './util.js'
+import * as Input from './input.js';
+import * as Log from './log.js';
+import * as Render from './render.js';
+import * as Routing from './routing.js';
+import * as Util from './util.js';
 
 function init() {
     let requirements = {assignment: true};
@@ -409,7 +409,7 @@ function handlerFetchUserAttempt(path, params, context, container) {
         }),
     ];
 
-    // Keep track of the result in case they are needed for downloading.
+    // Keep track of the result for future downloading.
     let _cached_result = undefined;
 
     let fetchUserAttempt = function(params, context, container, inputParams) {

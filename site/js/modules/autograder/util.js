@@ -1,5 +1,5 @@
-import sjcl from './vendor/sjcl.min.js'
-import JSZipExport from './vendor/jszip.min.js'
+import sjcl from './vendor/sjcl.min.js';
+import JSZipExport from './vendor/jszip.min.js';
 
 function getTimestampNow() {
     return Date.now()
@@ -12,7 +12,7 @@ function sha256(text) {
 // Return a promise that will resolve to a Blob.
 function b64Decode(b64Text) {
     return new Promise(function(resolve, reject) {
-        // Convert the base 64 string to a byte string.
+        // Convert the base64 string to a byte string.
         const byteString = atob(b64Text);
 
         // Convert the bytes from characters to ints.
@@ -22,20 +22,20 @@ function b64Decode(b64Text) {
         }
 
         // Construct a blob.
-        resolve(new Blob([new Uint8Array(bytes)]))
+        resolve(new Blob([new Uint8Array(bytes)]));
     });
 }
 
 // Take in a blob representing gzipped data,
 // and return a promise that will resolve to a Blob of the uncompressed gzipped data.
 function gunzip(gzipBlob) {
-    const decompression = new DecompressionStream("gzip");
+    const decompression = new DecompressionStream('gzip');
     const decompressedStream = gzipBlob.stream().pipeThrough(decompression);
     return (new Response(decompressedStream)).blob();
 }
 
 // Return a promise to convert a file sent over on the autograder API to a JS File object.
-// The autograder sends files as base 64 encodings of gzip file contents.
+// The autograder sends files as base64 encodings of gzip file contents.
 // If successful, the promise will resolve to an uncompressed File object.
 function autograderFileToJSFile(b64Text, name = undefined) {
     return b64Decode(b64Text).then(gunzip).then(function(blob) {
@@ -44,10 +44,11 @@ function autograderFileToJSFile(b64Text, name = undefined) {
 }
 
 // Return a promise that resolves a standard autograder grading result (model.GradingResult)
-// to a map of names to JS file objects.
+// to a JS file object that represents a zip file containing the full result.
 // If no filename is provided, the grading result's ID is used.
 function autograderGradingResultToJSFile(gradingResult, filename = undefined) {
     const jszip = JSZipExport();
+
     let archive = jszip();
     let root = archive.folder(gradingResult.info.id);
 
