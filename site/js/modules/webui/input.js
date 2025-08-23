@@ -17,6 +17,8 @@ const INPUT_TYPE_STRING = 'string';
 const INPUT_TYPE_TEXT = 'text';
 const INPUT_TYPE_TEXTAREA = 'textarea';
 
+const TEST_FILES_KEY = '__test-files';
+
 // The set of valid types for a FieldType.
 const VALID_PARSED_TYPES = [
     INPUT_TYPE_CHECKBOX,
@@ -300,9 +302,8 @@ class FieldInstance {
     validate() {
         // Validate file inputs for testing.
         if ((this.input.type === INPUT_TYPE_FILE) &&
-                (this.input['__test-files']) &&
-                (this.input['__test-files'].length > 0)
-            ) {
+                (this.input[TEST_FILES_KEY]) &&
+                (this.input[TEST_FILES_KEY].length > 0)) {
             return;
         }
 
@@ -358,8 +359,8 @@ class FieldInstance {
                 value.push(file);
             }
 
-            if (this.input['__test-files']) {
-                for (const file of this.input['__test-files']) {
+            if (this.input[TEST_FILES_KEY]) {
+                for (const file of this.input[TEST_FILES_KEY]) {
                     value.push(file);
                 }
             }
@@ -425,4 +426,6 @@ export {
     SelectOption,
 
     COURSE_USER_REFERENCE_LIST_FIELD_TYPE,
+
+    TEST_FILES_KEY,
 };

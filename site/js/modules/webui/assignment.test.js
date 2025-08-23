@@ -3,6 +3,7 @@ import path from 'node:path';
 
 import * as Base from './base.js';
 import * as Event from './event.js';
+import * as Input from './input.js'
 import * as Routing from './routing.js';
 import * as TestUtil from './test/util.js';
 
@@ -31,7 +32,7 @@ test('Submit Assignment', async function() {
 
     TestUtil.checkPageBasics(targetAssignment, 'assignment submit');
 
-    document.querySelector('div[data-name="files"] input')['__test-files'] = [fileObj];
+    document.querySelector('div[data-name="files"] input')[Input.TEST_FILES_KEY] = [fileObj];
 
     let resultWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_TEMPLATE_RESULT_COMPLETE);
     document.querySelector('.template-button').click();
