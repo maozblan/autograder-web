@@ -300,7 +300,7 @@ class FieldInstance {
     // Validate the value of the input.
     // Throws an error on invalid input values.
     validate() {
-        // Validate file inputs for testing.
+        // Validate file type input if test files are attached.
         if ((this.input.type === INPUT_TYPE_FILE) &&
                 (this.input[TEST_FILES_KEY]) &&
                 (this.input[TEST_FILES_KEY].length > 0)) {
@@ -359,6 +359,7 @@ class FieldInstance {
                 value.push(file);
             }
 
+            // Extract test files attached to input if any.
             if (this.input[TEST_FILES_KEY]) {
                 for (const file of this.input[TEST_FILES_KEY]) {
                     value.push(file);

@@ -28,12 +28,15 @@ global.fetch = function(url, options = {}) {
         }
     }
 
+    // Extract files from response body object,
+    // keys (other than reponse content) are file names.
     let files = [];
     for (const key of options?.body.keys()) {
         if (key === "content") {
             continue;
         }
 
+        // Format file name to match test data format.
         files.push(`__DATA_DIR__(${key})`);
     }
 
