@@ -1,6 +1,7 @@
 import * as Autograder from '../autograder/base.js';
 
 import * as Assignment from './assignment.js';
+import * as Event from './event.js';
 import * as Routing from './routing.js';
 import * as Util from './util.js';
 
@@ -332,6 +333,8 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
             if (button) {
                 button.disabled = false;
             }
+
+            Event.dispatchEvent(Event.EVENT_TYPE_TEMPLATE_RESULT_COMPLETE);
         })
     ;
 }
