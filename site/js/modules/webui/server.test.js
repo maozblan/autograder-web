@@ -3,15 +3,62 @@ import * as Event from './event.js';
 import * as Routing from './routing.js';
 import * as TestUtil from './test/util.js';
 
+<<<<<<< HEAD
 test('Server Action', async function() {
     Base.init(false);
 
     await TestUtil.loginUser('server-admin');
 
+=======
+test('Nav Server Actions', async function() {
+    Base.init(false);
+
+    // Each test case is a list of [user, [expected card labels]].
+    const testCases = [
+        [
+            'server-user',
+            [
+                'API Documentation',
+                'Call API',
+            ],
+        ],
+        [
+            'server-creator',
+            [
+                'API Documentation',
+                'Call API',
+            ],
+        ],
+        [
+            'server-admin',
+            [
+                'API Documentation',
+                'Call API',
+                'List Users',
+            ],
+        ],
+    ];
+
+    for (const testCase of testCases) {
+        const user = testCase[0];
+        await TestUtil.loginUser(user);
+
+        await navigateToServerActions();
+
+        TestUtil.checkPageBasics('Server Actions', 'server actions');
+
+        const expectedLabelNames = testCase[1];
+        TestUtil.checkCards(expectedLabelNames);
+    }
+});
+
+async function navigateToServerActions() {
+>>>>>>> main
     let pathComponents = {
         'path': Routing.PATH_SERVER,
     };
 
+<<<<<<< HEAD
     let loadWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, pathComponents);
 
     Routing.routeComponents(pathComponents);
@@ -51,3 +98,10 @@ test('Server Users List', async function() {
     let userCount = results.matchAll('@test.edulinq.org').toArray().length;
     expect(userCount).toEqual(9);
 });
+=======
+    let serverActionsRenderedPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, pathComponents);
+
+    Routing.routeComponents(pathComponents);
+    await serverActionsRenderedPromise;
+}
+>>>>>>> main
