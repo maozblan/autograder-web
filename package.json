@@ -19,10 +19,10 @@
     },
     "devDependencies": {
         "jest": "^30.0.5",
-        "jest-environment-jsdom": "^30.0.5"
+        "jest-fixed-jsdom": "^0.0.9"
     },
     "jest": {
-        "testEnvironment": "jsdom",
+        "testEnvironment": "jest-fixed-jsdom",
         "clearMocks": true,
         "collectCoverage": true,
         "coverageDirectory": ".coverage",
@@ -30,7 +30,8 @@
             "vendor"
         ],
         "setupFilesAfterEnv": [
-            "<rootDir>/site/js/modules/autograder/test/server.js"
+            "<rootDir>/site/js/modules/autograder/test/server.js",
+            "<rootDir>/site/js/modules/webui/test/setup.js"
         ],
         "transform": {},
         "verbose": true

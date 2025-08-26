@@ -1,11 +1,8 @@
-import * as Base from './base.js';
 import * as Event from './event.js';
 import * as Routing from './routing.js';
 import * as TestUtil from './test/util.js';
 
 test('Enrolled Courses', async function() {
-    Base.init(false);
-
     await TestUtil.loginUser('course-student');
     await TestUtil.navigate(Routing.PATH_COURSES);
 
@@ -19,8 +16,6 @@ test('Enrolled Courses', async function() {
 });
 
 test('Nav Course101', async function() {
-    Base.init(false);
-
     // Each test case is a list of [user, [expected card labels]].
     const testCases = [
         [
@@ -60,8 +55,6 @@ test('Nav Course101', async function() {
 });
 
 test('Nav HW0', async function() {
-    Base.init(false);
-
     // Each test case is a list of [user, [expected card labels]].
     const testCases = [
         [

@@ -1,15 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import * as Base from './base.js';
 import * as Event from './event.js';
 import * as Input from './input.js'
 import * as Routing from './routing.js';
 import * as TestUtil from './test/util.js';
 
 test('Fetch User Attempt, No Result', async function() {
-    Base.init(false);
-
     await TestUtil.loginUser('course-admin');
     await TestUtil.navigate(
             Routing.PATH_ASSIGNMENT_FETCH_USER_ATTEMPT,
@@ -24,8 +21,6 @@ test('Fetch User Attempt, No Result', async function() {
 });
 
 test('Fetch User Attempt, Target Other', async function() {
-    Base.init(false);
-
     await TestUtil.loginUser('course-admin');
     await TestUtil.navigate(
             Routing.PATH_ASSIGNMENT_FETCH_USER_ATTEMPT,
@@ -42,11 +37,13 @@ test('Fetch User Attempt, Target Other', async function() {
     expect(results).toContain('"found-submission": true');
     expect(results).toContain('"id": "course101::hw0::course-student@test.edulinq.org::1697406265"');
     expect(results).toContain('"score": 1');
+
+    let resultWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_DOWNLOAD_FILE_COMPLETE);
+    document.querySelector('.results-area button.download').click();
+    await resultWaitPromise;
 });
 
 test('Submit Assignment', async function() {
-    Base.init(false);
-
     await TestUtil.loginUser('course-admin');
 
     let targetCourse = 'course101';

@@ -11,6 +11,7 @@
 const eventListeners = new Map();
 const eventElement = document.createElement(`div`);
 
+const EVENT_TYPE_DOWNLOAD_FILE_COMPLETE = 'autograder-download-file-end';
 const EVENT_TYPE_ROUTING_COMPLETE = 'autograder-routing-end';
 const EVENT_TYPE_TEMPLATE_RESULT_COMPLETE = 'autograder-template-result-end';
 
@@ -112,6 +113,7 @@ export {
     getEventPromise,
     removeAllListeners,
 
+    EVENT_TYPE_DOWNLOAD_FILE_COMPLETE,
     EVENT_TYPE_ROUTING_COMPLETE,
     EVENT_TYPE_TEMPLATE_RESULT_COMPLETE,
 };
