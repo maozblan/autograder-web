@@ -300,10 +300,9 @@ class FieldInstance {
     // Validate the value of the input.
     // Throws an error on invalid input values.
     validate() {
-        // Validate file type input if test files are attached.
+        // Skip all other validation if type is file and test files are present.
         if ((this.input.type === INPUT_TYPE_FILE) &&
-                (this.input[TEST_FILES_KEY]) &&
-                (this.input[TEST_FILES_KEY].length > 0)) {
+                (this.input[TEST_FILES_KEY]?.length > 0)) {
             return;
         }
 
