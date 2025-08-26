@@ -10,9 +10,6 @@ import * as TestUtil from './test/util.js';
 test('Submit Assignment', async function() {
     Base.init(false);
 
-    const fileContent = fs.readFileSync(path.join('site', 'js', 'modules', 'autograder', 'test', 'data', 'hw0_solution.py'), 'utf8');
-    const fileObj = new File([fileContent], 'hw0_solution.py');
-
     await TestUtil.loginUser('course-admin');
 
     let targetCourse = 'course101';
@@ -32,6 +29,8 @@ test('Submit Assignment', async function() {
 
     TestUtil.checkPageBasics(targetAssignment, 'assignment submit');
 
+    const fileContent = fs.readFileSync(path.join('site', 'js', 'modules', 'autograder', 'test', 'data', 'hw0_solution.py'), 'utf8');
+    const fileObj = new File([fileContent], 'hw0_solution.py');
     document.querySelector('div[data-name="files"] input')[Input.TEST_FILES_KEY] = [fileObj];
 
     let resultWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_TEMPLATE_RESULT_COMPLETE);

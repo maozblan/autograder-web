@@ -294,7 +294,7 @@ function handlerSubmit(path, params, context, container) {
             type: Input.INPUT_TYPE_FILE,
             required: true,
             placeholder: 'Submission Files',
-            additionalAttributes: ' multiple="true"'
+            additionalAttributes: ' multiple="true"',
         }),
         new Input.FieldType(context, 'message', 'Message', {
             type: Input.INPUT_TYPE_STRING,
