@@ -62,9 +62,16 @@ async function navigate(path, params = undefined) {
     await renderPromise;
 }
 
+async function submitTemplate() {
+    let resultWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_TEMPLATE_RESULT_COMPLETE);
+    document.querySelector('.template-button').click();
+    await resultWaitPromise;
+}
+
 export {
     checkCards,
     checkPageBasics,
     loginUser,
     navigate,
+    submitTemplate,
 }

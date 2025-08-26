@@ -288,7 +288,9 @@ function submitInputs(params, context, container, inputs, onSubmitFunc, postResu
         return;
     }
 
-    Routing.loadingStart(container.querySelector(".results-area"), false);
+    let resultsArea = container.querySelector(".results-area");
+
+    Routing.loadingStart(resultsArea, false);
 
     let inputParams = {};
     let errorMessages = [];
@@ -307,8 +309,6 @@ function submitInputs(params, context, container, inputs, onSubmitFunc, postResu
             inputParams[result.getFieldName()] = value;
         }
     }
-
-    let resultsArea = container.querySelector(".results-area");
 
     if (errorMessages.length > 0) {
         resultsArea.innerHTML = `
