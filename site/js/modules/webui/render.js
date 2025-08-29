@@ -11,7 +11,7 @@ class Card {
         {
             minServerRole = Autograder.Users.SERVER_ROLE_UNKNOWN,
             minCourseRole = Autograder.Users.COURSE_ROLE_UNKNOWN,
-            courseId = undefined
+            courseId = undefined,
         } = {}) {
         // An optional card type that is added to the HTML class list.
         this.type = type;
@@ -93,7 +93,7 @@ function cards(context, cards) {
     let html = [];
     for (const card of cards) {
         if (card.isHidden(context)) {
-            continue
+            continue;
         }
 
         html.push(card.toHTML());
@@ -239,7 +239,7 @@ function makePage(
         </div>
     `;
 
-    let button = container.querySelector(".input-area .template-button")
+    let button = container.querySelector(".input-area .template-button");
     button?.addEventListener("click", function(event) {
         submitInputs(params, context, container, inputs, onSubmitFunc, postResultsFunc);
     });
@@ -329,7 +329,7 @@ function submitInputs(params, context, container, inputs, onSubmitFunc, postResu
             resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${result}</div>`;
 
             if (postResultsFunc) {
-                postResultsFunc(params, context, container, inputParams, result)
+                postResultsFunc(params, context, container, inputParams, result);
             }
         })
         .catch(function(message) {

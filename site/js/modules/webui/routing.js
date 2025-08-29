@@ -6,7 +6,7 @@ import * as Render from './render.js';
 
 let routes = [];
 
-const DEFAULT_HANDLER = handlerNotFound
+const DEFAULT_HANDLER = handlerNotFound;
 
 const PARAM_ASSIGNMENT = 'assignment';
 const PARAM_COURSE = 'course';
@@ -163,7 +163,7 @@ function handlerWrapper(handler, path, params, pageName, requirements) {
     }
 
     // Check for any requested courses or assignments.
-    let context = Context.get()
+    let context = Context.get();
 
     // Check course.
     if (requirements.course) {
@@ -219,7 +219,7 @@ function handlerWrapper(handler, path, params, pageName, requirements) {
 }
 
 function setContextUserDisplay() {
-    let context = Context.get()
+    let context = Context.get();
 
     let currentUserHTML = '';
     let loginAreaHTML = '';

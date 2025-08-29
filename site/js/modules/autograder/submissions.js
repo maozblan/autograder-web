@@ -1,10 +1,10 @@
-import * as Core from './core.js'
+import * as Core from './core.js';
 
 function history(course, assignment, targetEmail = undefined) {
     let args = {
         'course-id': course,
         'assignment-id': assignment,
-    }
+    };
 
     if (targetEmail) {
         args['target-email'] = targetEmail;
@@ -37,7 +37,7 @@ function submit(course, assignment, files, allowLate = false, message = '') {
         'course-id': course,
         'assignment-id': assignment,
         'allow-late': allowLate,
-    }
+    };
 
     if (message.length > 0) {
         args.message = message;
@@ -117,7 +117,7 @@ function analysisIndividual(submissions, overwriteRecords, waitForCompletion, dr
             'overwrite-records': overwriteRecords,
             'submissions': submissions,
             'wait-for-completion': waitForCompletion,
-        }
+        },
     });
 }
 
@@ -129,7 +129,7 @@ function analysisPairwise(submissions, overwriteRecords, waitForCompletion, dryR
             'overwrite-records': overwriteRecords,
             'submissions': submissions,
             'wait-for-completion': waitForCompletion,
-        }
+        },
     });
 }
 

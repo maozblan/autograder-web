@@ -363,7 +363,7 @@ function handlerSubmissionRemove(path, params, context, container) {
                 header: 'Remove Assignment Submission',
                 description: 'Remove a specified submission. Defaults to the most recent submission.',
                 inputs: inputFields,
-                buttonName: 'Remove Submission'
+                buttonName: 'Remove Submission',
             }
         )
     ;
@@ -571,7 +571,7 @@ function proxyRegrade(params, context, container, inputParams) {
     return Autograder.Submissions.proxyRegrade(
             course.id, assignment.id,
             inputParams.dryRun, inputParams.overwrite,
-            inputParams.cutoff, inputParams.target, inputParams.wait
+            inputParams.cutoff, inputParams.target, inputParams.wait,
         )
         .then(function(result) {
             return Render.displayJSON(result);
@@ -600,7 +600,7 @@ function handlerProxyResubmit(path, params, context, container) {
         }),
         new Input.FieldType(context, 'submission', 'Submission', {
             placeholder: 'Most Recent',
-        })
+        }),
     ];
 
     Render.makePage(
@@ -622,7 +622,7 @@ function proxyResubmit(params, context, container, inputParams) {
     return Autograder.Submissions.proxyResubmit(
             course.id, assignment.id,
             inputParams.email, inputParams.time,
-            inputParams.submission
+            inputParams.submission,
         )
         .then(function(result) {
             return getSubmissionResultHTML(course, assignment, result);

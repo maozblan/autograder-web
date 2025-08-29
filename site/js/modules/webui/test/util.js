@@ -26,7 +26,7 @@ async function loginUser(displayName) {
     let inputParams = {
         'email': `${displayName}@test.edulinq.org`,
         'cleartext': displayName,
-    }
+    };
     await Login.login(undefined, undefined, document, inputParams);
     await homeRenderedPromise;
 }

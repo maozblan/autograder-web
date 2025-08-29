@@ -2,7 +2,7 @@ import sjcl from './vendor/sjcl.min.js';
 import JSZipExport from './vendor/jszip.min.js';
 
 function getTimestampNow() {
-    return Date.now()
+    return Date.now();
 }
 
 function sha256(text) {

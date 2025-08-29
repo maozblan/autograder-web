@@ -5,6 +5,8 @@ describe("Util.sha256() base", function() {
     const testCases = [
         // Empty
         ['', 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'],
+
+        // Basic
         ['a', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb'],
         ['A', '559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd'],
     ];
@@ -19,6 +21,8 @@ describe("Util.b64Decode() base", function() {
     const testCases = [
         // Empty
         ['', ''],
+
+        // Basic
         ['YQ==', 'a'],
     ];
 
@@ -42,6 +46,8 @@ test("Util.autograderGradingResultToJSFile() base", async function() {
     let gradingResult = data['output']['grading-result'];
     expect(gradingResult).toBeDefined();
 
+    // Ensure that the file is approximately the size we expect.
+    // There may be slight variations depending on the OS and randomization.
     let file = await Util.autograderGradingResultToJSFile(gradingResult, 'test.zip');
     expect(file.__testing_blob_size).toBeGreaterThanOrEqual(expectedBytes - epsilonBytes);
     expect(file.__testing_blob_size).toBeLessThanOrEqual(expectedBytes + epsilonBytes);
