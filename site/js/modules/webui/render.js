@@ -11,7 +11,7 @@ class Card {
         {
             minServerRole = Autograder.Users.SERVER_ROLE_UNKNOWN,
             minCourseRole = Autograder.Users.COURSE_ROLE_UNKNOWN,
-            courseId = undefined
+            courseId = undefined,
         } = {}) {
         // An optional card type that is added to the HTML class list.
         this.type = type;
@@ -93,7 +93,7 @@ function cards(context, cards) {
     let html = [];
     for (const card of cards) {
         if (card.isHidden(context)) {
-            continue
+            continue;
         }
 
         html.push(card.toHTML());
@@ -147,6 +147,8 @@ function makeCardSection(context, sectionName, sectionCards) {
 //   - Accept four parameters (params, context, container, inputParams).
 //   - Return a promise that resolves to the content to display in the results area.
 // The page inputs expects a list of Input.Fields, see ./input.js for more information.
+// The postResultsFunc (if provided) is called after the results are rendered,
+// it will be called with (params, context, container, inputParams, resultHTML).
 function makePage(
         params, context, container, onSubmitFunc,
         {
@@ -158,6 +160,7 @@ function makePage(
             buttonName = 'Submit',
             // Click the submit button as soon as the page is created.
             submitOnCreation = false,
+            postResultsFunc = undefined,
         }) {
     if ((controlAreaHTML) && (controlAreaHTML != '')) {
         controlAreaHTML = `
@@ -236,9 +239,9 @@ function makePage(
         </div>
     `;
 
-    let button = container.querySelector(".input-area .template-button")
+    let button = container.querySelector(".input-area .template-button");
     button?.addEventListener("click", function(event) {
-        submitInputs(params, context, container, inputs, onSubmitFunc);
+        submitInputs(params, context, container, inputs, onSubmitFunc, postResultsFunc);
     });
 
     container.querySelector(".user-input-fields fieldset")?.addEventListener("keydown", function(event) {
@@ -246,7 +249,7 @@ function makePage(
             return;
         }
 
-        submitInputs(params, context, container, inputs, onSubmitFunc);
+        submitInputs(params, context, container, inputs, onSubmitFunc, postResultsFunc);
     });
 
     container.querySelectorAll(".user-input-fields fieldset input")?.forEach(function(input) {
@@ -278,14 +281,16 @@ function makePage(
     }
 }
 
-function submitInputs(params, context, container, inputs, onSubmitFunc) {
+function submitInputs(params, context, container, inputs, onSubmitFunc, postResultsFunc) {
     // If the button is blocked, the server is processing the previous request.
     let button = container.querySelector(".input-area .template-button");
     if (button?.disabled) {
         return;
     }
 
-    Routing.loadingStart(container.querySelector(".results-area"), false);
+    let resultsArea = container.querySelector(".results-area");
+
+    Routing.loadingStart(resultsArea, false);
 
     let inputParams = {};
     let errorMessages = [];
@@ -305,8 +310,6 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
         }
     }
 
-    let resultsArea = container.querySelector(".results-area");
-
     if (errorMessages.length > 0) {
         resultsArea.innerHTML = `
             <div class="result secondary-color drop-shadow">
@@ -324,6 +327,10 @@ function submitInputs(params, context, container, inputs, onSubmitFunc) {
     onSubmitFunc(params, context, container, inputParams)
         .then(function(result) {
             resultsArea.innerHTML = `<div class="result secondary-color drop-shadow">${result}</div>`;
+
+            if (postResultsFunc) {
+                postResultsFunc(params, context, container, inputParams, result);
+            }
         })
         .catch(function(message) {
             console.error(message);

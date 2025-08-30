@@ -1,10 +1,10 @@
-import * as Autograder from '../autograder/base.js'
+import * as Autograder from '../autograder/base.js';
 
-import * as Input from './input.js'
-import * as Log from './log.js'
-import * as Render from './render.js'
-import * as Routing from './routing.js'
-import * as Util from './util.js'
+import * as Input from './input.js';
+import * as Log from './log.js';
+import * as Render from './render.js';
+import * as Routing from './routing.js';
+import * as Util from './util.js';
 
 function init() {
     let requirements = {assignment: true};
@@ -14,6 +14,7 @@ function init() {
     Routing.addRoute(/^course\/assignment\/submit$/, handlerSubmit, 'Assignment Submit', requirements);
     Routing.addRoute(/^course\/assignment\/remove$/, handlerSubmissionRemove, 'Remove Submission', requirements);
     Routing.addRoute(/^course\/assignment\/fetch\/course\/scores$/, handlerFetchCourseScores, 'Fetch Course Assignment Scores', requirements);
+    Routing.addRoute(/^course\/assignment\/fetch\/user\/attempt$/, handlerFetchUserAttempt, 'Fetch Submission Attempt', requirements);
     Routing.addRoute(/^course\/assignment\/proxy-regrade$/, handlerProxyRegrade, 'Assignment Proxy Regrade', requirements);
     Routing.addRoute(/^course\/assignment\/proxy-resubmit$/, handlerProxyResubmit, 'Assignment Proxy Resubmit', requirements);
     Routing.addRoute(/^course\/assignment\/analysis\/individual$/, handlerAnalysisIndividual, 'Assignment Individual Analysis', requirements);
@@ -89,6 +90,16 @@ function handlerAssignment(path, params, context, container) {
             {
                 minServerRole: Autograder.Users.SERVER_ROLE_USER,
                 minCourseRole: Autograder.Users.COURSE_ROLE_GRADER,
+                courseId: course.id,
+            },
+        ),
+        new Render.Card(
+            'assignment-action',
+            'Fetch Submission Attempt',
+            Routing.formHashPath(Routing.PATH_ASSIGNMENT_FETCH_USER_ATTEMPT, args),
+            {
+                minServerRole: Autograder.Users.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Users.COURSE_ROLE_STUDENT,
                 courseId: course.id,
             },
         ),
@@ -352,7 +363,7 @@ function handlerSubmissionRemove(path, params, context, container) {
                 header: 'Remove Assignment Submission',
                 description: 'Remove a specified submission. Defaults to the most recent submission.',
                 inputs: inputFields,
-                buttonName: 'Remove Submission'
+                buttonName: 'Remove Submission',
             }
         )
     ;
@@ -425,6 +436,97 @@ function fetchCourseScores(params, context, container, inputParams) {
     ;
 }
 
+function handlerFetchUserAttempt(path, params, context, container) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+    let userEmail = context.user.email;
+
+    setAssignmentTitle(course, assignment);
+
+    let inputFields = [
+        new Input.FieldType(context, 'targetEmail', 'Target User Email', {
+            type: 'core.TargetCourseUserSelfOrGrader',
+            placeholder: userEmail,
+        }),
+        new Input.FieldType(context, 'targetSubmission', 'Target Submission ID', {
+            type: Input.INPUT_TYPE_STRING,
+            placeholder: '< Most Recent >',
+        }),
+    ];
+
+    // Keep track of the result for future downloading.
+    let _cached_result = undefined;
+
+    let fetchUserAttempt = function(params, context, container, inputParams) {
+        return Autograder.Submissions.fetchUserAttempt(course.id, assignment.id, inputParams.targetSubmission, inputParams.targetEmail)
+            .then(function(result) {
+                if (!result['found-submission']) {
+                    return Render.displayJSON(result);
+                }
+
+                // Stash the result for later use.
+                _cached_result = result;
+
+                return `
+                    <div class='results-controls'>
+                        <button class='download' disabled>Download Results</button>
+                    </div>
+                    <hr />
+                    <div>
+                        ${Render.displayJSON(result)}
+                    </div>
+                `;
+            })
+            .catch(function(message) {
+                console.error(message);
+                return message;
+            })
+        ;
+    }
+
+    // After the results are rendered, enable the download button.
+    let postResultsFunc = function(params, context, container, inputParams, resultHTML) {
+        let button = container.querySelector('.results-controls button.download');
+        if (!button) {
+            return;
+        }
+
+        button.addEventListener("click", function(event) {
+            // Disable the button again to avoid multiple downloads.
+            button.disabled = true;
+
+            // Bail if there are no results.
+            if (!_cached_result) {
+                return;
+            }
+
+            // Convert the results to a zip.
+            Autograder.Util.autograderGradingResultToJSFile(_cached_result['grading-result']).then(function(file) {
+                // Download the zip.
+                Util.downloadFile(file);
+
+                // Re-enable the button.
+                button.disabled = false;
+            });
+        });
+
+        // Enable the button.
+        button.disabled = false;
+    };
+
+    Render.makePage(
+            params, context, container, fetchUserAttempt,
+            {
+                header: 'Fetch Submission Attempt',
+                description: 'Fetch a full submission attempt.',
+                inputs: inputFields,
+                buttonName: 'Fetch',
+                postResultsFunc: postResultsFunc,
+            },
+        )
+    ;
+}
+
 function handlerProxyRegrade(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
@@ -469,7 +571,7 @@ function proxyRegrade(params, context, container, inputParams) {
     return Autograder.Submissions.proxyRegrade(
             course.id, assignment.id,
             inputParams.dryRun, inputParams.overwrite,
-            inputParams.cutoff, inputParams.target, inputParams.wait
+            inputParams.cutoff, inputParams.target, inputParams.wait,
         )
         .then(function(result) {
             return Render.displayJSON(result);
@@ -498,7 +600,7 @@ function handlerProxyResubmit(path, params, context, container) {
         }),
         new Input.FieldType(context, 'submission', 'Submission', {
             placeholder: 'Most Recent',
-        })
+        }),
     ];
 
     Render.makePage(
@@ -520,7 +622,7 @@ function proxyResubmit(params, context, container, inputParams) {
     return Autograder.Submissions.proxyResubmit(
             course.id, assignment.id,
             inputParams.email, inputParams.time,
-            inputParams.submission
+            inputParams.submission,
         )
         .then(function(result) {
             return getSubmissionResultHTML(course, assignment, result);

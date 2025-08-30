@@ -1,11 +1,8 @@
-import * as Base from './base.js';
 import * as Event from './event.js';
 import * as Routing from './routing.js';
 import * as TestUtil from './test/util.js';
 
 test('Nav Server Actions', async function() {
-    Base.init(false);
-
     // Each test case is a list of [user, [expected card labels]].
     const testCases = [
         [
