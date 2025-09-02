@@ -1,19 +1,21 @@
-import * as Base from './base.js';
-import * as Event from './event.js';
+import * as Render from './render.js';
 import * as Routing from './routing.js';
 import * as TestUtil from './test/util.js';
 
-<<<<<<< HEAD
-test('Server Action', async function() {
-    Base.init(false);
+const SERVER_USERS = [
+    'course-admin@test.edulinq.org',
+    'course-grader@test.edulinq.org',
+    'course-other@test.edulinq.org',
+    'course-owner@test.edulinq.org',
+    'course-student@test.edulinq.org',
+    'server-admin@test.edulinq.org',
+    'server-creator@test.edulinq.org',
+    'server-owner@test.edulinq.org',
+    'server-user@test.edulinq.org',
+];
 
-    await TestUtil.loginUser('server-admin');
-
-=======
-test('Nav Server Actions', async function() {
-    Base.init(false);
-
-    // Each test case is a list of [user, [expected card labels]].
+describe('Nav Server Actions', function() {
+    // [[user, [expected card labels]], ...].
     const testCases = [
         [
             'server-user',
@@ -39,69 +41,52 @@ test('Nav Server Actions', async function() {
         ],
     ];
 
-    for (const testCase of testCases) {
-        const user = testCase[0];
+    test.each(testCases)("%s", async function(user, expectedLabelNames) {
         await TestUtil.loginUser(user);
-
-        await navigateToServerActions();
+        await TestUtil.navigate(Routing.PATH_SERVER);
 
         TestUtil.checkPageBasics('Server Actions', 'server actions');
-
-        const expectedLabelNames = testCase[1];
         TestUtil.checkCards(expectedLabelNames);
-    }
-});
-
-async function navigateToServerActions() {
->>>>>>> main
-    let pathComponents = {
-        'path': Routing.PATH_SERVER,
-    };
-
-<<<<<<< HEAD
-    let loadWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, pathComponents);
-
-    Routing.routeComponents(pathComponents);
-    await loadWaitPromise;
-
-    TestUtil.checkPageBasics('Server Actions', 'server actions');
-
-    const expectedLabelNames = [
-        'API Documentation',
-        'Call API',
-        'List Users',
-    ];
-    TestUtil.checkCards(expectedLabelNames);
+    });
 });
 
 test('Server Users List', async function() {
-    Base.init(false);
-    
     await TestUtil.loginUser('server-admin');
-
-    let pathComponents = {
-        'path': Routing.PATH_SERVER_USERS_LIST,
-    };
-
-    let loadWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, pathComponents);
-
-    Routing.routeComponents(pathComponents);
-    await loadWaitPromise;
+    await TestUtil.navigate(Routing.PATH_SERVER_USERS_LIST);
 
     TestUtil.checkPageBasics('List Users', 'list users');
 
-    let resultWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_TEMPLATE_RESULT_COMPLETE);
-    document.querySelector('.template-button').click();
-    await resultWaitPromise;
+    await TestUtil.submitTemplate();
 
     let results = document.querySelector('.results-area').innerHTML;
-    let userCount = results.matchAll('@test.edulinq.org').toArray().length;
-    expect(userCount).toEqual(9);
-});
-=======
-    let serverActionsRenderedPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, pathComponents);
 
-    Routing.routeComponents(pathComponents);
-    await serverActionsRenderedPromise;
-}
->>>>>>> main
+    for (const expectedEmail of SERVER_USERS) {
+        expect(results).toContain(expectedEmail);
+    }
+});
+
+describe('Server Users List, Output Switching', function() {
+    // [[mode, prefix], ...]
+    const testCases = [
+        [Render.API_OUTPUT_SWITCHER_JSON, '"email": "'],
+        [Render.API_OUTPUT_SWITCHER_TABLE, '<td>'],
+        [Render.API_OUTPUT_SWITCHER_TEXT, 'Email: '],
+    ];
+
+    test.each(testCases)("%s", async function(mode, prefix) {
+        await TestUtil.loginUser('server-admin');
+        await TestUtil.navigate(Routing.PATH_SERVER_USERS_LIST);
+
+        TestUtil.checkPageBasics('List Users', 'list users');
+
+        await TestUtil.submitTemplate();
+
+        let button = document.querySelector(`.output-switcher .controls button.${mode.toLowerCase()}`);
+        button.click();
+
+        let results = document.querySelector('.results-area').innerHTML;
+        for (const expectedEmail of SERVER_USERS) {
+            expect(results).toContain(`${prefix}${expectedEmail}`);
+        }
+    });
+});

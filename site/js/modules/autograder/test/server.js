@@ -1,16 +1,17 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import url from 'node:url';
+import stream from 'node:stream/web';
 
-import * as Core from '../core.js'
-import * as Util from '../util.js'
+import * as Core from '../core.js';
+import * as Util from '../util.js';
 
-var testData = {}
+global.testData = {};
 
 const DEFAULT_ID_EMAIL = 'server-admin@test.edulinq.org';
 const DEFAULT_ID_CLEARTEXT = 'server-admin';
 
-global.URL = url.URL;
+// Replace JSDOM objects with Node versions (Jest makes these replacements).
+global.DecompressionStream = stream.DecompressionStream;
 
 global.alert = function(message) {
     console.log(`ALERT: ${message}`);
@@ -24,7 +25,7 @@ global.fetch = function(url, options = {}) {
     // Create arguments by lexicographically traversing the content.
     let args = {};
     for (const key of Object.keys(content).sort()) {
-        args[key] = content[key]
+        args[key] = content[key];
 
         // Capitalize Course ID to match test data format.
         if (key === 'course-id') {
@@ -32,10 +33,22 @@ global.fetch = function(url, options = {}) {
         }
     }
 
+    // Extract files from response body object,
+    // keys (other than reponse content) are file names.
+    let files = [];
+    for (const key of options?.body.keys()) {
+        if (key === "content") {
+            continue;
+        }
+
+        // Format file name to match test data format.
+        files.push(`__DATA_DIR__(${key})`);
+    }
+
     let keyData = {
         'arguments': args,
         'endpoint': endpoint,
-        'files': [],
+        'files': files,
     };
     let key = JSON.stringify(keyData);
 
@@ -76,7 +89,7 @@ function loadHTML() {
 // Load the test data from ./api_test_data.json.
 function loadAPITestData() {
     const text = fs.readFileSync(path.join('site', 'js', 'modules', 'autograder', 'test', 'api_test_data.json'), 'utf8');
-    testData = JSON.parse(text)
+    testData = JSON.parse(text);
 
     for (const [key, value] of Object.entries(testData)) {
         let keyData = JSON.parse(key);
@@ -119,12 +132,12 @@ function createTokensDeleteTestData(userEmail, cleartext, tokenId = '<TOKEN_ID>'
         'endpoint': endpoint,
         'module_name': 'autograder.api.users.tokens.delete',
         'arguments': {
-            'token-id': tokenId
+            'token-id': tokenId,
         },
         'output': {
-            'found': true
-        }
-    }
+            'found': true,
+        },
+    };
 }
 
 // Load the default testing identity.
