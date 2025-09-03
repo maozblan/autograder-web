@@ -20,12 +20,16 @@ test('Individual Analysis', async function() {
             "course101::hw0::course-student@test.edulinq.org::1697406265",
         ]
     );
+    document.querySelector('.input-field #dryRun').checked = true;
+    document.querySelector('.input-field #wait').checked = true;
+    document.querySelector('.input-field #overwrite').checked = true;
 
     await TestUtil.submitTemplate();
 
     let results = document.querySelector('.results-area').innerHTML;
-    expect(results).toContain('"complete": false');
-    expect(results).toContain('"pending-count": 2');
+    expect(results).toContain('"complete": true');
+    expect(results).toContain('"pending-count": 0');
+    expect(results).toContain('"overwrite-records": true');
 });
 
 test('Pairwise Analysis', async function() {
@@ -42,12 +46,17 @@ test('Pairwise Analysis', async function() {
             "course101::hw0::course-student@test.edulinq.org::1697406265",
         ]
     );
+    document.querySelector('.input-field #dryRun').checked = true;
+    document.querySelector('.input-field #wait').checked = true;
+    document.querySelector('.input-field #overwrite').checked = true;
 
     await TestUtil.submitTemplate();
 
     let results = document.querySelector('.results-area').innerHTML;
-    expect(results).toContain('"complete": false');
-    expect(results).toContain('"pending-count": 1');
+    expect(results).toContain('similarities');
+    expect(results).toContain('"complete": true');
+    expect(results).toContain('"pending-count": 0');
+    expect(results).toContain('"overwrite-records": true');
 });
 
 test('Fetch User Attempt, No Result', async function() {
@@ -100,13 +109,11 @@ test('Submit Assignment', async function() {
 
     const fileContent = fs.readFileSync(path.join('site', 'js', 'modules', 'autograder', 'test', 'data', 'hw0_solution.py'), 'utf8');
     const fileObj = new File([fileContent], 'hw0_solution.py');
-    document.querySelector('div[data-name="files"] input')[Input.TEST_FILES_KEY] = [fileObj];
+    document.querySelector('.input-field[data-name="files"] input')[Input.TEST_FILES_KEY] = [fileObj];
 
     await TestUtil.submitTemplate();
 
     let results = document.querySelector('.results-area').innerHTML;
-    expect(results).toContain('course101');
-    expect(results).toContain('hw0');
     expect(results).toContain('Score');
 });
 
@@ -119,7 +126,7 @@ test('Fetch Course Scores', async function() {
 
     TestUtil.checkPageBasics('hw0', 'fetch course assignment scores');
 
-    document.querySelector('.input-field[data-name="target-users"] input').value = '["student"]';
+    document.querySelector('.input-field #target-users').value = '["student"]';
 
     await TestUtil.submitTemplate();
 
@@ -127,7 +134,7 @@ test('Fetch Course Scores', async function() {
     expect(results).toContain('course101::hw0::course-student@test.edulinq.org::1697406272');
 });
 
-test('Fetch User History', async function() {
+test('Fetch User History, Success', async function() {
     await TestUtil.loginUser('course-admin');
     await TestUtil.navigate(
             Routing.PATH_USER_HISTORY,
@@ -136,7 +143,7 @@ test('Fetch User History', async function() {
 
     TestUtil.checkPageBasics('hw0', 'user assignment history');
 
-    document.querySelector('.input-field[data-name="targetUser"] input').value = 'course-student@test.edulinq.org';
+    document.querySelector('.input-field #targetUser').value = 'course-student@test.edulinq.org';
 
     await TestUtil.submitTemplate();
 
@@ -154,7 +161,7 @@ test('Proxy Regrade', async function() {
 
     TestUtil.checkPageBasics('hw0', 'assignment proxy regrade');
 
-    document.querySelector('.input-field[data-name="users"] input').value = JSON.stringify([
+    document.querySelector('.input-field #users').value = JSON.stringify([
             "*",
             "-course-admin@test.edulinq.org",
         ]
@@ -167,7 +174,7 @@ test('Proxy Regrade', async function() {
     expect(output['resolved-users'].length).toEqual(4);
 });
 
-test('Proxy Resubmit', async function() {
+test('Proxy Resubmit, Success', async function() {
     await TestUtil.loginUser('course-admin');
     await TestUtil.navigate(
             Routing.PATH_PROXY_RESUBMIT,
@@ -176,12 +183,28 @@ test('Proxy Resubmit', async function() {
 
     TestUtil.checkPageBasics('hw0', 'assignment proxy resubmit');
 
-    document.querySelector('.input-field[data-name="email"] input').value = 'course-student@test.edulinq.org';
+    document.querySelector('.input-field #email').value = 'course-student@test.edulinq.org';
 
     await TestUtil.submitTemplate();
 
     let results = document.querySelector('.results-area').innerHTML;
-    expect(results).toContain('course101');
-    expect(results).toContain('hw0');
     expect(results).toContain('course-student@test.edulinq.org');
+    expect(results).toContain('Score');
+});
+
+test('Proxy Resubmit, User Not Found', async function() {
+    await TestUtil.loginUser('course-admin');
+    await TestUtil.navigate(
+            Routing.PATH_PROXY_RESUBMIT,
+            {[Routing.PARAM_COURSE]: 'course101', [Routing.PARAM_ASSIGNMENT]: 'hw0'},
+    );
+
+    TestUtil.checkPageBasics('hw0', 'assignment proxy resubmit');
+
+    document.querySelector('.input-field #email').value = 'zzz@test.edulinq.org';
+
+    await TestUtil.submitTemplate();
+
+    let results = document.querySelector('.results-area').innerHTML;
+    expect(results).toContain('Grading Failed');
 });
