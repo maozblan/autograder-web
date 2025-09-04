@@ -180,8 +180,7 @@ function handlerWrapper(handler, path, params, pageName, navParent, requirements
             return;
         }
 
-        if ((!Object.hasOwn(context.user.courses, courseID)) &&
-                (Autograder.Users.getServerRoleValue(context.user.role) < Autograder.Users.SERVER_ROLE_ADMIN)) {
+        if (!Object.hasOwn(context.user.courses, courseID)) {
             Log.warn(`User ('${context.user.email}') is not enrolled in course ('${courseID}').`, null, true);
             return;
         }
