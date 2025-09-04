@@ -1,5 +1,6 @@
 import * as Autograder from '../autograder/base.js';
 
+import * as Icon from './icon.js';
 import * as Input from './input.js';
 import * as Log from './log.js';
 import * as Render from './render.js';
@@ -8,49 +9,33 @@ import * as Util from './util.js';
 
 function init() {
     let requirements = {assignment: true};
-    Routing.addRoute(/^course\/assignment$/, handlerAssignment, 'Assignment', requirements);
-    Routing.addRoute(/^course\/assignment\/peek$/, handlerPeek, 'Assignment Peek', requirements);
-    Routing.addRoute(/^course\/assignment\/history$/, handlerHistory, 'Assignment History', requirements);
-    Routing.addRoute(/^course\/assignment\/submit$/, handlerSubmit, 'Assignment Submit', requirements);
-    Routing.addRoute(/^course\/assignment\/remove$/, handlerSubmissionRemove, 'Remove Submission', requirements);
-    Routing.addRoute(/^course\/assignment\/fetch\/course\/scores$/, handlerFetchCourseScores, 'Fetch Course Assignment Scores', requirements);
-    Routing.addRoute(/^course\/assignment\/fetch\/user\/attempt$/, handlerFetchUserAttempt, 'Fetch Submission Attempt', requirements);
-    Routing.addRoute(/^course\/assignment\/proxy-regrade$/, handlerProxyRegrade, 'Assignment Proxy Regrade', requirements);
-    Routing.addRoute(/^course\/assignment\/proxy-resubmit$/, handlerProxyResubmit, 'Assignment Proxy Resubmit', requirements);
-    Routing.addRoute(/^course\/assignment\/analysis\/individual$/, handlerAnalysisIndividual, 'Assignment Individual Analysis', requirements);
-    Routing.addRoute(/^course\/assignment\/analysis\/pairwise$/, handlerAnalysisPairwise, 'Assignment Pairwise Analysis', requirements);
-    Routing.addRoute(/^course\/assignment\/user\/history$/, handlerUserHistory, 'User Assignment History', requirements);
-}
-
-function setAssignmentTitle(course, assignment) {
-    let args = {
-        [Routing.PARAM_COURSE]: course.id,
-        [Routing.PARAM_ASSIGNMENT]: assignment.id,
-    };
-
-    let courseLink = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
-    let assignmentLink = Routing.formHashPath(Routing.PATH_ASSIGNMENT, args);
-    let titleParts = [
-        [course.id, courseLink],
-        [assignment.id, assignmentLink],
-    ];
-
-    Render.makeTitle(assignment.id, titleParts);
+    Routing.addRoute(/^course\/assignment$/, handlerAssignment, 'Assignment', Routing.NAV_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/peek$/, handlerPeek, 'Assignment Peek', Routing.NAV_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/history$/, handlerHistory, 'Assignment History', Routing.NAV_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/submit$/, handlerSubmit, 'Assignment Submit', Routing.NAV_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/remove$/, handlerSubmissionRemove, 'Remove Submission', Routing.NAV_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/fetch\/course\/scores$/, handlerFetchCourseScores, 'Fetch Course Assignment Scores', Routing.NAV_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/fetch\/user\/attempt$/, handlerFetchUserAttempt, 'Fetch Submission Attempt', Routing.NAV_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/proxy-regrade$/, handlerProxyRegrade, 'Assignment Proxy Regrade', Routing.NAV_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/proxy-resubmit$/, handlerProxyResubmit, 'Assignment Proxy Resubmit', Routing.NAV_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/analysis\/individual$/, handlerAnalysisIndividual, 'Assignment Individual Analysis', Routing.NAV_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/analysis\/pairwise$/, handlerAnalysisPairwise, 'Assignment Pairwise Analysis', Routing.NAV_COURSES, requirements);
+    Routing.addRoute(/^course\/assignment\/user\/history$/, handlerUserHistory, 'User Assignment History', Routing.NAV_COURSES, requirements);
 }
 
 function handlerAssignment(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let args = {
         [Routing.PARAM_COURSE]: course.id,
         [Routing.PARAM_ASSIGNMENT]: assignment.id,
     };
 
-    let cards = [
-        // Simple Actions
+    // Simple Actions
+    let studentCards = [
         new Render.Card(
             'assignment-action',
             'Submit',
@@ -81,8 +66,10 @@ function handlerAssignment(path, params, context, container) {
                 courseId: course.id,
             },
         ),
+    ];
 
-        // Advanced Actions
+    // Advanced Actions
+    let staffCards = [
         new Render.Card(
             'assignment-action',
             'Fetch Course Scores',
@@ -166,10 +153,11 @@ function handlerAssignment(path, params, context, container) {
     ];
 
     let cardSections = [
-        ['', cards],
+        ['Student Actions', studentCards],
+        ['Advanced Actions', staffCards],
     ];
 
-    container.innerHTML = Render.makeCardSections(context, assignment.name, cardSections);
+    container.innerHTML = Render.makeCardSections(context, assignment.name, cardSections, Icon.ICON_NAME_COURSES);
 }
 
 function handlerPeek(path, params, context, container) {
@@ -177,7 +165,7 @@ function handlerPeek(path, params, context, container) {
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
     let submission = params[Routing.PARAM_SUBMISSION] || '';
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let inputFields = [
         new Input.FieldType(context, 'submission', 'Submission ID', {
@@ -192,6 +180,7 @@ function handlerPeek(path, params, context, container) {
                 description: 'View a past submission. If no submission ID is provided, the most recent submission is used.',
                 inputs: inputFields,
                 buttonName: 'Peek',
+                iconName: Icon.ICON_NAME_PEEK,
                 // Auto-submit if we were passed an existing submission ID.
                 submitOnCreation: (submission != ''),
             },
@@ -232,13 +221,14 @@ function handlerHistory(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     Render.makePage(
             params, context, container, history,
             {
                 header: 'Fetch Submission History',
                 buttonName: 'Fetch',
+                iconName: Icon.ICON_NAME_HISTORY,
             },
         )
     ;
@@ -248,7 +238,7 @@ function handlerUserHistory(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let inputFields = [
         new Input.FieldType(context, 'targetUser', 'Target User', {
@@ -264,6 +254,7 @@ function handlerUserHistory(path, params, context, container) {
                 description: 'Fetch a summary of the submissions for this assignment.',
                 inputs: inputFields,
                 buttonName: 'Fetch',
+                iconName: Icon.ICON_NAME_HISTORY,
             },
         )
     ;
@@ -298,7 +289,7 @@ function handlerSubmit(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let inputFields = [
         new Input.FieldType(context, 'files', 'Files', {
@@ -321,6 +312,7 @@ function handlerSubmit(path, params, context, container) {
                 header: 'Submit Assignment',
                 inputs: inputFields,
                 buttonName: 'Submit',
+                iconName: Icon.ICON_NAME_SUBMIT,
             }
         )
     ;
@@ -346,7 +338,7 @@ function handlerSubmissionRemove(path, params, context, container) {
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
     let userEmail = context.user.email;
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let inputFields = [
         new Input.FieldType(context, 'targetEmail', 'Target User Email', {
@@ -364,6 +356,7 @@ function handlerSubmissionRemove(path, params, context, container) {
                 description: 'Remove a specified submission. Defaults to the most recent submission.',
                 inputs: inputFields,
                 buttonName: 'Remove Submission',
+                iconName: Icon.ICON_NAME_REMOVE,
             }
         )
     ;
@@ -401,7 +394,7 @@ function handlerFetchCourseScores(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let inputFields = [
         new Input.FieldType(context, 'target-users', 'Target Users', {
@@ -416,6 +409,7 @@ function handlerFetchCourseScores(path, params, context, container) {
                 description: 'Fetch the most recent scores for this assignment.',
                 inputs: inputFields,
                 buttonName: 'Fetch',
+                iconName: Icon.ICON_NAME_FETCH,
             },
         )
     ;
@@ -441,7 +435,7 @@ function handlerFetchUserAttempt(path, params, context, container) {
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
     let userEmail = context.user.email;
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let inputFields = [
         new Input.FieldType(context, 'targetEmail', 'Target User Email', {
@@ -521,6 +515,7 @@ function handlerFetchUserAttempt(path, params, context, container) {
                 description: 'Fetch a full submission attempt.',
                 inputs: inputFields,
                 buttonName: 'Fetch',
+                iconName: Icon.ICON_NAME_FETCH,
                 postResultsFunc: postResultsFunc,
             },
         )
@@ -531,7 +526,7 @@ function handlerProxyRegrade(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let inputFields = [
         new Input.FieldType(context, 'dryRun', 'Dry Run', {
@@ -559,6 +554,7 @@ function handlerProxyRegrade(path, params, context, container) {
                 description: 'Proxy regrade an assignment for all target users using their most recent submission.',
                 inputs: inputFields,
                 buttonName: 'Regrade',
+                iconName: Icon.ICON_NAME_PROXY_REGRADE,
             },
         )
     ;
@@ -587,7 +583,7 @@ function handlerProxyResubmit(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let inputFields = [
         new Input.FieldType(context, 'email', 'Target User', {
@@ -610,6 +606,7 @@ function handlerProxyResubmit(path, params, context, container) {
                 description: 'Proxy resubmit an assignment submission to the autograder.',
                 inputs: inputFields,
                 buttonName: 'Resubmit',
+                iconName: Icon.ICON_NAME_PROXY_RESUBMIT,
             },
         )
     ;
@@ -635,26 +632,33 @@ function proxyResubmit(params, context, container, inputParams) {
 }
 
 function getSubmissionResultHTML(course, assignment, result) {
+    result.message = Util.messageTimestampsToPretty(result.message);
+
     if (result.rejected) {
-        return `
-            <h3>Submission Rejected</h3>
-            <p>${result.message}</p>
-        `;
+        return getSubmissionErrorHTML('Submission Rejected', result.message);
     } else if (!result['grading-success']) {
-        return `
-            <h3>Grading Failed</h3>
-            <p>${result.message}</p>
-        `;
+        return getSubmissionErrorHTML('Grading Failed', result.message);
     } else {
         return Render.submission(course, assignment, result.result);
     }
+}
+
+function getSubmissionErrorHTML(header, message) {
+    return `
+        <div class="submission">
+            <div class="secondary-color drop-shadow">
+                <h3>${header}</h3>
+                <span>${message}</span>
+            </div>
+        </div>
+    `;
 }
 
 function handlerAnalysisIndividual(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let inputFields = [
         new Input.FieldType(context, 'submissions', 'List of Submission IDs', {
@@ -679,6 +683,7 @@ function handlerAnalysisIndividual(path, params, context, container) {
                 description: 'Get the result of an individual analysis for the specified submissions.',
                 inputs: inputFields,
                 buttonName: 'Analyze',
+                iconName: Icon.ICON_NAME_ANALYSIS,
             },
         )
     ;
@@ -703,7 +708,7 @@ function handlerAnalysisPairwise(path, params, context, container) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    setAssignmentTitle(course, assignment);
+    Render.setTabTitle(assignment.id);
 
     let inputFields = [
         new Input.FieldType(context, 'submissions', 'List of Submission IDs', {
@@ -728,6 +733,7 @@ function handlerAnalysisPairwise(path, params, context, container) {
                 description: 'Get the result of a pairwise analysis for the specified submissions.',
                 inputs: inputFields,
                 buttonName: 'Analyze',
+                iconName: Icon.ICON_NAME_ANALYSIS,
             },
         )
     ;

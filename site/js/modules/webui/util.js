@@ -1,7 +1,15 @@
 import * as Event from './event.js';
 
+const MSECS_PER_SECS = 1000
+const MSECS_PER_MINS = MSECS_PER_SECS * 60
+const MSECS_PER_HOURS = MSECS_PER_MINS * 60
+const MSECS_PER_DAYS = MSECS_PER_HOURS * 24
+
 const WORD_BREAK_RE = /[\-_]+/
 const JSON_INDENT = 4;
+
+const TESTING_LOCALE = 'en-US';
+const TESTING_TIME_ZONE = 'UTC';
 
 let _testing = false;
 
@@ -53,7 +61,23 @@ function orderingCompare(a, b, ordering = [], fallback = stringCompare) {
 }
 
 function timestampToPretty(timestamp) {
-    return (new Date(timestamp)).toLocaleString();
+    const date = new Date(timestamp);
+
+    // Return a timestamp in a standard locale and time zone for testing consistency.
+    if (_testing) {
+        return date.toLocaleString(TESTING_LOCALE, {
+            timeZone: TESTING_TIME_ZONE,
+        });
+    }
+
+    return date.toLocaleString();
+}
+
+// Find timestamps in a message and replace them with the pretty version.
+function messageTimestampsToPretty(message) {
+    return message.replace(/<timestamp:\s*(-?\d+)\s*>/g, function(match, timestamp) {
+        return timestampToPretty(parseInt(timestamp));
+    });
 }
 
 // Trigger an in-memory file to be downloaded by the user.
@@ -126,11 +150,17 @@ function isObject(value) {
 }
 
 export {
+    MSECS_PER_SECS,
+    MSECS_PER_MINS,
+    MSECS_PER_HOURS,
+    MSECS_PER_DAYS,
+
     caseInsensitiveStringCompare,
     cleanText,
     displayJSON,
     downloadFile,
     isObject,
+    messageTimestampsToPretty,
     orderingCompare,
     setTesting,
     timestampToPretty,
