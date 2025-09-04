@@ -2,6 +2,7 @@ import * as Autograder from '../autograder/base.js';
 
 import * as Assignment from './assignment.js';
 import * as Event from './event.js';
+import * as Icon from './icon.js';
 import * as Input from './input.js';
 import * as Routing from './routing.js';
 import * as Util from './util.js';
@@ -132,7 +133,7 @@ class Card {
 
     toHTML() {
         return `
-            <div class='card card-${this.type} secondary-color drop-shadow'>
+            <div class='card card-${this.type} tertiary-color drop-shadow'>
                 <a href='${this.link}' alt='${this.text}'>
                     <span>${this.text}</span>
                 </a>
@@ -193,17 +194,27 @@ function cards(context, cards) {
 
 // Render a list of card sections to html.
 // A card section is [section name, a list of cards].
-function makeCardSections(context, sectionsName, sections) {
+function makeCardSections(context, sectionsName, sections, iconName = Icon.ICON_NAME_DEFAULT) {
     let cardSections = [];
     for (const section of sections) {
         cardSections.push(makeCardSection(context, section[0], section[1]));
     }
 
+    let headerClasses = 'secondary-color drop-shadow';
+    if (sectionsName === '') {
+        headerClasses += ' hidden';
+    }
+
     return `
+        <div class='card-header ${headerClasses}'>
+            ${Icon.getIconHTML(iconName)}
+            <div class='card-title'>
+                <h1>${sectionsName}</h1>
+            </div>
+        </div>
         <div class='card-sections'>
-            <h2>${sectionsName}</h2>
             ${cardSections.join("\n")}
-        <div>
+        </div>
     `;
 }
 
@@ -215,8 +226,8 @@ function makeCardSection(context, sectionName, sectionCards) {
     }
 
     return `
-        <div class='card-section'>
-            <h3>${sectionName}</h3>
+        <div class='card-section secondary-color drop-shadow'>
+            <h2>${sectionName}</h2>
             ${cardHTML}
         </div>
     `;
@@ -241,11 +252,12 @@ function makePage(
             buttonName = 'Submit',
             // Click the submit button as soon as the page is created.
             submitOnCreation = false,
+            iconName = Icon.ICON_NAME_DEFAULT,
             postResultsFunc = undefined,
         }) {
     if ((controlAreaHTML) && (controlAreaHTML != '')) {
         controlAreaHTML = `
-            <div class="template-control-area secondary-color drop-shadow">
+            <div class="template-control-area secondary-color link-color drop-shadow">
                 ${controlAreaHTML}
             </div>
         `;
@@ -263,7 +275,7 @@ function makePage(
     let descriptionHTML = '';
     if ((description) && (description != '')) {
         descriptionHTML = `
-            <div class="template-description">
+            <div class="template-description secondary-color-low link-color-low">
                 <p>
                     ${description}
                 </p>
@@ -274,9 +286,12 @@ function makePage(
     let infoHTML = '';
     if ((headerHTML != '') || (descriptionHTML != '')) {
         infoHTML = `
-            <div class="page-information secondary-color drop-shadow">
-                ${headerHTML}
-                ${descriptionHTML}
+            <div class='page-information secondary-color drop-shadow'>
+                ${Icon.getIconHTML(iconName)}
+                <div class='page-text'>
+                    ${headerHTML}
+                    ${descriptionHTML}
+                </div>
             </div>
         `;
     }
@@ -299,7 +314,7 @@ function makePage(
 
     let buttonHTML = '';
     if (onSubmitFunc) {
-        buttonHTML = `<button class="template-button">${buttonName}</button>`;
+        buttonHTML = `<button class="template-button secondary-accent-color">${buttonName}</button>`;
     }
 
     let inputSectionHTML = `
@@ -370,8 +385,10 @@ function submitInputs(params, context, container, inputs, onSubmitFunc, postResu
     }
 
     let resultsArea = container.querySelector(".results-area");
+    resultsArea.innerHTML = `<div class="result secondary-color drop-shadow"></div>`;
+    let resultsElement = resultsArea.firstChild;
 
-    Routing.loadingStart(resultsArea, false);
+    Routing.loadingStart(resultsElement, false);
 
     let inputParams = {};
     let errorMessages = [];
@@ -405,9 +422,6 @@ function submitInputs(params, context, container, inputs, onSubmitFunc, postResu
         button.disabled = true;
     }
 
-    resultsArea.innerHTML = `<div class="result secondary-color drop-shadow"></div>`;
-    let resultsElement = resultsArea.firstChild;
-
     onSubmitFunc(params, context, resultsElement, inputParams)
         .then(function(result) {
             if (result != undefined) {
@@ -435,34 +449,7 @@ function submitInputs(params, context, container, inputs, onSubmitFunc, postResu
     ;
 }
 
-// Set the page title given a list of title parts.
-// Each page title part is [display name, optional link].
-// If title parts is empty, the page title defaults to the tab title.
-function makeTitle(tabTitle, pageTitleParts = []) {
-    let titlePartsHTML = [];
-    for (const part of pageTitleParts) {
-        let displayName = part[0];
-        let link = part[1];
-
-        if (link) {
-            titlePartsHTML.push(`<a href='${link}'>${displayName}</a>`);
-        } else {
-            titlePartsHTML.push(displayName);
-        }
-    }
-
-    let titleHTML = '';
-    if (titlePartsHTML.length > 0) {
-        titleHTML = `
-            <span>
-                ${titlePartsHTML.join(" / ")}
-            </span>
-        `;
-    } else {
-        titleHTML = `<span>${tabTitle}</span>`;
-    }
-
-    document.querySelector('.page .page-title').innerHTML = titleHTML;
+function setTabTitle(tabTitle) {
     document.title = `${tabTitle} :: Autograder`;
 }
 
@@ -599,7 +586,7 @@ function makePairedTableRow(label, value, name = undefined) {
     return `
         <tr ${nameHTML}>
             <th class='label'>${label}</th>
-            <td class='value'>${value}</td>
+            <td class='value'><span>${value}</span></td>
         </tr>
     `;
 }
@@ -901,7 +888,7 @@ export {
     makeCardSection,
     makeCardSections,
     makePage,
-    makeTitle,
+    setTabTitle,
     submission,
     submissionHistory,
     tableFromDictionaries,
