@@ -81,10 +81,7 @@ function fetchUserAttempt(course, assignment, targetSubmission = undefined, targ
     });
 }
 
-function proxyRegrade(
-        course, assignment, dryRun = false, overwriteRecords = false,
-        regradeCutoff, targetUsers, waitForCompletion = false,
-    ) {
+function proxyRegrade(course, assignment, dryRun, overwriteRecords, regradeCutoff, targetUsers, waitForCompletion) {
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/proxy/regrade',
         payload: {
@@ -112,7 +109,7 @@ function proxyResubmit(course, assignment, proxyEmail, proxyTime, targetSubmissi
     });
 }
 
-function analysisIndividual(submissions, overwriteRecords = false, waitForCompletion = false, dryRun = false) {
+function analysisIndividual(submissions, overwriteRecords, waitForCompletion, dryRun) {
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/analysis/individual',
         payload: {
@@ -124,7 +121,7 @@ function analysisIndividual(submissions, overwriteRecords = false, waitForComple
     });
 }
 
-function analysisPairwise(submissions, overwriteRecords = false, waitForCompletion = false, dryRun = false) {
+function analysisPairwise(submissions, overwriteRecords, waitForCompletion, dryRun) {
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/analysis/pairwise',
         payload: {

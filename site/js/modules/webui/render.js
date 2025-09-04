@@ -2,6 +2,7 @@ import * as Autograder from '../autograder/base.js';
 
 import * as Assignment from './assignment.js';
 import * as Event from './event.js';
+import * as Input from './input.js';
 import * as Routing from './routing.js';
 import * as Util from './util.js';
 
@@ -385,7 +386,7 @@ function submitInputs(params, context, container, inputs, onSubmitFunc, postResu
         }
 
         let value = result.getFieldValue();
-        if ((value) && (value != "")) {
+        if ((input.type === Input.INPUT_TYPE_BOOL) || ((value) && (value != ""))) {
             inputParams[result.getFieldName()] = value;
         }
     }

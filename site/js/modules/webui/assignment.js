@@ -545,6 +545,7 @@ function handlerProxyRegrade(path, params, context, container) {
         }),
         new Input.FieldType(context, 'users', 'Target Users', {
             type: Input.COURSE_USER_REFERENCE_LIST_FIELD_TYPE,
+            placeholder: '< All Users in Course >',
         }),
         new Input.FieldType(context, 'wait', 'Wait for Completion', {
             type: Input.INPUT_TYPE_BOOL,
@@ -555,7 +556,7 @@ function handlerProxyRegrade(path, params, context, container) {
             params, context, container, proxyRegrade,
             {
                 header: 'Proxy Regrade',
-                description: 'Proxy regrade an assignment for all target users using their most recent submission. (Defaults to all users in course.)',
+                description: 'Proxy regrade an assignment for all target users using their most recent submission.',
                 inputs: inputFields,
                 buttonName: 'Regrade',
             },
