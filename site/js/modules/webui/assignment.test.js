@@ -206,4 +206,6 @@ test('Proxy Resubmit, User Not Found', async function() {
 
     let results = document.querySelector('.results-area').innerHTML;
     expect(results).toContain('Grading Failed');
+    expect(results).toContain('User not found.');
+    expect(results).toContain('Submission not found.');
 });
