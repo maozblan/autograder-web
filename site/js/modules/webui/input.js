@@ -340,6 +340,7 @@ class FieldInstance {
 
     // Get the value from the result.
     // Throws an error on validation errors.
+    // All result values without content should return undefined.
     getFieldValue() {
         if (this.extractInputFunc) {
             return this.extractInputFunc(this.input);
@@ -368,6 +369,10 @@ class FieldInstance {
             value = this.valueFromJSON();
         } else {
             value = this.input.value;
+        }
+
+        if (value?.length == 0) {
+            value = undefined
         }
 
         return value;

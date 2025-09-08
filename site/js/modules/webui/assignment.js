@@ -563,6 +563,11 @@ function handlerProxyRegrade(path, params, context, container) {
 function proxyRegrade(params, context, container, inputParams) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+    console.log(
+            course.id, assignment.id,
+            inputParams.dryRun, inputParams.overwrite,
+            inputParams.cutoff, inputParams.users, inputParams.wait,
+    );
 
     return Autograder.Submissions.proxyRegrade(
             course.id, assignment.id,

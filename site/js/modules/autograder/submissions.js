@@ -32,14 +32,14 @@ function peek(course, assignment, submission = undefined) {
     });
 }
 
-function submit(course, assignment, files, allowLate = false, message = '') {
+function submit(course, assignment, files, allowLate, message = undefined) {
     let args = {
         'course-id': course,
         'assignment-id': assignment,
         'allow-late': allowLate,
     };
 
-    if (message.length > 0) {
+    if (message) {
         args.message = message;
     }
 
@@ -50,14 +50,19 @@ function submit(course, assignment, files, allowLate = false, message = '') {
     });
 }
 
-function fetchCourseScores(course, assignment, targetUsers = []) {
+function fetchCourseScores(course, assignment, targetUsers = undefined) {
+    let args = {
+        'course-id': course,
+        'assignment-id': assignment,
+    };
+
+    if (targetUsers) {
+        args['target-users'] = targetUsers;
+    }
+
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/fetch/course/scores',
-        payload: {
-            'course-id': course,
-            'assignment-id': assignment,
-            'target-users': targetUsers,
-        },
+        payload: args,
     });
 }
 

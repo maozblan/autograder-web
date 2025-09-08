@@ -402,10 +402,7 @@ function submitInputs(params, context, container, inputs, onSubmitFunc, postResu
             continue;
         }
 
-        let value = result.getFieldValue();
-        if ((input.type === Input.INPUT_TYPE_BOOL) || ((value) && (value != ""))) {
-            inputParams[result.getFieldName()] = value;
-        }
+        inputParams[result.getFieldName()] = result.getFieldValue();
     }
 
     if (errorMessages.length > 0) {

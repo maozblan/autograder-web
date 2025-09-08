@@ -164,8 +164,7 @@ test('Proxy Regrade', async function() {
     document.querySelector('.input-field #users').value = JSON.stringify([
             "*",
             "-course-admin@test.edulinq.org",
-        ]
-    );
+    ]);
 
     await TestUtil.submitTemplate();
 
