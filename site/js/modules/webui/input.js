@@ -340,7 +340,7 @@ class FieldInstance {
 
     // Get the value from the result.
     // Throws an error on validation errors.
-    // All result values without content should return undefined.
+    // Return undefined for empty strings, arrays, objects, and 
     getFieldValue() {
         if (this.extractInputFunc) {
             return this.extractInputFunc(this.input);
@@ -367,12 +367,8 @@ class FieldInstance {
             }
         } else if ((this.#parsedType === INPUT_TYPE_JSON) || (this.#parsedType === INPUT_TYPE_NUMBER)) {
             value = this.valueFromJSON();
-        } else {
+        } else if (this.input.value?.length > 0) {
             value = this.input.value;
-        }
-
-        if (value?.length == 0) {
-            value = undefined
         }
 
         return value;
@@ -380,7 +376,7 @@ class FieldInstance {
 
     valueFromJSON() {
         if ((!this.input) || (!this.input.value) || (this.input.value === "")) {
-            return "";
+            return undefined;
         }
 
         // The input has already been validated,
