@@ -340,7 +340,7 @@ class FieldInstance {
 
     // Get the value from the result.
     // Throws an error on validation errors.
-    // Return undefined for empty strings, arrays, objects, and 
+    // Return undefined for empty strings, arrays, objects, and arrays.
     getFieldValue() {
         if (this.extractInputFunc) {
             return this.extractInputFunc(this.input);
