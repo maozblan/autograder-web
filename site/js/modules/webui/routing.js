@@ -11,17 +11,8 @@ const DEFAULT_HANDLER = handlerNotFound;
 
 const PARAM_ASSIGNMENT = 'assignment';
 const PARAM_COURSE = 'course';
-const PARAM_COURSE_ID = 'course-id';
-const PARAM_DRY_RUN = 'dry-run';
-const PARAM_EMAIL_BCC = 'bcc';
-const PARAM_EMAIL_BODY = 'body';
-const PARAM_EMAIL_CC = 'cc';
-const PARAM_EMAIL_HTML = 'html';
-const PARAM_EMAIL_SUBJECT = 'subject';
-const PARAM_EMAIL_TO = 'to';
 const PARAM_SUBMISSION = 'submission';
 const PARAM_TARGET_ENDPOINT = 'endpoint';
-const PARAM_TARGET_USERS = 'target-users';
 
 const PATH_COURSE = 'course';
 const PATH_COURSES = 'courses';
@@ -384,17 +375,8 @@ export {
 
     PARAM_ASSIGNMENT,
     PARAM_COURSE,
-    PARAM_COURSE_ID,
-    PARAM_DRY_RUN,
-    PARAM_EMAIL_BCC,
-    PARAM_EMAIL_BODY,
-    PARAM_EMAIL_CC,
-    PARAM_EMAIL_HTML,
-    PARAM_EMAIL_SUBJECT,
-    PARAM_EMAIL_TO,
     PARAM_SUBMISSION,
     PARAM_TARGET_ENDPOINT,
-    PARAM_TARGET_USERS,
 
     PATH_COURSE,
     PATH_COURSES,

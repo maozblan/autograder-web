@@ -122,7 +122,7 @@ function handlerEmail(path, params, context, container) {
         new Input.FieldType(context, 'subject', 'Subject', {
             required: true,
         }),
-        new Input.FieldType(context, 'content', 'Content', {
+        new Input.FieldType(context, 'body', 'Content', {
             type: Input.INPUT_TYPE_TEXTAREA,
             additionalAttributes: 'rows="10"',
         }),
@@ -148,24 +148,18 @@ function handlerEmail(path, params, context, container) {
 }
 
 function sendEmail(params, context, container, inputParams) {
-    let args = {
-        [Routing.PARAM_COURSE_ID]: context.courses[params[Routing.PARAM_COURSE]].id,
-        [Routing.PARAM_EMAIL_TO]: inputParams.to ?? [],
-        [Routing.PARAM_EMAIL_CC]: inputParams.cc ?? [],
-        [Routing.PARAM_EMAIL_BCC]: inputParams.bcc ?? [],
-        [Routing.PARAM_EMAIL_SUBJECT]: inputParams.subject,
-        [Routing.PARAM_EMAIL_BODY]: inputParams.content,
-        [Routing.PARAM_DRY_RUN]: inputParams.dryRun,
-        [Routing.PARAM_EMAIL_HTML]: inputParams.html,
-    };
+    let course = context.courses[params[Routing.PARAM_COURSE]].id;
 
-    if ((args[Routing.PARAM_EMAIL_TO].length === 0) &&
-            (args[Routing.PARAM_EMAIL_CC].length === 0) &&
-            (args[Routing.PARAM_EMAIL_BCC].length === 0)) {
+    if ((inputParams.to?.length === 0) &&
+            (inputParams.cc?.length === 0) &&
+            (inputParams.bcc?.length === 0)) {
         return Promise.resolve('<p>Specify at least one recipient.</p>');
     }
 
-    return Autograder.Course.email(args)
+    return Autograder.Course.email(
+            course, inputParams.dryRun, inputParams.html, inputParams.subject,
+            inputParams.bcc, inputParams.body, inputParams.cc, inputParams.to,
+    )
         .then(function(result) {
             return `
                 <p>Email sent successfully.</p>
@@ -185,7 +179,7 @@ function handlerUsers(path, params, context, container) {
     Render.setTabTitle(course.id);
 
     let inputFields = [
-        new Input.FieldType(context, Routing.PARAM_TARGET_USERS, 'Target Users', {
+        new Input.FieldType(context, 'targetUsers', 'Target Users', {
             type: Input.COURSE_USER_REFERENCE_LIST_FIELD_TYPE,
         }),
     ];
@@ -208,9 +202,9 @@ function handlerUsers(path, params, context, container) {
 }
 
 function listUsers(params, context, container, inputParams) {
-    inputParams[Routing.PARAM_COURSE_ID] = context.courses[params[Routing.PARAM_COURSE]].id;
+    let course = context.courses[params[Routing.PARAM_COURSE]].id;
 
-    return Autograder.Course.users(inputParams)
+    return Autograder.Course.users(course, inputParams.targetUsers)
         .then(function(result) {
             if (result.users.length === 0) {
                 return '<p>Unable to find target users.</p>';

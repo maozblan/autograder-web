@@ -452,7 +452,7 @@ function handlerFetchUserAttempt(path, params, context, container) {
     let _cached_result = undefined;
 
     let fetchUserAttempt = function(params, context, container, inputParams) {
-        return Autograder.Submissions.fetchUserAttempt(course.id, assignment.id, inputParams.targetSubmission, inputParams.targetEmail)
+        return Autograder.Submissions.fetchUserAttempt(course.id, assignment.id, inputParams.targetEmail, inputParams.targetSubmission)
             .then(function(result) {
                 if (!result['found-submission']) {
                     return Render.codeBlockJSON(result);
@@ -618,8 +618,7 @@ function proxyResubmit(params, context, container, inputParams) {
 
     return Autograder.Submissions.proxyResubmit(
             course.id, assignment.id,
-            inputParams.email, inputParams.time,
-            inputParams.submission,
+            inputParams.email, inputParams.submission, inputParams.time,
         )
         .then(function(result) {
             return getSubmissionResultHTML(course, assignment, result);
@@ -693,8 +692,8 @@ function handlerAnalysisIndividual(path, params, context, container) {
 
 function analysisIndividual(params, context, container, inputParams) {
     return Autograder.Submissions.analysisIndividual(
-            inputParams.submissions, inputParams.overwrite,
-            inputParams.wait, inputParams.dryRun,
+            inputParams.dryRun, inputParams.overwrite,
+            inputParams.submissions, inputParams.wait,
         )
         .then(function(result) {
             return Render.codeBlockJSON(result);
@@ -743,8 +742,8 @@ function handlerAnalysisPairwise(path, params, context, container) {
 
 function analysisPairwise(params, context, container, inputParams) {
     return Autograder.Submissions.analysisPairwise(
-            inputParams.submissions, inputParams.overwrite,
-            inputParams.wait, inputParams.dryRun,
+            inputParams.dryRun, inputParams.overwrite,
+            inputParams.submissions, inputParams.wait,
         )
         .then(function(result) {
             return Render.codeBlockJSON(result);

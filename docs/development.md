@@ -1,5 +1,13 @@
 # Development Notes
 
+## Autograder Modules
+Parameter order:
+- `courses, assignments, files` in this order (only include what is needed for the function).
+- Required parameters (alphabetically).
+- Optional parameters (alphabetically), initialize all to undefined.
+
+The function should then construct the arguments object to only include arguments that are not undefined and send it as the payload.
+
 ## Arrow Functions
 
 This projet heavily prefers the use of the `function` keyword over the use of
