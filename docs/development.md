@@ -1,6 +1,16 @@
 # Development Notes
 
-## Checking for Undefined
+## Autograder API Interface
+
+This project interfaces with the Autograder API through functions.
+Each endpoint call is its own function that returns a call to `sendRequest` in `core.js` to send a POST request to Autograder API.
+
+Endpoint function parameters match payload content except credientials which are handled in `sendRequest`.
+Optional parameters are initialized to `undefined`.
+
+### Checking for Undefined
+
+Autograder API calls are parsed to remove undefined values before being sent.
 
 To catch undefined values,
 values must strictly be checked against `undefined`.
@@ -11,17 +21,19 @@ which is a proper input value for certain types.
 For example:
 ```javascript
 // Bad: Will catch other falsy values.
-if (value) {
-    return 'value is undefined';
-}
+    if (value) {
+        return 'value is undefined';
+    }
 
 // Good: Will only catch undefined.
-if (value === undefined) {
-    return 'value is undefined';
-}
+    if (value === undefined) {
+        return 'value is undefined';
+    }
 ```
 
-## Arrow Functions
+## Style
+
+### Arrow Functions
 
 This project heavily prefers the use of the `function` keyword over the use of
 [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions).
@@ -33,16 +45,16 @@ Both the RHS and LHS of the arrow must be wrapped in parentheses.
 Consider the following cases:
 ```javascript
 // Good: One line, parentheses on both sides.
-numbers.map((number) => (number * 2));
+    numbers.map((number) => (number * 2));
 
 // Bad: Missing parentheses on both sides.
-numbers.map(number => number * 2);
+    numbers.map(number => number * 2);
 
 // Bad: Missing parentheses on RHS.
-numbers.map((number) => number * 2);
+    numbers.map((number) => number * 2);
 
 // Bad: Using multiple lines.
-numbers.map((number) => {
-    return (number * 2);
-});
+    numbers.map((number) => {
+        return (number * 2);
+    });
 ```

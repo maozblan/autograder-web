@@ -369,7 +369,7 @@ class FieldInstance {
         } else if (this.#parsedType === INPUT_TYPE_NUMBER) {
             value = this.parseNumber();
         } else if ((this.input.value) && (this.input.value !== '')) {
-            // Empty input fields are not equal to empty string and should not be set as such.
+            // Empty input fields are not equal to empty strings and should therefore be left as undefined.
             value = this.input.value;
         }
 

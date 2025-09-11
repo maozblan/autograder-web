@@ -98,7 +98,7 @@ function autograderGradingResultToJSFile(gradingResult, filename = undefined) {
 
 function cleanObjectofUndefined(obj) {
     for (let key in obj) {
-        // Clear key ONLY if value equals undefined.
+        // Clear key ONLY if value is explicitly undefined.
         if (obj[key] === undefined) {
             delete obj[key];
         }

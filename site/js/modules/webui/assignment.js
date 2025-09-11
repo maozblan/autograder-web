@@ -564,6 +564,8 @@ function proxyRegrade(params, context, container, inputParams) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
+    // Proxy time is a nullable timestamp in UNIX millisecond time.
+    // Input only accepts numeric values so manually update numeric default to nullable default.
     if (inputParams.time === 0) {
         inputParams.time = null;
     }
@@ -620,6 +622,8 @@ function proxyResubmit(params, context, container, inputParams) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
+    // Proxy time is a nullable timestamp in UNIX millisecond time.
+    // Input only accepts numeric values so manually update numeric default to nullable default.
     if ((inputParams.time === 0)) {
         inputParams.time = null;
     }
