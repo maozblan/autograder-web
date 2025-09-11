@@ -158,7 +158,7 @@ function sendEmail(params, context, container, inputParams) {
 
     return Autograder.Course.email(
             course, inputParams.dryRun, inputParams.html, inputParams.subject,
-            inputParams.bcc, inputParams.body, inputParams.cc, inputParams.to,
+            inputParams.to, inputParams.cc, inputParams.bcc, inputParams.body,
     )
         .then(function(result) {
             return `

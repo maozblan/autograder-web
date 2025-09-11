@@ -96,9 +96,19 @@ function autograderGradingResultToJSFile(gradingResult, filename = undefined) {
     });
 }
 
+function cleanObjectofUndefined(obj) {
+    for (let key in obj) {
+        // Clear key ONLY if value equals undefined.
+        if (obj[key] === undefined) {
+            delete obj[key];
+        }
+    }
+}
+
 export {
     autograderFileToJSFile,
     autograderGradingResultToJSFile,
+    cleanObjectofUndefined,
     b64Decode,
     getTimestampNow,
     gunzip,

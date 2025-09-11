@@ -564,10 +564,14 @@ function proxyRegrade(params, context, container, inputParams) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
+    if (inputParams.time === 0) {
+        inputParams.time = null;
+    }
+
     return Autograder.Submissions.proxyRegrade(
             course.id, assignment.id,
-            inputParams.dryRun, inputParams.overwrite,
-            inputParams.cutoff, inputParams.users, inputParams.wait,
+            inputParams.dryRun, inputParams.overwrite, inputParams.wait,
+            inputParams.cutoff, inputParams.users,
         )
         .then(function(result) {
             return Render.codeBlockJSON(result);
@@ -615,6 +619,10 @@ function handlerProxyResubmit(path, params, context, container) {
 function proxyResubmit(params, context, container, inputParams) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+
+    if ((inputParams.time === 0)) {
+        inputParams.time = null;
+    }
 
     return Autograder.Submissions.proxyResubmit(
             course.id, assignment.id,

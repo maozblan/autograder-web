@@ -52,3 +52,24 @@ test("Util.autograderGradingResultToJSFile() base", async function() {
     expect(file.__testing_blob_size).toBeGreaterThanOrEqual(expectedBytes - epsilonBytes);
     expect(file.__testing_blob_size).toBeLessThanOrEqual(expectedBytes + epsilonBytes);
 });
+
+describe("Util.cleanObjectofUndefined() base", function() {
+    // [[input, expected], ...]
+    const testCases = [
+        // Empty
+        [{}, {}],
+
+        // Basic
+        [{ a: 1, b: 2 }, { a: 1, b: 2 }],
+        [{ a: 1, b: undefined }, { a: 1 }],
+        [{ a: 1, b: null }, { a: 1, b: null }],
+        [{ a: true, b: false }, { a: true, b: false }],
+    ];
+
+    test.each(testCases)("'%s'", function(input, expected) {
+        // Function edits input object directly.
+        Util.cleanObjectofUndefined(input);
+
+        expect(input).toEqual(expected);
+    });
+});

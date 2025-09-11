@@ -1,16 +1,29 @@
 # Development Notes
 
-## Autograder Modules
-Parameter order:
-- `courses, assignments, files` in this order (only include what is needed for the function).
-- Required parameters (alphabetically).
-- Optional parameters (alphabetically), initialize all to undefined.
+## Checking for Undefined
 
-The function should then construct the arguments object to only include arguments that are not undefined and send it as the payload.
+To catch undefined values,
+values must strictly be checked against `undefined`.
+Regular guards will not work as JS has many falsy values.
+This risks the removal of `null`,
+which is a proper input value for certain types.
+
+For example:
+```javascript
+// Bad: Will catch other falsy values.
+if (value) {
+    return 'value is undefined';
+}
+
+// Good: Will only catch undefined.
+if (value === undefined) {
+    return 'value is undefined';
+}
+```
 
 ## Arrow Functions
 
-This projet heavily prefers the use of the `function` keyword over the use of
+This project heavily prefers the use of the `function` keyword over the use of
 [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions).
 Arrow functions may only be used for one line callbacks.
 If the RHS of the arrow function is more than a single expression,
