@@ -118,7 +118,7 @@ function sendRequest({
         payload[REQUEST_USER_PASS_KEY] = Util.sha256(overrideCleartext);
     }
 
-    Util.cleanObjectofUndefined(payload);
+    Util.removeUndefinedValues(payload);
 
     let url = `${BASE_URL}/${API_VESION}/${endpoint}`;
 

@@ -96,11 +96,11 @@ function autograderGradingResultToJSFile(gradingResult, filename = undefined) {
     });
 }
 
-function cleanObjectofUndefined(obj) {
-    for (let key in obj) {
+function removeUndefinedValues(object) {
+    for (const [key, value] of Object.entries(object)) {
         // Clear key ONLY if value is explicitly undefined.
-        if (obj[key] === undefined) {
-            delete obj[key];
+        if (value === undefined) {
+            delete object[key];
         }
     }
 }
@@ -108,9 +108,9 @@ function cleanObjectofUndefined(obj) {
 export {
     autograderFileToJSFile,
     autograderGradingResultToJSFile,
-    cleanObjectofUndefined,
     b64Decode,
     getTimestampNow,
     gunzip,
+    removeUndefinedValues,
     sha256,
 }

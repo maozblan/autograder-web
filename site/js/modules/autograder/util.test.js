@@ -53,22 +53,30 @@ test("Util.autograderGradingResultToJSFile() base", async function() {
     expect(file.__testing_blob_size).toBeLessThanOrEqual(expectedBytes + epsilonBytes);
 });
 
-describe("Util.cleanObjectofUndefined() base", function() {
+describe("Util.removeUndefinedValues() base", function() {
     // [[input, expected], ...]
     const testCases = [
         // Empty
         [{}, {}],
 
         // Basic
-        [{ a: 1, b: 2 }, { a: 1, b: 2 }],
-        [{ a: 1, b: undefined }, { a: 1 }],
-        [{ a: 1, b: null }, { a: 1, b: null }],
-        [{ a: true, b: false }, { a: true, b: false }],
+        [{ a: undefined }, {}],
+        [{ a: 1 }, { a: 1 }],
+        [{ a: true }, { a: true }],
+        [{ a: 'string' }, { a: 'string' }],
+        [{ a: ['array'] }, { a: ['array'] }],
+        
+        // Other falsy values
+        [{ a: 0 }, { a: 0 }],
+        [{ a: false }, { a: false }],
+        [{ a: '' }, { a: '' }],
+        [{ a: [] }, { a: [] }],
+        [{ a: null }, { a: null }],
     ];
 
     test.each(testCases)("'%s'", function(input, expected) {
         // Function edits input object directly.
-        Util.cleanObjectofUndefined(input);
+        Util.removeUndefinedValues(input);
 
         expect(input).toEqual(expected);
     });
