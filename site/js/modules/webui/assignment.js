@@ -646,22 +646,22 @@ function getSubmissionResultHTML(course, assignment, result) {
     result.message = Util.messageTimestampsToPretty(result.message);
 
     if (result.rejected) {
-        return getSubmissionErrorHTML('Submission Rejected', result['found-user'], result['found-submission'], result.message);
+        return getSubmissionErrorHTML('Submission Rejected', result);
     } else if (!result['grading-success']) {
-        return getSubmissionErrorHTML('Grading Failed', result['found-user'], result['found-submission'], result.message);
+        return getSubmissionErrorHTML('Grading Failed', result);
     } else {
         return Render.submission(course, assignment, result.result);
     }
 }
 
-function getSubmissionErrorHTML(header, foundUser, foundSubmission, message) {
+function getSubmissionErrorHTML(header, submission) {
     return `
         <div class="submission">
             <div class="secondary-color drop-shadow">
                 <h3>${header}</h3>
-                <p>User ${foundUser ? '' : 'not '}found.</p>
-                <p>Submission ${foundSubmission ? '' : 'not '}found.</p>
-                <p>${message}</p>
+                <p>User ${submission['found-user'] ? '' : 'not '}found.</p>
+                <p>Submission ${submission['found-submission'] ? '' : 'not '}found.</p>
+                <p>${submission.message}</p>
             </div>
         </div>
     `;
