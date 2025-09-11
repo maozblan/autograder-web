@@ -700,8 +700,8 @@ function handlerAnalysisIndividual(path, params, context, container) {
 
 function analysisIndividual(params, context, container, inputParams) {
     return Autograder.Submissions.analysisIndividual(
-            inputParams.dryRun, inputParams.overwrite,
-            inputParams.submissions, inputParams.wait,
+            inputParams.submissions, inputParams.overwrite,
+            inputParams.wait, inputParams.dryRun,
         )
         .then(function(result) {
             return Render.codeBlockJSON(result);
@@ -750,8 +750,8 @@ function handlerAnalysisPairwise(path, params, context, container) {
 
 function analysisPairwise(params, context, container, inputParams) {
     return Autograder.Submissions.analysisPairwise(
-            inputParams.dryRun, inputParams.overwrite,
-            inputParams.submissions, inputParams.wait,
+            inputParams.submissions, inputParams.overwrite,
+            inputParams.wait, inputParams.dryRun,
         )
         .then(function(result) {
             return Render.codeBlockJSON(result);

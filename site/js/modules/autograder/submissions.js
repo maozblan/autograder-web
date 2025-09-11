@@ -98,7 +98,7 @@ function analysisIndividual(submissions, overwriteRecords, waitForCompletion, dr
     });
 }
 
-function analysisPairwise(dryRun, overwriteRecords, submissions, waitForCompletion) {
+function analysisPairwise(submissions, overwriteRecords, waitForCompletion, dryRun) {
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/analysis/pairwise',
         payload: {
