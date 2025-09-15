@@ -565,9 +565,9 @@ function proxyRegrade(params, context, container, inputParams) {
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
     // Proxy time is a nullable timestamp in UNIX millisecond time.
-    // Input only accepts numeric values so manually update numeric default to nullable default.
-    if (inputParams.time === 0) {
-        inputParams.time = null;
+    // Change numeric sentinel value to nullable default.
+    if (inputParams.cutoff === -1) {
+        inputParams.cutoff = null;
     }
 
     return Autograder.Submissions.proxyRegrade(
@@ -623,8 +623,8 @@ function proxyResubmit(params, context, container, inputParams) {
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
     // Proxy time is a nullable timestamp in UNIX millisecond time.
-    // Input only accepts numeric values so manually update numeric default to nullable default.
-    if ((inputParams.time === 0)) {
+    // Change numeric sentinel value to nullable default.
+    if (inputParams.time === -1) {
         inputParams.time = null;
     }
 

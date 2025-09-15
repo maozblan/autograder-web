@@ -3,29 +3,28 @@
 ## Autograder API Interface
 
 This project interfaces with the Autograder API through functions.
-Each endpoint call is its own function that returns a call to `sendRequest` in `core.js` to send a POST request to Autograder API.
+Each endpoint call is a function that returns a promise to send a POST request to Autograder API.
+The request is handled in `sendRequest()` in `core.js`.
 
-Endpoint function parameters match payload content except credientials which are handled in `sendRequest`.
-Optional parameters are initialized to `undefined`.
+Endpoint function parameters should match payload content.
+Payload content includes all configurable parameters corresponding to each endpoint,
+with the exception of credientials which are handled in `sendRequest()`.
 
-### Checking for Undefined
+### Payload Parameter Edge Cases
 
-Autograder API calls are parsed to remove undefined values before being sent.
-
-To catch undefined values,
-values must strictly be checked against `undefined`.
-Regular guards will not work as JS has many falsy values.
-This risks the removal of `null`,
-which is a proper input value for certain types.
+Autograder API includes nullable types.
+Due to these edge cases, parameter values must strictly be checked against `undefined`
+to avoid accidentally removing other falsy values including `null`
+when removing unused optional parameters in `sendRequest()`.
 
 For example:
 ```javascript
-// Bad: Will catch other falsy values.
+    // Bad: Will catch other falsy values.
     if (value) {
         return 'value is undefined';
     }
 
-// Good: Will only catch undefined.
+    // Good: Will only catch undefined.
     if (value === undefined) {
         return 'value is undefined';
     }
@@ -44,16 +43,16 @@ Both the RHS and LHS of the arrow must be wrapped in parentheses.
 
 Consider the following cases:
 ```javascript
-// Good: One line, parentheses on both sides.
+    // Good: One line, parentheses on both sides.
     numbers.map((number) => (number * 2));
 
-// Bad: Missing parentheses on both sides.
+    // Bad: Missing parentheses on both sides.
     numbers.map(number => number * 2);
 
-// Bad: Missing parentheses on RHS.
+    // Bad: Missing parentheses on RHS.
     numbers.map((number) => number * 2);
 
-// Bad: Using multiple lines.
+    // Bad: Using multiple lines.
     numbers.map((number) => {
         return (number * 2);
     });
