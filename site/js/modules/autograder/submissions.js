@@ -1,56 +1,41 @@
 import * as Core from './core.js';
 
 function history(course, assignment, targetEmail = undefined) {
-    let args = {
-        'course-id': course,
-        'assignment-id': assignment,
-    };
-
-    if (targetEmail) {
-        args['target-email'] = targetEmail;
-    }
-
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/fetch/user/history',
-        payload: args,
+        payload: {
+            'course-id': course,
+            'assignment-id': assignment,
+            'target-email': targetEmail,
+        },
     });
 }
 
 function peek(course, assignment, submission = undefined) {
-    let args = {
-        'course-id': course,
-        'assignment-id': assignment,
-    };
-
-    if (submission) {
-        args['target-submission'] = submission;
-    }
-
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/fetch/user/peek',
-        payload: args,
+        payload: {
+            'course-id': course,
+            'assignment-id': assignment,
+            'target-submission': submission,
+        },
     });
 }
 
-function submit(course, assignment, files, allowLate = false, message = '') {
-    let args = {
-        'course-id': course,
-        'assignment-id': assignment,
-        'allow-late': allowLate,
-    };
-
-    if (message.length > 0) {
-        args.message = message;
-    }
-
+function submit(course, assignment, files, allowLate, message = undefined) {
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/submit',
         files: files,
-        payload: args,
+        payload: {
+            'course-id': course,
+            'assignment-id': assignment,
+            'allow-late': allowLate,
+            'message': message,
+        },
     });
 }
 
-function fetchCourseScores(course, assignment, targetUsers = []) {
+function fetchCourseScores(course, assignment, targetUsers = undefined) {
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/fetch/course/scores',
         payload: {
@@ -61,27 +46,19 @@ function fetchCourseScores(course, assignment, targetUsers = []) {
     });
 }
 
-function fetchUserAttempt(course, assignment, targetSubmission = undefined, targetEmail = undefined) {
-    let args = {
-        'course-id': course,
-        'assignment-id': assignment,
-    };
-
-    if (targetEmail) {
-        args['target-email'] = targetEmail;
-    }
-
-    if (targetSubmission) {
-        args['target-submission'] = targetSubmission;
-    }
-
+function fetchUserAttempt(course, assignment, targetEmail = undefined, targetSubmission = undefined) {
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/fetch/user/attempt',
-        payload: args,
+        payload: {
+            'course-id': course,
+            'assignment-id': assignment,
+            'target-email': targetEmail,
+            'target-submission': targetSubmission,
+        },
     });
 }
 
-function proxyRegrade(course, assignment, dryRun, overwriteRecords, regradeCutoff, targetUsers, waitForCompletion) {
+function proxyRegrade(course, assignment, dryRun, overwriteRecords, waitForCompletion, regradeCutoff = undefined, targetUsers = undefined) {
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/proxy/regrade',
         payload: {
@@ -89,14 +66,14 @@ function proxyRegrade(course, assignment, dryRun, overwriteRecords, regradeCutof
             'assignment-id': assignment,
             'dry-run': dryRun,
             'overwrite-records': overwriteRecords,
+            'wait-for-completion': waitForCompletion,
             'regrade-cutoff': regradeCutoff,
             'target-users': targetUsers,
-            'wait-for-completion': waitForCompletion,
         },
     });
 }
 
-function proxyResubmit(course, assignment, proxyEmail, proxyTime, targetSubmission) {
+function proxyResubmit(course, assignment, proxyEmail, targetSubmission = undefined, proxyTime = undefined) {
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/proxy/resubmit',
         payload: {
@@ -133,7 +110,7 @@ function analysisPairwise(submissions, overwriteRecords, waitForCompletion, dryR
     });
 }
 
-function remove(course, assignment, targetEmail = "", targetSubmission = "") {
+function remove(course, assignment, targetEmail = undefined, targetSubmission = undefined) {
     return Core.sendRequest({
         endpoint: 'courses/assignments/submissions/remove',
         payload: {

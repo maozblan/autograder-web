@@ -236,6 +236,7 @@ function makeCardSection(context, sectionName, sectionCards) {
 // The template includes a control area, header, description, input area, submission button, and a results area.
 // The onSubmitFunc must do the following:
 //   - Accept four parameters (params, context, container, inputParams).
+//   - Input parameter value validation for special cases should be done in this function.
 //   - Return a promise that resolves to the content to display in the results area.
 // The page inputs expects a list of Input.Fields, see ./input.js for more information.
 // The postResultsFunc (if provided) is called after the results are rendered,
@@ -401,10 +402,7 @@ function submitInputs(params, context, container, inputs, onSubmitFunc, postResu
             continue;
         }
 
-        let value = result.getFieldValue();
-        if ((value) && (value != "")) {
-            inputParams[result.getFieldName()] = value;
-        }
+        inputParams[result.getFieldName()] = result.getFieldValue();
     }
 
     if (errorMessages.length > 0) {

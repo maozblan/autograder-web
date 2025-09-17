@@ -13,6 +13,10 @@ const DEFAULT_ID_CLEARTEXT = 'server-admin';
 // Replace JSDOM objects with Node versions (Jest makes these replacements).
 global.DecompressionStream = stream.DecompressionStream;
 
+global.alert = function(message) {
+    console.log(`ALERT: ${message}`);
+}
+
 // Mock fetch to use our test data.
 global.fetch = function(url, options = {}) {
     let endpoint = url.replace(/^\/api\/v\d+\//, '');

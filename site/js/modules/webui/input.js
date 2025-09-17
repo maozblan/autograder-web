@@ -364,9 +364,12 @@ class FieldInstance {
                     value.push(file);
                 }
             }
-        } else if ((this.#parsedType === INPUT_TYPE_JSON) || (this.#parsedType === INPUT_TYPE_NUMBER)) {
+        } else if (this.#parsedType === INPUT_TYPE_JSON) {
             value = this.valueFromJSON();
-        } else {
+        } else if (this.#parsedType === INPUT_TYPE_NUMBER) {
+            value = this.parseNumber();
+        } else if ((this.input.value) && (this.input.value !== '')) {
+            // Empty input fields are not equal to empty strings and should therefore be left as undefined.
             value = this.input.value;
         }
 
@@ -374,13 +377,24 @@ class FieldInstance {
     }
 
     valueFromJSON() {
+        // The last case catches empty input fields.
+        // Empty strings are valid, parsable JSON values in the format of '""'.
         if ((!this.input) || (!this.input.value) || (this.input.value === "")) {
-            return "";
+            return undefined;
         }
 
         // The input has already been validated,
         // so parse will not throw an error.
         return JSON.parse(`${this.input.value}`);
+    }
+
+    parseNumber() {
+        // Empty strings are not valid numbers but are the value of empty text fields.
+        if ((!this.input) || (!this.input.value) || (this.input.value === "")) {
+            return undefined;
+        }
+
+        return Number(this.input.value);
     }
 }
 

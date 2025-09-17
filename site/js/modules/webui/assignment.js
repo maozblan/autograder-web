@@ -452,7 +452,7 @@ function handlerFetchUserAttempt(path, params, context, container) {
     let _cached_result = undefined;
 
     let fetchUserAttempt = function(params, context, container, inputParams) {
-        return Autograder.Submissions.fetchUserAttempt(course.id, assignment.id, inputParams.targetSubmission, inputParams.targetEmail)
+        return Autograder.Submissions.fetchUserAttempt(course.id, assignment.id, inputParams.targetEmail, inputParams.targetSubmission)
             .then(function(result) {
                 if (!result['found-submission']) {
                     return Render.codeBlockJSON(result);
@@ -540,7 +540,7 @@ function handlerProxyRegrade(path, params, context, container) {
         }),
         new Input.FieldType(context, 'users', 'Target Users', {
             type: Input.COURSE_USER_REFERENCE_LIST_FIELD_TYPE,
-            required: true,
+            placeholder: '< All Users in Course >',
         }),
         new Input.FieldType(context, 'wait', 'Wait for Completion', {
             type: Input.INPUT_TYPE_BOOL,
@@ -566,8 +566,8 @@ function proxyRegrade(params, context, container, inputParams) {
 
     return Autograder.Submissions.proxyRegrade(
             course.id, assignment.id,
-            inputParams.dryRun, inputParams.overwrite,
-            inputParams.cutoff, inputParams.target, inputParams.wait,
+            inputParams.dryRun, inputParams.overwrite, inputParams.wait,
+            inputParams.cutoff, inputParams.users,
         )
         .then(function(result) {
             return Render.codeBlockJSON(result);
@@ -618,8 +618,7 @@ function proxyResubmit(params, context, container, inputParams) {
 
     return Autograder.Submissions.proxyResubmit(
             course.id, assignment.id,
-            inputParams.email, inputParams.time,
-            inputParams.submission,
+            inputParams.email, inputParams.submission, inputParams.time,
         )
         .then(function(result) {
             return getSubmissionResultHTML(course, assignment, result);
@@ -635,20 +634,22 @@ function getSubmissionResultHTML(course, assignment, result) {
     result.message = Util.messageTimestampsToPretty(result.message);
 
     if (result.rejected) {
-        return getSubmissionErrorHTML('Submission Rejected', result.message);
+        return getSubmissionErrorHTML('Submission Rejected', result);
     } else if (!result['grading-success']) {
-        return getSubmissionErrorHTML('Grading Failed', result.message);
+        return getSubmissionErrorHTML('Grading Failed', result);
     } else {
         return Render.submission(course, assignment, result.result);
     }
 }
 
-function getSubmissionErrorHTML(header, message) {
+function getSubmissionErrorHTML(header, submission) {
     return `
         <div class="submission">
             <div class="secondary-color drop-shadow">
                 <h3>${header}</h3>
-                <span>${message}</span>
+                <p>User ${submission['found-user'] ? '' : 'not '}found.</p>
+                <p>Submission ${submission['found-submission'] ? '' : 'not '}found.</p>
+                <p>${submission.message}</p>
             </div>
         </div>
     `;
