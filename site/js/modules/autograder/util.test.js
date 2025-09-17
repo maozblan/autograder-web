@@ -65,7 +65,7 @@ describe("Util.removeUndefinedValues() base", function() {
         [{ a: true }, { a: true }],
         [{ a: 'string' }, { a: 'string' }],
         [{ a: ['array'] }, { a: ['array'] }],
-        
+
         // Other falsy values
         [{ a: 0 }, { a: 0 }],
         [{ a: false }, { a: false }],
