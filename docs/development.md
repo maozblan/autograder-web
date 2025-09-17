@@ -2,20 +2,14 @@
 
 ## Autograder API Interface
 
-This project interfaces with the Autograder API through functions.
-Each endpoint call is a function that returns a promise to send a POST request to Autograder API.
-The request is handled in `sendRequest()` in
-[`core.js`](/site/js/modules/autograder/core.js).
-
+This project interfaces with the Autograder API through functions for each API endpoint.
+These functions return a promise that resolves to a response from the Autograder API.
 Endpoint function parameters should match the Autograder API payload content.
 Payload content includes all configurable parameters corresponding to each endpoint,
-with the exception of credientials which are generally handled in `sendRequest()`.
-
-### Payload Parameter Edge Cases
-
-The Autograder API includes nullable types which are not handled by the page template by default.
-Nullable parameters should be handled manually in `onSubmit()` when using the template.
-For example, the nullable timestamp needs to be set to `null` if the input value is `NaN`.
+with the exception of credientials which are generally handled in [`sendRequest()`](/site/js/modules/autograder/core.js).
+`sendRequest()` will remove any payload keys with `undefined` values,
+if you want to send an explicitly null/nil value, use `null`.
+We recommend template users setting these parameters in their `onSubmit` callback.
 
 ## Style
 
