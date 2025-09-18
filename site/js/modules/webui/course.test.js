@@ -16,19 +16,21 @@ test('Enrolled Courses', async function() {
 });
 
 describe('Nav Course101', function() {
-    // [[user, [expected card labels]], ...].
+    // [[user, [expected card labels], error substring], ...].
     const testCases = [
         [
             'course-other',
             [
                 'Homework 0',
             ],
+            undefined,
         ],
         [
             'course-student',
             [
                 'Homework 0',
             ],
+            undefined,
         ],
         [
             'course-grader',
@@ -37,13 +39,35 @@ describe('Nav Course101', function() {
                 'Email Users',
                 'List Users',
             ],
+            undefined,
+        ],
+        [
+            'server-user',
+            undefined,
+            'is not enrolled in course',
+        ],
+        [
+            'server-admin',
+            [
+                'Homework 0',
+                'Email Users',
+                'List Users',
+            ],
+            undefined,
         ],
     ];
 
     const targetCourse = 'course101';
 
-    test.each(testCases)("%s", async function(user, expectedLabelNames) {
+    test.each(testCases)("%s", async function(user, expectedLabelNames, errorSubstring) {
         await TestUtil.loginUser(user);
+
+        // If there is an error substring, we expect navigation to fail.
+        if (errorSubstring) {
+            await TestUtil.expectFailedNavigation(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: targetCourse}, errorSubstring);
+            return;
+        }
+
         await TestUtil.navigate(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: targetCourse});
 
         TestUtil.checkPageBasics(targetCourse, 'course');
@@ -135,4 +159,17 @@ test('Course Users List', async function() {
     for (const expectedEmail of expectedEmails) {
         expect(results).toContain(expectedEmail);
     }
+});
+
+// Navigate to multiple courses to ensure that the course context is properly loaded for each.
+test('Nav Multiple Courses', async function() {
+    const user = 'course-admin';
+
+    await TestUtil.loginUser(user);
+
+    await TestUtil.navigate(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: 'course101'});
+    TestUtil.checkPageBasics('course101', 'course');
+
+    await TestUtil.navigate(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: 'course-languages'});
+    TestUtil.checkPageBasics('course-languages', 'course');
 });

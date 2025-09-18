@@ -153,7 +153,7 @@ function handlerWrapper(handler, path, params, pageName, navParent, requirements
                 return handlerWrapper(handler, path, params, pageName, navParent, requirements);
             })
             .catch(function(result) {
-                Log.warn('Failed to load context.', result);
+                routingFailed(path, params, null, `Failed to load context: '${result}'.`, false);
                 return redirectLogout();
             })
         ;
@@ -167,12 +167,29 @@ function handlerWrapper(handler, path, params, pageName, navParent, requirements
     if (requirements.course) {
         let courseID = params[PARAM_COURSE];
         if (!courseID) {
-            Log.warn(`No course id specified for path '${path}'.`, null, true);
+            routingFailed(path, params, context, `No course id specified for path '${path}'.`, false);
             return;
         }
 
-        if (!Object.hasOwn(context.user.courses, courseID)) {
-            Log.warn(`User ('${context.user.email}') is not enrolled in course ('${courseID}').`, null, true);
+        // Check if the course context does not exist.
+        // If it doesn't, then either the course context needs to be loaded or the user is not enrolled in this course.
+        if (!Object.hasOwn(context.courses, courseID)) {
+            // Check if the user is a server admin and or enrolled in this course.
+            if ((Autograder.Users.getServerRoleValue(context.user.role) < Autograder.Users.SERVER_ROLE_ADMIN) && !Object.hasOwn(context.user.enrollments, courseID)) {
+                routingFailed(path, params, context, `User ('${context.user.email}') is not enrolled in course ('${courseID}').`, true);
+                return redirectHome();
+            }
+
+            Context.loadCourse(courseID)
+                .then(function(result) {
+                    // Call this function again to complete all checks and call the wrapper.
+                    return handlerWrapper(handler, path, params, pageName, navParent, requirements);
+                })
+                .catch(function(result) {
+                    routingFailed(path, params, context, `Failed to load context course: '${result}'.`, true);
+                    return redirectHome();
+                })
+            ;
             return;
         }
 
@@ -180,12 +197,12 @@ function handlerWrapper(handler, path, params, pageName, navParent, requirements
         if (requirements.assignment) {
             let assignmentID = params[PARAM_ASSIGNMENT];
             if (!assignmentID) {
-                Log.warn(`No assignment id specified for path '${path}'.`, null, true);
+                routingFailed(path, params, context, `No assignment id specified for path '${path}'.`, true);
                 return;
             }
 
             if (!Object.hasOwn(context.courses[courseID].assignments, assignmentID)) {
-                Log.warn(`Course ('${courseID}') does not have assignment ('${assignmentID}').`, null, true);
+                routingFailed(path, params, context, `Course ('${courseID}') does not have assignment ('${assignmentID}').`, true);
                 return;
             }
         }
@@ -215,6 +232,18 @@ function handlerWrapper(handler, path, params, pageName, navParent, requirements
         'container': container,
     };
     Event.dispatchEvent(Event.EVENT_TYPE_ROUTING_COMPLETE, eventDetails);
+}
+
+function routingFailed(path, params, context, message, notify = true) {
+    Log.warn(message, context, notify);
+
+    let eventDetails = {
+        'path': path,
+        'params': params,
+        'context': context,
+        'message': message,
+    };
+    Event.dispatchEvent(Event.EVENT_TYPE_ROUTING_FAILED, eventDetails);
 }
 
 function setContextUserDisplay() {

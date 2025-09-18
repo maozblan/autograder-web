@@ -16,7 +16,7 @@ function init() {
 
 function handlerCourses(path, params, context, container) {
     let cards = [];
-    for (const [id, course] of Object.entries(context.courses)) {
+    for (const [id, course] of Object.entries(context.user.enrollments)) {
         let link = Routing.formHashPath(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: course.id});
         cards.push(new Render.Card(
             'course',
