@@ -27,9 +27,9 @@ global.fetch = function(url, options = {}) {
     for (const key of Object.keys(content).sort()) {
         args[key] = content[key];
 
-        // Capitalize Course ID to match test data format.
+        // Lower case Course ID to match test data format.
         if (key === 'course-id') {
-            args[key] = args[key].toUpperCase();
+            args[key] = args[key].toLowerCase();
         }
     }
 

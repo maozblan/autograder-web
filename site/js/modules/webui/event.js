@@ -13,6 +13,7 @@ const eventElement = document.createElement(`div`);
 
 const EVENT_TYPE_DOWNLOAD_FILE_COMPLETE = 'autograder-download-file-end';
 const EVENT_TYPE_ROUTING_COMPLETE = 'autograder-routing-end';
+const EVENT_TYPE_ROUTING_FAILED = 'autograder-routing-failed';
 const EVENT_TYPE_TEMPLATE_RESULT_COMPLETE = 'autograder-template-result-end';
 
 const DEFAULT_TIMEOUT_MS = 3000;
@@ -29,7 +30,7 @@ function createEvent(eventName, details = {}) {
 // All details must match the corresponding key in the event.detail to trigger the onEventFunc.
 // See the file level comment for more information on detail matching semantics.
 // Returns a cleanup function that removes the event listener.
-function addEventListener(eventName, onEventFunc, details = undefined) {
+function addEventSystemListener(eventName, onEventFunc, details = undefined) {
     const onEventFuncWithFilter = function(event) {
         if (matchesFilter(event.detail, details)) {
             onEventFunc(event);
@@ -91,7 +92,7 @@ function getEventPromise(eventName, details = undefined, timeout = DEFAULT_TIMEO
     return new Promise(function(resolve, reject) {
         let timeoutId = undefined;
 
-        const cleanup = addEventListener(eventName, function(event) {
+        const cleanup = addEventSystemListener(eventName, function(event) {
             if (timeoutId) {
                 clearTimeout(timeoutId);
             }
@@ -115,5 +116,6 @@ export {
 
     EVENT_TYPE_DOWNLOAD_FILE_COMPLETE,
     EVENT_TYPE_ROUTING_COMPLETE,
+    EVENT_TYPE_ROUTING_FAILED,
     EVENT_TYPE_TEMPLATE_RESULT_COMPLETE,
 };

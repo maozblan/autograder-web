@@ -32,6 +32,32 @@ function load() {
     ;
 }
 
+// Load a course into the existing context.
+function loadCourse(courseID) {
+    if (!context) {
+        // Load the context first and then re-call this function.
+        return load().then(function() {
+            return loadCourse(courseID);
+        });
+    }
+
+    return Autograder.Course.get(courseID)
+        .then(function(result) {
+            if (!result.found) {
+                Log.warn("Server could not find context course.");
+                return Promise.reject(result);
+            }
+
+            context.courses[result.course.id] = result.course
+            return null;
+        })
+        .catch(function(result) {
+            Log.warn('Failed to get course.', result);
+            return result;
+        })
+    ;
+}
+
 function makeContext(result) {
     result.user.name = result.user.name || result.user.email;
 
@@ -39,9 +65,11 @@ function makeContext(result) {
         course.name = course.name || course.id;
     }
 
+    result.user.enrollments = result.courses
+
     return {
         user: result.user,
-        courses: result.courses,
+        courses: {},
     };
 }
 
@@ -62,4 +90,5 @@ export {
     exists,
     get,
     load,
+    loadCourse,
 }

@@ -62,6 +62,25 @@ async function navigate(path, params = undefined) {
     await renderPromise;
 }
 
+async function expectFailedNavigation(path, params = undefined, messageSubstring = undefined) {
+    let pathComponents = {
+        'path': path,
+    };
+
+    if (params) {
+        pathComponents['params'] = params;
+    }
+
+    let renderPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_FAILED, pathComponents);
+
+    Routing.routeComponents(pathComponents);
+    let event = await renderPromise;
+
+    if (messageSubstring) {
+        expect(event.detail.message).toContain(messageSubstring);
+    }
+}
+
 async function submitTemplate() {
     let resultWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_TEMPLATE_RESULT_COMPLETE);
     document.querySelector('.template-button').click();
@@ -71,6 +90,7 @@ async function submitTemplate() {
 export {
     checkCards,
     checkPageBasics,
+    expectFailedNavigation,
     loginUser,
     navigate,
     submitTemplate,

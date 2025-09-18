@@ -16,6 +16,15 @@ function email(course, dryRun, html, subject, to = undefined, cc = undefined, bc
     });
 }
 
+function get(course) {
+    return Core.sendRequest({
+        endpoint: 'courses/get',
+        payload: {
+            'course-id': course,
+        },
+    });
+}
+
 function users(course, targetUsers = undefined) {
     return Core.sendRequest({
         endpoint: 'courses/users/list',
@@ -28,5 +37,6 @@ function users(course, targetUsers = undefined) {
 
 export {
     email,
+    get,
     users,
 };
