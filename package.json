@@ -27,10 +27,11 @@
         "collectCoverage": true,
         "coverageDirectory": ".coverage",
         "coveragePathIgnorePatterns": [
-            "vendor"
+            "vendor",
+            "index.js"
         ],
         "setupFilesAfterEnv": [
-            "<rootDir>/site/js/modules/autograder/test/server.js",
+            "<rootDir>/site/js/modules/autograder/test/setup.js",
             "<rootDir>/site/js/modules/webui/test/setup.js"
         ],
         "transform": {},

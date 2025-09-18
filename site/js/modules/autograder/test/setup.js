@@ -2,8 +2,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import stream from 'node:stream/web';
 
+import * as Common from '../common/index.js';
 import * as Core from '../core.js';
-import * as Util from '../util.js';
+import * as Util from '../util/index.js';
 
 global.testData = {};
 
@@ -62,8 +63,8 @@ global.fetch = function(url, options = {}) {
         'id': '00000000-0000-0000-0000-000000000000',
         'locator': '',
         'server-version': '0.0.0',
-        'start-timestamp': Util.getTimestampNow(),
-        'end-timestamp': Util.getTimestampNow(),
+        'start-timestamp': Common.getTimestampNow(),
+        'end-timestamp': Common.getTimestampNow(),
         'status': 200,
         'success': true,
         'message': responseContent.message ?? '',

@@ -1,5 +1,3 @@
-import * as Core from './core.js'
-
 const COURSE_ROLE_UNKNOWN = 0;
 const COURSE_ROLE_OTHER = 10;
 const COURSE_ROLE_STUDENT = 20;
@@ -50,32 +48,9 @@ function getServerRoleValue(role) {
     return value;
 }
 
-function createToken(email, cleartext) {
-    return Core.sendRequest({
-        endpoint: 'users/tokens/create',
-        overrideEmail: email,
-        overrideCleartext: cleartext,
-    });
-}
-
-function get() {
-    return Core.sendRequest({
-        endpoint: 'users/get',
-    });
-}
-
-function listServerUsers() {
-    return Core.sendRequest({
-        endpoint: 'users/list',
-    });
-}
-
 export {
-    createToken,
     getCourseRoleValue,
     getServerRoleValue,
-    get,
-    listServerUsers,
 
     COURSE_ROLE_UNKNOWN,
     COURSE_ROLE_OTHER,

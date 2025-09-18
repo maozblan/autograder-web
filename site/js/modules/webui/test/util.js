@@ -1,4 +1,4 @@
-import * as Autograder from '../../autograder/base.js';
+import * as Autograder from '../../autograder/index.js';
 
 import * as Context from '../context.js';
 import * as Event from '../event.js';

@@ -1,4 +1,4 @@
-import * as Autograder from '../autograder/base.js';
+import * as Autograder from '../autograder/index.js';
 import * as Icon from './icon.js';
 import * as Input from './input.js';
 import * as Render from './render.js';
@@ -23,8 +23,8 @@ function handlerCourses(path, params, context, container) {
             course.name,
             link,
             {
-                minServerRole: Autograder.Users.SERVER_ROLE_USER,
-                minCourseRole: Autograder.Users.COURSE_ROLE_OTHER,
+                minServerRole: Autograder.Common.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Common.COURSE_ROLE_OTHER,
                 courseId: id,
             },
         ));
@@ -55,8 +55,8 @@ function handlerCourse(path, params, context, container) {
             assignment.name,
             link,
             {
-                minServerRole: Autograder.Users.SERVER_ROLE_USER,
-                minCourseRole: Autograder.Users.COURSE_ROLE_OTHER,
+                minServerRole: Autograder.Common.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Common.COURSE_ROLE_OTHER,
                 courseId: course.id,
             },
         ));
@@ -70,8 +70,8 @@ function handlerCourse(path, params, context, container) {
             [Routing.PARAM_COURSE]: course.id,
         }),
         {
-            minServerRole: Autograder.Users.SERVER_ROLE_USER,
-            minCourseRole: Autograder.Users.COURSE_ROLE_GRADER,
+            minServerRole: Autograder.Common.SERVER_ROLE_USER,
+            minCourseRole: Autograder.Common.COURSE_ROLE_GRADER,
             courseId: course.id,
         },
     ));
@@ -83,8 +83,8 @@ function handlerCourse(path, params, context, container) {
             [Routing.PARAM_COURSE]: course.id,
         }),
         {
-            minServerRole: Autograder.Users.SERVER_ROLE_USER,
-            minCourseRole: Autograder.Users.COURSE_ROLE_GRADER,
+            minServerRole: Autograder.Common.SERVER_ROLE_USER,
+            minCourseRole: Autograder.Common.COURSE_ROLE_GRADER,
             courseId: course.id,
         },
     ));
@@ -156,7 +156,7 @@ function sendEmail(params, context, container, inputParams) {
         return Promise.resolve('<p>Specify at least one recipient.</p>');
     }
 
-    return Autograder.Course.email(
+    return Autograder.Courses.Admin.email(
             course, inputParams.dryRun, inputParams.html, inputParams.subject,
             inputParams.to, inputParams.cc, inputParams.bcc, inputParams.body,
     )
@@ -204,7 +204,7 @@ function handlerUsers(path, params, context, container) {
 function listUsers(params, context, container, inputParams) {
     let course = context.courses[params[Routing.PARAM_COURSE]].id;
 
-    return Autograder.Course.users(course, inputParams.targetUsers)
+    return Autograder.Courses.Users.list(course, inputParams.targetUsers)
         .then(function(result) {
             if (result.users.length === 0) {
                 return '<p>Unable to find target users.</p>';

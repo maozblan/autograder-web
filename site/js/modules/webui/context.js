@@ -1,4 +1,4 @@
-import * as Autograder from '../autograder/base.js'
+import * as Autograder from '../autograder/index.js'
 
 import * as Log from './log.js'
 import * as Util from './util.js'
@@ -41,7 +41,7 @@ function loadCourse(courseID) {
         });
     }
 
-    return Autograder.Course.get(courseID)
+    return Autograder.Courses.get(courseID)
         .then(function(result) {
             if (!result.found) {
                 Log.warn("Server could not find context course.");

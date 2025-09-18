@@ -1,13 +1,4 @@
-import * as Core from './core.js'
-
-function list(courseID) {
-    return Core.sendRequest({
-        endpoint: 'courses/assignments/list',
-        payload: {
-            'course-id': courseID
-        },
-    });
-}
+import * as Core from '../../core.js'
 
 function get(courseID, assignmentID) {
     return Core.sendRequest({
@@ -21,5 +12,4 @@ function get(courseID, assignmentID) {
 
 export {
     get,
-    list,
 }

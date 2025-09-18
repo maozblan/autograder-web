@@ -1,4 +1,4 @@
-import * as Autograder from '../autograder/base.js';
+import * as Autograder from '../autograder/index.js';
 
 import * as Icon from './icon.js';
 import * as Input from './input.js';
@@ -35,7 +35,7 @@ function handlerServer(path, params, context, container) {
         new Render.Card('server-action', 'API Documentation', Routing.formHashPath(Routing.PATH_SERVER_DOCS)),
         new Render.Card('server-action', 'Call API', Routing.formHashPath(Routing.PATH_SERVER_CALL_API, args)),
         new Render.Card('server-action', 'List Users', Routing.formHashPath(Routing.PATH_SERVER_USERS_LIST, args), {
-            minServerRole: Autograder.Users.SERVER_ROLE_ADMIN,
+            minServerRole: Autograder.Common.SERVER_ROLE_ADMIN,
         }),
     ];
 
@@ -49,7 +49,7 @@ function handlerServer(path, params, context, container) {
 function handlerCallAPI(path, params, context, container) {
     Routing.loadingStart(container);
 
-    Autograder.Server.describe()
+    Autograder.Metadata.describe()
         .then(function(result) {
             const endpoints = result["endpoints"];
             const selectedEndpoint = params[Routing.PARAM_TARGET_ENDPOINT] ?? undefined;
@@ -168,7 +168,7 @@ function callEndpoint(params, context, container, inputParams) {
         delete inputParams["user-pass"];
     }
 
-    return Autograder.Server.callEndpoint({
+    return Autograder.Misc.callEndpoint({
             targetEndpoint: targetEndpoint,
             params: inputParams,
             overrideEmail: overrideEmail,
@@ -188,7 +188,7 @@ function callEndpoint(params, context, container, inputParams) {
 function handlerDocs(path, params, context, container) {
     Render.setTabTitle('API Documentation');
 
-    Autograder.Server.describe()
+    Autograder.Metadata.describe()
         .then(function(result) {
             container.innerHTML = displayDocumentation(result);
 
@@ -344,7 +344,7 @@ function handlerUsers(path, params, context, container) {
 }
 
 function listServerUsers(params, context, container, inputParams) {
-    return Autograder.Server.users(inputParams.users)
+    return Autograder.Users.list(inputParams.users)
         .then(function(result) {
             if (result.users.length === 0) {
                 return '<p>Unable to find target users.</p>';

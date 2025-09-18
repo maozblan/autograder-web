@@ -1,11 +1,11 @@
-import * as Users from './users.js';
+import * as List from './list.js';
 
-test("listServerUsers base", function() {
+test("users/list base", function() {
     const expected = {
         'users': serverUsers,
     };
 
-    expect(Users.listServerUsers()).resolves.toStrictEqual(expected);
+    expect(List.list()).resolves.toStrictEqual(expected);
 });
 
 const serverUsers = [

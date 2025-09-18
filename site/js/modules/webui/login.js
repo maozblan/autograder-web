@@ -1,4 +1,4 @@
-import * as Autograder from '../autograder/base.js';
+import * as Autograder from '../autograder/index.js';
 
 import * as Context from './context.js';
 import * as Input from './input.js';
@@ -42,7 +42,7 @@ function login(params, context, container, inputParams) {
         `);
     }
 
-    return Autograder.Users.createToken(inputParams.email, inputParams.cleartext)
+    return Autograder.Users.Tokens.create(inputParams.email, inputParams.cleartext)
         .then(function(token) {
             Autograder.setCredentials(inputParams.email, token['token-id'], token['token-cleartext']);
             Routing.redirectHome();

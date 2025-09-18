@@ -1,55 +1,13 @@
-import sjcl from './vendor/sjcl.min.js';
-import JSZipExport from './vendor/jszip.min.js';
+import * as Archive from './archive.js';
+import * as Encoding from './encoding.js';
 
-function getTimestampNow() {
-    return Date.now();
-}
-
-function sha256(text) {
-    return sjcl.codec.hex.fromBits(sjcl.hash.sha256.hash(text));
-}
-
-// Convert a base64 string to a Blob,
-// block until the result is ready.
-function b64DecodeBlock(b64Text) {
-    // Convert the base64 string to a byte string.
-    const byteString = atob(b64Text);
-
-    // Convert the bytes from characters to ints.
-    const bytes = new Array(byteString.length);
-    for (let i = 0; i < byteString.length; i++) {
-        bytes[i] = byteString.charCodeAt(i);
-    }
-
-    // Construct a blob.
-    return new Blob([new Uint8Array(bytes)]);
-}
-
-// Convert a base64 string to a Blob,
-// return a promise the resolves to the result.
-function b64Decode(b64Text) {
-    return new Promise(function(resolve, reject) {
-        try {
-            resolve(b64DecodeBlock(b64Text));
-        } catch (error) {
-            reject(error);
-        }
-    });
-}
-
-// Take in a blob representing gzipped data,
-// and return a promise that will resolve to a Blob of the uncompressed gzipped data.
-function gunzip(gzipBlob) {
-    const decompression = new DecompressionStream('gzip');
-    const decompressedStream = gzipBlob.stream().pipeThrough(decompression);
-    return (new Response(decompressedStream)).blob();
-}
+import JSZipExport from '../vendor/jszip.min.js';
 
 // Return a promise to convert a file sent over on the autograder API to a JS File object.
 // The autograder sends files as base64 encodings of gzip file contents.
 // If successful, the promise will resolve to an uncompressed File object.
 function autograderFileToJSFile(b64Text, name = undefined) {
-    return b64Decode(b64Text).then(gunzip).then(function(blob) {
+    return Encoding.b64Decode(b64Text).then(Archive.gunzip).then(function(blob) {
         return new File([blob], name);
     });
 }
@@ -96,21 +54,7 @@ function autograderGradingResultToJSFile(gradingResult, filename = undefined) {
     });
 }
 
-function removeUndefinedValues(object) {
-    for (const [key, value] of Object.entries(object)) {
-        // Clear key ONLY if value is explicitly undefined.
-        if (value === undefined) {
-            delete object[key];
-        }
-    }
-}
-
 export {
     autograderFileToJSFile,
     autograderGradingResultToJSFile,
-    b64Decode,
-    getTimestampNow,
-    gunzip,
-    removeUndefinedValues,
-    sha256,
 }

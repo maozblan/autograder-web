@@ -1,4 +1,4 @@
-import * as Autograder from '../autograder/base.js';
+import * as Autograder from '../autograder/index.js';
 
 import * as Assignment from './assignment.js';
 import * as Event from './event.js';
@@ -90,8 +90,8 @@ class Card {
     constructor(
         type = 'unknown', text = '', link = '#',
         {
-            minServerRole = Autograder.Users.SERVER_ROLE_UNKNOWN,
-            minCourseRole = Autograder.Users.COURSE_ROLE_UNKNOWN,
+            minServerRole = Autograder.Common.SERVER_ROLE_UNKNOWN,
+            minCourseRole = Autograder.Common.COURSE_ROLE_UNKNOWN,
             courseId = undefined,
         } = {}) {
         // An optional card type that is added to the HTML class list.
@@ -142,10 +142,10 @@ class Card {
 
     // Signals the card should be hidden based on the context user's roles.
     isHidden(context) {
-        const userServerRole = Autograder.Users.getServerRoleValue(context?.user?.role);
+        const userServerRole = Autograder.Common.getServerRoleValue(context?.user?.role);
 
         // Never hide cards from server admins or above.
-        if (userServerRole >= Autograder.Users.SERVER_ROLE_ADMIN) {
+        if (userServerRole >= Autograder.Common.SERVER_ROLE_ADMIN) {
             return false;
         }
 
@@ -154,7 +154,7 @@ class Card {
         }
 
         const course = context?.user?.courses[this.courseId];
-        const userCourseRole = Autograder.Users.getCourseRoleValue(course?.role);
+        const userCourseRole = Autograder.Common.getCourseRoleValue(course?.role);
 
         if (this.minCourseRole > userCourseRole) {
             return true;

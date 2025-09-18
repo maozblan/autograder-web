@@ -1,4 +1,4 @@
-import * as Util from './util.js'
+import * as Util from './util/index.js'
 
 const BASE_URL = '/api'
 

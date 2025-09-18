@@ -1,4 +1,4 @@
-import * as Autograder from '../autograder/base.js';
+import * as Autograder from '../autograder/index.js';
 
 import * as Icon from './icon.js';
 import * as Input from './input.js';
@@ -41,8 +41,8 @@ function handlerAssignment(path, params, context, container) {
             'Submit',
             Routing.formHashPath(Routing.PATH_SUBMIT, args),
             {
-                minServerRole: Autograder.Users.SERVER_ROLE_USER,
-                minCourseRole: Autograder.Users.COURSE_ROLE_STUDENT,
+                minServerRole: Autograder.Common.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Common.COURSE_ROLE_STUDENT,
                 courseId: course.id,
             },
         ),
@@ -51,8 +51,8 @@ function handlerAssignment(path, params, context, container) {
             'Peek a Previous Submission',
             Routing.formHashPath(Routing.PATH_PEEK, args),
             {
-                minServerRole: Autograder.Users.SERVER_ROLE_USER,
-                minCourseRole: Autograder.Users.COURSE_ROLE_STUDENT,
+                minServerRole: Autograder.Common.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Common.COURSE_ROLE_STUDENT,
                 courseId: course.id,
             },
         ),
@@ -61,8 +61,8 @@ function handlerAssignment(path, params, context, container) {
             'View Submission History',
             Routing.formHashPath(Routing.PATH_HISTORY, args),
             {
-                minServerRole: Autograder.Users.SERVER_ROLE_USER,
-                minCourseRole: Autograder.Users.COURSE_ROLE_STUDENT,
+                minServerRole: Autograder.Common.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Common.COURSE_ROLE_STUDENT,
                 courseId: course.id,
             },
         ),
@@ -75,8 +75,8 @@ function handlerAssignment(path, params, context, container) {
             'Fetch Course Scores',
             Routing.formHashPath(Routing.PATH_ASSIGNMENT_FETCH_COURSE_SCORES, args),
             {
-                minServerRole: Autograder.Users.SERVER_ROLE_USER,
-                minCourseRole: Autograder.Users.COURSE_ROLE_GRADER,
+                minServerRole: Autograder.Common.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Common.COURSE_ROLE_GRADER,
                 courseId: course.id,
             },
         ),
@@ -85,8 +85,8 @@ function handlerAssignment(path, params, context, container) {
             'Fetch Submission Attempt',
             Routing.formHashPath(Routing.PATH_ASSIGNMENT_FETCH_USER_ATTEMPT, args),
             {
-                minServerRole: Autograder.Users.SERVER_ROLE_USER,
-                minCourseRole: Autograder.Users.COURSE_ROLE_STUDENT,
+                minServerRole: Autograder.Common.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Common.COURSE_ROLE_STUDENT,
                 courseId: course.id,
             },
         ),
@@ -95,8 +95,8 @@ function handlerAssignment(path, params, context, container) {
             'Proxy Regrade',
             Routing.formHashPath(Routing.PATH_PROXY_REGRADE, args),
             {
-                minServerRole: Autograder.Users.SERVER_ROLE_USER,
-                minCourseRole: Autograder.Users.COURSE_ROLE_GRADER,
+                minServerRole: Autograder.Common.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Common.COURSE_ROLE_GRADER,
                 courseId: course.id,
             },
         ),
@@ -105,8 +105,8 @@ function handlerAssignment(path, params, context, container) {
             'Proxy Resubmit',
             Routing.formHashPath(Routing.PATH_PROXY_RESUBMIT, args),
             {
-                minServerRole: Autograder.Users.SERVER_ROLE_USER,
-                minCourseRole: Autograder.Users.COURSE_ROLE_GRADER,
+                minServerRole: Autograder.Common.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Common.COURSE_ROLE_GRADER,
                 courseId: course.id,
             },
         ),
@@ -115,8 +115,8 @@ function handlerAssignment(path, params, context, container) {
             'Individual Analysis',
             Routing.formHashPath(Routing.PATH_ANALYSIS_INDIVIDUAL, args),
             {
-                minServerRole: Autograder.Users.SERVER_ROLE_USER,
-                minCourseRole: Autograder.Users.COURSE_ROLE_ADMIN,
+                minServerRole: Autograder.Common.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Common.COURSE_ROLE_ADMIN,
                 courseId: course.id,
             },
         ),
@@ -125,8 +125,8 @@ function handlerAssignment(path, params, context, container) {
             'Pairwise Analysis',
             Routing.formHashPath(Routing.PATH_ANALYSIS_PAIRWISE, args),
             {
-                minServerRole: Autograder.Users.SERVER_ROLE_USER,
-                minCourseRole: Autograder.Users.COURSE_ROLE_ADMIN,
+                minServerRole: Autograder.Common.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Common.COURSE_ROLE_ADMIN,
                 courseId: course.id,
             },
         ),
@@ -135,8 +135,8 @@ function handlerAssignment(path, params, context, container) {
             'Remove Submission',
             Routing.formHashPath(Routing.PATH_SUBMIT_REMOVE, args),
             {
-                minServerRole: Autograder.Users.SERVER_ROLE_USER,
-                minCourseRole: Autograder.Users.COURSE_ROLE_GRADER,
+                minServerRole: Autograder.Common.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Common.COURSE_ROLE_GRADER,
                 courseId: course.id,
             },
         ),
@@ -145,8 +145,8 @@ function handlerAssignment(path, params, context, container) {
             'View User History',
             Routing.formHashPath(Routing.PATH_USER_HISTORY, args),
             {
-                minServerRole: Autograder.Users.SERVER_ROLE_USER,
-                minCourseRole: Autograder.Users.COURSE_ROLE_GRADER,
+                minServerRole: Autograder.Common.SERVER_ROLE_USER,
+                minCourseRole: Autograder.Common.COURSE_ROLE_GRADER,
                 courseId: course.id,
             },
         ),
@@ -192,7 +192,7 @@ function peek(params, context, container, inputParams) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    return Autograder.Submissions.peek(course.id, assignment.id, inputParams.submission)
+    return Autograder.Courses.Assignments.Submissions.Fetch.User.peek(course.id, assignment.id, inputParams.submission)
         .then(function(result) {
             let html = "";
 
@@ -266,7 +266,7 @@ function history(params, context, container, inputParams) {
 
     let targetEmail = inputParams.targetUser ?? context.user.email;
 
-    return Autograder.Submissions.history(course.id, assignment.id, targetEmail)
+    return Autograder.Courses.Assignments.Submissions.Fetch.User.history(course.id, assignment.id, targetEmail)
         .then(function(result) {
             let html = "";
 
@@ -322,7 +322,7 @@ function doSubmit(params, context, container, inputParams) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    return Autograder.Submissions.submit(course.id, assignment.id, inputParams.files, inputParams.allowLate, inputParams.message)
+    return Autograder.Courses.Assignments.Submissions.submit(course.id, assignment.id, inputParams.files, inputParams.allowLate, inputParams.message)
         .then(function(result) {
             return getSubmissionResultHTML(course, assignment, result);
         })
@@ -366,7 +366,7 @@ function removeSubmission(params, context, container, inputParams) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    return Autograder.Submissions.remove(
+    return Autograder.Courses.Assignments.Submissions.remove(
             course.id, assignment.id,
             inputParams.targetEmail, inputParams.targetSubmission,
         )
@@ -419,7 +419,7 @@ function fetchCourseScores(params, context, container, inputParams) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    return Autograder.Submissions.fetchCourseScores(course.id, assignment.id, inputParams['target-users'])
+    return Autograder.Courses.Assignments.Submissions.Fetch.Course.scores(course.id, assignment.id, inputParams['target-users'])
         .then(function(result) {
             return Render.codeBlockJSON(result);
         })
@@ -452,7 +452,7 @@ function handlerFetchUserAttempt(path, params, context, container) {
     let _cached_result = undefined;
 
     let fetchUserAttempt = function(params, context, container, inputParams) {
-        return Autograder.Submissions.fetchUserAttempt(course.id, assignment.id, inputParams.targetEmail, inputParams.targetSubmission)
+        return Autograder.Courses.Assignments.Submissions.Fetch.User.attempt(course.id, assignment.id, inputParams.targetEmail, inputParams.targetSubmission)
             .then(function(result) {
                 if (!result['found-submission']) {
                     return Render.codeBlockJSON(result);
@@ -564,7 +564,7 @@ function proxyRegrade(params, context, container, inputParams) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    return Autograder.Submissions.proxyRegrade(
+    return Autograder.Courses.Assignments.Submissions.Proxy.regrade(
             course.id, assignment.id,
             inputParams.dryRun, inputParams.overwrite, inputParams.wait,
             inputParams.cutoff, inputParams.users,
@@ -616,7 +616,7 @@ function proxyResubmit(params, context, container, inputParams) {
     let course = context.courses[params[Routing.PARAM_COURSE]];
     let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
 
-    return Autograder.Submissions.proxyResubmit(
+    return Autograder.Courses.Assignments.Submissions.Proxy.resubmit(
             course.id, assignment.id,
             inputParams.email, inputParams.submission, inputParams.time,
         )
@@ -691,7 +691,7 @@ function handlerAnalysisIndividual(path, params, context, container) {
 }
 
 function analysisIndividual(params, context, container, inputParams) {
-    return Autograder.Submissions.analysisIndividual(
+    return Autograder.Courses.Assignments.Submissions.Analysis.individual(
             inputParams.submissions, inputParams.overwrite,
             inputParams.wait, inputParams.dryRun,
         )
@@ -741,7 +741,7 @@ function handlerAnalysisPairwise(path, params, context, container) {
 }
 
 function analysisPairwise(params, context, container, inputParams) {
-    return Autograder.Submissions.analysisPairwise(
+    return Autograder.Courses.Assignments.Submissions.Analysis.pairwise(
             inputParams.submissions, inputParams.overwrite,
             inputParams.wait, inputParams.dryRun,
         )
