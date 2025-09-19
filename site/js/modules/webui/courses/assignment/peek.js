@@ -1,0 +1,69 @@
+import * as Autograder from '../../../autograder/index.js';
+
+import * as Icon from '../../icon.js';
+import * as Input from '../../input.js';
+import * as Render from '../../render.js';
+import * as Routing from '../../routing.js';
+
+function init() {
+    Routing.addRoute(/^course\/assignment\/peek$/, handlerPeek, 'Assignment Peek', Routing.NAV_COURSES, {assignment: true});
+}
+
+function handlerPeek(path, params, context, container) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+    let submission = params[Routing.PARAM_SUBMISSION] || '';
+
+    Render.setTabTitle(assignment.id);
+
+    let inputFields = [
+        new Input.FieldType(context, 'submission', 'Submission ID', {
+            defaultValue: submission,
+        }),
+    ];
+
+    Render.makePage(
+            params, context, container, peek,
+            {
+                header: 'Peek a Submission',
+                description: 'View a past submission. If no submission ID is provided, the most recent submission is used.',
+                inputs: inputFields,
+                buttonName: 'Peek',
+                iconName: Icon.ICON_NAME_PEEK,
+                // Auto-submit if we were passed an existing submission ID.
+                submitOnCreation: (submission != ''),
+            },
+        )
+    ;
+}
+
+function peek(params, context, container, inputParams) {
+    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+
+    return Autograder.Courses.Assignments.Submissions.Fetch.User.peek(course.id, assignment.id, inputParams.submission)
+        .then(function(result) {
+            let html = "";
+
+            if (!result['found-user']) {
+                html = `<p>Could not find user: '${context.user.name}'.</p>`;
+            } else if (!result['found-submission']) {
+                if (inputParams.submission) {
+                    html = `<p>Could not find submission: '${inputParams.submission}'.</p>`;
+                } else {
+                    html = `<p>Could not find most recent submission.</p>`;
+                }
+            } else {
+                html = Render.submission(course, assignment, result['submission-result']);
+            }
+
+            return html;
+        })
+        .catch(function(message) {
+            console.error(message);
+            return message;
+        })
+    ;
+}
+
+init();

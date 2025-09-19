@@ -1,6 +1,5 @@
 import * as Autograder from '../autograder/index.js';
 
-import * as Assignment from './assignment.js';
 import * as Event from './event.js';
 import * as Icon from './icon.js';
 import * as Routing from './routing.js';

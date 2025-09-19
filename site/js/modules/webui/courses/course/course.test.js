@@ -1,19 +1,5 @@
-import * as Event from './event.js';
-import * as Routing from './routing.js';
-import * as TestUtil from './test/util.js';
-
-test('Enrolled Courses', async function() {
-    await TestUtil.loginUser('course-student');
-    await TestUtil.navigate(Routing.PATH_COURSES);
-
-    TestUtil.checkPageBasics('Enrolled Courses', 'enrolled courses');
-
-    const expectedLabelNames = [
-        'Course 101',
-        'Course Using Different Languages',
-    ];
-    TestUtil.checkCards(expectedLabelNames);
-});
+import * as Routing from '../../routing.js';
+import * as TestUtil from '../../test/util.js';
 
 describe('Nav Course101', function() {
     // [[user, [expected card labels], error substring], ...].
@@ -135,30 +121,6 @@ describe('Nav HW0', function() {
         TestUtil.checkPageBasics(`${targetAssignment} :: Autograder`, 'assignment');
         TestUtil.checkCards(expectedLabelNames);
     });
-});
-
-test('Course Users List', async function() {
-    const targetCourse = 'course101';
-    const expectedEmails = [
-        'course-admin@test.edulinq.org',
-        'course-grader@test.edulinq.org',
-        'course-other@test.edulinq.org',
-        'course-owner@test.edulinq.org',
-        'course-student@test.edulinq.org',
-    ];
-
-    await TestUtil.loginUser('course-admin');
-    await TestUtil.navigate(Routing.PATH_COURSE_USERS_LIST, {[Routing.PARAM_COURSE]: targetCourse});
-
-    TestUtil.checkPageBasics(targetCourse, 'users');
-
-    await TestUtil.submitTemplate();
-
-    let results = document.querySelector('.results-area').innerHTML;
-
-    for (const expectedEmail of expectedEmails) {
-        expect(results).toContain(expectedEmail);
-    }
 });
 
 // Navigate to multiple courses to ensure that the course context is properly loaded for each.
