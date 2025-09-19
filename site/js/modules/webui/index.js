@@ -2,7 +2,7 @@ import * as Courses from './courses/index.js';
 import * as Home from './home.js';
 import * as Login from './login.js';
 import * as Routing from './routing.js';
-import * as Server from './server.js';
+import * as Server from './server/index.js';
 import * as System from './system.js';
 import * as Util from './util/index.js';
 
@@ -17,7 +17,6 @@ function init(initialRoute = false) {
     // Init handlers.
     Home.init();
     Login.init();
-    Server.init();
 
     // Init routes last (since it will route).
     Routing.init(initialRoute);

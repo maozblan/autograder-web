@@ -1,6 +1,6 @@
-import * as Render from './render.js';
-import * as Routing from './routing.js';
-import * as TestUtil from './test/util.js';
+import * as Render from '../render.js';
+import * as Routing from '../routing.js';
+import * as TestUtil from '../test/util.js';
 
 const SERVER_USERS = [
     'course-admin@test.edulinq.org',
@@ -13,42 +13,6 @@ const SERVER_USERS = [
     'server-owner@test.edulinq.org',
     'server-user@test.edulinq.org',
 ];
-
-describe('Nav Server Actions', function() {
-    // [[user, [expected card labels]], ...].
-    const testCases = [
-        [
-            'server-user',
-            [
-                'API Documentation',
-                'Call API',
-            ],
-        ],
-        [
-            'server-creator',
-            [
-                'API Documentation',
-                'Call API',
-            ],
-        ],
-        [
-            'server-admin',
-            [
-                'API Documentation',
-                'Call API',
-                'List Users',
-            ],
-        ],
-    ];
-
-    test.each(testCases)("%s", async function(user, expectedLabelNames) {
-        await TestUtil.loginUser(user);
-        await TestUtil.navigate(Routing.PATH_SERVER);
-
-        TestUtil.checkPageBasics('Server Actions', 'server actions');
-        TestUtil.checkCards(expectedLabelNames);
-    });
-});
 
 test('Server Users List', async function() {
     await TestUtil.loginUser('server-admin');
