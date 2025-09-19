@@ -4,7 +4,7 @@ import * as Assignment from './assignment.js';
 import * as Event from './event.js';
 import * as Icon from './icon.js';
 import * as Routing from './routing.js';
-import * as Util from './util.js';
+import * as Util from './util/index.js';
 
 const API_OUTPUT_SWITCHER_JSON = 'JSON';
 const API_OUTPUT_SWITCHER_TABLE = 'Table';

@@ -1,7 +1,7 @@
 import * as Autograder from '../autograder/index.js'
 
 import * as Log from './log.js'
-import * as Util from './util.js'
+import * as Util from './util/index.js'
 
 let context = undefined;
 

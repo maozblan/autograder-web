@@ -5,7 +5,7 @@ import * as Input from './input.js';
 import * as Log from './log.js';
 import * as Render from './render.js';
 import * as Routing from './routing.js';
-import * as Util from './util.js';
+import * as Util from './util/index.js';
 
 function init() {
     let requirements = {assignment: true};

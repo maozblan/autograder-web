@@ -4,7 +4,7 @@ import * as Icon from './icon.js';
 import * as Input from './input.js';
 import * as Render from './render.js';
 import * as Routing from './routing.js';
-import * as Util from './util.js';
+import * as Util from './util/index.js';
 
 // The priority of the field to show first.
 // Items later in the list have the highest priority.

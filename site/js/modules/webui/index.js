@@ -5,7 +5,7 @@ import * as Login from './login.js';
 import * as Routing from './routing.js';
 import * as Server from './server.js';
 import * as System from './system.js';
-import * as Util from './util.js';
+import * as Util from './util/index.js';
 
 function init(initialRoute = true) {
     // Init base libs.

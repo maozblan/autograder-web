@@ -1,9 +1,9 @@
-import * as Base from '../base.js';
-import * as Util from '../util.js';
+import * as WebUI from '../index.js';
+import * as Util from '../util/index.js';
 
 function init() {
-    Util.setTesting(true);
-    Base.init(false);
+    Util.setTestingMode(true);
+    WebUI.init(false);
 }
 
 beforeEach(function() {
