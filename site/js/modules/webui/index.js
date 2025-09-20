@@ -1,3 +1,5 @@
+import * as Core from './core/index.js';
+
 export * as Core from './core/index.js';
 export * as Courses from './courses/index.js';
 export * as Log from './log.js';
@@ -8,7 +10,7 @@ export * as Util from './util/index.js';
 
 function init() {
     // Start by routing to the desired page.
-    Core.route();
+    Core.Routing.route();
 }
 
 export {

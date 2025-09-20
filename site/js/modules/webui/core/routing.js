@@ -396,6 +396,7 @@ export {
     redirectHome,
     redirectLogin,
     redirectLogout,
+    route,
     routeComponents,
 
     PARAM_ASSIGNMENT,
