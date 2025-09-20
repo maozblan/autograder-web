@@ -1,17 +1,16 @@
 import * as Autograder from '../../../autograder/index.js';
-
+import * as Core from '../../core/index.js';
 import * as Icon from '../../icon.js';
 import * as Input from '../../input.js';
 import * as Render from '../../render.js';
-import * as Routing from '../../routing.js';
 
 function init() {
-    Routing.addRoute(/^course\/assignment\/remove$/, handlerSubmissionRemove, 'Remove Submission', Routing.NAV_COURSES, {assignment: true});
+    Core.Routing.addRoute(/^course\/assignment\/remove$/, handlerSubmissionRemove, 'Remove Submission', Core.Routing.NAV_COURSES, {assignment: true});
 }
 
 function handlerSubmissionRemove(path, params, context, container) {
-    let course = context.courses[params[Routing.PARAM_COURSE]];
-    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+    let course = context.courses[params[Core.Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Core.Routing.PARAM_ASSIGNMENT]];
     let userEmail = context.user.email;
 
     Render.setTabTitle(assignment.id);
@@ -39,8 +38,8 @@ function handlerSubmissionRemove(path, params, context, container) {
 }
 
 function removeSubmission(params, context, container, inputParams) {
-    let course = context.courses[params[Routing.PARAM_COURSE]];
-    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+    let course = context.courses[params[Core.Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Core.Routing.PARAM_ASSIGNMENT]];
 
     return Autograder.Courses.Assignments.Submissions.remove(
             course.id, assignment.id,

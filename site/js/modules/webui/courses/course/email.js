@@ -1,17 +1,17 @@
 import * as Autograder from '../../../autograder/index.js';
+import * as Core from '../../core/index.js';
 import * as Icon from '../../icon.js';
 import * as Input from '../../input.js';
 import * as Render from '../../render.js';
-import * as Routing from '../../routing.js';
 
 const COURSE_USER_REFERENCE_DOC_LINK = "https://github.com/edulinq/autograder-server/blob/main/docs/types.md#course-user-reference-courseuserreference";
 
 function init() {
-    Routing.addRoute(/^course\/email$/, handlerEmail, 'Email', Routing.NAV_COURSES, {course: true});
+    Core.Routing.addRoute(/^course\/email$/, handlerEmail, 'Email', Core.Routing.NAV_COURSES, {course: true});
 }
 
 function handlerEmail(path, params, context, container) {
-    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let course = context.courses[params[Core.Routing.PARAM_COURSE]];
 
     Render.setTabTitle(course.id);
 
@@ -61,7 +61,7 @@ function handlerEmail(path, params, context, container) {
 }
 
 function sendEmail(params, context, container, inputParams) {
-    let course = context.courses[params[Routing.PARAM_COURSE]].id;
+    let course = context.courses[params[Core.Routing.PARAM_COURSE]].id;
 
     if ((inputParams.to?.length === 0) &&
             (inputParams.cc?.length === 0) &&

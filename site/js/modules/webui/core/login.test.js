@@ -1,4 +1,4 @@
-import * as TestUtil from './test/util.js';
+import * as TestUtil from '../test/util.js';
 
 test("Login Page", async function() {
     const testCases = [

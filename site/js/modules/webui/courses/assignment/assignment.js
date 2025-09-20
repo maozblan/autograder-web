@@ -1,22 +1,21 @@
 import * as Autograder from '../../../autograder/index.js';
-
+import * as Core from '../../core/index.js';
 import * as Icon from '../../icon.js';
 import * as Render from '../../render.js';
-import * as Routing from '../../routing.js';
 
 function init() {
-    Routing.addRoute(/^course\/assignment$/, handlerAssignment, 'Assignment', Routing.NAV_COURSES, {assignment: true});
+    Core.Routing.addRoute(/^course\/assignment$/, handlerAssignment, 'Assignment', Core.Routing.NAV_COURSES, {assignment: true});
 }
 
 function handlerAssignment(path, params, context, container) {
-    let course = context.courses[params[Routing.PARAM_COURSE]];
-    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+    let course = context.courses[params[Core.Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Core.Routing.PARAM_ASSIGNMENT]];
 
     Render.setTabTitle(assignment.id);
 
     let args = {
-        [Routing.PARAM_COURSE]: course.id,
-        [Routing.PARAM_ASSIGNMENT]: assignment.id,
+        [Core.Routing.PARAM_COURSE]: course.id,
+        [Core.Routing.PARAM_ASSIGNMENT]: assignment.id,
     };
 
     // Simple Actions
@@ -24,7 +23,7 @@ function handlerAssignment(path, params, context, container) {
         new Render.Card(
             'assignment-action',
             'Submit',
-            Routing.formHashPath(Routing.PATH_SUBMIT, args),
+            Core.Routing.formHashPath(Core.Routing.PATH_SUBMIT, args),
             {
                 minServerRole: Autograder.Common.SERVER_ROLE_USER,
                 minCourseRole: Autograder.Common.COURSE_ROLE_STUDENT,
@@ -34,7 +33,7 @@ function handlerAssignment(path, params, context, container) {
         new Render.Card(
             'assignment-action',
             'Peek a Previous Submission',
-            Routing.formHashPath(Routing.PATH_PEEK, args),
+            Core.Routing.formHashPath(Core.Routing.PATH_PEEK, args),
             {
                 minServerRole: Autograder.Common.SERVER_ROLE_USER,
                 minCourseRole: Autograder.Common.COURSE_ROLE_STUDENT,
@@ -44,7 +43,7 @@ function handlerAssignment(path, params, context, container) {
         new Render.Card(
             'assignment-action',
             'View Submission History',
-            Routing.formHashPath(Routing.PATH_HISTORY, args),
+            Core.Routing.formHashPath(Core.Routing.PATH_HISTORY, args),
             {
                 minServerRole: Autograder.Common.SERVER_ROLE_USER,
                 minCourseRole: Autograder.Common.COURSE_ROLE_STUDENT,
@@ -58,7 +57,7 @@ function handlerAssignment(path, params, context, container) {
         new Render.Card(
             'assignment-action',
             'Fetch Course Scores',
-            Routing.formHashPath(Routing.PATH_ASSIGNMENT_FETCH_COURSE_SCORES, args),
+            Core.Routing.formHashPath(Core.Routing.PATH_ASSIGNMENT_FETCH_COURSE_SCORES, args),
             {
                 minServerRole: Autograder.Common.SERVER_ROLE_USER,
                 minCourseRole: Autograder.Common.COURSE_ROLE_GRADER,
@@ -68,7 +67,7 @@ function handlerAssignment(path, params, context, container) {
         new Render.Card(
             'assignment-action',
             'Fetch Submission Attempt',
-            Routing.formHashPath(Routing.PATH_ASSIGNMENT_FETCH_USER_ATTEMPT, args),
+            Core.Routing.formHashPath(Core.Routing.PATH_ASSIGNMENT_FETCH_USER_ATTEMPT, args),
             {
                 minServerRole: Autograder.Common.SERVER_ROLE_USER,
                 minCourseRole: Autograder.Common.COURSE_ROLE_STUDENT,
@@ -78,7 +77,7 @@ function handlerAssignment(path, params, context, container) {
         new Render.Card(
             'assignment-action',
             'Proxy Regrade',
-            Routing.formHashPath(Routing.PATH_PROXY_REGRADE, args),
+            Core.Routing.formHashPath(Core.Routing.PATH_PROXY_REGRADE, args),
             {
                 minServerRole: Autograder.Common.SERVER_ROLE_USER,
                 minCourseRole: Autograder.Common.COURSE_ROLE_GRADER,
@@ -88,7 +87,7 @@ function handlerAssignment(path, params, context, container) {
         new Render.Card(
             'assignment-action',
             'Proxy Resubmit',
-            Routing.formHashPath(Routing.PATH_PROXY_RESUBMIT, args),
+            Core.Routing.formHashPath(Core.Routing.PATH_PROXY_RESUBMIT, args),
             {
                 minServerRole: Autograder.Common.SERVER_ROLE_USER,
                 minCourseRole: Autograder.Common.COURSE_ROLE_GRADER,
@@ -98,7 +97,7 @@ function handlerAssignment(path, params, context, container) {
         new Render.Card(
             'assignment-action',
             'Individual Analysis',
-            Routing.formHashPath(Routing.PATH_ANALYSIS_INDIVIDUAL, args),
+            Core.Routing.formHashPath(Core.Routing.PATH_ANALYSIS_INDIVIDUAL, args),
             {
                 minServerRole: Autograder.Common.SERVER_ROLE_USER,
                 minCourseRole: Autograder.Common.COURSE_ROLE_ADMIN,
@@ -108,7 +107,7 @@ function handlerAssignment(path, params, context, container) {
         new Render.Card(
             'assignment-action',
             'Pairwise Analysis',
-            Routing.formHashPath(Routing.PATH_ANALYSIS_PAIRWISE, args),
+            Core.Routing.formHashPath(Core.Routing.PATH_ANALYSIS_PAIRWISE, args),
             {
                 minServerRole: Autograder.Common.SERVER_ROLE_USER,
                 minCourseRole: Autograder.Common.COURSE_ROLE_ADMIN,
@@ -118,7 +117,7 @@ function handlerAssignment(path, params, context, container) {
         new Render.Card(
             'assignment-action',
             'Remove Submission',
-            Routing.formHashPath(Routing.PATH_SUBMIT_REMOVE, args),
+            Core.Routing.formHashPath(Core.Routing.PATH_SUBMIT_REMOVE, args),
             {
                 minServerRole: Autograder.Common.SERVER_ROLE_USER,
                 minCourseRole: Autograder.Common.COURSE_ROLE_GRADER,
@@ -128,7 +127,7 @@ function handlerAssignment(path, params, context, container) {
         new Render.Card(
             'assignment-action',
             'View User History',
-            Routing.formHashPath(Routing.PATH_USER_HISTORY, args),
+            Core.Routing.formHashPath(Core.Routing.PATH_USER_HISTORY, args),
             {
                 minServerRole: Autograder.Common.SERVER_ROLE_USER,
                 minCourseRole: Autograder.Common.COURSE_ROLE_GRADER,

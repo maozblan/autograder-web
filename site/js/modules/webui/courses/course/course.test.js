@@ -1,4 +1,4 @@
-import * as Routing from '../../routing.js';
+import * as Core from '../../core/index.js';
 import * as TestUtil from '../../test/util.js';
 
 describe('Nav Course101', function() {
@@ -50,11 +50,11 @@ describe('Nav Course101', function() {
 
         // If there is an error substring, we expect navigation to fail.
         if (errorSubstring) {
-            await TestUtil.expectFailedNavigation(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: targetCourse}, errorSubstring);
+            await TestUtil.expectFailedNavigation(Core.Routing.PATH_COURSE, {[Core.Routing.PARAM_COURSE]: targetCourse}, errorSubstring);
             return;
         }
 
-        await TestUtil.navigate(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: targetCourse});
+        await TestUtil.navigate(Core.Routing.PATH_COURSE, {[Core.Routing.PARAM_COURSE]: targetCourse});
 
         TestUtil.checkPageBasics(targetCourse, 'course');
         TestUtil.checkCards(expectedLabelNames);
@@ -115,8 +115,8 @@ describe('Nav HW0', function() {
     test.each(testCases)("%s", async function(user, expectedLabelNames) {
         await TestUtil.loginUser(user);
         await TestUtil.navigate(
-                Routing.PATH_ASSIGNMENT,
-                {[Routing.PARAM_COURSE]: targetCourse, [Routing.PARAM_ASSIGNMENT]: targetAssignment});
+                Core.Routing.PATH_ASSIGNMENT,
+                {[Core.Routing.PARAM_COURSE]: targetCourse, [Core.Routing.PARAM_ASSIGNMENT]: targetAssignment});
 
         TestUtil.checkPageBasics(`${targetAssignment} :: Autograder`, 'assignment');
         TestUtil.checkCards(expectedLabelNames);
@@ -129,9 +129,9 @@ test('Nav Multiple Courses', async function() {
 
     await TestUtil.loginUser(user);
 
-    await TestUtil.navigate(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: 'course101'});
+    await TestUtil.navigate(Core.Routing.PATH_COURSE, {[Core.Routing.PARAM_COURSE]: 'course101'});
     TestUtil.checkPageBasics('course101', 'course');
 
-    await TestUtil.navigate(Routing.PATH_COURSE, {[Routing.PARAM_COURSE]: 'course-languages'});
+    await TestUtil.navigate(Core.Routing.PATH_COURSE, {[Core.Routing.PARAM_COURSE]: 'course-languages'});
     TestUtil.checkPageBasics('course-languages', 'course');
 });

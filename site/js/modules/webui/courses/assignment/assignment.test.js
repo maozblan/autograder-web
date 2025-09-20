@@ -1,15 +1,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+import * as Core from '../../core/index.js';
 import * as Input from '../../input.js';
-import * as Routing from '../../routing.js';
 import * as TestUtil from '../../test/util.js';
 
 test('Submit Assignment', async function() {
     await TestUtil.loginUser('course-admin');
     await TestUtil.navigate(
-            Routing.PATH_SUBMIT,
-            {[Routing.PARAM_COURSE]: 'course101', [Routing.PARAM_ASSIGNMENT]: 'hw0'},
+            Core.Routing.PATH_SUBMIT,
+            {[Core.Routing.PARAM_COURSE]: 'course101', [Core.Routing.PARAM_ASSIGNMENT]: 'hw0'},
     );
 
     TestUtil.checkPageBasics('hw0', 'assignment submit');

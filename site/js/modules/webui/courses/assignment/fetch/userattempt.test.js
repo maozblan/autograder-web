@@ -1,12 +1,11 @@
-import * as Event from '../../../event.js';
-import * as Routing from '../../../routing.js';
+import * as Core from '../../../core/index.js';
 import * as TestUtil from '../../../test/util.js';
 
 test('Fetch User Attempt, No Result', async function() {
     await TestUtil.loginUser('course-admin');
     await TestUtil.navigate(
-            Routing.PATH_ASSIGNMENT_FETCH_USER_ATTEMPT,
-            {[Routing.PARAM_COURSE]: 'course101', [Routing.PARAM_ASSIGNMENT]: 'hw0'},
+            Core.Routing.PATH_ASSIGNMENT_FETCH_USER_ATTEMPT,
+            {[Core.Routing.PARAM_COURSE]: 'course101', [Core.Routing.PARAM_ASSIGNMENT]: 'hw0'},
     );
 
     TestUtil.checkPageBasics('hw0', 'fetch submission attempt');
@@ -20,8 +19,8 @@ test('Fetch User Attempt, No Result', async function() {
 test('Fetch User Attempt, Target Other', async function() {
     await TestUtil.loginUser('course-admin');
     await TestUtil.navigate(
-            Routing.PATH_ASSIGNMENT_FETCH_USER_ATTEMPT,
-            {[Routing.PARAM_COURSE]: 'course101', [Routing.PARAM_ASSIGNMENT]: 'hw0'},
+            Core.Routing.PATH_ASSIGNMENT_FETCH_USER_ATTEMPT,
+            {[Core.Routing.PARAM_COURSE]: 'course101', [Core.Routing.PARAM_ASSIGNMENT]: 'hw0'},
     );
 
     TestUtil.checkPageBasics('hw0', 'fetch submission attempt');
@@ -36,7 +35,7 @@ test('Fetch User Attempt, Target Other', async function() {
     expect(results).toContain('"id": "course101::hw0::course-student@test.edulinq.org::1697406265"');
     expect(results).toContain('"score": 1');
 
-    let downloadWaitPromisePromise = Event.getEventPromise(Event.EVENT_TYPE_DOWNLOAD_FILE_COMPLETE);
+    let downloadWaitPromisePromise = Core.Event.getEventPromise(Core.Event.EVENT_TYPE_DOWNLOAD_FILE_COMPLETE);
     document.querySelector('.results-area button.download').click();
     await downloadWaitPromisePromise;
 });

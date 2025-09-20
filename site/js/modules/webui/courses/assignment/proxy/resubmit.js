@@ -1,18 +1,17 @@
 import * as Autograder from '../../../../autograder/index.js';
-
+import * as Core from '../../../core/index.js';
 import * as Icon from '../../../icon.js';
 import * as Input from '../../../input.js';
 import * as Render from '../../../render.js';
-import * as Routing from '../../../routing.js';
 import * as Submit from '../submit.js';
 
 function init() {
-    Routing.addRoute(/^course\/assignment\/proxy-resubmit$/, handlerProxyResubmit, 'Assignment Proxy Resubmit', Routing.NAV_COURSES, {assignment: true});
+    Core.Routing.addRoute(/^course\/assignment\/proxy-resubmit$/, handlerProxyResubmit, 'Assignment Proxy Resubmit', Core.Routing.NAV_COURSES, {assignment: true});
 }
 
 function handlerProxyResubmit(path, params, context, container) {
-    let course = context.courses[params[Routing.PARAM_COURSE]];
-    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+    let course = context.courses[params[Core.Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Core.Routing.PARAM_ASSIGNMENT]];
 
     Render.setTabTitle(assignment.id);
 
@@ -44,8 +43,8 @@ function handlerProxyResubmit(path, params, context, container) {
 }
 
 function proxyResubmit(params, context, container, inputParams) {
-    let course = context.courses[params[Routing.PARAM_COURSE]];
-    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+    let course = context.courses[params[Core.Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Core.Routing.PARAM_ASSIGNMENT]];
 
     return Autograder.Courses.Assignments.Submissions.Proxy.resubmit(
             course.id, assignment.id,

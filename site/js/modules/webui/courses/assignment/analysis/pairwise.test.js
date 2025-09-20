@@ -1,11 +1,11 @@
-import * as Routing from '../../../routing.js';
+import * as Core from '../../../core/index.js';
 import * as TestUtil from '../../../test/util.js';
 
 test('Pairwise Analysis', async function() {
     await TestUtil.loginUser('course-admin');
     await TestUtil.navigate(
-            Routing.PATH_ANALYSIS_PAIRWISE,
-            {[Routing.PARAM_COURSE]: 'course101', [Routing.PARAM_ASSIGNMENT]: 'hw0'},
+            Core.Routing.PATH_ANALYSIS_PAIRWISE,
+            {[Core.Routing.PARAM_COURSE]: 'course101', [Core.Routing.PARAM_ASSIGNMENT]: 'hw0'},
     );
 
     TestUtil.checkPageBasics('hw0', 'assignment pairwise analysis');

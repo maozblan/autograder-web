@@ -1,9 +1,10 @@
-import * as Autograder from '../autograder/index.js';
+import * as Autograder from '../../autograder/index.js';
+
 import * as Context from './context.js';
 import * as Event from './event.js';
-import * as Icon from './icon.js';
-import * as Log from './log.js';
-import * as Render from './render.js';
+import * as Icon from '../icon.js';
+import * as Log from '../log.js';
+import * as Render from '../render.js';
 
 let routes = [];
 
@@ -45,15 +46,11 @@ const NAV_SERVER = 'Server';
 // Should be prefixed with a hash symbol.
 let currentHash = undefined;
 
-// Start listening for routing events and do an initial route.
-function init(initialRoute = true) {
+// Start listening for routing events.
+function init() {
     window.addEventListener("hashchange", function() {
         route();
     });
-
-    if (initialRoute) {
-        route();
-    }
 }
 
 // Add a route to the router.
@@ -390,10 +387,11 @@ function loadingStop(container = undefined) {
     container.innerHTML = '';
 }
 
+init();
+
 export {
     addRoute,
     formHashPath,
-    init,
     loadingStart,
     loadingStop,
     redirect,

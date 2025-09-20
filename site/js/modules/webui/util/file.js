@@ -1,5 +1,5 @@
+import * as Core from '../core/index.js';
 import * as Testing from './testing.js';
-import * as Event from '../event.js';
 
 // Trigger an in-memory file to be downloaded by the user.
 function downloadFile(file) {
@@ -9,7 +9,7 @@ function downloadFile(file) {
     };
 
     if (Testing.isTestingMode) {
-        Event.dispatchEvent(Event.EVENT_TYPE_DOWNLOAD_FILE_COMPLETE, eventDetails);
+        Core.Event.dispatchEvent(Core.Event.EVENT_TYPE_DOWNLOAD_FILE_COMPLETE, eventDetails);
         return false;
     }
 
@@ -25,7 +25,7 @@ function downloadFile(file) {
         URL.revokeObjectURL(url);
     }, 10);
 
-    Event.dispatchEvent(Event.EVENT_TYPE_DOWNLOAD_FILE_COMPLETE, eventDetails);
+    Core.Event.dispatchEvent(Core.Event.EVENT_TYPE_DOWNLOAD_FILE_COMPLETE, eventDetails);
     return true;
 }
 

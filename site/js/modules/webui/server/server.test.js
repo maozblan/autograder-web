@@ -1,4 +1,4 @@
-import * as Routing from '../routing.js';
+import * as Core from '../core/index.js';
 import * as TestUtil from '../test/util.js';
 
 describe('Nav Server Actions', function() {
@@ -30,7 +30,7 @@ describe('Nav Server Actions', function() {
 
     test.each(testCases)("%s", async function(user, expectedLabelNames) {
         await TestUtil.loginUser(user);
-        await TestUtil.navigate(Routing.PATH_SERVER);
+        await TestUtil.navigate(Core.Routing.PATH_SERVER);
 
         TestUtil.checkPageBasics('Server Actions', 'server actions');
         TestUtil.checkCards(expectedLabelNames);

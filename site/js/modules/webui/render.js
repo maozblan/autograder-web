@@ -1,8 +1,7 @@
 import * as Autograder from '../autograder/index.js';
 
-import * as Event from './event.js';
+import * as Core from './core/index.js';
 import * as Icon from './icon.js';
-import * as Routing from './routing.js';
 import * as Util from './util/index.js';
 
 const API_OUTPUT_SWITCHER_JSON = 'JSON';
@@ -387,7 +386,7 @@ function submitInputs(params, context, container, inputs, onSubmitFunc, postResu
     resultsArea.innerHTML = `<div class="result secondary-color drop-shadow"></div>`;
     let resultsElement = resultsArea.firstChild;
 
-    Routing.loadingStart(resultsElement, false);
+    Core.Routing.loadingStart(resultsElement, false);
 
     let inputParams = {};
     let errorMessages = [];
@@ -440,7 +439,7 @@ function submitInputs(params, context, container, inputs, onSubmitFunc, postResu
                 button.disabled = false;
             }
 
-            Event.dispatchEvent(Event.EVENT_TYPE_TEMPLATE_RESULT_COMPLETE);
+            Core.Event.dispatchEvent(Core.Event.EVENT_TYPE_TEMPLATE_RESULT_COMPLETE);
         })
     ;
 }
@@ -455,11 +454,11 @@ function submissionHistory(course, assignment, history) {
         let submissionTime = Util.timestampToPretty(record['grading_start_time']);
 
         let params = {
-            [Routing.PARAM_COURSE]: course.id,
-            [Routing.PARAM_ASSIGNMENT]: assignment.id,
-            [Routing.PARAM_SUBMISSION]: record['short-id'],
+            [Core.Routing.PARAM_COURSE]: course.id,
+            [Core.Routing.PARAM_ASSIGNMENT]: assignment.id,
+            [Core.Routing.PARAM_SUBMISSION]: record['short-id'],
         };
-        let peekLink = Routing.formHashPath(Routing.PATH_PEEK, params);
+        let peekLink = Core.Routing.formHashPath(Core.Routing.PATH_PEEK, params);
 
         rowsHTML.push(`
             <tr>
@@ -506,10 +505,10 @@ function submission(course, assignment, submission) {
         messageHTML = makePairedTableRow('Message', submission['message'], 'message');
     }
 
-    let courseLink = Routing.formHashPath(Routing.PATH_COURSE,
-            {[Routing.PARAM_COURSE]: course.id});
-    let assignmentLink = Routing.formHashPath(Routing.PATH_ASSIGNMENT,
-            {[Routing.PARAM_COURSE]: course.id, [Routing.PARAM_ASSIGNMENT]: assignment.id});
+    let courseLink = Core.Routing.formHashPath(Core.Routing.PATH_COURSE,
+            {[Core.Routing.PARAM_COURSE]: course.id});
+    let assignmentLink = Core.Routing.formHashPath(Core.Routing.PATH_ASSIGNMENT,
+            {[Core.Routing.PARAM_COURSE]: course.id, [Core.Routing.PARAM_ASSIGNMENT]: assignment.id});
 
     let html = `
         <div class='submission'>

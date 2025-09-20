@@ -1,9 +1,9 @@
-import * as Routing from '../routing.js';
+import * as Core from '../core/index.js';
 import * as TestUtil from '../test/util.js';
 
 test('Enrolled Courses', async function() {
     await TestUtil.loginUser('course-student');
-    await TestUtil.navigate(Routing.PATH_COURSES);
+    await TestUtil.navigate(Core.Routing.PATH_COURSES);
 
     TestUtil.checkPageBasics('Enrolled Courses', 'enrolled courses');
 

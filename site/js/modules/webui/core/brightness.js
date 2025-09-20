@@ -65,9 +65,9 @@ function isDarkMode() {
     return !isLightMode();
 }
 
-export {
-    init,
+init();
 
+export {
     isDarkMode,
     isLightMode,
 }

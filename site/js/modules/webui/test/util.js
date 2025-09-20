@@ -1,25 +1,20 @@
 import * as Autograder from '../../autograder/index.js';
-
-import * as Context from '../context.js';
-import * as Event from '../event.js';
-import * as Login from '../login.js';
-import * as Routing from '../routing.js';
+import * as Core from '../core/index.js';
 
 // A helper function for tests to login as a user.
 // This is not in ../login.test.js to avoid importing a test file from other tests.
 async function loginUser(displayName) {
     Autograder.clearCredentials();
-    Context.clear();
-    Routing.init();
+    Core.Context.clear();
 
-    let loginRenderedProimise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, {
+    let loginRenderedProimise = Core.Event.getEventPromise(Core.Event.EVENT_TYPE_ROUTING_COMPLETE, {
         'path': 'login',
     });
 
-    Routing.redirectLogin();
+    Core.Routing.redirectLogin();
     await loginRenderedProimise;
 
-    let homeRenderedPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, {
+    let homeRenderedPromise = Core.Event.getEventPromise(Core.Event.EVENT_TYPE_ROUTING_COMPLETE, {
         'path': '',
     });
 
@@ -27,7 +22,7 @@ async function loginUser(displayName) {
         'email': `${displayName}@test.edulinq.org`,
         'cleartext': displayName,
     };
-    await Login.login(undefined, undefined, document, inputParams);
+    await Core.login(undefined, undefined, document, inputParams);
     await homeRenderedPromise;
 }
 
@@ -56,9 +51,9 @@ async function navigate(path, params = undefined) {
         pathComponents['params'] = params;
     }
 
-    let renderPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_COMPLETE, pathComponents);
+    let renderPromise = Core.Event.getEventPromise(Core.Event.EVENT_TYPE_ROUTING_COMPLETE, pathComponents);
 
-    Routing.routeComponents(pathComponents);
+    Core.Routing.routeComponents(pathComponents);
     await renderPromise;
 }
 
@@ -71,9 +66,9 @@ async function expectFailedNavigation(path, params = undefined, messageSubstring
         pathComponents['params'] = params;
     }
 
-    let renderPromise = Event.getEventPromise(Event.EVENT_TYPE_ROUTING_FAILED, pathComponents);
+    let renderPromise = Core.Event.getEventPromise(Core.Event.EVENT_TYPE_ROUTING_FAILED, pathComponents);
 
-    Routing.routeComponents(pathComponents);
+    Core.Routing.routeComponents(pathComponents);
     let event = await renderPromise;
 
     if (messageSubstring) {
@@ -82,7 +77,7 @@ async function expectFailedNavigation(path, params = undefined, messageSubstring
 }
 
 async function submitTemplate() {
-    let resultWaitPromise = Event.getEventPromise(Event.EVENT_TYPE_TEMPLATE_RESULT_COMPLETE);
+    let resultWaitPromise = Core.Event.getEventPromise(Core.Event.EVENT_TYPE_TEMPLATE_RESULT_COMPLETE);
     document.querySelector('.template-button').click();
     await resultWaitPromise;
 }

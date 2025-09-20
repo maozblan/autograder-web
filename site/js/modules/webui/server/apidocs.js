@@ -1,10 +1,9 @@
 import * as Autograder from '../../autograder/index.js';
-
+import * as Core from '../core/index.js';
 import * as Render from '../render.js';
-import * as Routing from '../routing.js';
 
 function init() {
-    Routing.addRoute(/^server\/docs$/, handlerDocs, "API Documentation", Routing.NAV_SERVER);
+    Core.Routing.addRoute(/^server\/docs$/, handlerDocs, "API Documentation", Core.Routing.NAV_SERVER);
 }
 
 function handlerDocs(path, params, context, container) {
@@ -73,7 +72,7 @@ function displayEndpoints(endpointData) {
 
     Object.entries(endpointData).forEach(function([endpoint, data]) {
         let args = {
-            [Routing.PARAM_TARGET_ENDPOINT]: endpoint,
+            [Core.Routing.PARAM_TARGET_ENDPOINT]: endpoint,
         };
 
         let inputTypes = Render.tableFromDictionaries(
@@ -88,7 +87,7 @@ function displayEndpoints(endpointData) {
 
         endpoints.push(`
             <div class="endpoint" data-endpoint="${endpoint}">
-                <a href="${Routing.formHashPath(Routing.PATH_SERVER_CALL_API, args)}">
+                <a href="${Core.Routing.formHashPath(Core.Routing.PATH_SERVER_CALL_API, args)}">
                     <h3>${endpoint}</h3>
                 </a>
                 <p>${data.description}</p>

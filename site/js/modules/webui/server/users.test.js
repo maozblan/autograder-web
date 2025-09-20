@@ -1,5 +1,5 @@
+import * as Core from '../core/index.js';
 import * as Render from '../render.js';
-import * as Routing from '../routing.js';
 import * as TestUtil from '../test/util.js';
 
 const SERVER_USERS = [
@@ -16,7 +16,7 @@ const SERVER_USERS = [
 
 test('Server Users List', async function() {
     await TestUtil.loginUser('server-admin');
-    await TestUtil.navigate(Routing.PATH_SERVER_USERS_LIST);
+    await TestUtil.navigate(Core.Routing.PATH_SERVER_USERS_LIST);
 
     TestUtil.checkPageBasics('List Users', 'list users');
 
@@ -39,7 +39,7 @@ describe('Server Users List, Output Switching', function() {
 
     test.each(testCases)("%s", async function(mode, prefix) {
         await TestUtil.loginUser('server-admin');
-        await TestUtil.navigate(Routing.PATH_SERVER_USERS_LIST);
+        await TestUtil.navigate(Core.Routing.PATH_SERVER_USERS_LIST);
 
         TestUtil.checkPageBasics('List Users', 'list users');
 

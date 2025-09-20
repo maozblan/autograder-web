@@ -1,5 +1,5 @@
-import * as Icon from './icon.js'
-import * as Render from './render.js'
+import * as Icon from '../icon.js'
+import * as Render from '../render.js'
 import * as Routing from './routing.js'
 
 function init() {
@@ -43,6 +43,4 @@ function handlerHome(path, params, context, container) {
     `;
 }
 
-export {
-    init,
-}
+init();

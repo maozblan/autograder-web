@@ -1,11 +1,10 @@
 import * as Autograder from '../../autograder/index.js';
-
+import * as Core from '../core/index.js';
 import * as Input from '../input.js';
 import * as Render from '../render.js';
-import * as Routing from '../routing.js';
 
 function init() {
-    Routing.addRoute(/^server\/users\/list$/, handlerUsers, "List Users", Routing.NAV_SERVER);
+    Core.Routing.addRoute(/^server\/users\/list$/, handlerUsers, "List Users", Core.Routing.NAV_SERVER);
 }
 
 function handlerUsers(path, params, context, container) {

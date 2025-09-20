@@ -77,7 +77,7 @@ function matchesFilter(eventDetails, details) {
 }
 
 // Cleanup all listeners from the event listeners map.
-function removeAllListeners() {
+function removeAllEventListeners() {
     for (const listener of Object.values(eventListeners)) {
         eventElement.removeEventListener(listener.eventName, listener.onEventFuncWithFilter);
     }
@@ -112,7 +112,7 @@ function getEventPromise(eventName, details = undefined, timeout = DEFAULT_TIMEO
 export {
     dispatchEvent,
     getEventPromise,
-    removeAllListeners,
+    removeAllEventListeners,
 
     EVENT_TYPE_DOWNLOAD_FILE_COMPLETE,
     EVENT_TYPE_ROUTING_COMPLETE,

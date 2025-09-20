@@ -1,18 +1,18 @@
 import * as Autograder from '../../../../autograder/index.js';
 
+import * as Core from '../../../core/index.js';
 import * as Icon from '../../../icon.js';
 import * as Input from '../../../input.js';
 import * as Render from '../../../render.js';
-import * as Routing from '../../../routing.js';
 import * as Util from '../../../util/index.js';
 
 function init() {
-    Routing.addRoute(/^course\/assignment\/fetch\/user\/attempt$/, handlerFetchUserAttempt, 'Fetch Submission Attempt', Routing.NAV_COURSES, {assignment: true});
+    Core.Routing.addRoute(/^course\/assignment\/fetch\/user\/attempt$/, handlerFetchUserAttempt, 'Fetch Submission Attempt', Core.Routing.NAV_COURSES, {assignment: true});
 }
 
 function handlerFetchUserAttempt(path, params, context, container) {
-    let course = context.courses[params[Routing.PARAM_COURSE]];
-    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+    let course = context.courses[params[Core.Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Core.Routing.PARAM_ASSIGNMENT]];
     let userEmail = context.user.email;
 
     Render.setTabTitle(assignment.id);

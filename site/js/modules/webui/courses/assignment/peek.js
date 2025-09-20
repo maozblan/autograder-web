@@ -1,18 +1,17 @@
 import * as Autograder from '../../../autograder/index.js';
-
+import * as Core from '../../core/index.js';
 import * as Icon from '../../icon.js';
 import * as Input from '../../input.js';
 import * as Render from '../../render.js';
-import * as Routing from '../../routing.js';
 
 function init() {
-    Routing.addRoute(/^course\/assignment\/peek$/, handlerPeek, 'Assignment Peek', Routing.NAV_COURSES, {assignment: true});
+    Core.Routing.addRoute(/^course\/assignment\/peek$/, handlerPeek, 'Assignment Peek', Core.Routing.NAV_COURSES, {assignment: true});
 }
 
 function handlerPeek(path, params, context, container) {
-    let course = context.courses[params[Routing.PARAM_COURSE]];
-    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
-    let submission = params[Routing.PARAM_SUBMISSION] || '';
+    let course = context.courses[params[Core.Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Core.Routing.PARAM_ASSIGNMENT]];
+    let submission = params[Core.Routing.PARAM_SUBMISSION] || '';
 
     Render.setTabTitle(assignment.id);
 
@@ -38,8 +37,8 @@ function handlerPeek(path, params, context, container) {
 }
 
 function peek(params, context, container, inputParams) {
-    let course = context.courses[params[Routing.PARAM_COURSE]];
-    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+    let course = context.courses[params[Core.Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Core.Routing.PARAM_ASSIGNMENT]];
 
     return Autograder.Courses.Assignments.Submissions.Fetch.User.peek(course.id, assignment.id, inputParams.submission)
         .then(function(result) {

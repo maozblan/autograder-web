@@ -1,15 +1,15 @@
 import * as Autograder from '../../../autograder/index.js';
+import * as Core from '../../core/index.js';
 import * as Icon from '../../icon.js';
 import * as Input from '../../input.js';
 import * as Render from '../../render.js';
-import * as Routing from '../../routing.js';
 
 function init() {
-    Routing.addRoute(/^course\/list$/, handlerUsers, 'Users', Routing.NAV_COURSES, {course: true});
+    Core.Routing.addRoute(/^course\/list$/, handlerUsers, 'Users', Core.Routing.NAV_COURSES, {course: true});
 }
 
 function handlerUsers(path, params, context, container) {
-    let course = context.courses[params[Routing.PARAM_COURSE]];
+    let course = context.courses[params[Core.Routing.PARAM_COURSE]];
 
     Render.setTabTitle(course.id);
 
@@ -37,7 +37,7 @@ function handlerUsers(path, params, context, container) {
 }
 
 function listUsers(params, context, container, inputParams) {
-    let course = context.courses[params[Routing.PARAM_COURSE]].id;
+    let course = context.courses[params[Core.Routing.PARAM_COURSE]].id;
 
     return Autograder.Courses.Users.list(course, inputParams.targetUsers)
         .then(function(result) {

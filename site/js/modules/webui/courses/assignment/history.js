@@ -1,16 +1,15 @@
 import * as Autograder from '../../../autograder/index.js';
-
+import * as Core from '../../core/index.js';
 import * as Icon from '../../icon.js';
 import * as Render from '../../render.js';
-import * as Routing from '../../routing.js';
 
 function init() {
-    Routing.addRoute(/^course\/assignment\/history$/, handlerHistory, 'Assignment History', Routing.NAV_COURSES, {assignment: true});
+    Core.Routing.addRoute(/^course\/assignment\/history$/, handlerHistory, 'Assignment History', Core.Routing.NAV_COURSES, {assignment: true});
 }
 
 function handlerHistory(path, params, context, container) {
-    let course = context.courses[params[Routing.PARAM_COURSE]];
-    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+    let course = context.courses[params[Core.Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Core.Routing.PARAM_ASSIGNMENT]];
 
     Render.setTabTitle(assignment.id);
 
@@ -26,8 +25,8 @@ function handlerHistory(path, params, context, container) {
 }
 
 function historyCallback(params, context, container, inputParams) {
-    let course = context.courses[params[Routing.PARAM_COURSE]];
-    let assignment = course.assignments[params[Routing.PARAM_ASSIGNMENT]];
+    let course = context.courses[params[Core.Routing.PARAM_COURSE]];
+    let assignment = course.assignments[params[Core.Routing.PARAM_ASSIGNMENT]];
 
     let targetEmail = inputParams.targetUser ?? context.user.email;
 

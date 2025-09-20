@@ -1,11 +1,11 @@
-import * as Routing from '../../../routing.js';
+import * as Core from '../../../core/index.js';
 import * as TestUtil from '../../../test/util.js';
 
 test('Fetch Course Scores', async function() {
     await TestUtil.loginUser('course-admin');
     await TestUtil.navigate(
-            Routing.PATH_ASSIGNMENT_FETCH_COURSE_SCORES,
-            {[Routing.PARAM_COURSE]: 'course101', [Routing.PARAM_ASSIGNMENT]: 'hw0'},
+            Core.Routing.PATH_ASSIGNMENT_FETCH_COURSE_SCORES,
+            {[Core.Routing.PARAM_COURSE]: 'course101', [Core.Routing.PARAM_ASSIGNMENT]: 'hw0'},
     );
 
     TestUtil.checkPageBasics('hw0', 'fetch course assignment scores');

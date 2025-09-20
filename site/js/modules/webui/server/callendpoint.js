@@ -1,9 +1,8 @@
 import * as Autograder from '../../autograder/index.js';
-
+import * as Core from '../core/index.js';
 import * as Icon from '../icon.js';
 import * as Input from '../input.js';
 import * as Render from '../render.js';
-import * as Routing from '../routing.js';
 
 // The priority of the field to show first.
 // Items later in the list have the highest priority.
@@ -15,16 +14,16 @@ const FIELD_PRIORITY = [
 ];
 
 function init() {
-    Routing.addRoute(/^server\/call-api$/, handlerCallAPI, 'Call API', Routing.NAV_SERVER, undefined);
+    Core.Routing.addRoute(/^server\/call-api$/, handlerCallAPI, 'Call API', Core.Routing.NAV_SERVER, undefined);
 }
 
 function handlerCallAPI(path, params, context, container) {
-    Routing.loadingStart(container);
+    Core.Routing.loadingStart(container);
 
     Autograder.Metadata.describe()
         .then(function(result) {
             const endpoints = result["endpoints"];
-            const selectedEndpoint = params[Routing.PARAM_TARGET_ENDPOINT] ?? undefined;
+            const selectedEndpoint = params[Core.Routing.PARAM_TARGET_ENDPOINT] ?? undefined;
 
             render(endpoints, selectedEndpoint, params, context, container);
         })
@@ -67,11 +66,11 @@ function render(endpoints, selectedEndpoint, params, context, container) {
 
     container.querySelector(".template-control-area select").addEventListener("change", function(event) {
         let newParams = {
-            [Routing.PARAM_TARGET_ENDPOINT]: event.target.value,
+            [Core.Routing.PARAM_TARGET_ENDPOINT]: event.target.value,
         };
 
-        let path = Routing.formHashPath(Routing.PATH_SERVER_CALL_API, newParams);
-        Routing.redirect(path);
+        let path = Core.Routing.formHashPath(Core.Routing.PATH_SERVER_CALL_API, newParams);
+        Core.Routing.redirect(path);
     });
 }
 
@@ -119,7 +118,7 @@ function getInputFields(endpoints, selectedEndpoint, context) {
 }
 
 function callEndpoint(params, context, container, inputParams) {
-    const targetEndpoint = params[Routing.PARAM_TARGET_ENDPOINT] ?? undefined;
+    const targetEndpoint = params[Core.Routing.PARAM_TARGET_ENDPOINT] ?? undefined;
     if (!targetEndpoint) {
         return Promise.resolve("Unable to find target endpoint.");
     }

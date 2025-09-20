@@ -1,4 +1,4 @@
-import * as Routing from '../../routing.js';
+import * as Core from '../../core/index.js';
 import * as TestUtil from '../../test/util.js';
 
 test('Course Users List', async function() {
@@ -12,7 +12,7 @@ test('Course Users List', async function() {
     ];
 
     await TestUtil.loginUser('course-admin');
-    await TestUtil.navigate(Routing.PATH_COURSE_USERS_LIST, {[Routing.PARAM_COURSE]: targetCourse});
+    await TestUtil.navigate(Core.Routing.PATH_COURSE_USERS_LIST, {[Core.Routing.PARAM_COURSE]: targetCourse});
 
     TestUtil.checkPageBasics(targetCourse, 'users');
 

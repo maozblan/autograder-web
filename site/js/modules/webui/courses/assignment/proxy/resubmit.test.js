@@ -1,11 +1,11 @@
-import * as Routing from '../../../routing.js';
+import * as Core from '../../../core/index.js';
 import * as TestUtil from '../../../test/util.js';
 
 test('Proxy Resubmit, Success', async function() {
     await TestUtil.loginUser('course-admin');
     await TestUtil.navigate(
-            Routing.PATH_PROXY_RESUBMIT,
-            {[Routing.PARAM_COURSE]: 'course101', [Routing.PARAM_ASSIGNMENT]: 'hw0'},
+            Core.Routing.PATH_PROXY_RESUBMIT,
+            {[Core.Routing.PARAM_COURSE]: 'course101', [Core.Routing.PARAM_ASSIGNMENT]: 'hw0'},
     );
 
     TestUtil.checkPageBasics('hw0', 'assignment proxy resubmit');
@@ -22,8 +22,8 @@ test('Proxy Resubmit, Success', async function() {
 test('Proxy Resubmit, User Not Found', async function() {
     await TestUtil.loginUser('course-admin');
     await TestUtil.navigate(
-            Routing.PATH_PROXY_RESUBMIT,
-            {[Routing.PARAM_COURSE]: 'course101', [Routing.PARAM_ASSIGNMENT]: 'hw0'},
+            Core.Routing.PATH_PROXY_RESUBMIT,
+            {[Core.Routing.PARAM_COURSE]: 'course101', [Core.Routing.PARAM_ASSIGNMENT]: 'hw0'},
     );
 
     TestUtil.checkPageBasics('hw0', 'assignment proxy resubmit');
