@@ -3,7 +3,7 @@ import * as Core from '../core/index.js';
 import * as Render from '../render/index.js';
 
 function init() {
-    Core.Routing.addRoute(/^server\/docs$/, handlerDocs, "API Documentation", Core.Routing.NAV_SERVER);
+    Core.Routing.addRoute(Core.Routing.PATH_SERVER_DOCS, handlerDocs, "API Documentation", Core.Routing.NAV_SERVER);
 }
 
 function handlerDocs(path, params, context, container) {

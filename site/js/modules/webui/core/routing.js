@@ -4,7 +4,8 @@ import * as Event from './event.js';
 import * as Log from '../log.js';
 import * as Render from '../render/index.js';
 
-let routes = [];
+// All the known routes keyed by the URL path (anchor, no params).
+let routes = {};
 
 const DEFAULT_HANDLER = handlerNotFound;
 
@@ -12,6 +13,11 @@ const PARAM_ASSIGNMENT = 'assignment';
 const PARAM_COURSE = 'course';
 const PARAM_SUBMISSION = 'submission';
 const PARAM_TARGET_ENDPOINT = 'endpoint';
+
+const PATH_HOME = '';
+
+const PATH_LOGIN = 'login';
+const PATH_LOGOUT = 'logout';
 
 const PATH_COURSE = 'course';
 const PATH_COURSES = 'courses';
@@ -58,7 +64,7 @@ function init() {
 // |context| is any context resolved by the router while preparing the request,
 // and |container| is an element to render into.
 // Possible fields for |context| are: user, courseID, course, and assignmentID.
-function addRoute(pattern, handler,
+function addRoute(path, handler,
         pageName = undefined,
         navParent = NAV_EMPTY,
         requirements = {login: true, course: false, assignment: false}) {
@@ -66,7 +72,12 @@ function addRoute(pattern, handler,
     requirements.course = requirements.course || requirements.assignment;
     requirements.login = requirements.login || requirements.course;
 
-    routes.push([pattern, handler, requirements, pageName, navParent]);
+    routes[path] = {
+        handler: handler,
+        requirements: requirements,
+        pageName: pageName,
+        navParent: navParent,
+    };
 }
 
 // Route the page content to a path specified in an argument or window.location.hash.
@@ -92,17 +103,16 @@ function route(rawPath = undefined) {
     currentHash = newHash;
     window.location.hash = newHash;
 
-    // Check all known routes.
-    for (const [pattern, handler, requirements, pageName, navParent] of routes) {
-        if (path.match(pattern)) {
-            console.debug(`Routing '${path}' to ${handler.name}.`);
-            return handlerWrapper(handler, path, params, pageName, navParent, requirements);
-        }
+    // Check for a known route.
+    let routeInfo = routes[path];
+    if (!routeInfo) {
+        // No path found, fallback to the default route.
+        console.warn(`Unknown path '${path}'. Falling back to default route.`);
+        return handlerWrapper(DEFAULT_HANDLER, path, params, undefined, '', {});
     }
 
-    // Fallback to the default route.
-    console.warn(`Unknown path '${path}'. Falling back to default route.`);
-    return handlerWrapper(DEFAULT_HANDLER, path, params, undefined, '', {});
+    console.debug(`Routing '${path}' to ${routeInfo.handler.name}.`);
+    return handlerWrapper(routeInfo.handler, path, params, routeInfo.pageName, routeInfo.navParent, routeInfo.requirements);
 }
 
 function routeComponents({path = '', params = {}}) {
@@ -343,20 +353,20 @@ function basicPathClean(path) {
     return path;
 }
 
-function redirect(path = '') {
+function redirect(path = PATH_HOME) {
     window.location.hash = path;
 }
 
 function redirectHome() {
-    redirect('');
+    redirect(PATH_HOME);
 }
 
 function redirectLogin() {
-    redirect('login');
+    redirect(PATH_LOGIN);
 }
 
 function redirectLogout() {
-    redirect('logout');
+    redirect(PATH_LOGOUT);
 }
 
 function loadingStart(container = undefined, modal = true) {
@@ -404,6 +414,9 @@ export {
     PARAM_SUBMISSION,
     PARAM_TARGET_ENDPOINT,
 
+    PATH_HOME,
+    PATH_LOGIN,
+    PATH_LOGOUT,
     PATH_COURSE,
     PATH_COURSES,
     PATH_ANALYSIS_INDIVIDUAL,

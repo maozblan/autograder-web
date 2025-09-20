@@ -3,7 +3,7 @@ import * as History from '../history.js';
 import * as Render from '../../../render/index.js';
 
 function init() {
-    Core.Routing.addRoute(/^course\/assignment\/user\/history$/, handlerUserHistory, 'User Assignment History', Core.Routing.NAV_COURSES, {assignment: true});
+    Core.Routing.addRoute(Core.Routing.PATH_USER_HISTORY, handlerUserHistory, 'User Assignment History', Core.Routing.NAV_COURSES, {assignment: true});
 }
 
 function handlerUserHistory(path, params, context, container) {

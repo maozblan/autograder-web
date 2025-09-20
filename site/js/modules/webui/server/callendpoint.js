@@ -12,7 +12,7 @@ const FIELD_PRIORITY = [
 ];
 
 function init() {
-    Core.Routing.addRoute(/^server\/call-api$/, handlerCallAPI, 'Call API', Core.Routing.NAV_SERVER, undefined);
+    Core.Routing.addRoute(Core.Routing.PATH_SERVER_CALL_API, handlerCallAPI, 'Call API', Core.Routing.NAV_SERVER, undefined);
 }
 
 function handlerCallAPI(path, params, context, container) {

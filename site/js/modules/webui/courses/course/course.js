@@ -3,7 +3,7 @@ import * as Core from '../../core/index.js';
 import * as Render from '../../render/index.js';
 
 function init() {
-    Core.Routing.addRoute(/^course$/, handlerCourse, 'Course', Core.Routing.NAV_COURSES, {course: true});
+    Core.Routing.addRoute(Core.Routing.PATH_COURSE, handlerCourse, 'Course', Core.Routing.NAV_COURSES, {course: true});
 }
 
 function handlerCourse(path, params, context, container) {

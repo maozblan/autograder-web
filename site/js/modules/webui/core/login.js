@@ -4,8 +4,8 @@ import * as Render from '../render/index.js';
 import * as Routing from './routing.js';
 
 function init() {
-    Routing.addRoute(/^login$/, handlerLogin, 'Login', Routing.NAV_EMPTY, {login: false});
-    Routing.addRoute(/^logout$/, handlerLogout, 'Logout');
+    Routing.addRoute(Routing.PATH_LOGIN, handlerLogin, 'Login', Routing.NAV_EMPTY, {login: false});
+    Routing.addRoute(Routing.PATH_LOGOUT, handlerLogout, 'Logout');
 }
 
 function handlerLogin(path, params, context, container) {

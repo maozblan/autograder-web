@@ -3,7 +3,7 @@ import * as Core from '../../core/index.js';
 import * as Render from '../../render/index.js';
 
 function init() {
-    Core.Routing.addRoute(/^course\/assignment\/peek$/, handlerPeek, 'Assignment Peek', Core.Routing.NAV_COURSES, {assignment: true});
+    Core.Routing.addRoute(Core.Routing.PATH_PEEK, handlerPeek, 'Assignment Peek', Core.Routing.NAV_COURSES, {assignment: true});
 }
 
 function handlerPeek(path, params, context, container) {

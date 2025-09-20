@@ -4,7 +4,7 @@ import * as Render from '../../render/index.js';
 import * as Util from '../../util/index.js';
 
 function init() {
-    Core.Routing.addRoute(/^course\/assignment\/submit$/, handlerSubmit, 'Assignment Submit', Core.Routing.NAV_COURSES, {assignment: true});
+    Core.Routing.addRoute(Core.Routing.PATH_SUBMIT, handlerSubmit, 'Assignment Submit', Core.Routing.NAV_COURSES, {assignment: true});
 }
 
 function handlerSubmit(path, params, context, container) {

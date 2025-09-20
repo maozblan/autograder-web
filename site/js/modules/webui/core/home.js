@@ -2,7 +2,7 @@ import * as Render from '../render/index.js'
 import * as Routing from './routing.js'
 
 function init() {
-    Routing.addRoute(/^$/, handlerHome, 'Home', Routing.NAV_HOME);
+    Routing.addRoute(Routing.PATH_HOME, handlerHome, 'Home', Routing.NAV_HOME);
 }
 
 function handlerHome(path, params, context, container) {

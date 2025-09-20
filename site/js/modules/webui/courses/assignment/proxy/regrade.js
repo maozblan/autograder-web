@@ -3,7 +3,7 @@ import * as Core from '../../../core/index.js';
 import * as Render from '../../../render/index.js';
 
 function init() {
-    Core.Routing.addRoute(/^course\/assignment\/proxy-regrade$/, handlerProxyRegrade, 'Assignment Proxy Regrade', Core.Routing.NAV_COURSES, {assignment: true});
+    Core.Routing.addRoute(Core.Routing.PATH_PROXY_REGRADE, handlerProxyRegrade, 'Assignment Proxy Regrade', Core.Routing.NAV_COURSES, {assignment: true});
 }
 
 function handlerProxyRegrade(path, params, context, container) {

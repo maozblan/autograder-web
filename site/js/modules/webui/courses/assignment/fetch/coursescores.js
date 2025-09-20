@@ -3,7 +3,7 @@ import * as Core from '../../../core/index.js';
 import * as Render from '../../../render/index.js';
 
 function init() {
-    Core.Routing.addRoute(/^course\/assignment\/fetch\/course\/scores$/, handlerFetchCourseScores, 'Fetch Course Assignment Scores', Core.Routing.NAV_COURSES, {assignment: true});
+    Core.Routing.addRoute(Core.Routing.PATH_ASSIGNMENT_FETCH_COURSE_SCORES, handlerFetchCourseScores, 'Fetch Course Assignment Scores', Core.Routing.NAV_COURSES, {assignment: true});
 }
 
 function handlerFetchCourseScores(path, params, context, container) {

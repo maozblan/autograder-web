@@ -5,7 +5,7 @@ import * as Render from '../../render/index.js';
 const COURSE_USER_REFERENCE_DOC_LINK = "https://github.com/edulinq/autograder-server/blob/main/docs/types.md#course-user-reference-courseuserreference";
 
 function init() {
-    Core.Routing.addRoute(/^course\/email$/, handlerEmail, 'Email', Core.Routing.NAV_COURSES, {course: true});
+    Core.Routing.addRoute(Core.Routing.PATH_EMAIL, handlerEmail, 'Email', Core.Routing.NAV_COURSES, {course: true});
 }
 
 function handlerEmail(path, params, context, container) {

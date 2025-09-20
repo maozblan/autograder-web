@@ -5,7 +5,7 @@ import * as Render from '../../../render/index.js';
 import * as Util from '../../../util/index.js';
 
 function init() {
-    Core.Routing.addRoute(/^course\/assignment\/fetch\/user\/attempt$/, handlerFetchUserAttempt, 'Fetch Submission Attempt', Core.Routing.NAV_COURSES, {assignment: true});
+    Core.Routing.addRoute(Core.Routing.PATH_ASSIGNMENT_FETCH_USER_ATTEMPT, handlerFetchUserAttempt, 'Fetch Submission Attempt', Core.Routing.NAV_COURSES, {assignment: true});
 }
 
 function handlerFetchUserAttempt(path, params, context, container) {

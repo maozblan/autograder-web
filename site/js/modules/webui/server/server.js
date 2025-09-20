@@ -3,7 +3,7 @@ import * as Core from '../core/index.js';
 import * as Render from '../render/index.js';
 
 function init() {
-    Core.Routing.addRoute(/^server$/, handlerServer, 'Server Actions', Core.Routing.NAV_SERVER, undefined);
+    Core.Routing.addRoute(Core.Routing.PATH_SERVER, handlerServer, 'Server Actions', Core.Routing.NAV_SERVER, undefined);
 }
 
 function handlerServer(path, params, context, container) {

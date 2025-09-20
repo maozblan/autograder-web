@@ -3,7 +3,7 @@ import * as Core from '../../core/index.js';
 import * as Render from '../../render/index.js';
 
 function init() {
-    Core.Routing.addRoute(/^course\/list$/, handlerUsers, 'Users', Core.Routing.NAV_COURSES, {course: true});
+    Core.Routing.addRoute(Core.Routing.PATH_COURSE_USERS_LIST, handlerUsers, 'Users', Core.Routing.NAV_COURSES, {course: true});
 }
 
 function handlerUsers(path, params, context, container) {
