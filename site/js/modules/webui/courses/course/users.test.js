@@ -1,5 +1,5 @@
 import * as Core from '../../core/index.js';
-import * as TestUtil from '../../test/util.js';
+import * as Test from '../../test/index.js';
 
 test('Course Users List', async function() {
     const targetCourse = 'course101';
@@ -11,12 +11,12 @@ test('Course Users List', async function() {
         'course-student@test.edulinq.org',
     ];
 
-    await TestUtil.loginUser('course-admin');
-    await TestUtil.navigate(Core.Routing.PATH_COURSE_USERS_LIST, {[Core.Routing.PARAM_COURSE]: targetCourse});
+    await Test.loginUser('course-admin');
+    await Test.navigate(Core.Routing.PATH_COURSE_USERS_LIST, {[Core.Routing.PARAM_COURSE]: targetCourse});
 
-    TestUtil.checkPageBasics(targetCourse, 'users');
+    Test.checkPageBasics(targetCourse, 'users');
 
-    await TestUtil.submitTemplate();
+    await Test.submitTemplate();
 
     let results = document.querySelector('.results-area').innerHTML;
 

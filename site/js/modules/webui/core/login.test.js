@@ -1,4 +1,4 @@
-import * as TestUtil from '../test/util.js';
+import * as Test from '../test/index.js';
 
 test("Login Page", async function() {
     const testCases = [
@@ -20,7 +20,7 @@ test("Login Page", async function() {
 });
 
 async function testLoginUser(displayName) {
-    await TestUtil.loginUser(displayName);
+    await Test.loginUser(displayName);
 
     expect(document.title).toContain("Home");
 

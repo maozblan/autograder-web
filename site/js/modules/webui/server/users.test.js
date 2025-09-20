@@ -1,6 +1,6 @@
 import * as Core from '../core/index.js';
 import * as Render from '../render/index.js';
-import * as TestUtil from '../test/util.js';
+import * as Test from '../test/index.js';
 
 const SERVER_USERS = [
     'course-admin@test.edulinq.org',
@@ -15,12 +15,12 @@ const SERVER_USERS = [
 ];
 
 test('Server Users List', async function() {
-    await TestUtil.loginUser('server-admin');
-    await TestUtil.navigate(Core.Routing.PATH_SERVER_USERS_LIST);
+    await Test.loginUser('server-admin');
+    await Test.navigate(Core.Routing.PATH_SERVER_USERS_LIST);
 
-    TestUtil.checkPageBasics('List Users', 'list users');
+    Test.checkPageBasics('List Users', 'list users');
 
-    await TestUtil.submitTemplate();
+    await Test.submitTemplate();
 
     let results = document.querySelector('.results-area').innerHTML;
 
@@ -38,12 +38,12 @@ describe('Server Users List, Output Switching', function() {
     ];
 
     test.each(testCases)("%s", async function(mode, prefix) {
-        await TestUtil.loginUser('server-admin');
-        await TestUtil.navigate(Core.Routing.PATH_SERVER_USERS_LIST);
+        await Test.loginUser('server-admin');
+        await Test.navigate(Core.Routing.PATH_SERVER_USERS_LIST);
 
-        TestUtil.checkPageBasics('List Users', 'list users');
+        Test.checkPageBasics('List Users', 'list users');
 
-        await TestUtil.submitTemplate();
+        await Test.submitTemplate();
 
         let button = document.querySelector(`.output-switcher .controls button.${mode.toLowerCase()}`);
         button.click();

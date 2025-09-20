@@ -1,5 +1,5 @@
 import * as Core from '../../core/index.js';
-import * as TestUtil from '../../test/util.js';
+import * as Test from '../../test/index.js';
 
 describe('Nav Course101', function() {
     // [[user, [expected card labels], error substring], ...].
@@ -46,18 +46,18 @@ describe('Nav Course101', function() {
     const targetCourse = 'course101';
 
     test.each(testCases)("%s", async function(user, expectedLabelNames, errorSubstring) {
-        await TestUtil.loginUser(user);
+        await Test.loginUser(user);
 
         // If there is an error substring, we expect navigation to fail.
         if (errorSubstring) {
-            await TestUtil.expectFailedNavigation(Core.Routing.PATH_COURSE, {[Core.Routing.PARAM_COURSE]: targetCourse}, errorSubstring);
+            await Test.expectFailedNavigation(Core.Routing.PATH_COURSE, {[Core.Routing.PARAM_COURSE]: targetCourse}, errorSubstring);
             return;
         }
 
-        await TestUtil.navigate(Core.Routing.PATH_COURSE, {[Core.Routing.PARAM_COURSE]: targetCourse});
+        await Test.navigate(Core.Routing.PATH_COURSE, {[Core.Routing.PARAM_COURSE]: targetCourse});
 
-        TestUtil.checkPageBasics(targetCourse, 'course');
-        TestUtil.checkCards(expectedLabelNames);
+        Test.checkPageBasics(targetCourse, 'course');
+        Test.checkCards(expectedLabelNames);
     });
 });
 
@@ -113,13 +113,13 @@ describe('Nav HW0', function() {
     const targetAssignment = 'hw0';
 
     test.each(testCases)("%s", async function(user, expectedLabelNames) {
-        await TestUtil.loginUser(user);
-        await TestUtil.navigate(
+        await Test.loginUser(user);
+        await Test.navigate(
                 Core.Routing.PATH_ASSIGNMENT,
                 {[Core.Routing.PARAM_COURSE]: targetCourse, [Core.Routing.PARAM_ASSIGNMENT]: targetAssignment});
 
-        TestUtil.checkPageBasics(`${targetAssignment} :: Autograder`, 'assignment');
-        TestUtil.checkCards(expectedLabelNames);
+        Test.checkPageBasics(`${targetAssignment} :: Autograder`, 'assignment');
+        Test.checkCards(expectedLabelNames);
     });
 });
 
@@ -127,11 +127,11 @@ describe('Nav HW0', function() {
 test('Nav Multiple Courses', async function() {
     const user = 'course-admin';
 
-    await TestUtil.loginUser(user);
+    await Test.loginUser(user);
 
-    await TestUtil.navigate(Core.Routing.PATH_COURSE, {[Core.Routing.PARAM_COURSE]: 'course101'});
-    TestUtil.checkPageBasics('course101', 'course');
+    await Test.navigate(Core.Routing.PATH_COURSE, {[Core.Routing.PARAM_COURSE]: 'course101'});
+    Test.checkPageBasics('course101', 'course');
 
-    await TestUtil.navigate(Core.Routing.PATH_COURSE, {[Core.Routing.PARAM_COURSE]: 'course-languages'});
-    TestUtil.checkPageBasics('course-languages', 'course');
+    await Test.navigate(Core.Routing.PATH_COURSE, {[Core.Routing.PARAM_COURSE]: 'course-languages'});
+    Test.checkPageBasics('course-languages', 'course');
 });
