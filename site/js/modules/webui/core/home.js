@@ -1,5 +1,4 @@
-import * as Icon from '../icon.js'
-import * as Render from '../render.js'
+import * as Render from '../render/index.js'
 import * as Routing from './routing.js'
 
 function init() {
@@ -11,7 +10,7 @@ function handlerHome(path, params, context, container) {
         <div class='home-page'>
             <div class='home-content link-color'>
                 <div class='home-title secondary-color drop-shadow'>
-                    ${Icon.getIconHTML(Icon.ICON_NAME_LOGO)}
+                    ${Render.getIconHTML(Render.ICON_NAME_LOGO)}
                     <h1>
                         Welcome to the LynxGrader!
                     </h1>

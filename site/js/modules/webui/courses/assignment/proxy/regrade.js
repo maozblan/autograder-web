@@ -1,8 +1,6 @@
 import * as Autograder from '../../../../autograder/index.js';
 import * as Core from '../../../core/index.js';
-import * as Icon from '../../../icon.js';
-import * as Input from '../../../input.js';
-import * as Render from '../../../render.js';
+import * as Render from '../../../render/index.js';
 
 function init() {
     Core.Routing.addRoute(/^course\/assignment\/proxy-regrade$/, handlerProxyRegrade, 'Assignment Proxy Regrade', Core.Routing.NAV_COURSES, {assignment: true});
@@ -15,21 +13,21 @@ function handlerProxyRegrade(path, params, context, container) {
     Render.setTabTitle(assignment.id);
 
     let inputFields = [
-        new Input.FieldType(context, 'dryRun', 'Dry Run', {
-            type: Input.INPUT_TYPE_BOOL,
+        new Render.FieldType(context, 'dryRun', 'Dry Run', {
+            type: Render.INPUT_TYPE_BOOL,
         }),
-        new Input.FieldType(context, 'overwrite', 'Overwrite Records', {
-            type: Input.INPUT_TYPE_BOOL,
+        new Render.FieldType(context, 'overwrite', 'Overwrite Records', {
+            type: Render.INPUT_TYPE_BOOL,
         }),
-        new Input.FieldType(context, 'cutoff', 'Regrade Cutoff', {
-            type: Input.INPUT_TYPE_INT,
+        new Render.FieldType(context, 'cutoff', 'Regrade Cutoff', {
+            type: Render.INPUT_TYPE_INT,
         }),
-        new Input.FieldType(context, 'users', 'Target Users', {
-            type: Input.COURSE_USER_REFERENCE_LIST_FIELD_TYPE,
+        new Render.FieldType(context, 'users', 'Target Users', {
+            type: Render.COURSE_USER_REFERENCE_LIST_FIELD_TYPE,
             placeholder: '< All Users in Course >',
         }),
-        new Input.FieldType(context, 'wait', 'Wait for Completion', {
-            type: Input.INPUT_TYPE_BOOL,
+        new Render.FieldType(context, 'wait', 'Wait for Completion', {
+            type: Render.INPUT_TYPE_BOOL,
         })
     ];
 
@@ -40,7 +38,7 @@ function handlerProxyRegrade(path, params, context, container) {
                 description: 'Proxy regrade an assignment for all target users using their most recent submission.',
                 inputs: inputFields,
                 buttonName: 'Regrade',
-                iconName: Icon.ICON_NAME_PROXY_REGRADE,
+                iconName: Render.ICON_NAME_PROXY_REGRADE,
             },
         )
     ;

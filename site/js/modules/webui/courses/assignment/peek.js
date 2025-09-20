@@ -1,8 +1,6 @@
 import * as Autograder from '../../../autograder/index.js';
 import * as Core from '../../core/index.js';
-import * as Icon from '../../icon.js';
-import * as Input from '../../input.js';
-import * as Render from '../../render.js';
+import * as Render from '../../render/index.js';
 
 function init() {
     Core.Routing.addRoute(/^course\/assignment\/peek$/, handlerPeek, 'Assignment Peek', Core.Routing.NAV_COURSES, {assignment: true});
@@ -16,7 +14,7 @@ function handlerPeek(path, params, context, container) {
     Render.setTabTitle(assignment.id);
 
     let inputFields = [
-        new Input.FieldType(context, 'submission', 'Submission ID', {
+        new Render.FieldType(context, 'submission', 'Submission ID', {
             defaultValue: submission,
         }),
     ];
@@ -28,7 +26,7 @@ function handlerPeek(path, params, context, container) {
                 description: 'View a past submission. If no submission ID is provided, the most recent submission is used.',
                 inputs: inputFields,
                 buttonName: 'Peek',
-                iconName: Icon.ICON_NAME_PEEK,
+                iconName: Render.ICON_NAME_PEEK,
                 // Auto-submit if we were passed an existing submission ID.
                 submitOnCreation: (submission != ''),
             },

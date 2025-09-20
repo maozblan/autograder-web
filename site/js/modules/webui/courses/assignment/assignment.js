@@ -1,7 +1,6 @@
 import * as Autograder from '../../../autograder/index.js';
 import * as Core from '../../core/index.js';
-import * as Icon from '../../icon.js';
-import * as Render from '../../render.js';
+import * as Render from '../../render/index.js';
 
 function init() {
     Core.Routing.addRoute(/^course\/assignment$/, handlerAssignment, 'Assignment', Core.Routing.NAV_COURSES, {assignment: true});
@@ -141,7 +140,7 @@ function handlerAssignment(path, params, context, container) {
         ['Advanced Actions', staffCards],
     ];
 
-    container.innerHTML = Render.makeCardSections(context, assignment.name, cardSections, Icon.ICON_NAME_COURSES);
+    container.innerHTML = Render.makeCardSections(context, assignment.name, cardSections, Render.ICON_NAME_COURSES);
 }
 
 init();

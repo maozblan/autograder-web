@@ -1,8 +1,6 @@
 import * as Autograder from '../../autograder/index.js';
 import * as Core from '../core/index.js';
-import * as Icon from '../icon.js';
-import * as Input from '../input.js';
-import * as Render from '../render.js';
+import * as Render from '../render/index.js';
 
 // The priority of the field to show first.
 // Items later in the list have the highest priority.
@@ -59,7 +57,7 @@ function render(endpoints, selectedEndpoint, params, context, container) {
                 description: description,
                 inputs: inputFields,
                 buttonName: 'Call Endpoint',
-                iconName: Icon.ICON_NAME_CALL_ENDPOINT,
+                iconName: Render.ICON_NAME_CALL_ENDPOINT,
             },
         )
     ;
@@ -77,11 +75,11 @@ function render(endpoints, selectedEndpoint, params, context, container) {
 function renderSelector(context, endpoints, selectedEndpoint) {
     let optionsList = [];
     for (const endpoint of Object.keys(endpoints)) {
-        optionsList.push(new Input.SelectOption(endpoint));
+        optionsList.push(new Render.SelectOption(endpoint));
     }
 
-    let selector = new Input.FieldType(context, "endpoint-dropdown", "Select an endpoint...", {
-        type: Input.INPUT_TYPE_SELECT,
+    let selector = new Render.FieldType(context, "endpoint-dropdown", "Select an endpoint...", {
+        type: Render.INPUT_TYPE_SELECT,
         choices: optionsList,
         defaultValue: selectedEndpoint,
     });
@@ -108,7 +106,7 @@ function getInputFields(endpoints, selectedEndpoint, context) {
 
     let inputFields = [];
     for (const field of sortedInputs) {
-        inputFields.push(new Input.FieldType(context, field.name, field.name, {
+        inputFields.push(new Render.FieldType(context, field.name, field.name, {
             type: field.type,
             required: field.required,
         }));

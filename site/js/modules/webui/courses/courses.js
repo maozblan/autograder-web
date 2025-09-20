@@ -1,6 +1,6 @@
 import * as Autograder from '../../autograder/index.js';
 import * as Core from '../core/index.js';
-import * as Render from '../render.js';
+import * as Render from '../render/index.js';
 
 function init() {
     Core.Routing.addRoute(/^courses$/, handlerCourses, 'Enrolled Courses', Core.Routing.NAV_COURSES);

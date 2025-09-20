@@ -1,7 +1,6 @@
 import * as Autograder from '../../../autograder/index.js';
 import * as Core from '../../core/index.js';
-import * as Icon from '../../icon.js';
-import * as Render from '../../render.js';
+import * as Render from '../../render/index.js';
 
 function init() {
     Core.Routing.addRoute(/^course\/assignment\/history$/, handlerHistory, 'Assignment History', Core.Routing.NAV_COURSES, {assignment: true});
@@ -18,7 +17,7 @@ function handlerHistory(path, params, context, container) {
             {
                 header: 'Fetch Submission History',
                 buttonName: 'Fetch',
-                iconName: Icon.ICON_NAME_HISTORY,
+                iconName: Render.ICON_NAME_HISTORY,
             },
         )
     ;

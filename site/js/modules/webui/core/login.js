@@ -1,8 +1,6 @@
 import * as Autograder from '../../autograder/index.js';
-
 import * as Context from './context.js';
-import * as Input from '../input.js';
-import * as Render from '../render.js';
+import * as Render from '../render/index.js';
 import * as Routing from './routing.js';
 
 function init() {
@@ -12,13 +10,13 @@ function init() {
 
 function handlerLogin(path, params, context, container) {
     let inputFields = [
-        new Input.FieldType(context, 'email', 'Email', {
-            type: Input.INPUT_TYPE_EMAIL,
+        new Render.FieldType(context, 'email', 'Email', {
+            type: Render.INPUT_TYPE_EMAIL,
             required: true,
             placeholder: 'email',
         }),
-        new Input.FieldType(context, 'cleartext', 'Password', {
-            type: Input.INPUT_TYPE_PASSWORD,
+        new Render.FieldType(context, 'cleartext', 'Password', {
+            type: Render.INPUT_TYPE_PASSWORD,
             required: true,
             placeholder: 'password / token',
         }),

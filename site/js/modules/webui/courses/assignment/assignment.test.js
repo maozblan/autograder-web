@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import * as Core from '../../core/index.js';
-import * as Input from '../../input.js';
+import * as Render from '../../render/index.js';
 import * as TestUtil from '../../test/util.js';
 
 test('Submit Assignment', async function() {
@@ -16,7 +16,7 @@ test('Submit Assignment', async function() {
 
     const fileContent = fs.readFileSync(path.join('site', 'js', 'modules', 'autograder', 'test', 'data', 'hw0_solution.py'), 'utf8');
     const fileObj = new File([fileContent], 'hw0_solution.py');
-    document.querySelector('.input-field[data-name="files"] input')[Input.TEST_FILES_KEY] = [fileObj];
+    document.querySelector('.input-field[data-name="files"] input')[Render.TEST_FILES_KEY] = [fileObj];
 
     await TestUtil.submitTemplate();
 

@@ -1,8 +1,6 @@
 import * as Autograder from '../../../../autograder/index.js';
 import * as Core from '../../../core/index.js';
-import * as Icon from '../../../icon.js';
-import * as Input from '../../../input.js';
-import * as Render from '../../../render.js';
+import * as Render from '../../../render/index.js';
 
 function init() {
     Core.Routing.addRoute(/^course\/assignment\/fetch\/course\/scores$/, handlerFetchCourseScores, 'Fetch Course Assignment Scores', Core.Routing.NAV_COURSES, {assignment: true});
@@ -15,7 +13,7 @@ function handlerFetchCourseScores(path, params, context, container) {
     Render.setTabTitle(assignment.id);
 
     let inputFields = [
-        new Input.FieldType(context, 'target-users', 'Target Users', {
+        new Render.FieldType(context, 'target-users', 'Target Users', {
             type: '[]model.CourseUserReference',
         }),
     ];
@@ -27,7 +25,7 @@ function handlerFetchCourseScores(path, params, context, container) {
                 description: 'Fetch the most recent scores for this assignment.',
                 inputs: inputFields,
                 buttonName: 'Fetch',
-                iconName: Icon.ICON_NAME_FETCH,
+                iconName: Render.ICON_NAME_FETCH,
             },
         )
     ;

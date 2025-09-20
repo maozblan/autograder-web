@@ -1,11 +1,9 @@
-// Import the entire web UI.
-import * as Core from './core/index.js';
-import * as Courses from './courses/index.js';
-import * as Log from './log.js';
-import * as Server from './server/index.js';
-import * as Util from './util/index.js';
-
-// TEST - render.
+export * as Core from './core/index.js';
+export * as Courses from './courses/index.js';
+export * as Log from './log.js';
+export * as Render from './render/index.js';
+export * as Server from './server/index.js';
+export * as Util from './util/index.js';
 
 function init() {
     // Start by routing to the desired page.

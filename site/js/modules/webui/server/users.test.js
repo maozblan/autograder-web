@@ -1,5 +1,5 @@
 import * as Core from '../core/index.js';
-import * as Render from '../render.js';
+import * as Render from '../render/index.js';
 import * as TestUtil from '../test/util.js';
 
 const SERVER_USERS = [

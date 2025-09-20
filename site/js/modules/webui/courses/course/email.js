@@ -1,8 +1,6 @@
 import * as Autograder from '../../../autograder/index.js';
 import * as Core from '../../core/index.js';
-import * as Icon from '../../icon.js';
-import * as Input from '../../input.js';
-import * as Render from '../../render.js';
+import * as Render from '../../render/index.js';
 
 const COURSE_USER_REFERENCE_DOC_LINK = "https://github.com/edulinq/autograder-server/blob/main/docs/types.md#course-user-reference-courseuserreference";
 
@@ -23,27 +21,27 @@ function handlerEmail(path, params, context, container) {
     `;
 
     let inputFields = [
-        new Input.FieldType(context, 'to', 'To', {
+        new Render.FieldType(context, 'to', 'To', {
             extractInputFunc: extractRecipients,
         }),
-        new Input.FieldType(context, 'cc', 'CC', {
+        new Render.FieldType(context, 'cc', 'CC', {
             extractInputFunc: extractRecipients,
         }),
-        new Input.FieldType(context, 'bcc', 'BCC', {
+        new Render.FieldType(context, 'bcc', 'BCC', {
             extractInputFunc: extractRecipients,
         }),
-        new Input.FieldType(context, 'subject', 'Subject', {
+        new Render.FieldType(context, 'subject', 'Subject', {
             required: true,
         }),
-        new Input.FieldType(context, 'body', 'Content', {
-            type: Input.INPUT_TYPE_TEXTAREA,
+        new Render.FieldType(context, 'body', 'Content', {
+            type: Render.INPUT_TYPE_TEXTAREA,
             additionalAttributes: 'rows="10"',
         }),
-        new Input.FieldType(context, 'dryRun', 'Send as Dry Run', {
-            type: Input.INPUT_TYPE_BOOL,
+        new Render.FieldType(context, 'dryRun', 'Send as Dry Run', {
+            type: Render.INPUT_TYPE_BOOL,
         }),
-        new Input.FieldType(context, 'html', 'Content is HTML', {
-            type: Input.INPUT_TYPE_BOOL,
+        new Render.FieldType(context, 'html', 'Content is HTML', {
+            type: Render.INPUT_TYPE_BOOL,
         }),
     ];
 
@@ -54,7 +52,7 @@ function handlerEmail(path, params, context, container) {
                 description: description,
                 inputs: inputFields,
                 buttonName: 'Send Email',
-                iconName: Icon.ICON_NAME_MAIL,
+                iconName: Render.ICON_NAME_MAIL,
             },
         )
     ;

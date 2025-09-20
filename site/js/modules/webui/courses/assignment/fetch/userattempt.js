@@ -1,9 +1,7 @@
 import * as Autograder from '../../../../autograder/index.js';
 
 import * as Core from '../../../core/index.js';
-import * as Icon from '../../../icon.js';
-import * as Input from '../../../input.js';
-import * as Render from '../../../render.js';
+import * as Render from '../../../render/index.js';
 import * as Util from '../../../util/index.js';
 
 function init() {
@@ -18,12 +16,12 @@ function handlerFetchUserAttempt(path, params, context, container) {
     Render.setTabTitle(assignment.id);
 
     let inputFields = [
-        new Input.FieldType(context, 'targetEmail', 'Target User Email', {
+        new Render.FieldType(context, 'targetEmail', 'Target User Email', {
             type: 'core.TargetCourseUserSelfOrGrader',
             placeholder: userEmail,
         }),
-        new Input.FieldType(context, 'targetSubmission', 'Target Submission ID', {
-            type: Input.INPUT_TYPE_STRING,
+        new Render.FieldType(context, 'targetSubmission', 'Target Submission ID', {
+            type: Render.INPUT_TYPE_STRING,
             placeholder: '< Most Recent >',
         }),
     ];
@@ -95,7 +93,7 @@ function handlerFetchUserAttempt(path, params, context, container) {
                 description: 'Fetch a full submission attempt.',
                 inputs: inputFields,
                 buttonName: 'Fetch',
-                iconName: Icon.ICON_NAME_FETCH,
+                iconName: Render.ICON_NAME_FETCH,
                 postResultsFunc: postResultsFunc,
             },
         )

@@ -1,8 +1,6 @@
 import * as Autograder from '../../../../autograder/index.js';
 import * as Core from '../../../core/index.js';
-import * as Icon from '../../../icon.js';
-import * as Input from '../../../input.js';
-import * as Render from '../../../render.js';
+import * as Render from '../../../render/index.js';
 
 function init() {
     Core.Routing.addRoute(/^course\/assignment\/analysis\/individual$/, handlerAnalysisIndividual, 'Assignment Individual Analysis', Core.Routing.NAV_COURSES, {assignment: true});
@@ -15,18 +13,18 @@ function handlerAnalysisIndividual(path, params, context, container) {
     Render.setTabTitle(assignment.id);
 
     let inputFields = [
-        new Input.FieldType(context, 'submissions', 'List of Submission IDs', {
+        new Render.FieldType(context, 'submissions', 'List of Submission IDs', {
             type: '[]string',
             required: true,
         }),
-        new Input.FieldType(context, 'wait', 'Wait for Completion', {
-            type: Input.INPUT_TYPE_BOOL,
+        new Render.FieldType(context, 'wait', 'Wait for Completion', {
+            type: Render.INPUT_TYPE_BOOL,
         }),
-        new Input.FieldType(context, 'overwrite', 'Overwrite Records', {
-            type: Input.INPUT_TYPE_BOOL,
+        new Render.FieldType(context, 'overwrite', 'Overwrite Records', {
+            type: Render.INPUT_TYPE_BOOL,
         }),
-        new Input.FieldType(context, 'dryRun', 'Dry Run', {
-            type: Input.INPUT_TYPE_BOOL,
+        new Render.FieldType(context, 'dryRun', 'Dry Run', {
+            type: Render.INPUT_TYPE_BOOL,
         }),
     ];
 
@@ -37,7 +35,7 @@ function handlerAnalysisIndividual(path, params, context, container) {
                 description: 'Get the result of an individual analysis for the specified submissions.',
                 inputs: inputFields,
                 buttonName: 'Analyze',
-                iconName: Icon.ICON_NAME_ANALYSIS,
+                iconName: Render.ICON_NAME_ANALYSIS,
             },
         )
     ;

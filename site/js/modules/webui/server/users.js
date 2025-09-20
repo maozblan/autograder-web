@@ -1,7 +1,6 @@
 import * as Autograder from '../../autograder/index.js';
 import * as Core from '../core/index.js';
-import * as Input from '../input.js';
-import * as Render from '../render.js';
+import * as Render from '../render/index.js';
 
 function init() {
     Core.Routing.addRoute(/^server\/users\/list$/, handlerUsers, "List Users", Core.Routing.NAV_SERVER);
@@ -11,7 +10,7 @@ function handlerUsers(path, params, context, container) {
     Render.setTabTitle('List Users');
 
     let inputFields = [
-        new Input.FieldType(context, 'users', 'Target Users', {
+        new Render.FieldType(context, 'users', 'Target Users', {
             type: '[]model.ServerUserReference',
         }),
     ];

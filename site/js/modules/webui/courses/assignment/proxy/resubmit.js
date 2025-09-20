@@ -1,8 +1,6 @@
 import * as Autograder from '../../../../autograder/index.js';
 import * as Core from '../../../core/index.js';
-import * as Icon from '../../../icon.js';
-import * as Input from '../../../input.js';
-import * as Render from '../../../render.js';
+import * as Render from '../../../render/index.js';
 import * as Submit from '../submit.js';
 
 function init() {
@@ -16,15 +14,15 @@ function handlerProxyResubmit(path, params, context, container) {
     Render.setTabTitle(assignment.id);
 
     let inputFields = [
-        new Input.FieldType(context, 'email', 'Target User', {
-            type: Input.INPUT_TYPE_EMAIL,
+        new Render.FieldType(context, 'email', 'Target User', {
+            type: Render.INPUT_TYPE_EMAIL,
             required: true,
             placeholder: 'Email',
         }),
-        new Input.FieldType(context, 'time', 'Proxy Time', {
-            type: Input.INPUT_TYPE_INT,
+        new Render.FieldType(context, 'time', 'Proxy Time', {
+            type: Render.INPUT_TYPE_INT,
         }),
-        new Input.FieldType(context, 'submission', 'Submission', {
+        new Render.FieldType(context, 'submission', 'Submission', {
             placeholder: 'Most Recent',
         }),
     ];
@@ -36,7 +34,7 @@ function handlerProxyResubmit(path, params, context, container) {
                 description: 'Proxy resubmit an assignment submission to the autograder.',
                 inputs: inputFields,
                 buttonName: 'Resubmit',
-                iconName: Icon.ICON_NAME_PROXY_RESUBMIT,
+                iconName: Render.ICON_NAME_PROXY_RESUBMIT,
             },
         )
     ;

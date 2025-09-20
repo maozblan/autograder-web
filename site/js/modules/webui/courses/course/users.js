@@ -1,8 +1,6 @@
 import * as Autograder from '../../../autograder/index.js';
 import * as Core from '../../core/index.js';
-import * as Icon from '../../icon.js';
-import * as Input from '../../input.js';
-import * as Render from '../../render.js';
+import * as Render from '../../render/index.js';
 
 function init() {
     Core.Routing.addRoute(/^course\/list$/, handlerUsers, 'Users', Core.Routing.NAV_COURSES, {course: true});
@@ -14,8 +12,8 @@ function handlerUsers(path, params, context, container) {
     Render.setTabTitle(course.id);
 
     let inputFields = [
-        new Input.FieldType(context, 'targetUsers', 'Target Users', {
-            type: Input.COURSE_USER_REFERENCE_LIST_FIELD_TYPE,
+        new Render.FieldType(context, 'targetUsers', 'Target Users', {
+            type: Render.COURSE_USER_REFERENCE_LIST_FIELD_TYPE,
         }),
     ];
 
@@ -30,7 +28,7 @@ function handlerUsers(path, params, context, container) {
                 description: description,
                 inputs: inputFields,
                 buttonName: 'List Users',
-                iconName: Icon.ICON_NAME_LIST,
+                iconName: Render.ICON_NAME_LIST,
             },
         )
     ;

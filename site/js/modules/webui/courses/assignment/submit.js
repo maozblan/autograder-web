@@ -1,8 +1,6 @@
 import * as Autograder from '../../../autograder/index.js';
 import * as Core from '../../core/index.js';
-import * as Icon from '../../icon.js';
-import * as Input from '../../input.js';
-import * as Render from '../../render.js';
+import * as Render from '../../render/index.js';
 import * as Util from '../../util/index.js';
 
 function init() {
@@ -16,17 +14,17 @@ function handlerSubmit(path, params, context, container) {
     Render.setTabTitle(assignment.id);
 
     let inputFields = [
-        new Input.FieldType(context, 'files', 'Files', {
-            type: Input.INPUT_TYPE_FILE,
+        new Render.FieldType(context, 'files', 'Files', {
+            type: Render.INPUT_TYPE_FILE,
             required: true,
             placeholder: 'Submission Files',
             additionalAttributes: ' multiple="true"',
         }),
-        new Input.FieldType(context, 'message', 'Message', {
-            type: Input.INPUT_TYPE_STRING,
+        new Render.FieldType(context, 'message', 'Message', {
+            type: Render.INPUT_TYPE_STRING,
         }),
-        new Input.FieldType(context, 'allowLate', 'Allow Late', {
-            type: Input.INPUT_TYPE_BOOL,
+        new Render.FieldType(context, 'allowLate', 'Allow Late', {
+            type: Render.INPUT_TYPE_BOOL,
         }),
     ];
 
@@ -36,7 +34,7 @@ function handlerSubmit(path, params, context, container) {
                 header: 'Submit Assignment',
                 inputs: inputFields,
                 buttonName: 'Submit',
-                iconName: Icon.ICON_NAME_SUBMIT,
+                iconName: Render.ICON_NAME_SUBMIT,
             }
         )
     ;

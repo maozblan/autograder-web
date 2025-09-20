@@ -1,7 +1,6 @@
 import * as Autograder from '../../../autograder/index.js';
 import * as Core from '../../core/index.js';
-import * as Icon from '../../icon.js';
-import * as Render from '../../render.js';
+import * as Render from '../../render/index.js';
 
 function init() {
     Core.Routing.addRoute(/^course$/, handlerCourse, 'Course', Core.Routing.NAV_COURSES, {course: true});
@@ -64,7 +63,7 @@ function handlerCourse(path, params, context, container) {
         ['Actions', actionCards],
     ];
 
-    container.innerHTML = Render.makeCardSections(context, course.name, cardSections, Icon.ICON_NAME_COURSES);
+    container.innerHTML = Render.makeCardSections(context, course.name, cardSections, Render.ICON_NAME_COURSES);
 }
 
 init();

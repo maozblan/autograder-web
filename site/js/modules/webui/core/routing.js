@@ -1,10 +1,8 @@
 import * as Autograder from '../../autograder/index.js';
-
 import * as Context from './context.js';
 import * as Event from './event.js';
-import * as Icon from '../icon.js';
 import * as Log from '../log.js';
-import * as Render from '../render.js';
+import * as Render from '../render/index.js';
 
 let routes = [];
 
@@ -255,12 +253,12 @@ function setContextUserDisplay() {
         `;
 
         loginAreaHTML = `
-            <a href='#logout'>${Icon.getIconHTML(Icon.ICON_NAME_LOGOUT, '')}</span>
+            <a href='#logout'>${Render.getIconHTML(Render.ICON_NAME_LOGOUT, '')}</span>
         `;
     } else {
         currentUserHTML = '';
         loginAreaHTML = `
-            <a href='#login'>${Icon.getIconHTML(Icon.ICON_NAME_LOGIN, '')}</span>
+            <a href='#login'>${Render.getIconHTML(Render.ICON_NAME_LOGIN, '')}</span>
         `;
     }
 
@@ -371,7 +369,7 @@ function loadingStart(container = undefined, modal = true) {
 
     container.innerHTML = `
         <div class='loading-container'>
-            ${Icon.getIconHTML(Icon.ICON_NAME_LOGO, loadingClass)}
+            ${Render.getIconHTML(Render.ICON_NAME_LOGO, loadingClass)}
             <div class='loading-dots'>
                 <span></span>
                 <span></span>
