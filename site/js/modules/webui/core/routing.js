@@ -180,7 +180,8 @@ function handlerWrapper(handler, path, params, pageName, navParent, requirements
         // If it doesn't, then either the course context needs to be loaded or the user is not enrolled in this course.
         if (!Object.hasOwn(context.courses, courseID)) {
             // Check if the user is a server admin and or enrolled in this course.
-            if ((Autograder.Common.getServerRoleValue(context.user.role) < Autograder.Common.SERVER_ROLE_ADMIN) && !Object.hasOwn(context.user.enrollments, courseID)) {
+            if ((Autograder.Common.getServerRoleValue(context.user.role) < Autograder.Common.SERVER_ROLE_ADMIN)
+                    && !Object.hasOwn(context.user.enrollments, courseID)) {
                 routingFailed(path, params, context, `User ('${context.user.email}') is not enrolled in course ('${courseID}').`, true);
                 return redirectHome();
             }
