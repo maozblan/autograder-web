@@ -48,7 +48,7 @@ function loadCourse(courseID) {
                 return Promise.reject(result);
             }
 
-            context.courses[result.course.id] = result.course
+            context.courses[result.course.id] = result.course;
             return null;
         })
         .catch(function(result) {
@@ -65,7 +65,7 @@ function makeContext(result) {
         course.name = course.name || course.id;
     }
 
-    result.user.enrollments = result.courses
+    result.user.enrollments = result.courses;
 
     return {
         user: result.user,
