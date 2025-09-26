@@ -28,9 +28,7 @@ function updateCourse(params, context, container, inputParams) {
 
     return Autograder.Courses.Admin.update(course)
         .then(function(result) {
-            return `
-                ${Render.codeBlockJSON(result)}
-            `;
+            return Render.codeBlockJSON(result);
         })
         .catch(function(message) {
             console.error(message);
