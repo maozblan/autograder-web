@@ -24,9 +24,9 @@ function handlerUpdate(path, params, context, container) {
 }
 
 function updateCourse(params, context, container, inputParams) {
-    let course = context.courses[params[Core.Routing.PARAM_COURSE]].id;
+    let course = context.courses[params[Core.Routing.PARAM_COURSE]];
 
-    return Autograder.Courses.Admin.update(course)
+    return Autograder.Courses.Admin.update(course.id)
         .then(function(result) {
             return Render.codeBlockJSON(result);
         })

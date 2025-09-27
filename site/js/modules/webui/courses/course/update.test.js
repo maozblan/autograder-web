@@ -3,12 +3,13 @@ import * as Test from '../../test/index.js';
 
 test('Course Update', async function() {
     const targetCourse = 'course101';
-    const expectedUsers = [
+    const expectedStrings = [
+        '"success": true',
+        '"created": false',
+        '"updated": true',
         'course-admin@test.edulinq.org',
-        'course-grader@test.edulinq.org',
-        'course-other@test.edulinq.org',
-        'course-owner@test.edulinq.org',
-        'course-student@test.edulinq.org',
+        'autograder.course101.hw0',
+        'submission.py',
     ];
 
     await Test.loginUser('course-admin');
@@ -19,8 +20,7 @@ test('Course Update', async function() {
     await Test.submitTemplate();
 
     let results = document.querySelector('.results-area').innerHTML;
-    expect(results).toContain('"success": true');
-    for (const user of expectedUsers) {
-        expect(results).toContain(user);
+    for (const string of expectedStrings) {
+        expect(results).toContain(string);
     }
 });
